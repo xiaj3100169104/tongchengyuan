@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#fff"
+              android:orientation="vertical" >
+
+    <include android:id="@+id/toolbar" layout="@layout/comm_toolbar_btn" />
+
+    <EditText
+        android:id="@+id/etInputNick"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/edittext_login"
+        android:singleLine="true"
+        android:maxLength="12"
+        android:textColor="#353535"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="好名字可以让你的好朋友更容易记得你"
+        android:textColor="#AAAAAA"
+        android:textSize="14sp" />
+
+</LinearLayout>

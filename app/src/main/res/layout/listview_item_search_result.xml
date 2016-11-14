@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools">
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/ivIcon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_default_circle"
+        app:riv_corner_radius="50dip"
+        app:riv_border_width="0.5dp"
+        app:riv_border_color="@color/black4"
+        android:layout_margin="15dp"/>
+
+    <TextView
+        android:id="@+id/tvNickName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="昆卡"
+        android:layout_alignTop="@+id/ivIcon"
+        android:layout_toRightOf="@+id/ivIcon"
+        android:layout_marginTop="3dp"
+        android:textSize="14sp"
+        android:textColor="@color/black"/>
+
+    <TextView
+        android:id="@+id/tvDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="暂无描述"
+        android:layout_below="@+id/tvNickName"
+        android:layout_toRightOf="@+id/ivIcon"
+        android:layout_toEndOf="@+id/ivIcon"
+        android:textSize="12sp"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/list_pressed"/>
+</RelativeLayout>

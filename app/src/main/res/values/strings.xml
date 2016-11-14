@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">微信</string>
+    <string name="contacts">通讯录</string>
+    <string name="me">我</string>
+    <string name="discover">发现</string>
+    <string name="recommended_friends">新的朋友</string>
+    <string name="group_chats">群聊</string>
+    <string name="official_accounts">订阅号</string>
+    <string name="chat">微信</string>
+    <string name="no_msg">暂时没有新消息</string>
+    <string name="wechat_id">微信号</string>
+    <string name="my_posts">相册</string>
+    <string name="collection">收藏</string>
+    <string name="wallet">钱包</string>
+    <string name="card_bag">卡包</string>
+    <string name="expression2">表情</string>
+    <string name="settings">设置</string>
+    <string name="moments">朋友圈</string>
+    <string name="scan">扫一扫</string>
+    <string name="shake2">摇一摇</string>
+    <string name="people_nearby">附近的人</string>
+    <string name="drift_bottle">漂流瓶</string>
+    <string name="shopping">购物</string>
+    <string name="games">游戏</string>
+    <string name="search">搜索</string>
+    <string name="countries_and_areas">国家和地区</string>
+    <string name="passWord">密码</string>
+    <string name="toast_network_unavailable">网络不可用，请打开网络设置</string>
+    <string name="toast_network_error">网络错误，请检查网络设置</string>
+
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_groupchat">发起群聊</string>
+    <string name="menu_addfriend">添加朋友</string>
+    <string name="menu_qrcode">扫一扫</string>
+    <string name="menu_money">微信支付</string>
+    <string name="menu_add_friend">添加朋友</string>
+
+    <string name="label_activity_user_info">详细资料</string>
+    <string name="label_activity_register">注册</string>
+    <string name="label_activity_login">登录</string>
+    <string name="label_activity_my_profile">个人信息</string>
+    <string name="label_activity_modify_name">更改名字</string>
+    <string name="label_activity_show_search_result">搜索结果</string>
+    <string name="label_activity_add_friend">添加朋友</string>
+    <string name="label_activity_new_friends">新的朋友</string>
+    <string name="label_activity_crop_image">剪切图片</string>
+    <string name="label_activity_send_invite_message">微信</string>
+
+    <string name="normal">按住 说话</string>
+    <string name="recording">松开 结束</string>
+    <string name="want_to_cancle">松开手指，取消发送</string>
+    <string name="shouzhishanghua">手指上滑，取消发送</string>
+    <string name="tooshort">录音时间过短</string>
+
+    <string name="instruction">当设计的UI与地图部分重叠时，设置地图的padding值,以防止UI遮挡</string>
+</resources>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#fff"
+              android:orientation="vertical" >
+
+    <include android:id="@+id/toolbar" layout="@layout/comm_toolbar_btn" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:paddingBottom="5dp"
+    >
+
+
+        <HorizontalScrollView
+            android:layout_alignParentLeft="true"
+            android:id="@+id/horizonMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#ffffff"
+            android:scrollbars="none" >
+
+            <LinearLayout
+                android:id="@+id/linearLayoutMenu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="#ffffff"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/iv_search"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:src="@drawable/ar5" />
+            </LinearLayout>
+        </HorizontalScrollView>
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/horizonMenu"
+            android:background="@null"
+            android:gravity="bottom"
+            android:hint="搜索"
+            android:singleLine="true"
+            android:textColor="#353535"
+            android:textColorHint="#484c4c"
+            android:textSize="16sp" />
+
+    </RelativeLayout>
+
+    <ListView
+        android:headerDividersEnabled="false"
+        android:id="@+id/lvMessages"
+        android:footerDividersEnabled="false"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F9F9F9"
+        android:descendantFocusability="afterDescendants"
+        android:fastScrollEnabled="false" />
+
+</LinearLayout>

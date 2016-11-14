@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingTop="13dp" >
+
+    <TextView
+        android:id="@+id/tv_date"
+        style="@style/chat_text_date_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_chat_activity" >
+
+        <ImageView
+            android:id="@+id/iv_avatar"
+            android:layout_width="@dimen/size_avatar"
+            android:layout_height="@dimen/size_avatar"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="@dimen/margin_chat_activity"
+            android:background="@drawable/default_useravatar"
+            android:scaleType="fitXY"/>
+
+        <RelativeLayout
+            android:id="@+id/rl_content_container"
+            style="@style/chat_item_to_content_container"
+            android:layout_toLeftOf="@+id/iv_avatar">
+            <TextView
+                android:id="@+id/tv_voice_padding"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"/>
+            <ImageView
+                android:id="@+id/iv_voice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/chatto_voice_playing"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/tv_voice_padding"/>
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_length"
+            style="@style/chat_text_name_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_toLeftOf="@id/rl_content_container"
+            android:layout_centerVertical="true" />
+        
+        <ImageView
+            android:id="@+id/iv_send_failed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/tv_length"
+            android:clickable="true"
+            android:src="@drawable/msg_state_failed_resend"
+            android:visibility="gone" />
+        
+        <TextView
+            android:id="@+id/tv_ack"
+            style="@style/chat_text_name_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/text_ack_msg"
+            android:textSize="12sp"
+            android:layout_toLeftOf="@id/tv_length"
+            android:visibility="invisible"
+            />
+        <TextView
+            android:id="@+id/tv_delivered"
+            style="@style/chat_text_name_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/text_delivered_msg"
+            android:textSize="12sp"
+            android:layout_toLeftOf="@id/tv_length"
+            android:visibility="invisible"
+            />
+          <ProgressBar 
+            android:visibility="visible"
+            android:id="@+id/pb_sending"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+                android:indeterminateDrawable="@drawable/small_prograssbar"
+				android:indeterminateOnly="true"
+				android:indeterminateBehavior="repeat"
+              android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/tv_length"
+            />
+    </RelativeLayout>
+
+</LinearLayout>

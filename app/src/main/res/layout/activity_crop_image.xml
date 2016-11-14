@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.juns.wechat.activity.CropImageActivity"
+    android:orientation="vertical">
+
+    <include android:id="@+id/toolbar" layout="@layout/comm_toolbar_btn" />
+
+    <com.juns.wechat.view.ClipImageLayout
+        android:id="@+id/clipImageLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:horizontal_padding="30dp">
+
+    </com.juns.wechat.view.ClipImageLayout>
+
+</LinearLayout>

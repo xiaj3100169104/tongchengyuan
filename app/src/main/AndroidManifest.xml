@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="com.juns.wechat"
+          android:versionCode="1"
+          android:versionName="1.0">
+
+    <uses-sdk
+        android:minSdkVersion="15"
+        android:targetSdkVersion="21"/>
+
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <!-- 环信开始 -->
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.GET_TASKS"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS"/>
+    <uses-permission android:name="android.permission.BROADCAST_STICKY"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <!-- 环信结束 -->
+    <!-- Push service 运行需要的权限 -->
+    <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER"/>
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION"/>
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+    <application
+        android:name=".App"
+        android:allowBackup="true"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".SplashActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".view.activity.LoginActivity"
+            android:label="@string/label_activity_login"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".view.activity.RegisterActivity"
+            android:label="@string/label_activity_register"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".activity.UserInfoActivity"
+            android:label="@string/label_activity_user_info"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".view.activity.PublishUserListActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".view.activity.PublicActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".view.activity.SearchActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".view.activity.NewFriendsListActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".view.activity.GroupListActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".view.activity.PublishMsgListActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".view.activity.SettingActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".view.activity.AlbumActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".view.activity.PublishMsgDetailActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".view.activity.GetMoneyActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".view.activity.SetMoneyActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".view.activity.AddFromContactActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".view.activity.EditUserNameActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".view.activity.WebViewActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:screenOrientation="sensor"
+            android:windowSoftInputMode="stateHidden|adjustUnspecified">
+        </activity>
+        <activity
+            android:name=".zxing.CaptureActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".view.activity.MyCodeActivity"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <service android:name=".view.UpdateService"/>
+        <!-- 朋友圈分享 -->
+        <activity
+            android:name=".view.activity.ShareActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+
+                <data android:mimeType="image/*"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+
+                <data android:mimeType="text/plain"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND_MULTIPLE"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+
+                <data android:mimeType="image/*"/>
+            </intent-filter>
+        </activity>
+        <!-- 环信开始 -->
+
+        <activity
+            android:name=".activity.ChatActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
+        <activity
+            android:name=".view.activity.AddGroupChatActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".view.activity.GroupSettingActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".chat.VoiceCallActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".chat.VideoCallActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".chat.BaiduMapActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".chat.AlertDialog"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyDialogStyle">
+        </activity>
+        <activity
+            android:name=".chat.ContextMenu"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyDialogStyle">
+        </activity>
+        <activity
+            android:name=".chat.ShowBigImage"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".chat.ShowNormalFileActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".chat.ShowVideoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="stateAlwaysHidden">
+        </activity>
+        <activity
+            android:name=".activity.AddFriendActivity"
+            android:label="@string/label_activity_add_friend"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.SearchActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.mob.tools.MobUIShell"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+
+        <!-- 百度地图所需的service -->
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote"/>
+        <!-- umeng appkey，可忽略 -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="53912a3156240b01a7075ed1">
+        </meta-data>
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="3ecea51f560650b1ed8a4b99808f52e8"/>
+        <!-- 环信结束 -->
+
+
+        <!-- push应用定义消息receiver声明 -->
+
+
+        <!-- 4.4版本新增的CommandService声明，提升小米和魅族手机上的实际推送到达率 -->
+        <service
+            android:name="com.baidu.android.pushservice.CommandService"
+            android:exported="true"/>
+
+        <receiver
+            android:name="com.baidu.android.pushservice.PushServiceReceiver"
+            android:process=":bdservice_v1">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+                <action android:name="com.baidu.android.pushservice.action.notification.SHOW"/>
+                <action android:name="com.baidu.android.pushservice.action.media.CLICK"/>
+            </intent-filter>
+        </receiver>
+        <!-- push应用定义消息receiver声明 -->
+        <receiver android:name=".PushMessageReceiver">
+            <intent-filter>
+
+                <!-- 接收push消息 -->
+                <action android:name="com.baidu.android.pushservice.action.MESSAGE"/>
+                <!-- 接收bind,unbind,fetch,delete等反馈消息 -->
+                <action android:name="com.baidu.android.pushservice.action.RECEIVE"/>
+                <action android:name="com.baidu.android.pushservice.action.notification.CLICK"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".receiver.WeChatBroadCastReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.CONFIGURATION_CHANGED"/>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+                <action android:name="android.intent.action.USER_PRESENT"/>
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".service.XmppService"
+            android:exported="true"/>
+
+        <!-- 在百度开发者中心查询应用的API Key -->
+        <meta-data
+            android:name="api_key"
+            android:value="Uvw5AMP15i9v1cUoS5aY7GR1"/>
+
+        <activity
+            android:name=".activity.SearchResultActivity"
+            android:label="@string/label_activity_show_search_result"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".activity.MyProfileActivity"
+            android:label="@string/label_activity_my_profile"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".activity.ModifyNameActivity"
+            android:label="@string/label_activity_modify_name"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".activity.CropImageActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".activity.SendInviteMessageActivity"
+            android:label="@string/label_activity_send_invite_message"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".activity.NewFriendsActivity"
+            android:label="@string/label_activity_new_friends"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".activity.AddFriendFinalActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".activity.SendLocationActivity">
+        </activity>
+    </application>
+
+</manifest>
