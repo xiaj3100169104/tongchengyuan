@@ -43,6 +43,7 @@ repositories{
 dependencies {
     compile 'com.android.support:appcompat-v7:23.1.0'
     compile 'com.android.support:support-v4:23.1.0'
+
     compile fileTree(dir: 'libs', includes: ['*.jar'])
     compile 'org.igniterealtime.smack:smack-android-extensions:4.1.0'
     compile 'org.igniterealtime.smack:smack-tcp:4.1.0'
