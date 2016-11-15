@@ -1,14 +1,16 @@
 apply plugin: 'com.android.library'
-
+def androidCompileSdkVersion = 23
+def androidBuildToolsVersion = "24.0.0"
+def androidMinSdkVersion = 15
+def androidTargetSdkVersion = 22
+def supportVersion = "23.4.0"
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.3"
+    compileSdkVersion androidCompileSdkVersion
+    buildToolsVersion androidBuildToolsVersion
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 23
-        versionCode 1
-        versionName "1.0"
+        minSdkVersion androidMinSdkVersion
+        targetSdkVersion androidTargetSdkVersion
     }
     buildTypes {
         release {
@@ -20,12 +22,12 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.4.0'
+    //testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:' + supportVersion
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
-    compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'com.android.support:design:23.4.0'
-    compile 'com.android.support:recyclerview-v7:23.4.0'
-    compile 'com.android.support:support-annotations:23.4.0'
+    compile 'com.android.support:appcompat-v7:' + supportVersion
+    compile 'com.android.support:design:' + supportVersion
+    compile 'com.android.support:recyclerview-v7:' + supportVersion
+    compile 'com.android.support:support-annotations:' + supportVersion
 }
