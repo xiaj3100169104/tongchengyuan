@@ -6,7 +6,7 @@
               android:orientation="vertical" >
 
     <RelativeLayout
-        android:id="@+id/re_newfriends"
+        android:id="@+id/layout_new_friends"
         android:layout_width="match_parent"
         android:layout_height="52dp"
         android:background="@drawable/btn_list_item_bg"
@@ -22,7 +22,6 @@
             android:src="@drawable/default_fmessage" />
 
         <TextView
-            android:id="@+id/tv_newfriends"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -55,7 +54,7 @@
         android:background="#d9d9d9" />
 
     <RelativeLayout
-        android:id="@+id/re_chatroom"
+        android:id="@+id/layout_chat_room"
         android:layout_width="match_parent"
         android:layout_height="52dp"
         android:background="@drawable/btn_list_item_bg"
@@ -71,7 +70,6 @@
             android:src="@drawable/default_chatroom" />
 
         <TextView
-            android:id="@+id/tv_chatroom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -90,6 +88,7 @@
         android:background="#d9d9d9" />
 
     <RelativeLayout
+        android:id="@+id/layout_label"
         android:layout_width="match_parent"
         android:layout_height="52dp"
         android:background="@drawable/btn_list_item_bg"
@@ -105,7 +104,6 @@
             android:src="@drawable/default_contactlabel" />
 
         <TextView
-            android:id="@+id/tv_biaoqian"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -128,7 +126,7 @@
         android:layout_height="52dp"
         android:background="@drawable/btn_list_item_bg"
         android:clickable="true"
-        android:id="@+id/re_public">
+        android:id="@+id/layout_public">
 
         <ImageView
             android:id="@+id/iv_avatar4"

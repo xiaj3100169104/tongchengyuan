@@ -1,13 +1,10 @@
 package com.juns.wechat.adpter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.Context;
-import android.view.LayoutInflater;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
@@ -15,99 +12,82 @@ import android.widget.TextView;
 import com.juns.wechat.R;
 import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.common.PingYinUtil;
-import com.juns.wechat.common.ViewHolder;
 import com.juns.wechat.util.ImageLoader;
+import com.style.base.BaseRecyclerViewAdapter;
 
-public class ContactAdapter extends BaseAdapter implements SectionIndexer {
-	private Context mContext;
-	private List<FriendBean> friendBeen = new ArrayList<>();// 好友信息
+import java.util.List;
 
-    public ContactAdapter(Context context) {
-        this.mContext = context;
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
+public class ContactAdapter extends BaseRecyclerViewAdapter implements SectionIndexer {
+    public ContactAdapter(Context context, List list) {
+        super(context, list);
     }
 
-    public void setData(List<FriendBean> friendBeen){
-        this.friendBeen = friendBeen;
-        notifyDataSetChanged();
+    @Override
+    public RecyclerView.ViewHolder onCreateItem(ViewGroup parent, int viewType) {
+        return new ViewHolder(mInflater.inflate(R.layout.contact_item, parent, false));
     }
 
-	@Override
-	public int getCount() {
-        if(friendBeen == null){
-            return 0;
+    @Override
+    public void onBindItem(RecyclerView.ViewHolder viewHolder, int position, Object data) {
+        ViewHolder holder = (ViewHolder) viewHolder;
+        FriendBean friendBean = (FriendBean) data;
+        // 根据position获取分类的首字母的Char ascii值
+        int section = getSectionForPosition(position);
+        // 如果当前位置等于该分类首字母的Char的位置 ，则认为是第一次出现
+        if (position == getPositionForSection(section)) {
+            holder.tvCatalog.setVisibility(View.VISIBLE);
+            holder.tvCatalog.setText(friendBean.getSortLetters());
+        } else {
+            holder.tvCatalog.setVisibility(View.GONE);
         }
-		return friendBeen.size();
-	}
 
-	@Override
-	public Object getItem(int position) {
-		if(friendBeen == null){
-            return null;
+        ImageLoader.loadAvatar(holder.ivAvatar, friendBean.getHeadUrl());
+        holder.tvNick.setText(friendBean.getShowName());
+    }
+
+    /**
+     * 根据ListView的当前位置获取分类的首字母的Char ascii值
+     */
+    public int getSectionForPosition(int position) {
+        return ((FriendBean) list.get(position)).getSortLetters().charAt(0);
+    }
+
+    @Override
+    public Object[] getSections() {
+        return new Object[0];
+    }
+
+    /**
+     * 根据分类的首字母的Char ascii值获取其第一次出现该首字母的位置
+     */
+    public int getPositionForSection(int section) {
+        for (int i = 0; i < getDataSize(); i++) {
+            String sortStr = ((FriendBean) list.get(i)).getSortLetters();
+            char firstChar = sortStr.toUpperCase().charAt(0);
+            if (firstChar == section) {
+                return i;
+            }
         }
-        return friendBeen.get(position);
-	}
 
-	@Override
-	public long getItemId(int position) {
-		return position;
-	}
+        return -1;
+    }
 
-	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		FriendBean friendBean = friendBeen.get(position);
-		if (convertView == null) {
-			convertView = LayoutInflater.from(mContext).inflate(
-					R.layout.contact_item, parent, false);
+    static class ViewHolder extends RecyclerView.ViewHolder{
+        @Bind(R.id.tv_catalog)
+        TextView tvCatalog;
+        @Bind(R.id.iv_avatar)
+        ImageView ivAvatar;
+        @Bind(R.id.tv_nick)
+        TextView tvNick;
+        @Bind(R.id.checkbox)
+        CheckBox checkbox;
 
-		}
-		ImageView ivAvatar = ViewHolder.get(convertView,
-				R.id.iv_avatar);
-		TextView tvCatalog = ViewHolder.get(convertView,
-				R.id.contactitem_catalog);
-		TextView tvNick = ViewHolder.get(convertView, R.id.contactitem_nick);
-		String catalog = PingYinUtil.converterToFirstSpell(friendBean.getContactName())
-				.substring(0, 1);
-		if (position == 0) {
-			tvCatalog.setVisibility(View.VISIBLE);
-			tvCatalog.setText(catalog);
-		} else {
-			FriendBean prevRosterBean = friendBeen.get(position - 1);
-			String lastCatalog = PingYinUtil.converterToFirstSpell(
-                    prevRosterBean.getContactName()).substring(0, 1);
-			if (catalog.equals(lastCatalog)) {
-				tvCatalog.setVisibility(View.GONE);
-			} else {
-				tvCatalog.setVisibility(View.VISIBLE);
-				tvCatalog.setText(catalog);
-			}
-		}
-
-        ImageLoader.loadAvatar(ivAvatar, friendBean.getHeadUrl());
-		tvNick.setText(friendBean.getShowName());
-		return convertView;
-	}
-
-	@Override
-	public int getPositionForSection(int section) {
-		for (int i = 0; i < friendBeen.size(); i++) {
-			FriendBean rosterBean = friendBeen.get(i);
-			String l = PingYinUtil.converterToFirstSpell(rosterBean.getContactName())
-					.substring(0, 1);
-			char firstChar = l.toUpperCase().charAt(0);
-			if (firstChar == section) {
-				return i;
-			}
-		}
-		return 0;
-	}
-
-	@Override
-	public int getSectionForPosition(int position) {
-		return 0;
-	}
-
-	@Override
-	public Object[] getSections() {
-		return null;
-	}
+        ViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+        }
+    }
 }

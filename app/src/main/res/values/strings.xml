@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+    <string name="delete_succeed">删除成功</string>
+    <string name="delete_fail">删除失败</string>
+    <string name="request_fail">请求失败</string>
+    <string name="no_data_now">暂时还没数据哦</string>
+    <string name="no_more">没有更多了</string>
+    <string name="refresh_fail">刷新失败</string>
+    <string name="prompt">提示</string>
+    <string name="clear">清空</string>
+    <string name="sd_card_unavailable">SD不可用</string>
+    <string name="cant_find_pictures">找不到图片</string>
+    <string name="File_does_not_exist">文件不存在</string>
+    <string name="back">返回</string>
+    <string name="save">保存</string>
+    <string name="album">相册</string>
+    <string name="explain">说明</string>
     <string name="app_name">微信</string>
     <string name="contacts">通讯录</string>
     <string name="me">我</string>

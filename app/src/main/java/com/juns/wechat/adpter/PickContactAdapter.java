@@ -68,9 +68,9 @@ public class PickContactAdapter extends BaseAdapter implements SectionIndexer{
         ImageView ivAvatar = ViewHolder.get(convertView,
                 R.id.iv_avatar);
         TextView tvCatalog = ViewHolder.get(convertView,
-                R.id.contactitem_catalog);
+                R.id.tv_catalog);
         TextView tvNick = ViewHolder
-                .get(convertView, R.id.contactitem_nick);
+                .get(convertView, R.id.tv_nick);
         final CheckBox checkBox = ViewHolder
                 .get(convertView, R.id.checkbox);
         checkBox.setVisibility(View.VISIBLE);

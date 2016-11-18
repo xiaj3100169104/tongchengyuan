@@ -61,6 +61,7 @@ public class MainActivity extends BaseActivity{
 	private void initView() {
 		vpMainContent = (ViewPager) findViewById(R.id.vp_main_content);
 		mainAdapter = new MainAdapter(getSupportFragmentManager());
+		vpMainContent.setOffscreenPageLimit(4);
 		vpMainContent.setAdapter(mainAdapter);
         vpMainContent.setOnPageChangeListener(pageChangeListener);
 

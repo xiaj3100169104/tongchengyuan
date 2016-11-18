@@ -9,7 +9,7 @@ import org.simple.eventbus.EventBus;
 /**
  * Created by 王者 on 2016/8/7.
  */
-public class BaseFragment extends Fragment{
+public class BaseFragment extends com.style.base.BaseFragment{
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -17,6 +17,16 @@ public class BaseFragment extends Fragment{
         if(registerEventBus()){
             EventBus.getDefault().register(this);
         }
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    protected void onLazyLoad() {
+
     }
 
     @Override

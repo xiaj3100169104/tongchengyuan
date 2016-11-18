@@ -1,0 +1,82 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 动画风格 -->
+    <style name="Animations" />
+    <!-- 从右上角向左下缩放 -->
+    <style name="Animations.EnlargeFromTopRight">
+        <item name="@android:windowEnterAnimation">@anim/enlarge_from_top_right</item>
+        <item name="@android:windowExitAnimation">@anim/shrink_to_top_right</item>
+    </style>
+    <!-- 从顶部向下伸缩 -->
+    <style name="Animations.ExtendsFromTop">
+        <item name="@android:windowEnterAnimation">@anim/extends_open_from_top</item>
+        <item name="@android:windowExitAnimation">@anim/extends_close_to_top</item>
+    </style>
+    <!-- 从底部向上伸缩 -->
+    <style name="Animations.ExtendsFromBottom">
+        <item name="@android:windowEnterAnimation">@anim/extends_open_from_bottom</item>
+        <item name="@android:windowExitAnimation">@anim/extends_close_to_bottom</item>
+    </style>
+    <!-- 底进底出，进大出小 -->
+    <style name="Animations.GrowFromBottom">
+        <item name="@android:windowEnterAnimation">@anim/grow_from_bottom</item>
+        <item name="@android:windowExitAnimation">@anim/shrink_from_top</item>
+    </style>
+    <!-- 底进底出 -->
+    <style name="Animations.SlideInFromBottom_OutToBottom">
+        <item name="@android:windowEnterAnimation">@anim/slide_in_from_bottom</item>
+        <item name="@android:windowExitAnimation">@anim/slide_out_to_bottom</item>
+    </style>
+    <!-- 底进顶出 -->
+    <style name="Animations.SlideInFromBottom_OutToTop">
+        <item name="@android:windowEnterAnimation">@anim/slide_in_from_bottom</item>
+        <item name="@android:windowExitAnimation">@anim/slide_out_to_top</item>
+    </style>
+    <!-- 顶进顶出 -->
+    <style name="Animations.SlideInFromTop_OutToTop">
+        <item name="@android:windowEnterAnimation">@anim/slide_in_from_top</item>
+        <item name="@android:windowExitAnimation">@anim/slide_out_to_top</item>
+    </style>
+    <!-- 顶进底出 -->
+    <style name="Animations.SlideInFromTop_OutToBottom">
+        <item name="@android:windowEnterAnimation">@anim/slide_in_from_top</item>
+        <item name="@android:windowExitAnimation">@anim/slide_out_to_bottom</item>
+    </style>
+    <!-- 左进左出 -->
+    <style name="Animations.SlideInFromLeft_OutToLeft">
+        <item name="@android:windowEnterAnimation">@anim/slide_in_from_left</item>
+        <item name="@android:windowExitAnimation">@anim/slide_out_to_left</item>
+    </style>
+    <!-- 左进右出 -->
+    <style name="Animations.SlideInFromLeft_OutToRight">
+        <item name="@android:windowEnterAnimation">@anim/slide_in_from_left</item>
+        <item name="@android:windowExitAnimation">@anim/slide_out_to_right</item>
+    </style>
+    <!-- 右进右出 -->
+    <style name="Animations.SlideInFromRight_OutToRight">
+        <item name="@android:windowEnterAnimation">@anim/slide_in_from_right</item>
+        <item name="@android:windowExitAnimation">@anim/slide_out_to_right</item>
+    </style>
+    <!-- 右进左出 -->
+    <style name="Animations.SlideInFromRight_OutToLeft">
+        <item name="@android:windowEnterAnimation">@anim/slide_in_from_right</item>
+        <item name="@android:windowExitAnimation">@anim/slide_out_to_left</item>
+    </style>
+
+    <style name="Anim_main" parent="@android:style/Animation.Activity">
+        <!-- 当我们从 A1 启动 A2 时，A2 出现在屏幕上 -->
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_from_right</item>
+        <!-- 当我们从 A2 退出回到 A1 时，A2 从屏幕上消失 -->
+        <item name="android:activityCloseExitAnimation">@anim/slide_out_to_right</item>
+    </style>
+
+    <style name="AnimFade2" parent="@android:style/Animation.Activity">
+        <!-- 当我们从 A1 启动 A2 时，A2 出现在屏幕上 -->
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_from_right</item>
+        <!-- 当我们从 A2 退出回到 A1 时，A2 从屏幕上消失 -->
+        <item name="android:activityCloseExitAnimation">@anim/slide_out_to_right</item>
+        <!-- 当我们从 A1 启动 A2 时，A1 从屏幕上消失 -->
+        <item name="android:activityOpenExitAnimation">@anim/slide_out_to_left</item>
+        <!-- 当我们从 A2 退出回到 A1 时，A1 出现在屏幕上 -->
+        <item name="android:activityCloseEnterAnimation">@anim/slide_in_from_left</item>
+    </style>
+</resources>

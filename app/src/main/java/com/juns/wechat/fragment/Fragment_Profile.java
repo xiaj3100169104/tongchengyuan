@@ -68,7 +68,7 @@ public class Fragment_Profile extends BaseFragment implements OnClickListener {
 		layout.findViewById(R.id.txt_setting).setOnClickListener(this);
 	}
 
-	private void initData() {
+	protected void initData() {
 		account = AccountManager.getInstance().getUser();
         tvUserName.setText("微信号：" + account.getUserName());
         tvNickName.setText(account.getNickName() == null ? account.getUserName() : account.getNickName());

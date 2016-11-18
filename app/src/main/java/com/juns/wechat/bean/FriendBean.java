@@ -38,6 +38,7 @@ public class FriendBean {
     private int flag;
     @Column(name = "modifyDate")
     private long modifyDate;
+    private String sortLetters;
 
     public FriendBean(){
 
@@ -97,6 +98,14 @@ public class FriendBean {
 
     public void setModifyDate(long modifyDate) {
         this.modifyDate = modifyDate;
+    }
+
+    public String getSortLetters() {
+        return sortLetters;
+    }
+
+    public void setSortLetters(String sortLetters) {
+        this.sortLetters = sortLetters;
     }
 
     public UserBean getContactUser() throws UserNotFoundException{

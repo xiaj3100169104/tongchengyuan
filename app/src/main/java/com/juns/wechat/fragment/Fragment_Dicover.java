@@ -56,7 +56,7 @@ public class Fragment_Dicover extends BaseFragment implements OnClickListener {
 		layout.findViewById(R.id.txt_game).setOnClickListener(this);
 	}
 
-	private void initData() {
+	protected void initData() {
 		// TODO Auto-generated method stub
 
 	}

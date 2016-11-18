@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/contactitem_catalog"
+        android:id="@+id/tv_catalog"
         style="@style/MMListCatalog"
         android:layout_height="wrap_content"
         android:layout_marginLeft="4dp"
         android:paddingRight="5.0dip" />
 
     <LinearLayout
-        android:id="@+id/contactitem_layout"
         style="@style/MMListItem"
+        android:layout_width="match_parent"
         android:layout_height="65.0dip"
         android:background="@color/white">
         
@@ -24,14 +24,13 @@
             android:layout_marginLeft="4dp"/>
 
         <RelativeLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1.0"
             android:gravity="center_vertical"
             android:paddingLeft="8.0dip" >
 
             <TextView
-                android:id="@+id/contactitem_nick"
+                android:id="@+id/tv_nick"
                 style="@style/MMFontTitleInList"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -50,10 +49,4 @@
               
         </RelativeLayout>
     </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/black2" />
-
 </LinearLayout>
