@@ -155,6 +155,7 @@ public class ChatActivity extends ToolbarActivity{
         mAdapter.setData(msgViewModels);
         chatActivityHelper.loadMessagesFromDb();
 
+		ptRefresh.setMode(PtrFrameLayout.Mode.REFRESH);
         ptRefresh.setLastUpdateTimeKey(contactUser.getUserName());
         ptRefresh.setPtrHandler(new PtrDefaultHandler() {
             @Override
