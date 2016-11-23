@@ -329,6 +329,8 @@
         </activity>
         <activity android:name=".activity.SendLocationActivity">
         </activity>
+        <activity
+            android:name="com.wangzhe.photopicker.PhotoPickerActivity"/>
     </application>
 
 </manifest>
