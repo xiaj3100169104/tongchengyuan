@@ -49,8 +49,8 @@ import java.util.List;
  * Created by 王者 on 2016/8/7.
  */
 public class ChatInputManager implements View.OnClickListener{
-    private static final int EMOTICONS_COUNT = 62;
-
+    private static final int EMOTICONS_COUNT = 59;
+    private static final String EMOTION_NAME_DELETE = "f_emotion_del_normal";
     private Button btnSetModeVoice; //输入语音按钮
     private Button btnSetModeKeyBoard; //输入文字按钮
     private LinearLayout llPressToSpeak; //按住说话
@@ -217,7 +217,7 @@ public class ChatInputManager implements View.OnClickListener{
         int id = view.getId();
         switch (id) {
             case R.id.view_camera:
-               // selectPicFromCamera();// 点击照相图标
+               selectPicFromCamera();// 点击照相图标
                 break;
             case R.id.view_file:
                 // 发送文件
@@ -431,14 +431,14 @@ public class ChatInputManager implements View.OnClickListener{
         ExpandGridView gv = (ExpandGridView) view.findViewById(R.id.gridview);
         List<String> list = new ArrayList<>();
         if (i == 1) {
-            List<String> list1 = emoticonsFileNames.subList(0, 21);
+            List<String> list1 = emoticonsFileNames.subList(0, 20);
             list.addAll(list1);
         } else if (i == 2) {
-            list.addAll(emoticonsFileNames.subList(21, emoticonsFileNames.size()));
+            list.addAll(emoticonsFileNames.subList(20, 40));
         } else if (i == 3) {
-            list.addAll(emoticonsFileNames.subList(42, emoticonsFileNames.size()));
+            list.addAll(emoticonsFileNames.subList(40, emoticonsFileNames.size()));
         }
-        list.add("delete_expression");
+        list.add(EMOTION_NAME_DELETE);
         final ExpressionAdapter expressionAdapter = new ExpressionAdapter(mChatActivity,
                 1, list);
         gv.setAdapter(expressionAdapter);
@@ -453,9 +453,12 @@ public class ChatInputManager implements View.OnClickListener{
                     // 按住说话可见，不让输入表情
                     if (btnSetModeKeyBoard.getVisibility() != View.VISIBLE) {
 
-                        if (filename != "delete_expression") { // 不是删除键，显示表情
+                        if (filename != EMOTION_NAME_DELETE) { // 不是删除键，显示表情
                             String fieldValue = SmileUtils.getFieldValue(filename);
-                            etInputText.append(SmileUtils.getSmiledText(mChatActivity, fieldValue));
+                            CharSequence sequence = SmileUtils.getSmiledText(mChatActivity, fieldValue);
+                            int index = etInputText.getSelectionStart();
+                            Editable edit = etInputText.getEditableText();//获取EditText的文字
+                            edit.insert(index,sequence);//光标所在位置插入文字
                         } else { // 删除文字或者表情
                             if (!TextUtils.isEmpty(etInputText.getText())) {
 

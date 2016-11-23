@@ -12,4 +12,7 @@
     <dimen name="text_size_16sp">16sp</dimen>
     <dimen name="text_size_17sp">17sp</dimen>
     <dimen name="text_size_18sp">18sp</dimen>
+
+    <dimen name="divider_1px_width">1px</dimen>
+
 </resources>

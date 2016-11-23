@@ -5,6 +5,10 @@
     android:layout_alignParentBottom="true"
     android:orientation="vertical" >
 
+    <View
+        android:id="@+id/view3"
+        style="@style/divider_horizontal_transparent_black" />
+
     <!-- 普通底部导航 -->
 
      <LinearLayout
