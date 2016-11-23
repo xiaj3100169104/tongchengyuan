@@ -51,6 +51,7 @@ import com.juns.wechat.util.PhotoUtil;
 import com.juns.wechat.util.ThreadPoolUtil;
 import com.juns.wechat.util.ToolBarUtil;
 import com.juns.wechat.xmpp.util.SendMessage;
+import com.style.base.Constant;
 import com.wangzhe.photopicker.PhotoPicker;
 
 import org.jivesoftware.smack.packet.id.StanzaIdUtil;
@@ -98,7 +99,7 @@ public class ChatActivity extends ToolbarActivity{
 
 	//private VoiceRecorder voiceRecorder;
 	private MessageAdapter adapter;
-	private File cameraFile;
+	public File cameraFile;
 	static int resendPos;
 
 	public String playMsgId;
@@ -311,7 +312,7 @@ public class ChatActivity extends ToolbarActivity{
 			if (requestCode == REQUEST_CODE_EMPTY_HISTORY) {
 				// 清空会话
 
-			} else if (requestCode == REQUEST_CODE_CAMERA) { // 发送照片
+			} else if (requestCode == Constant.REQUESTCODE_TAKE_CAMERA) { // 发送照片
 				if (cameraFile != null && cameraFile.exists())
 					sendPicture(cameraFile.getAbsolutePath());
 			} /*else if (requestCode == REQUEST_CODE_SELECT_VIDEO) { // 发送本地选择的视频

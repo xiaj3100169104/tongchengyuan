@@ -37,6 +37,7 @@ import com.juns.wechat.util.ThreadPoolUtil;
 import com.juns.wechat.util.ToastUtil;
 import com.juns.wechat.view.AudioRecordButton;
 import com.juns.wechat.xmpp.util.SendMessage;
+import com.style.base.Constant;
 import com.wangzhe.photopicker.PhotoPicker;
 
 import java.io.File;
@@ -217,7 +218,9 @@ public class ChatInputManager implements View.OnClickListener{
         int id = view.getId();
         switch (id) {
             case R.id.view_camera:
-               selectPicFromCamera();// 点击照相图标
+               // 点击照相图标
+                mChatActivity.cameraFile = com.style.utils.CommonUtil.takePhoto(mChatActivity, Constant.DIR_APP_IMAGE_CAMERA, String.valueOf(System.currentTimeMillis()) + ".jpg");
+
                 break;
             case R.id.view_file:
                 // 发送文件
