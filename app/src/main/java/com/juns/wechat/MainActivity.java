@@ -15,19 +15,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.juns.wechat.activity.AddFriendActivity;
+import com.juns.wechat.activity.LoginActivity;
 import com.juns.wechat.adpter.MainAdapter;
 import com.juns.wechat.annotation.Content;
 import com.juns.wechat.common.BaseActivity;
-import com.juns.wechat.common.CommonUtil;
 import com.juns.wechat.dialog.WarnTipDialog;
 import com.juns.wechat.dialog.TitleMenu.ActionItem;
 import com.juns.wechat.dialog.TitleMenu.TitlePopup;
 import com.juns.wechat.dialog.TitleMenu.TitlePopup.OnItemOnClickListener;
 import com.juns.wechat.service.XmppService;
-import com.juns.wechat.util.LogUtil;
-import com.juns.wechat.view.activity.AddGroupChatActivity;
-import com.juns.wechat.view.activity.GetMoneyActivity;
-import com.juns.wechat.view.activity.LoginActivity;
 import com.juns.wechat.zxing.CaptureActivity;
 
 @Content(R.layout.activity_main)
@@ -194,17 +190,16 @@ public class MainActivity extends BaseActivity{
 			// mLoadingDialog.show();
 			switch (position) {
 			case 0:// 发起群聊
-				CommonUtil.startActivity(MainActivity.this,
-						AddGroupChatActivity.class);
+				//skip(AddGroupChatActivity.class);
 				break;
 			case 1:// 添加朋友
-				CommonUtil.startActivity(MainActivity.this, AddFriendActivity.class);
+				skip(AddFriendActivity.class);
 				break;
 			case 2:// 扫一扫
-				CommonUtil.startActivity(MainActivity.this, CaptureActivity.class);
+				skip(CaptureActivity.class);
 				break;
 			case 3:// 收钱
-				CommonUtil.startActivity(MainActivity.this, GetMoneyActivity.class);
+				//skip(GetMoneyActivity.class);
 				break;
 			default:
 				break;

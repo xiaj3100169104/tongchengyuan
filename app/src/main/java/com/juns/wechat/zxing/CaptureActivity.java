@@ -31,9 +31,7 @@ import com.google.zxing.BarcodeFormat;
 import com.juns.wechat.Constants;
 import com.juns.wechat.R;
 import com.juns.wechat.SplashActivity;
-import com.juns.wechat.common.CommonUtil;
-import com.juns.wechat.activity.UserInfoActivity;
-import com.juns.wechat.view.activity.SetMoneyActivity;
+import com.juns.wechat.common.BaseActivity;
 import com.juns.wechat.zxing.camera.CameraManager;
 import com.juns.wechat.zxing.decoding.CaptureActivityHandler;
 import com.juns.wechat.zxing.decoding.InactivityTimer;
@@ -45,7 +43,7 @@ import com.juns.wechat.zxing.view.ViewfinderView;
  * @author juns
  * @date 2013-8-14
  */
-public class CaptureActivity extends Activity implements Callback {
+public class CaptureActivity extends BaseActivity implements Callback {
 
 	private CaptureActivityHandler handler;
 	private ViewfinderView viewfinderView;
@@ -84,10 +82,9 @@ public class CaptureActivity extends Activity implements Callback {
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			if (isNoCute) {
-				CommonUtil.finish(CaptureActivity.this);
+				finish();
 			} else {
-				CommonUtil.startActivity(CaptureActivity.this, SplashActivity.class);
-				CommonUtil.finish(CaptureActivity.this);
+				skip(SplashActivity.class);
 			}
 		}
 		return super.onKeyDown(keyCode, event);
@@ -101,7 +98,7 @@ public class CaptureActivity extends Activity implements Callback {
 		mGoHome.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				CommonUtil.finish(CaptureActivity.this);
+				finish();
 			}
 		});
 	}
@@ -254,7 +251,7 @@ public class CaptureActivity extends Activity implements Callback {
 
 		if (!isNoCute) {
 			if (TextUtils.isEmpty(resultString)) {
-				CommonUtil.showLongToast(CaptureActivity.this, "二维码信息错误！");
+				showToast("二维码信息错误！");
 				return;
 			} else {
 				/*if (resultString.startsWith("JUNS_WeChat@User")) {
@@ -280,7 +277,7 @@ public class CaptureActivity extends Activity implements Callback {
 					Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 					startActivity(intent);
 				} else {
-					CommonUtil.showLongToast(this, "扫描结果为：" + result);
+					showToast("扫描结果为：" + result);
 				}
 			}
 		}

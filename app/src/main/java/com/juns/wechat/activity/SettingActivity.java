@@ -1,4 +1,4 @@
-package com.juns.wechat.view.activity;
+package com.juns.wechat.activity;
 
 
 import android.os.Bundle;
@@ -8,9 +8,9 @@ import android.widget.TextView;
 
 import com.juns.wechat.Constants;
 import com.juns.wechat.R;
-import com.juns.wechat.common.CommonUtil;
+import com.juns.wechat.common.BaseActivity;
 import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.view.BaseActivity;
+
 
 //设置
 public class SettingActivity extends BaseActivity implements OnClickListener {
@@ -59,7 +59,7 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.img_back:
-			CommonUtil.finish(SettingActivity.this);
+			//CommonUtil.finish(SettingActivity.this);
 			break;
 	/*	case R.id.txt_about:
 			CommonUtil.startActivity(SettingActivity.this, WebViewActivity.class,
@@ -76,29 +76,4 @@ public class SettingActivity extends BaseActivity implements OnClickListener {
 			break;
 		}
 	}
-
-	@Override
-	protected void initControl() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected void initView() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected void initData() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected void setListener() {
-		// TODO Auto-generated method stub
-
-	}
-
 }

@@ -2,8 +2,6 @@ package com.juns.wechat.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
@@ -23,13 +21,9 @@ import android.widget.Toast;
 import com.juns.wechat.R;
 import com.juns.wechat.chat.adpter.ExpressionAdapter;
 import com.juns.wechat.chat.adpter.ExpressionPagerAdapter;
-import com.juns.wechat.chat.adpter.VoicePlayClickListener;
-import com.juns.wechat.chat.utils.CommonUtils;
 import com.juns.wechat.chat.utils.SmileUtils;
 import com.juns.wechat.chat.widght.ExpandGridView;
 import com.juns.wechat.chat.widght.PasteEditText;
-import com.juns.wechat.common.BASE64;
-import com.juns.wechat.common.CommonUtil;
 import com.juns.wechat.util.BitmapUtil;
 import com.juns.wechat.util.LogUtil;
 import com.juns.wechat.util.PhotoUtil;
@@ -38,6 +32,7 @@ import com.juns.wechat.util.ToastUtil;
 import com.juns.wechat.view.AudioRecordButton;
 import com.juns.wechat.xmpp.util.SendMessage;
 import com.style.base.Constant;
+import com.style.utils.CommonUtil;
 import com.wangzhe.photopicker.PhotoPicker;
 
 import java.io.File;
@@ -185,7 +180,7 @@ public class ChatInputManager implements View.OnClickListener{
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                CommonUtil.hideKeyboard(mChatActivity);
+                CommonUtil.hiddenSoftInput(mChatActivity);
                 llMore.setVisibility(View.GONE);
                 ivEmoticonsNormal.setVisibility(View.VISIBLE);
                 ivEmoticonsChecked.setVisibility(View.INVISIBLE);
@@ -245,7 +240,7 @@ public class ChatInputManager implements View.OnClickListener{
                 // 语音通话
                 break;
             case R.id.iv_emoticons_normal:
-                CommonUtil.hideKeyboard(mChatActivity);
+                CommonUtil.hiddenSoftInput(mChatActivity);
                 // 点击显示表情框
                 llMore.setVisibility(View.VISIBLE);
                 ivEmoticonsNormal.setVisibility(View.INVISIBLE);
@@ -254,7 +249,7 @@ public class ChatInputManager implements View.OnClickListener{
                 llEmoticonContainer.setVisibility(View.VISIBLE);
                 break;
             case R.id.iv_emoticons_checked:// 点击隐藏表情框
-                CommonUtil.hideKeyboard(mChatActivity);
+                CommonUtil.hiddenSoftInput(mChatActivity);
                 ivEmoticonsNormal.setVisibility(View.VISIBLE);
                 ivEmoticonsChecked.setVisibility(View.INVISIBLE);
                 llMoreFunctionContainer.setVisibility(View.VISIBLE);
@@ -363,7 +358,7 @@ public class ChatInputManager implements View.OnClickListener{
      * @param view
      */
     public void setModeVoice(View view) {
-        CommonUtil.hideKeyboard(mChatActivity);
+        CommonUtil.hiddenSoftInput(mChatActivity);
         rlInputText.setVisibility(View.GONE);
         llMore.setVisibility(View.GONE);
         view.setVisibility(View.GONE);
@@ -405,7 +400,7 @@ public class ChatInputManager implements View.OnClickListener{
      */
     public void more(View view) {
         if (llMore.getVisibility() == View.GONE) {
-            CommonUtil.hideKeyboard(mChatActivity);
+            CommonUtil.hiddenSoftInput(mChatActivity);
             llMore.setVisibility(View.VISIBLE);
             llMoreFunctionContainer.setVisibility(View.VISIBLE);
             llEmoticonContainer.setVisibility(View.GONE);

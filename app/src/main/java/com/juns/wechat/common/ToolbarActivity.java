@@ -8,7 +8,7 @@ import com.juns.wechat.util.ToolBarUtil;
 
 import org.simple.eventbus.EventBus;
 
-public class ToolbarActivity extends BaseActivity {
+public abstract class ToolbarActivity extends BaseActivity {
     protected Toolbar toolbar;
 
     @Override
@@ -42,6 +42,6 @@ public class ToolbarActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        CommonUtil.finish(this);
+        finish();
     }
 }

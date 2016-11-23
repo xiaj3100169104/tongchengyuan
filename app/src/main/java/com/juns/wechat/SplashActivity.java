@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.view.activity.LoginActivity;
+import com.juns.wechat.activity.LoginActivity;
 
 public class SplashActivity extends Activity {
 	private boolean isLogin; //用户是否已经登录

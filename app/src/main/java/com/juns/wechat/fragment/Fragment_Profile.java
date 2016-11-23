@@ -3,6 +3,7 @@ package com.juns.wechat.fragment;
 import org.simple.eventbus.EventBus;
 import org.simple.eventbus.Subscriber;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -12,18 +13,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.juns.wechat.Constants;
 import com.juns.wechat.R;
 import com.juns.wechat.activity.MyProfileActivity;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.common.BaseFragment;
-import com.juns.wechat.common.CommonUtil;
 import com.juns.wechat.dao.DbDataEvent;
 import com.juns.wechat.database.UserTable;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.util.ImageLoader;
-import com.juns.wechat.view.activity.PublicActivity;
-import com.juns.wechat.view.activity.SettingActivity;
+import com.juns.wechat.activity.SettingActivity;
 
 import java.util.List;
 
@@ -94,7 +92,7 @@ public class Fragment_Profile extends BaseFragment implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.view_user:
-			CommonUtil.startActivity(getActivity(), MyProfileActivity.class);
+			startActivity(new Intent(getActivity(), MyProfileActivity.class));
 			break;
 		/*case R.id.txt_album:// 相册
 			CommonUtil.startActivity(getActivity(), PublicActivity.class,
@@ -122,7 +120,7 @@ public class Fragment_Profile extends BaseFragment implements OnClickListener {
 							getString(R.string.expression)));
 			break;*/
 		case R.id.txt_setting:// 设置
-			CommonUtil.startActivity(getActivity(), SettingActivity.class);
+			startActivity(new Intent(getActivity(), SettingActivity.class));
 			break;
 		default:
 			break;

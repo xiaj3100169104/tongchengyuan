@@ -1,4 +1,4 @@
-package com.juns.wechat.view.activity;
+package com.juns.wechat.activity;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -16,13 +16,13 @@ import com.juns.wechat.R;
 import com.juns.wechat.annotation.Content;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.common.ToolbarActivity;
-import com.juns.wechat.common.CommonUtil;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.callback.BaseCallBack;
 import com.juns.wechat.net.response.BaseResponse;
 import com.juns.wechat.net.request.UserRequest;
 import com.juns.wechat.net.callback.LoginCallBack;
 import com.juns.wechat.util.NetWorkUtil;
+import com.style.utils.FormatUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -116,7 +116,7 @@ public class RegisterActivity extends ToolbarActivity implements OnClickListener
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.img_back:
-			CommonUtil.finish(RegisterActivity.this);
+			//CommonUtil.finish(RegisterActivity.this);
 			break;
 		case R.id.btn_send:
 			if (mc == null) {
@@ -136,8 +136,8 @@ public class RegisterActivity extends ToolbarActivity implements OnClickListener
 
     private void sendVerifyCode(){
         userName = etInputName.getText().toString().trim();
-        if (!CommonUtil.isMobileNO(userName)) {
-            CommonUtil.showLongToast(RegisterActivity.this, "请使用手机号码注册账户！ ");
+        if (!FormatUtil.isMobileNum(userName)) {
+            showToast("请使用手机号码注册账户！ ");
             return;
         }
         SMSSDK.getVerificationCode("86", userName);
@@ -147,16 +147,16 @@ public class RegisterActivity extends ToolbarActivity implements OnClickListener
 		userName = etInputName.getText().toString().trim();
 		passWord = etPassword.getText().toString();
 		verifyCode = et_code.getText().toString().trim();
-		if (!CommonUtil.isMobileNO(userName)) {
-			CommonUtil.showLongToast(RegisterActivity.this, "请使用手机号码注册账户！ ");
+		if (!FormatUtil.isMobileNum(userName)) {
+			showToast("请使用手机号码注册账户！ ");
 			return;
 		}
 		if (TextUtils.isEmpty(verifyCode)) {
-			CommonUtil.showLongToast(RegisterActivity.this, "请填写手机号码，并获取验证码！");
+			showToast("请填写手机号码，并获取验证码！");
 			return;
 		}
 		if (TextUtils.isEmpty(passWord) || passWord.length() < 6) {
-			CommonUtil.showLongToast(RegisterActivity.this, "密码不能少于6位！");
+			showToast("密码不能少于6位！");
 			return;
 		}
 
@@ -172,7 +172,7 @@ public class RegisterActivity extends ToolbarActivity implements OnClickListener
             }
         }
          if(validCodeResult == VALID_CODE_FAILED){
-           CommonUtil.showLongToast(RegisterActivity.this, "验证码错误！");
+           showToast("验证码错误！");
            getLoadingDialog("正在注册...").dismiss();
            return;
         }
@@ -233,8 +233,7 @@ public class RegisterActivity extends ToolbarActivity implements OnClickListener
             super.handleResponse(result);
             if(result.code == BaseResponse.SUCCESS){
                 AccountManager.getInstance().setUserPassWord(passWord);
-                CommonUtil.startActivity(RegisterActivity.this, MainActivity.class);
-                CommonUtil.finish(RegisterActivity.this);
+				skip(MainActivity.class);
             }else {
                 handleFailed(result);
             }
@@ -271,7 +270,7 @@ public class RegisterActivity extends ToolbarActivity implements OnClickListener
 				int count) {
 			String phone = etInputName.getText().toString();
 			if (phone.length() == 11) {
-				if (CommonUtil.isMobileNO(phone)) {
+				if (FormatUtil.isMobileNum(phone)) {
 					btn_send.setBackgroundDrawable(getResources().getDrawable(
 							R.drawable.btn_bg_green));
 					btn_send.setTextColor(0xFFFFFFFF);

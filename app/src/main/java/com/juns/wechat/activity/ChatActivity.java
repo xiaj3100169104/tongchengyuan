@@ -69,8 +69,6 @@ public class ChatActivity extends ToolbarActivity{
 	private static final int REQUEST_CODE_EMPTY_HISTORY = 2;
 	private static final int REQUEST_CODE_MAP = 4;
 	public static final int REQUEST_CODE_COPY_AND_PASTE = 11;
-	public static final int REQUEST_CODE_CAMERA = 18;
-	public static final int REQUEST_CODE_LOCAL = 19;
 	public static final int REQUEST_CODE_SELECT_FILE = 24;
 
 	public static final int RESULT_CODE_COPY = 1;

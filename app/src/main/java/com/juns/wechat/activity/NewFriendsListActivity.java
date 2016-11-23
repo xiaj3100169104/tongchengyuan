@@ -1,4 +1,4 @@
-package com.juns.wechat.view.activity;
+package com.juns.wechat.activity;
 
 
 import android.os.Bundle;
@@ -12,7 +12,6 @@ import com.juns.wechat.adpter.NewFriendsAdapter;
 import com.juns.wechat.annotation.Content;
 import com.juns.wechat.annotation.Id;
 import com.juns.wechat.bean.MessageBean;
-import com.juns.wechat.common.CommonUtil;
 import com.juns.wechat.common.ToolbarActivity;
 import com.juns.wechat.dao.MessageDao;
 import com.juns.wechat.manager.AccountManager;

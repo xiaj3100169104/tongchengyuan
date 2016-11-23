@@ -8,8 +8,9 @@ import android.os.IBinder;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
 
-import com.juns.wechat.Constants;
-import com.juns.wechat.common.CommonUtil;
+import com.style.utils.CommonUtil;
+import com.style.utils.FormatUtil;
+
 
 public class UpdateService extends Service {
 
@@ -91,7 +92,7 @@ public class UpdateService extends Service {
 							if (phoneNumber.startsWith("+186")) {
 								phoneNumber = phoneNumber.substring(4);
 							}
-							if (CommonUtil.isMobileNO(phoneNumber)) {
+							if (FormatUtil.isMobileNum(phoneNumber)) {
 								strTelphones = strTelphones + "'" + phoneNumber
 										+ "',";
 								strNames = strNames + "',";

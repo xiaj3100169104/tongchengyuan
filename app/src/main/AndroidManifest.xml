@@ -57,13 +57,13 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".view.activity.LoginActivity"
+            android:name=".activity.LoginActivity"
             android:label="@string/label_activity_login"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".view.activity.RegisterActivity"
+            android:name=".activity.RegisterActivity"
             android:label="@string/label_activity_register"
             android:screenOrientation="portrait">
         </activity>
@@ -85,7 +85,7 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".view.activity.NewFriendsListActivity"
+            android:name=".activity.NewFriendsListActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
@@ -97,7 +97,7 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".view.activity.SettingActivity"
+            android:name=".activity.SettingActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity

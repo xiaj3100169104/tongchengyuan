@@ -2,6 +2,7 @@ package com.juns.wechat.fragment;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +12,6 @@ import android.view.ViewGroup;
 import com.juns.wechat.Constants;
 import com.juns.wechat.R;
 import com.juns.wechat.common.BaseFragment;
-import com.juns.wechat.common.CommonUtil;
-import com.juns.wechat.view.activity.AlbumActivity;
-import com.juns.wechat.view.activity.PublicActivity;
 import com.juns.wechat.zxing.CaptureActivity;
 
 public class Fragment_Dicover extends BaseFragment implements OnClickListener {
@@ -65,10 +63,10 @@ public class Fragment_Dicover extends BaseFragment implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.txt_pengyouquan:// 朋友圈
-			CommonUtil.startActivity(getActivity(), AlbumActivity.class);
+			//startActivity(new Intent(getActivity(), AlbumActivity.class));
 			break;
 		case R.id.txt_saoyisao:// 扫一扫
-			CommonUtil.startActivity(getActivity(), CaptureActivity.class);
+			startActivity(new Intent(getActivity(), CaptureActivity.class));
 			break;
 		/*case R.id.txt_yaoyiyao:
 			CommonUtil.startActivity(getActivity(), PublicActivity.class,

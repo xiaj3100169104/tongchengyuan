@@ -199,7 +199,7 @@ public class SmileUtils {
 					hasChanges = true;
 					Drawable drawable = context.getResources().getDrawable(
 							entry.getValue());
-					drawable.setBounds(0, 0, 50, 50);// 这里设置图片的大小
+					drawable.setBounds(0, 0, 60, 60);// 这里设置图片的大小
 					ImageSpan imageSpan = new ImageSpan(drawable,
 							ImageSpan.ALIGN_BOTTOM);
 					spannable.setSpan(imageSpan, matcher.start(),

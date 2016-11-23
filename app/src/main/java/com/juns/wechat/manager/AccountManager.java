@@ -1,23 +1,16 @@
 package com.juns.wechat.manager;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 
 import com.juns.wechat.App;
 import com.juns.wechat.Constants;
 import com.juns.wechat.MainActivity;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.dao.UserDao;
-import com.juns.wechat.service.XmppService;
 import com.juns.wechat.util.SharedPreferencesUtil;
-import com.juns.wechat.view.activity.LoginActivity;
 import com.juns.wechat.xmpp.XmppManagerImpl;
 
 import org.xutils.db.sqlite.WhereBuilder;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by 王宗文 on 2016/6/8.

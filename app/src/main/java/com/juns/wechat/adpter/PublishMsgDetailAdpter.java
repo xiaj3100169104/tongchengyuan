@@ -11,10 +11,7 @@ import android.widget.BaseAdapter;
 
 import com.juns.wechat.Constants;
 import com.juns.wechat.R;
-import com.juns.wechat.common.CommonUtil;
 import com.juns.wechat.common.ViewHolder;
-import com.juns.wechat.view.activity.WebViewActivity;
-
 //订阅号信息详情页面
 public class PublishMsgDetailAdpter extends BaseAdapter {
 	protected Context context;

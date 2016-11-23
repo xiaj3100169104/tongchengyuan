@@ -15,7 +15,6 @@ import com.juns.wechat.annotation.Id;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.ShowBigImage;
 import com.juns.wechat.common.ToolbarActivity;
-import com.juns.wechat.common.CommonUtil;
 import com.juns.wechat.dao.DbDataEvent;
 import com.juns.wechat.database.UserTable;
 import com.juns.wechat.dialog.SelectPhotoDialog;
@@ -108,7 +107,7 @@ public class MyProfileActivity extends ToolbarActivity implements SelectPhotoDia
 
     @Click(viewId = R.id.rlNickName)
     private void modifyNickName(View v){
-        CommonUtil.startActivity(this, ModifyNameActivity.class);
+        startActivity(new Intent(this, ModifyNameActivity.class));
     }
 
     @Click(viewId = R.id.rlSex)

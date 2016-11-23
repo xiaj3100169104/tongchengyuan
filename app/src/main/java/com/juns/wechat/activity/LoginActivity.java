@@ -1,4 +1,4 @@
-package com.juns.wechat.view.activity;
+package com.juns.wechat.activity;
 
 
 import android.content.Intent;
@@ -16,13 +16,11 @@ import com.juns.wechat.R;
 import com.juns.wechat.annotation.Content;
 import com.juns.wechat.annotation.Id;
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.common.CommonUtil;
 import com.juns.wechat.common.ToolbarActivity;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.request.UserRequest;
 import com.juns.wechat.net.callback.LoginCallBack;
 import com.juns.wechat.net.response.BaseResponse;
-import com.juns.wechat.util.NetWorkUtil;
 
 /**
  * create by 王者 on 2016/7/12
@@ -70,7 +68,7 @@ public class LoginActivity extends ToolbarActivity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.img_back:
-			CommonUtil.finish(LoginActivity.this);
+			finish();
 			break;
 		case R.id.tv_wenti:
 			/*CommonUtil.startActivity(LoginActivity.this, WebViewActivity.class,
@@ -101,7 +99,7 @@ public class LoginActivity extends ToolbarActivity implements OnClickListener {
 	}
 
     private void login(String userName, String password){
-        if(!NetWorkUtil.isNetworkAvailable()){
+        if(!com.style.utils.CommonUtil.isNetWorkConnected(this)){
             showToast(R.string.toast_network_unavailable);
             return;
         }
@@ -116,8 +114,8 @@ public class LoginActivity extends ToolbarActivity implements OnClickListener {
             super.handleResponse(result);
             if(result.code == 0){
                 AccountManager.getInstance().setUserPassWord(password);
-                CommonUtil.startActivity(LoginActivity.this, MainActivity.class);
-                CommonUtil.finish(LoginActivity.this);
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                finish();
             }else {
                 handleFailed(result);
             }

@@ -35,7 +35,6 @@ import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.utils.CoordinateConverter;
 import com.juns.wechat.R;
 import com.juns.wechat.common.BaseActivity;
-import com.juns.wechat.common.CommonUtil;
 import com.juns.wechat.dialog.FlippingLoadingDialog;
 
 public class BaiduMapActivity extends BaseActivity implements OnClickListener {
@@ -264,7 +263,7 @@ public class BaiduMapActivity extends BaseActivity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.img_back:
-			CommonUtil.finish(BaiduMapActivity.this);
+			finish();
 			break;
 		case R.id.txt_right:
 			if (lastLocation != null) {
@@ -273,7 +272,7 @@ public class BaiduMapActivity extends BaseActivity implements OnClickListener {
 				intent.putExtra("longitude", lastLocation.getLongitude());
 				intent.putExtra("address", lastLocation.getAddrStr());
 				setResult(RESULT_OK, intent);
-				CommonUtil.finish(BaiduMapActivity.this);
+				finish();
 			}
 			break;
 		default:

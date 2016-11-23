@@ -17,7 +17,6 @@ import com.juns.wechat.annotation.Id;
 import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.common.ToolbarActivity;
-import com.juns.wechat.common.CommonUtil;
 import com.juns.wechat.dao.FriendDao;
 import com.juns.wechat.exception.UserNotFoundException;
 import com.juns.wechat.manager.AccountManager;
@@ -116,7 +115,7 @@ public class UserInfoActivity extends ToolbarActivity implements OnClickListener
 	@Click(viewId = R.id.btnSendMsg)
 	public void onClick(View v) {
         if(userName.equals(account.getUserName())){
-            CommonUtil.startActivity(this, MyProfileActivity.class);
+            startActivity(new Intent(this, MyProfileActivity.class));
             return;
         }
 	    if(subType == null){

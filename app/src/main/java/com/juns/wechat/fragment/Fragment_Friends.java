@@ -13,13 +13,13 @@ import android.widget.TextView;
 
 import com.juns.wechat.MainActivity;
 import com.juns.wechat.R;
+import com.juns.wechat.activity.NewFriendsListActivity;
 import com.juns.wechat.activity.UserInfoActivity;
 import com.juns.wechat.adpter.ContactAdapter;
 import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.bean.MessageBean;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.common.BaseFragment;
-import com.juns.wechat.common.CommonUtil;
 import com.juns.wechat.config.MsgType;
 import com.juns.wechat.dao.DbDataEvent;
 import com.juns.wechat.dao.FriendDao;
@@ -28,9 +28,6 @@ import com.juns.wechat.database.ChatTable;
 import com.juns.wechat.database.FriendTable;
 import com.juns.wechat.database.UserTable;
 import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.view.activity.GroupListActivity;
-import com.juns.wechat.view.activity.NewFriendsListActivity;
-import com.juns.wechat.view.activity.PublishUserListActivity;
 import com.style.base.BaseRecyclerViewAdapter;
 import com.style.utils.HanyuToPinyin;
 import com.style.view.DividerItemDecoration;
@@ -175,13 +172,13 @@ public class Fragment_Friends extends BaseFragment implements OnClickListener{
         switch (v.getId()) {
             case R.id.layout_new_friends://
                 MessageDao.getInstance().markAsRead(account, MsgType.MSG_TYPE_SEND_INVITE);
-                CommonUtil.startActivity(getActivity(), NewFriendsListActivity.class);
+                startActivity(new Intent(getActivity(), NewFriendsListActivity.class));
                 break;
             case R.id.layout_chat_room:// 群聊
-                CommonUtil.startActivity(getActivity(), GroupListActivity.class);
+                //startActivity(new Intent(getActivity(), GroupListActivity.class));
                 break;
             case R.id.layout_public:// 公众号
-                CommonUtil.startActivity(getActivity(), PublishUserListActivity.class);
+                //startActivity(new Intent(getActivity(), PublishUserListActivity.class));
                 break;
             default:
                 break;

@@ -1,13 +1,12 @@
 package com.juns.wechat.activity;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.juns.wechat.R;
 import com.juns.wechat.annotation.Content;
-import com.juns.wechat.common.BaseActivity;
-import com.juns.wechat.common.CommonUtil;
 import com.juns.wechat.common.ToolbarActivity;
 
 /**
@@ -26,7 +25,7 @@ public class AddFriendActivity extends ToolbarActivity {
         findViewById(R.id.rl_search_container).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommonUtil.startActivity(AddFriendActivity.this, SearchActivity.class);
+                skip(SearchActivity.class);
             }
         });
     }
