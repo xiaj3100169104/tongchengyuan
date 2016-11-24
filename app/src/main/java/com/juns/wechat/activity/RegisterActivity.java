@@ -28,6 +28,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.view.annotation.ViewInject;
 
+import butterknife.Bind;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 
@@ -36,16 +37,17 @@ import cn.smssdk.SMSSDK;
  * 用户注册
  * create by 王者 on 2061/2/7
  */
-@Content(R.layout.activity_register)
 public class RegisterActivity extends ToolbarActivity implements OnClickListener {
-    @ViewInject(R.id.btnRegister)
-	private Button btn_register;
-    @ViewInject(R.id.btn_send)
-    private Button btn_send;
-    @ViewInject(R.id.etInputName)
-	private EditText etInputName;
-    @ViewInject(R.id.etPassWord)
-    private EditText etPassword, et_code;
+    @Bind(R.id.btnRegister)
+	Button btn_register;
+    @Bind(R.id.btn_send)
+    Button btn_send;
+    @Bind(R.id.etInputName)
+	EditText etInputName;
+    @Bind(R.id.etPassWord)
+    EditText etPassword;
+	@Bind(R.id.etVerifyCode)
+	EditText et_code;
 	private MyCount mc;
     private Handler handler = new Handler();
 
@@ -60,18 +62,15 @@ public class RegisterActivity extends ToolbarActivity implements OnClickListener
 
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        initControl();
-        setListener();
+	public void initData() {
+		setListener();
 	}
 
-	protected void initControl() {
-		btn_send = (Button) findViewById(R.id.btn_send);
-		btn_register = (Button) findViewById(R.id.btnRegister);
-		etInputName = (EditText) findViewById(R.id.etInputName);
-		etPassword = (EditText) findViewById(R.id.etPassWord);
-		et_code = (EditText) findViewById(R.id.etVerifyCode);
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		mLayoutResID = R.layout.activity_register;
+        super.onCreate(savedInstanceState);
+
 	}
 
 	protected void setListener() {

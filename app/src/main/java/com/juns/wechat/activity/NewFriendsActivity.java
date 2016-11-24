@@ -9,8 +9,14 @@ import com.juns.wechat.common.ToolbarActivity;
 public class NewFriendsActivity extends ToolbarActivity {
 
     @Override
+    public void initData() {
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mLayoutResID = R.layout.activity_new_friends;
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_friends);
     }
 }

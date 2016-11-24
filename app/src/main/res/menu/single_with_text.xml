@@ -1,0 +1,8 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/item_text_only"
+        android:orderInCategory="0"
+        android:title="@string/save"
+        app:showAsAction="always" />
+</menu>

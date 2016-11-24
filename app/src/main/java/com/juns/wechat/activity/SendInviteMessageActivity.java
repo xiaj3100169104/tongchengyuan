@@ -13,10 +13,15 @@ public class SendInviteMessageActivity extends ToolbarActivity {
     private TextView tvRightText;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_send_invite_message);
+    public void initData() {
         init();
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        setContentView(R.layout.activity_send_invite_message);
+        super.onCreate(savedInstanceState);
+
     }
 
     private void init(){

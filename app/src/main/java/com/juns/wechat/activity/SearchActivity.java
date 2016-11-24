@@ -30,7 +30,7 @@ import java.util.List;
 /**
  * Created by 王宗文 on 2016/6/20.
  */
-@Content(R.layout.activity_search)
+
 public class SearchActivity extends BaseActivity {
 
     private EditText etSearch;
@@ -39,10 +39,16 @@ public class SearchActivity extends BaseActivity {
     private String search;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initData() {
         initView();
         setListener();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        mLayoutResID = R.layout.activity_search;
+        super.onCreate(savedInstanceState);
+
     }
 
     private void initView(){

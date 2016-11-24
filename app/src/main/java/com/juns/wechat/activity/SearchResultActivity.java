@@ -19,7 +19,6 @@ import com.juns.wechat.xmpp.bean.SearchResult;
 
 import java.util.List;
 
-@Content(R.layout.activity_search_result)
 public class SearchResultActivity extends ToolbarActivity {
     public static final String ARG_SEARCH_RESULTS = "search_results";
 
@@ -29,12 +28,7 @@ public class SearchResultActivity extends ToolbarActivity {
     private SearchResultAdapter searchResultAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        init();
-    }
-
-    private void init(){
+    public void initData() {
         if(searchResults == null || searchResults.isEmpty()){
             throw new IllegalArgumentException("search results is null or empty!");
         }
@@ -52,5 +46,11 @@ public class SearchResultActivity extends ToolbarActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        mLayoutResID = R.layout.activity_search_result;
+        super.onCreate(savedInstanceState);
     }
 }

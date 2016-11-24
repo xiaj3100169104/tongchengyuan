@@ -37,11 +37,8 @@ import org.xutils.common.Callback;
  * 下载显示大图
  * 
  */
-@Content(R.layout.activity_show_big_image)
 public class ShowBigImage extends ToolbarActivity {
     public static final String ARG_IMG_NAME = "img_name";
-
-	private ProgressDialog pd;
 	private PhotoView scaleImageView;
 	private ProgressBar loadLocalPb;
     @Extra(name = ARG_IMG_NAME)
@@ -54,19 +51,16 @@ public class ShowBigImage extends ToolbarActivity {
     private String tempImageName; //拍照临时保存的图片名字
 
 
-    @SuppressLint("NewApi")
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    @Override
+    public void initData() {
         setToolbarTitle("我的头像");
-        setToolbarRight(2, R.drawable.icon_more);
         scaleImageView = (PhotoView) findViewById(R.id.image);
         Point point = DisplayUtil.getScreenMetrics(this);
         ViewGroup.LayoutParams lp = scaleImageView.getLayoutParams();
         lp.width = point.x;
         lp.height = point.x;
         scaleImageView.setLayoutParams(lp);
-		loadLocalPb = (ProgressBar) findViewById(R.id.pb_load_local);
+        loadLocalPb = (ProgressBar) findViewById(R.id.pb_load_local);
 
         ImageLoader.loadAvatar(scaleImageView, imgName, new Callback.CommonCallback<Drawable>() {
             @Override
@@ -91,18 +85,19 @@ public class ShowBigImage extends ToolbarActivity {
         });
 
         scaleImageView.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				finish();
-			}
-		});
-
-        findViewById(R.id.ivRightBtn).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPhotoDialog();
+                finish();
             }
         });
+    }
+
+    @SuppressLint("NewApi")
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+        mLayoutResID = R.layout.activity_show_big_image;
+		super.onCreate(savedInstanceState);
+
 	}
 
     private void showPhotoDialog() {

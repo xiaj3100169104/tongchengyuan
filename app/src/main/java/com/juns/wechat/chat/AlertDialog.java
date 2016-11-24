@@ -25,9 +25,7 @@ public class AlertDialog extends BaseActivity {
 	private boolean isEditextShow;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.alert_dialog);
+	public void initData() {
 		mTextView = (TextView) findViewById(R.id.title);
 		mButton = (TextView) findViewById(R.id.btn_cancel);
 		imageView = (ImageView) findViewById(R.id.image);
@@ -78,6 +76,13 @@ public class AlertDialog extends BaseActivity {
 			editText.setVisibility(View.VISIBLE);
 			editText.setText(edit_text);
 		}
+	}
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		mLayoutResID = R.layout.alert_dialog;
+		super.onCreate(savedInstanceState);
+
 	}
 
 	public void ok(View view) {

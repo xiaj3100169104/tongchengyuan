@@ -28,14 +28,22 @@ public class ShowVideoActivity extends BaseActivity {
 	private RelativeLayout loadingLayout;
 	private ProgressBar progressBar;
 	private String localFilePath;
+	@Override
+	protected void customWindowOptions(Window window) {
+		super.customWindowOptions(window);
+		window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		mLayoutResID = R.layout.activity_show_video;
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-				WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		setContentView(R.layout.activity_show_video);
+
+	}
+	@Override
+	public void initData() {
+
 		loadingLayout = (RelativeLayout) findViewById(R.id.loading_layout);
 		progressBar = (ProgressBar) findViewById(R.id.progressBar);
 		localFilePath = getIntent().getStringExtra("localpath");
@@ -60,6 +68,8 @@ public class ShowVideoActivity extends BaseActivity {
 
 		}
 	}
+
+
 
 	public String getLocalFilePath(String remoteUrl) {
 		String localPath = null;

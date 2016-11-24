@@ -13,9 +13,8 @@ public class ContextMenu extends BaseActivity {
 	private int position;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-	/*	int txtValue = EMMessage.Type.TXT.ordinal();
+	public void initData() {
+		/*	int txtValue = EMMessage.Type.TXT.ordinal();
 		int type = getIntent().getIntExtra("type", -1);
 		if (type == EMMessage.Type.TXT.ordinal()) {
 			setContentView(R.layout.context_menu_for_text);
@@ -45,6 +44,12 @@ public class ContextMenu extends BaseActivity {
 		 * default: break; }
 		 */
 		position = getIntent().getIntExtra("position", -1);
+	}
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+
 	}
 
 	@Override

@@ -77,13 +77,11 @@ public class BaiduMapActivity extends BaseActivity implements OnClickListener {
 	private BaiduSDKReceiver mBaiduReceiver;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	public void initData() {
 		instance = this;
 		// 在使用SDK各组件之前初始化context信息，传入ApplicationContext
 		// 注意该方法要再setContentView方法之前实现
 		SDKInitializer.initialize(getApplicationContext());
-		setContentView(R.layout.activity_baidumap);
 		mMapView = (MapView) findViewById(R.id.bmapView);
 		txt_right = (TextView) findViewById(R.id.txt_right);
 		txt_right.setText("发送");
@@ -123,6 +121,13 @@ public class BaiduMapActivity extends BaseActivity implements OnClickListener {
 		mBaiduReceiver = new BaiduSDKReceiver();
 		registerReceiver(mBaiduReceiver, iFilter);
 		initClick();
+	}
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		mLayoutResID = R.layout.activity_baidumap;
+		super.onCreate(savedInstanceState);
+
 	}
 
 	private void initClick() {

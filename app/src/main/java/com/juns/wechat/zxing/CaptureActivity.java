@@ -60,12 +60,8 @@ public class CaptureActivity extends BaseActivity implements Callback {
 	private ImageView mGoHome;
 	private boolean isNoCute = true;
 
-	/** Called when the activity is first created. */
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.activity_code_scan);
+	public void initData() {
 		CameraManager.init(getApplication());
 		initControl();
 		hasSurface = false;
@@ -76,6 +72,15 @@ public class CaptureActivity extends BaseActivity implements Callback {
 		} else {
 			isNoCute = false;
 		}
+	}
+
+	/** Called when the activity is first created. */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+
+		mLayoutResID = R.layout.activity_code_scan;
+		super.onCreate(savedInstanceState);
+
 	}
 
 	@Override

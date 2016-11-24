@@ -73,99 +73,20 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".view.activity.PublishUserListActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name=".view.activity.PublicActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name=".view.activity.SearchActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
             android:name=".activity.NewFriendsListActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name=".view.activity.GroupListActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name=".view.activity.PublishMsgListActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".activity.SettingActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity
-            android:name=".view.activity.AlbumActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name=".view.activity.PublishMsgDetailActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name=".view.activity.GetMoneyActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name=".view.activity.SetMoneyActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name=".view.activity.AddFromContactActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name=".view.activity.EditUserNameActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name=".view.activity.WebViewActivity"
-            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
-            android:screenOrientation="sensor"
-            android:windowSoftInputMode="stateHidden|adjustUnspecified">
-        </activity>
+
         <activity
             android:name=".zxing.CaptureActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity
-            android:name=".view.activity.MyCodeActivity"
-            android:screenOrientation="portrait">
-        </activity>
-
         <service android:name=".view.UpdateService"/>
-        <!-- 朋友圈分享 -->
-        <activity
-            android:name=".view.activity.ShareActivity"
-            android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="android.intent.action.SEND"/>
 
-                <category android:name="android.intent.category.DEFAULT"/>
-
-                <data android:mimeType="image/*"/>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.SEND"/>
-
-                <category android:name="android.intent.category.DEFAULT"/>
-
-                <data android:mimeType="text/plain"/>
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.SEND_MULTIPLE"/>
-
-                <category android:name="android.intent.category.DEFAULT"/>
-
-                <data android:mimeType="image/*"/>
-            </intent-filter>
-        </activity>
         <!-- 环信开始 -->
 
         <activity
@@ -174,14 +95,6 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
-        </activity>
-        <activity
-            android:name=".view.activity.AddGroupChatActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name=".view.activity.GroupSettingActivity"
-            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".chat.VoiceCallActivity"

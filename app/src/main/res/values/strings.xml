@@ -17,6 +17,8 @@
     <string name="File_does_not_exist">文件不存在</string>
     <string name="back">返回</string>
     <string name="save">保存</string>
+    <string name="send">发送</string>
+
     <string name="album">相册</string>
     <string name="explain">说明</string>
     <string name="app_name">微信</string>

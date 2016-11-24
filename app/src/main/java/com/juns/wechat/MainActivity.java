@@ -26,7 +26,6 @@ import com.juns.wechat.dialog.TitleMenu.TitlePopup.OnItemOnClickListener;
 import com.juns.wechat.service.XmppService;
 import com.juns.wechat.zxing.CaptureActivity;
 
-@Content(R.layout.activity_main)
 public class MainActivity extends BaseActivity{
 	private TextView txt_title;
 	private ImageView img_right;
@@ -44,14 +43,20 @@ public class MainActivity extends BaseActivity{
 
 	private MainAdapter mainAdapter;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+    @Override
+    public void initData() {
         mInstance = this;
-		initView();
-		setOnClickListener();
-		initPopWindow();
+        initView();
+        setOnClickListener();
+        initPopWindow();
         XmppService.login(this);
+    }
+
+    @Override
+	public void onCreate(Bundle savedInstanceState) {
+        mLayoutResID = R.layout.activity_main;
+        super.onCreate(savedInstanceState);
+
 	}
 
 	private void initView() {
@@ -216,13 +221,10 @@ public class MainActivity extends BaseActivity{
 		});
 	}
 
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			moveTaskToBack(false);
-		}
-		return super.onKeyDown(keyCode, event);
-	}
+    @Override
+    public void onBackPressed() {
+        this.moveTaskToBack(true);
+    }
 
     private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
         @Override

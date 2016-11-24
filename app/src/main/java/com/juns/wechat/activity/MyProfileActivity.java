@@ -5,13 +5,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.juns.wechat.R;
-import com.juns.wechat.annotation.Click;
-import com.juns.wechat.annotation.Content;
-import com.juns.wechat.annotation.Id;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.ShowBigImage;
 import com.juns.wechat.common.ToolbarActivity;
@@ -33,39 +29,26 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.OnClick;
+
 /**
  * create by 王者 on 2016/7/14
  */
-@Content(R.layout.activity_my_profile)
-public class MyProfileActivity extends ToolbarActivity implements SelectPhotoDialog.OnClickListener{
-    @Id
-    private RelativeLayout rlAvatar;
-    @Id
-    private ImageView ivAvatar;
-    @Id
-    private TextView tvNickName;
-    @Id
-    private TextView tvUserName;
-    @Id
-    private RelativeLayout rlQrCode;
-    @Id
-    private ImageView ivQrCode;
-    @Id
-    private RelativeLayout rlSex;
-    @Id
-    private TextView tvSex;
-    @Id
-    private RelativeLayout rlRegion;
-    @Id
-    private TextView tvRegion;
-    @Id
-    private RelativeLayout rlSignature;
-    @Id
-    private TextView tvSignature;
+public class MyProfileActivity extends ToolbarActivity implements SelectPhotoDialog.OnClickListener {
+
 
     private static final int PHOTO_REQUEST_TAKEPHOTO = 1;// 拍照
     private static final int PHOTO_REQUEST_GALLERY = 2;// 从相册中选择
     private static final int PHOTO_REQUEST_CUT = 3;// 结果
+    @Bind(R.id.ivAvatar)
+    ImageView ivAvatar;
+    @Bind(R.id.tvNickName)
+    TextView tvNickName;
+    @Bind(R.id.tvUserName)
+    TextView tvUserName;
+    @Bind(R.id.tvSex)
+    TextView tvSex;
 
     private UserBean account;
 
@@ -74,13 +57,18 @@ public class MyProfileActivity extends ToolbarActivity implements SelectPhotoDia
     private String imageName;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initData() {
         setData();
         EventBus.getDefault().register(this);
     }
 
-    private void setData(){
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        mLayoutResID = R.layout.activity_my_profile;
+        super.onCreate(savedInstanceState);
+    }
+
+    private void setData() {
         account = AccountManager.getInstance().getUser();
         tvNickName.setText(account.getNickName() == null ? "" : account.getNickName());
         tvUserName.setText(account.getUserName());
@@ -89,38 +77,38 @@ public class MyProfileActivity extends ToolbarActivity implements SelectPhotoDia
         ImageLoader.loadAvatar(ivAvatar, account.getHeadUrl());
     }
 
-    @Click(viewId = R.id.rlAvatar)
-    private void modifyAvatar(View v){
-        if(selectPhotoDialog == null){
+    @OnClick(R.id.rlAvatar)
+    public void modifyAvatar() {
+        if (selectPhotoDialog == null) {
             selectPhotoDialog = SelectPhotoDialog.createDialog(this, this);
         }
         selectPhotoDialog.show();
     }
 
-    @Click(viewId = R.id.ivAvatar)
-    private void showBigAvatar(View v){
+    @OnClick(R.id.ivAvatar)
+    public void showBigAvatar() {
         Intent intent = new Intent(this, ShowBigImage.class);
         intent.putExtra(ShowBigImage.ARG_IMG_NAME, account.getHeadUrl());
         startActivity(intent);
     }
 
 
-    @Click(viewId = R.id.rlNickName)
-    private void modifyNickName(View v){
+    @OnClick(R.id.rlNickName)
+    public void modifyNickName() {
         startActivity(new Intent(this, ModifyNameActivity.class));
     }
 
-    @Click(viewId = R.id.rlSex)
-    private void modifySex(View v){
+    @OnClick(R.id.rlSex)
+    public void modifySex() {
         final String sex = account.getSex();
         int position = UserBean.Sex.isMan(sex) ? 0 : 1;
         selectSexDialog = SelectSexDialog.createDialog(this, position);
         selectSexDialog.setOnItemClickListener(new SelectSexDialog.OnItemClickListener() {
             @Override
             public void onItemClicked(int oldPosition, int newPosition) {
-                if(oldPosition == newPosition){
+                if (oldPosition == newPosition) {
                     selectSexDialog.dismiss();
-                }else {
+                } else {
                     String sex = newPosition == 0 ? UserBean.Sex.MAN.value : UserBean.Sex.WOMAN.value;
                     modifySexToServer(sex);
                 }
@@ -131,12 +119,12 @@ public class MyProfileActivity extends ToolbarActivity implements SelectPhotoDia
     }
 
     @Subscriber(tag = UserTable.TABLE_NAME)
-    private void onDbDataChanged(DbDataEvent<UserBean> event){
-        if(event.action == DbDataEvent.REPLACE || event.action == DbDataEvent.UPDATE){
+    private void onDbDataChanged(DbDataEvent<UserBean> event) {
+        if (event.action == DbDataEvent.REPLACE || event.action == DbDataEvent.UPDATE) {
             List<UserBean> updateData = event.data;
-            if(updateData != null && !updateData.isEmpty()){
-                for(UserBean userBean : updateData){
-                    if(userBean.getUserName().equals(account.getUserName())){
+            if (updateData != null && !updateData.isEmpty()) {
+                for (UserBean userBean : updateData) {
+                    if (userBean.getUserName().equals(account.getUserName())) {
                         setData();
                     }
                 }
@@ -144,7 +132,7 @@ public class MyProfileActivity extends ToolbarActivity implements SelectPhotoDia
         }
     }
 
-    private void modifySexToServer(String sex){
+    private void modifySexToServer(String sex) {
         UserRequest.updateUser(account.getUserName(), UserBean.SEX, sex, new UpdateUserCallBack() {
             @Override
             protected void handleResponse(UpdateUserResponse result) {

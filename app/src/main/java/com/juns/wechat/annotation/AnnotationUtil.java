@@ -29,6 +29,8 @@ import java.util.List;
  * Created by 王宗文 on 2015/9/20
  * *****************************************************
  */
+//建议用bufferknife自动生成控件变量
+@Deprecated
 public class AnnotationUtil {
     private static final HashSet<Class<?>> IGNORED = new HashSet<Class<?>>();
     static {

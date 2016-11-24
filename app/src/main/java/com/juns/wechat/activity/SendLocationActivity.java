@@ -4,9 +4,7 @@ import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,7 +14,6 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
-import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
@@ -25,7 +22,6 @@ import com.baidu.mapapi.map.MarkerOptions;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.UiSettings;
 import com.baidu.mapapi.model.LatLng;
-import com.baidu.mapapi.model.LatLngBounds;
 import com.baidu.mapapi.search.core.PoiInfo;
 import com.baidu.mapapi.search.geocode.GeoCodeResult;
 import com.baidu.mapapi.search.geocode.GeoCoder;
@@ -33,15 +29,17 @@ import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.juns.wechat.R;
-import com.juns.wechat.annotation.Content;
 import com.juns.wechat.annotation.Id;
 import com.juns.wechat.common.ToolbarActivity;
 import com.juns.wechat.util.LogUtil;
 
 import java.util.List;
 
-@Content(R.layout.activity_send_location)
-public class SendLocationActivity extends ToolbarActivity implements OnGetGeoCoderResultListener{
+import butterknife.Bind;
+
+public class SendLocationActivity extends ToolbarActivity implements OnGetGeoCoderResultListener {
+    @Bind(R.id.ivMarker)
+    ImageView ivMarker;
     /**
      * MapView 是地图主控件
      */
@@ -60,12 +58,16 @@ public class SendLocationActivity extends ToolbarActivity implements OnGetGeoCod
     private MarkerOptions markOps;
     GeoCoder mSearch = null; // 搜索模块，也可去掉地图模块独立使用
     private Point mCenterPoint;
-    @Id
-    private ImageView ivMarker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mLayoutResID = R.layout.activity_send_location;
         super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
+    public void initData() {
 
         mMapView = (MapView) findViewById(R.id.bmapView);
         mBaiduMap = mMapView.getMap();
@@ -106,7 +108,7 @@ public class SendLocationActivity extends ToolbarActivity implements OnGetGeoCod
         initLocation();
     }
 
-    private void initLocation(){
+    private void initLocation() {
         mBaiduMap.setMyLocationEnabled(true);
         // 定位初始化
         mLocClient = new LocationClient(this);
@@ -128,7 +130,7 @@ public class SendLocationActivity extends ToolbarActivity implements OnGetGeoCod
     public void onGetReverseGeoCodeResult(ReverseGeoCodeResult reverseGeoCodeResult) {
         String address = reverseGeoCodeResult.getAddress();
         List<PoiInfo> poiInfos = reverseGeoCodeResult.getPoiList();
-        for(PoiInfo poiInfo : poiInfos){
+        for (PoiInfo poiInfo : poiInfos) {
             LogUtil.i("arredss:" + poiInfo.address);
         }
         LogUtil.i("addres: " + address);
@@ -145,8 +147,8 @@ public class SendLocationActivity extends ToolbarActivity implements OnGetGeoCod
             if (location == null || mMapView == null) {
                 return;
             }
-          //  LogUtil.i("myLocation: " + location.getAddress().address);
-           MyLocationData locData = new MyLocationData.Builder()
+            //  LogUtil.i("myLocation: " + location.getAddress().address);
+            MyLocationData locData = new MyLocationData.Builder()
                     //.accuracy(location.getRadius())
                     // 此处设置开发者获取到的方向信息，顺时针0-360
                     .direction(100).latitude(location.getLatitude())
@@ -167,7 +169,7 @@ public class SendLocationActivity extends ToolbarActivity implements OnGetGeoCod
                 int w = ivMarker.getMeasuredWidth();
                 int h = ivMarker.getMeasuredHeight();
                 int x = (int) (mCenterPoint.x - w * 0.5);
-                int y = (int) ( mCenterPoint.y - h);
+                int y = (int) (mCenterPoint.y - h);
                 ivMarker.setLeft(x);
                 ivMarker.setTop(y);
 
@@ -224,6 +226,7 @@ public class SendLocationActivity extends ToolbarActivity implements OnGetGeoCod
     public void setCompassEnable(View v) {
         mUiSettings.setCompassEnabled(((CheckBox) v).isChecked());
     }
+
     /**
      * 是否显示底图默认标注
      *
@@ -247,7 +250,7 @@ public class SendLocationActivity extends ToolbarActivity implements OnGetGeoCod
      *
      * @param v
      */
-    public void setPadding( View v) {
+    public void setPadding(View v) {
         if (((CheckBox) v).isChecked()) {
             mBaiduMap.setViewPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
             addView(mMapView);

@@ -2,59 +2,60 @@ package com.juns.wechat.activity;
 
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ListView;
 
-import com.juns.wechat.Constants;
 import com.juns.wechat.R;
 import com.juns.wechat.adpter.NewFriendsAdapter;
-import com.juns.wechat.annotation.Content;
 import com.juns.wechat.annotation.Id;
 import com.juns.wechat.bean.MessageBean;
 import com.juns.wechat.common.ToolbarActivity;
 import com.juns.wechat.dao.MessageDao;
 import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.util.LogUtil;
-import com.juns.wechat.util.ToolBarUtil;
 
 import java.util.List;
 
+import butterknife.Bind;
+
 //新朋友
-@Content(R.layout.activity_listview)
-public class NewFriendsListActivity extends ToolbarActivity implements OnClickListener {
-    @Id
-	private ListView lvNewFriends;
+public class NewFriendsListActivity extends ToolbarActivity {
+    @Bind(R.id.lvNewFriends)
+    ListView lvNewFriends;
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-        ToolBarUtil.setToolbarRight(this, 1, R.string.menu_add_friend);
+    @Override
+    public void initData() {
         initControl();
-	}
+    }
 
-	protected void initControl() {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        mLayoutResID = R.layout.activity_listview;
+        super.onCreate(savedInstanceState);
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.single_with_text, menu);
+        menu.getItem(0).setTitle(R.string.menu_add_friend);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.item_text_only:
+                //goonNext();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    protected void initControl() {
         String myselfName = AccountManager.getInstance().getUserName();
         List<MessageBean> myReceivedInviteMessages =
                 MessageDao.getInstance().getMyReceivedInviteMessages(myselfName);
 
-		lvNewFriends.setAdapter(new NewFriendsAdapter(this, myReceivedInviteMessages));
-	}
-
-
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-	/*	case R.id.tvRightText:
-			CommonUtil.startActivity(this, PublicActivity.class,
-					new BasicNameValuePair(Constants.NAME, "添加朋友"));
-			break;
-		case R.id.txt_search:
-			CommonUtil.startActivity(this, PublicActivity.class,
-					new BasicNameValuePair(Constants.NAME, "搜索"));
-			break;*/
-		default:
-			break;
-		}
-	}
+        lvNewFriends.setAdapter(new NewFriendsAdapter(this, myReceivedInviteMessages));
+    }
 }

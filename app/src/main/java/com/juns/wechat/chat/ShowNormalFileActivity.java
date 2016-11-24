@@ -15,9 +15,7 @@ public class ShowNormalFileActivity extends BaseActivity {
 	private File file;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_show_file);
+	public void initData() {
 		progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
 		/*final FileMessageBody messageBody = getIntent().getParcelableExtra(
@@ -80,6 +78,13 @@ public class ShowNormalFileActivity extends BaseActivity {
 */
 			}
 		}).start();
+
+	}
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		mLayoutResID = R.layout.activity_show_file;
+		super.onCreate(savedInstanceState);
 
 	}
 }

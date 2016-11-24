@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
  * Created by 王宗文 on 2015/9/20
  * *****************************************************
  */
-
+@Deprecated //建议与bufferknife使用一致，已经包含了onclick注解
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Click {

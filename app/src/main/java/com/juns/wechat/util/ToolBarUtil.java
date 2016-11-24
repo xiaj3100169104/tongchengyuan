@@ -16,14 +16,15 @@ import com.juns.wechat.R;
  * @since 1.5.5
  * Created by 王宗文 on 2015/9/14
  *******************************************************/
+@Deprecated
 public class ToolBarUtil {
-    public static final int TAG_TEXT = 1;
+  /*  public static final int TAG_TEXT = 1;
     public static final int TAG_IMG = 2;
-    /**
+    *//**
      * 自定义toolbar的显示
      *
      * @param activity
-     */
+     *//*
     public static Toolbar setToolBar(final AppCompatActivity activity) {
         Toolbar toolBar = (Toolbar) activity.findViewById(R.id.toolbar);
 
@@ -50,12 +51,12 @@ public class ToolBarUtil {
 
     }
 
-    /**
+    *//**
      * 自定义标题栏文字，需要在{@link ToolBarUtil#setToolBar(AppCompatActivity)}方法后调用，否则会被覆盖
      *
      * @param activity
      * @param text
-     */
+     *//*
     public static void setTitle(AppCompatActivity activity, String text) {
         Toolbar toolBar = setToolBar(activity);
         TextView tvTitle = (TextView) toolBar.findViewById(R.id.tvTitle);
@@ -64,12 +65,12 @@ public class ToolBarUtil {
         }
     }
 
-    /**
+    *//**
      * 自定义标题栏文字，需要在{@link ToolBarUtil#setToolBar(AppCompatActivity)}方法后调用，否则会被覆盖
      *
      * @param activity
      * @param resId
-     */
+     *//*
     public static void setTitle(AppCompatActivity activity, int resId) {
         setTitle(activity, activity.getString(resId));
     }
@@ -123,5 +124,5 @@ public class ToolBarUtil {
         ivRightBtn.setVisibility(View.GONE);
     }
 
-
+*/
 }

@@ -21,10 +21,15 @@ public class CallActivity extends BaseActivity {
 	protected int outgoing;
 
 	@Override
-	protected void onCreate(Bundle arg0) {
-		super.onCreate(arg0);
+	public void initData() {
+
 		audioManager = (AudioManager) this
 				.getSystemService(Context.AUDIO_SERVICE);
+	}
+
+	@Override
+	protected void onCreate(Bundle arg0) {
+		super.onCreate(arg0);
 	}
 
 	@Override

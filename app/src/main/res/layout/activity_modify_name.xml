@@ -5,7 +5,7 @@
               android:background="#fff"
               android:orientation="vertical" >
 
-    <include android:id="@+id/toolbar" layout="@layout/comm_toolbar_btn" />
+    <include android:id="@+id/toolbar" layout="@layout/comm_toolbar" />
 
     <EditText
         android:id="@+id/etInputNick"

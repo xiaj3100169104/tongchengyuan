@@ -12,13 +12,18 @@ import com.juns.wechat.common.ToolbarActivity;
 /**
  * Created by 王宗文 on 2016/6/20.
  */
-@Content(R.layout.activity_add_friend)
 public class AddFriendActivity extends ToolbarActivity {
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void initData() {
         setListener();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        mLayoutResID = R.layout.activity_add_friend;
+        super.onCreate(savedInstanceState);
+
     }
 
     private void setListener(){
