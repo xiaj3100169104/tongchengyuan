@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.juns.wechat.R;
+import com.style.manager.LogManager;
+import com.style.manager.ToastManager;
 import com.style.utils.CommonUtil;
 
 import org.json.JSONObject;

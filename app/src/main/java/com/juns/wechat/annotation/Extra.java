@@ -16,7 +16,7 @@ import java.lang.annotation.Target;
  * Created by 王宗文 on 2015/9/ic_card_detail_arrow_down
  * *****************************************************
  */
-
+@Deprecated //跳转之类不用用注解吧，数据库操作那些倒是用注解比较好
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Extra {

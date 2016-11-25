@@ -22,6 +22,7 @@ import com.juns.wechat.database.ChatTable;
 import com.juns.wechat.database.UserTable;
 import com.juns.wechat.manager.AccountManager;
 import com.style.base.BaseRecyclerViewAdapter;
+import com.style.constant.Skip;
 import com.style.view.DividerItemDecoration;
 
 import org.simple.eventbus.Subscriber;
@@ -64,7 +65,7 @@ public class Fragment_Msg extends BaseFragment {
             public void onItemClick(int position, Object data) {
                 MsgItemShow  msgItemShow = (MsgItemShow) data;
                 Intent intent = new Intent(context, ChatActivity.class);
-                intent.putExtra(ChatActivity.ARG_USER_NAME, msgItemShow.msgItem.userName);
+                intent.putExtra(Skip.KEY_USER_NAME, msgItemShow.msgItem.userName);
                 startActivity(intent);
 
             }

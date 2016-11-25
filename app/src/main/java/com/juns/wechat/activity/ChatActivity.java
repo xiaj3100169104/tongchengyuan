@@ -22,7 +22,6 @@ import com.juns.wechat.Constants;
 import com.juns.wechat.R;
 import com.juns.wechat.adpter.ChatAdapter;
 import com.juns.wechat.annotation.Extra;
-import com.juns.wechat.annotation.Id;
 import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.bean.MessageBean;
 import com.juns.wechat.bean.UserBean;
@@ -36,7 +35,8 @@ import com.juns.wechat.database.ChatTable;
 import com.juns.wechat.exception.UserNotFoundException;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.util.LogUtil;
-import com.style.base.Constant;
+import com.style.constant.MyAction;
+import com.style.constant.Skip;
 import com.wangzhe.photopicker.PhotoPicker;
 
 import org.simple.eventbus.Subscriber;
@@ -52,12 +52,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 
 //聊天页面
 public class ChatActivity extends ToolbarActivity {
-    public static final String ARG_USER_NAME = "user_name";
 
-    private static final int REQUEST_CODE_EMPTY_HISTORY = 2;
-    private static final int REQUEST_CODE_MAP = 4;
-    public static final int REQUEST_CODE_COPY_AND_PASTE = 11;
-    public static final int REQUEST_CODE_SELECT_FILE = 24;
 
     public static final int RESULT_CODE_COPY = 1;
     public static final int RESULT_CODE_DELETE = 2;
@@ -94,7 +89,7 @@ public class ChatActivity extends ToolbarActivity {
 
     public String playMsgId;
 
-    @Extra(name = ARG_USER_NAME)
+    //@Extra(name = ARG_USER_NAME)
     private String contactName;
 
     private ChatInputManager chatInputManager;
@@ -134,6 +129,7 @@ public class ChatActivity extends ToolbarActivity {
      * initData
      */
     public void initData() {
+        contactName = getIntent().getStringExtra(Skip.KEY_USER_NAME);
         friendBean = FriendDao.getInstance().findByOwnerAndContactName(account.getUserName(), contactName);
         try {
             contactUser = friendBean.getContactUser();
@@ -312,10 +308,10 @@ public class ChatActivity extends ToolbarActivity {
 			}
 		}*/
         if (resultCode == RESULT_OK) { // 清空消息
-            if (requestCode == REQUEST_CODE_EMPTY_HISTORY) {
+            if (requestCode == Skip.CODE_EMPTY_HISTORY) {
                 // 清空会话
 
-            } else if (requestCode == Constant.REQUESTCODE_TAKE_CAMERA) { // 发送照片
+            } else if (requestCode == Skip.CODE_TAKE_CAMERA) { // 发送照片
                 if (cameraFile != null && cameraFile.exists())
                     sendPicture(cameraFile.getAbsolutePath());
             } /*else if (requestCode == REQUEST_CODE_SELECT_VIDEO) { // 发送本地选择的视频
@@ -364,7 +360,7 @@ public class ChatActivity extends ToolbarActivity {
                 ArrayList<String> selectedPhotos = data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
 
                 sendPicture(selectedPhotos);
-            } else if (requestCode == REQUEST_CODE_SELECT_FILE) { // 发送选择的文件
+            } else if (requestCode == Skip.CODE_SELECT_FILE) { // 发送选择的文件
                 if (data != null) {
                     Uri uri = data.getData();
                     if (uri != null) {
@@ -372,7 +368,7 @@ public class ChatActivity extends ToolbarActivity {
                     }
                 }
 
-            } else if (requestCode == REQUEST_CODE_MAP) { // 地图
+            } else if (requestCode == Skip.CODE_MAP) { // 地图
                 double latitude = data.getDoubleExtra("latitude", 0);
                 double longitude = data.getDoubleExtra("longitude", 0);
                 String locationAddress = data.getStringExtra("address");
@@ -385,7 +381,7 @@ public class ChatActivity extends ToolbarActivity {
 
                 }
                 // 重发消息
-            } else if (requestCode == REQUEST_CODE_COPY_AND_PASTE) {
+            } else if (requestCode == Skip.CODE_COPY_AND_PASTE) {
                 // 粘贴
                 if (!TextUtils.isEmpty(clipboard.getText())) {
                     String pasteText = clipboard.getText().toString();
@@ -539,7 +535,7 @@ public class ChatActivity extends ToolbarActivity {
         startActivityForResult(
                 new Intent(this, AlertDialog.class)
                         .putExtra("titleIsCancel", true).putExtra("msg", st5)
-                        .putExtra("cancel", true), REQUEST_CODE_EMPTY_HISTORY);
+                        .putExtra("cancel", true), Skip.CODE_EMPTY_HISTORY);
     }
 
     /**

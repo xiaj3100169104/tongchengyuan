@@ -12,6 +12,7 @@ import com.juns.wechat.bean.Flag;
 import com.juns.wechat.bean.MessageBean;
 import com.juns.wechat.dao.MessageDao;
 import com.juns.wechat.util.ImageLoader;
+import com.style.constant.Skip;
 
 /*******************************************************
  * Created by 王者 on 2015/11/30
@@ -125,7 +126,7 @@ public abstract class MsgViewModel implements Comparable<MsgViewModel> {
      */
     protected void onUserPhotoClick(String userName){
         Intent intent = new Intent(mContext, UserInfoActivity.class);
-        intent.putExtra(UserInfoActivity.ARG_USER_NAME, userName);
+        intent.putExtra(Skip.KEY_USER_NAME, userName);
         mContext.startActivity(intent);
     }
 

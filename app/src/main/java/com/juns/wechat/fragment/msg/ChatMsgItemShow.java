@@ -13,6 +13,7 @@ import com.juns.wechat.net.callback.QueryUserCallBack;
 import com.juns.wechat.net.request.UserRequest;
 import com.juns.wechat.net.response.BaseResponse;
 import com.juns.wechat.util.ImageLoader;
+import com.style.constant.Skip;
 
 /**
  * Created by 王者 on 2016/8/9.
@@ -64,7 +65,7 @@ public class ChatMsgItemShow extends MsgItemShow {
     @Override
     public void onItemClick() {
         Intent intent = new Intent(mContext, ChatActivity.class);
-        intent.putExtra(ChatActivity.ARG_USER_NAME, msgItem.userName);
+        intent.putExtra(Skip.KEY_USER_NAME, msgItem.userName);
         mContext.startActivity(intent);
     }
 

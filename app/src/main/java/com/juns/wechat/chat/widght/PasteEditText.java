@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 import android.widget.EditText;
 
 import com.juns.wechat.activity.ChatActivity;
+import com.style.constant.Skip;
 
 /**
  * 自定义的textview，用来处理复制粘贴的消息
@@ -55,7 +56,7 @@ public class PasteEditText extends EditText {
 				intent.putExtra("forwardImage", text);
 				intent.putExtra("cancel", true);
 				((Activity) context).startActivityForResult(intent,
-						ChatActivity.REQUEST_CODE_COPY_AND_PASTE);
+						Skip.CODE_COPY_AND_PASTE);
 				// clip.setText("");
 			}
 		}

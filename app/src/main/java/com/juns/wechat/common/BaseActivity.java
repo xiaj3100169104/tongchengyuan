@@ -19,8 +19,8 @@ import android.widget.Toast;
 import com.juns.wechat.R;
 import com.juns.wechat.dialog.FlippingLoadingDialog;
 import com.juns.wechat.util.ToastUtil;
-import com.style.base.LogManager;
-import com.style.base.ToastManager;
+import com.style.manager.LogManager;
+import com.style.manager.ToastManager;
 import com.style.dialog.MaterialProgressDialog;
 import com.style.utils.CommonUtil;
 
@@ -99,7 +99,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            onFinish();
+            onBackFinish();
             return true;
         }
         return super.onKeyDown(keyCode, event);
@@ -107,10 +107,10 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        onFinish();
+        onBackFinish();
     }
 
-    protected void onFinish() {
+    protected void onBackFinish() {
         finish();
     }
 

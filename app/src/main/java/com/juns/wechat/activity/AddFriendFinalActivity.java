@@ -4,27 +4,26 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.juns.wechat.R;
-import com.juns.wechat.annotation.Extra;
 import com.juns.wechat.common.ToolbarActivity;
 import com.juns.wechat.util.ToastUtil;
 import com.juns.wechat.xmpp.util.SendMessage;
+import com.style.constant.Skip;
 
 import butterknife.Bind;
 
 public class AddFriendFinalActivity extends ToolbarActivity {
-    public static final String ARG_USER_NAME = "user_name";
     @Bind(R.id.etReason)
     EditText etReason;
-    @Extra(name = ARG_USER_NAME)
+    //@Extra(name = ARG_USER_NAME)
     private String wantToAddUser;
 
     @Override
     public void initData() {
+        wantToAddUser = getIntent().getStringExtra(Skip.KEY_USER_NAME);
     }
 
     @Override
@@ -52,7 +51,7 @@ public class AddFriendFinalActivity extends ToolbarActivity {
     private void goonNext() {
         String reason = etReason.getText().toString();
         if (TextUtils.isEmpty(reason)) {
-            ToastUtil.showToast("请输入添加好友理由", Toast.LENGTH_SHORT);
+            showToastLong("请输入添加好友理由");
             return;
         }
         SendMessage.sendInviteMsg(wantToAddUser, reason);

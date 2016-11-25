@@ -18,6 +18,7 @@ import com.juns.wechat.R;
 import com.juns.wechat.activity.ChatActivity;
 import com.juns.wechat.util.LogUtil;
 import com.juns.wechat.util.SharedPreferencesUtil;
+import com.style.constant.Skip;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -145,7 +146,7 @@ public class NoticePrompt extends Prompt implements ISwitch {
             ticker = fromUserName;
         }
 
-        noticeIntent.putExtra(ChatActivity.ARG_USER_NAME, fromUserName);
+        noticeIntent.putExtra(Skip.KEY_USER_NAME, fromUserName);
         noticeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
         // need to set flag FLAG_UPDATE_CURRENT to get extras transferred

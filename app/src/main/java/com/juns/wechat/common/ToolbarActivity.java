@@ -39,7 +39,7 @@ public abstract class ToolbarActivity extends BaseActivity {
     }
 
     protected void onClickTitleBack() {
-        onFinish();
+        onBackFinish();
     }
 
     protected void setNavigationIcon(int resId) {

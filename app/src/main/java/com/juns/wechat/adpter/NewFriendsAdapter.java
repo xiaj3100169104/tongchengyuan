@@ -27,6 +27,7 @@ import com.juns.wechat.net.response.BaseResponse;
 import com.juns.wechat.util.ImageLoader;
 import com.juns.wechat.util.ToastUtil;
 import com.juns.wechat.xmpp.util.SendMessage;
+import com.style.constant.Skip;
 
 import java.util.List;
 
@@ -107,7 +108,7 @@ public class NewFriendsAdapter extends BaseAdapter{
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(context, UserInfoActivity.class);
-				intent.putExtra(UserInfoActivity.ARG_USER_NAME, userBean.getUserName());
+				intent.putExtra(Skip.KEY_USER_NAME, userBean.getUserName());
 				context.startActivity(intent);
 			}
 		});

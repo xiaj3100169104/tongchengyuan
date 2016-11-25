@@ -29,6 +29,7 @@ import com.juns.wechat.database.FriendTable;
 import com.juns.wechat.database.UserTable;
 import com.juns.wechat.manager.AccountManager;
 import com.style.base.BaseRecyclerViewAdapter;
+import com.style.constant.Skip;
 import com.style.utils.HanyuToPinyin;
 import com.style.view.DividerItemDecoration;
 import com.style.view.SideBar;
@@ -90,7 +91,7 @@ public class Fragment_Friends extends BaseFragment implements OnClickListener{
             public void onItemClick(int position, Object data) {
                 FriendBean rosterBean = (FriendBean) data;
                 Intent intent = new Intent(getActivity(), UserInfoActivity.class);
-                intent.putExtra(UserInfoActivity.ARG_USER_NAME, rosterBean.getContactName());
+                intent.putExtra(Skip.KEY_USER_NAME, rosterBean.getContactName());
 
                 getActivity().startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.push_left_in,

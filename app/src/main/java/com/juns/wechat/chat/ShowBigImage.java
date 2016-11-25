@@ -29,6 +29,8 @@ import com.juns.wechat.util.ImageLoader;
 import com.juns.wechat.util.LogUtil;
 import com.juns.wechat.util.PhotoUtil;
 import com.juns.wechat.widget.scalemageview.PhotoView;
+import com.style.constant.Skip;
+
 import android.app.AlertDialog;
 
 import org.xutils.common.Callback;
@@ -38,10 +40,9 @@ import org.xutils.common.Callback;
  * 
  */
 public class ShowBigImage extends ToolbarActivity {
-    public static final String ARG_IMG_NAME = "img_name";
 	private PhotoView scaleImageView;
 	private ProgressBar loadLocalPb;
-    @Extra(name = ARG_IMG_NAME)
+    //@Extra(name = ARG_IMG_NAME)
     private String imgName;
 
     private static final int PHOTO_REQUEST_TAKEPHOTO = 1;// 拍照
@@ -62,6 +63,7 @@ public class ShowBigImage extends ToolbarActivity {
         scaleImageView.setLayoutParams(lp);
         loadLocalPb = (ProgressBar) findViewById(R.id.pb_load_local);
 
+        imgName = getIntent().getStringExtra(Skip.KEY_IMG_NAME);
         ImageLoader.loadAvatar(scaleImageView, imgName, new Callback.CommonCallback<Drawable>() {
             @Override
             public void onSuccess(Drawable result) {

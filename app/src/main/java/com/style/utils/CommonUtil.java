@@ -34,8 +34,9 @@ import android.widget.TextView;
 
 import com.juns.wechat.App;
 import com.juns.wechat.R;
-import com.style.base.Constant;
-import com.style.base.ToastManager;
+import com.style.constant.MyAction;
+import com.style.constant.Skip;
+import com.style.manager.ToastManager;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -355,7 +356,7 @@ public class CommonUtil {
         Uri imageUri = Uri.fromFile(photo);
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-        activity.startActivityForResult(intent, Constant.REQUESTCODE_TAKE_CAMERA);
+        activity.startActivityForResult(intent, Skip.CODE_TAKE_CAMERA);
         return photo;
     }
 
@@ -364,7 +365,7 @@ public class CommonUtil {
         Uri imageUri = Uri.fromFile(photo);
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-        fragment.startActivityForResult(intent, Constant.REQUESTCODE_TAKE_CAMERA);
+        fragment.startActivityForResult(intent, Skip.CODE_TAKE_CAMERA);
         return photo;
     }
 
@@ -376,7 +377,7 @@ public class CommonUtil {
         } else {
             intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         }
-        activity.startActivityForResult(intent, Constant.REQUESTCODE_TAKE_LOCAL);
+        activity.startActivityForResult(intent, Skip.CODE_TAKE_LOCAL);
     }
 
     public static void selectPhotoFromFragment(Fragment activity) {
@@ -387,7 +388,7 @@ public class CommonUtil {
         } else {
             intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         }
-        activity.startActivityForResult(intent, Constant.REQUESTCODE_TAKE_LOCAL);
+        activity.startActivityForResult(intent, Skip.CODE_TAKE_LOCAL);
     }
 
     public static List<String> getFromAssets(Context context, String fileName, String charSet) {

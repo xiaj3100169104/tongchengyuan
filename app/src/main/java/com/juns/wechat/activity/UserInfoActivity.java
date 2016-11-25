@@ -25,6 +25,7 @@ import com.juns.wechat.net.request.UserRequest;
 import com.juns.wechat.net.response.BaseResponse;
 import com.juns.wechat.util.ImageLoader;
 import com.juns.wechat.util.ToastUtil;
+import com.style.constant.Skip;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -34,7 +35,6 @@ import butterknife.OnClick;
  */
 
 public class UserInfoActivity extends ToolbarActivity implements OnClickListener {
-    public static final String ARG_USER_NAME = "user_name";
     @Bind(R.id.ivAvatar)
     ImageView ivAvatar;
     @Bind(R.id.tvNickName)
@@ -46,7 +46,7 @@ public class UserInfoActivity extends ToolbarActivity implements OnClickListener
     @Bind(R.id.btnSendMsg)
     Button btnSendMsg;
 
-    @Extra(name = ARG_USER_NAME)
+    //@Extra(name = ARG_USER_NAME)
     private String userName;
 
     private UserBean account = AccountManager.getInstance().getUser();
@@ -77,6 +77,7 @@ public class UserInfoActivity extends ToolbarActivity implements OnClickListener
     }
 
     public void initData() {
+        userName = getIntent().getStringExtra(Skip.KEY_USER_NAME);
         if (userName.equals(account.getUserName())) {  //查看自己的信息
             userBean = account;
             setData();
@@ -138,11 +139,11 @@ public class UserInfoActivity extends ToolbarActivity implements OnClickListener
         }
         if (subType == null) {
             Intent intent = new Intent(UserInfoActivity.this, AddFriendFinalActivity.class);
-            intent.putExtra(AddFriendFinalActivity.ARG_USER_NAME, userName);
+            intent.putExtra(Skip.KEY_USER_NAME, userName);
             startActivity(intent);
         } else {
             Intent intent = new Intent(UserInfoActivity.this, ChatActivity.class);
-            intent.putExtra(ChatActivity.ARG_USER_NAME, userName);
+            intent.putExtra(Skip.KEY_USER_NAME, userName);
             startActivity(intent);
         }
     }

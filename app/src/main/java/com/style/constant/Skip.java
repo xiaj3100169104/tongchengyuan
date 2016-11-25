@@ -1,4 +1,4 @@
-package com.style.utils;
+package com.style.constant;
 
 import android.app.ActivityManager;
 import android.content.Context;
@@ -7,23 +7,39 @@ import android.util.Log;
 
 
 import java.util.List;
-
+/**
+ *  * 避免跳转传值的key和请求码重复混乱，最好统一放在这里
+ * Created by xiajun on 2016/11/25.
+ */
 public class Skip {
-
-    public static final String ACCOUNT_KEY = "account";
-    public static final String PASSWORD_KEY = "password";
-    public static final String USER_KEY = "user";
-    public static final String CURUSER_KEY = "curUser";
-    public static final String OUSER_KEY = "oUser";
-    public static final String CIRCLE_KEY = "circle";
-    public static final String PHONE_KEY = "phone";
-    public static final String EMODATA_KEY = "emoData";
-    public static final String USERDYNAMIC_KEY = "UserDynamic";
-    public static final String POSITION_KEY = "position";
-    public static final String SQUAREINFO_KEY = "SquareInfo";
-    public static final String ISDELETE_KEY = "isDelete";
-    public static final String USERLIST_KEY = "userList";
-    public static final String YY_KEY = "yy";
+    /**
+     * 界面跳转请求码
+     */
+    public static final int CODE_TAKE_CAMERA = 0x000001;// 拍照
+    public static final int CODE_TAKE_LOCAL = 0x000002;// 本地图片
+    public static final int CODE_PHOTO_CROP = 0x000003;// 系统裁剪头像
+    public static final int CODE_EMPTY_HISTORY = 0x000004;
+    public static final int CODE_MAP = 0x000005;
+    public static final int CODE_COPY_AND_PASTE = 0x000006;
+    public static final int CODE_SELECT_FILE = 0x000007;
+    /**
+     * 界面跳转传值key
+     */
+    public static final String KEY_USER_NAME = "user_name";
+    public static final String KEY_SEARCH_RESULTS = "search_results";
+    public static final String KEY_IMG_NAME = "img_name";
+    public static final String KEY_ACCOUNT = "account";
+    public static final String KEY_PASSWORD = "password";
+    public static final String KEY_USER = "user";
+    public static final String KEY_CURUSER = "curUser";
+    public static final String KEY_OUSER = "oUser";
+    public static final String KEY_PHONE = "phone";
+    public static final String KEY_EMODATA = "emoData";
+    public static final String KEY_USERDYNAMIC = "UserDynamic";
+    public static final String KEY_POSITION = "position";
+    public static final String KEY_SQUAREINFO = "SquareInfo";
+    public static final String KEY_ISDELETE = "isDelete";
+    public static final String KEY_USERLIST = "userList";
 
     public static void skipClearTop(Context context, Class<?> cls) {
         context.startActivity(new Intent().setClass(context, cls).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));

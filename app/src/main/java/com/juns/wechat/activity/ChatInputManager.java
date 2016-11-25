@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.juns.wechat.R;
@@ -31,12 +30,12 @@ import com.juns.wechat.util.ThreadPoolUtil;
 import com.juns.wechat.util.ToastUtil;
 import com.juns.wechat.view.AudioRecordButton;
 import com.juns.wechat.xmpp.util.SendMessage;
-import com.style.base.Constant;
+import com.style.constant.FileDirectory;
+import com.style.constant.MyAction;
 import com.style.utils.CommonUtil;
 import com.wangzhe.photopicker.PhotoPicker;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -214,7 +213,7 @@ public class ChatInputManager implements View.OnClickListener{
         switch (id) {
             case R.id.view_camera:
                // 点击照相图标
-                mChatActivity.cameraFile = com.style.utils.CommonUtil.takePhoto(mChatActivity, Constant.DIR_APP_IMAGE_CAMERA, String.valueOf(System.currentTimeMillis()) + ".jpg");
+                mChatActivity.cameraFile = com.style.utils.CommonUtil.takePhoto(mChatActivity, FileDirectory.DIR_IMAGE, String.valueOf(System.currentTimeMillis()) + ".jpg");
 
                 break;
             case R.id.view_file:

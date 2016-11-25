@@ -16,19 +16,21 @@ import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.common.BaseActivity;
 import com.juns.wechat.common.ToolbarActivity;
 import com.juns.wechat.xmpp.bean.SearchResult;
+import com.style.constant.Skip;
 
 import java.util.List;
 
 public class SearchResultActivity extends ToolbarActivity {
-    public static final String ARG_SEARCH_RESULTS = "search_results";
 
     private ListView lvSearchResultList;
-    @Extra(name = ARG_SEARCH_RESULTS)
+    //@Extra(name = ARG_SEARCH_RESULTS)
     private List<UserBean> searchResults;
     private SearchResultAdapter searchResultAdapter;
 
     @Override
     public void initData() {
+        searchResults = (List<UserBean>) getIntent().getParcelableExtra(Skip.KEY_SEARCH_RESULTS);
+
         if(searchResults == null || searchResults.isEmpty()){
             throw new IllegalArgumentException("search results is null or empty!");
         }
@@ -42,7 +44,7 @@ public class SearchResultActivity extends ToolbarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 UserBean userBean = searchResults.get(position);
                 Intent intent = new Intent(SearchResultActivity.this, UserInfoActivity.class);
-                intent.putExtra(UserInfoActivity.ARG_USER_NAME, userBean.getUserName());
+                intent.putExtra(Skip.KEY_USER_NAME, userBean.getUserName());
                 startActivity(intent);
             }
         });

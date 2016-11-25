@@ -23,6 +23,7 @@ import com.juns.wechat.util.LogUtil;
 import com.juns.wechat.xmpp.bean.SearchResult;
 import com.juns.wechat.xmpp.listener.BaseXmppManagerListener;
 import com.juns.wechat.xmpp.listener.XmppManagerListener;
+import com.style.constant.Skip;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -123,7 +124,7 @@ public class SearchActivity extends BaseActivity {
     private void showSearchResult(ArrayList<UserBean> userBeans){
         if(userBeans != null && !userBeans.isEmpty()){
             Intent intent = new Intent(SearchActivity.this, SearchResultActivity.class);
-            intent.putParcelableArrayListExtra(SearchResultActivity.ARG_SEARCH_RESULTS, userBeans);
+            intent.putParcelableArrayListExtra(Skip.KEY_SEARCH_RESULTS, userBeans);
             startActivity(intent);
         }else {
             showToast("没有搜索到用户");

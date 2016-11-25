@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.juns.wechat.R;
 import com.style.dialog.MaterialProgressDialog;
+import com.style.manager.ToastManager;
 import com.style.utils.CommonUtil;
 
 import java.util.ArrayList;

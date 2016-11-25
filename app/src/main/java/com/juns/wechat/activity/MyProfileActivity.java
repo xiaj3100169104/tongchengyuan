@@ -21,6 +21,7 @@ import com.juns.wechat.net.request.UserRequest;
 import com.juns.wechat.net.response.UpdateUserResponse;
 import com.juns.wechat.util.ImageLoader;
 import com.juns.wechat.util.PhotoUtil;
+import com.style.constant.Skip;
 
 import org.simple.eventbus.EventBus;
 import org.simple.eventbus.Subscriber;
@@ -88,7 +89,7 @@ public class MyProfileActivity extends ToolbarActivity implements SelectPhotoDia
     @OnClick(R.id.ivAvatar)
     public void showBigAvatar() {
         Intent intent = new Intent(this, ShowBigImage.class);
-        intent.putExtra(ShowBigImage.ARG_IMG_NAME, account.getHeadUrl());
+        intent.putExtra(Skip.KEY_IMG_NAME, account.getHeadUrl());
         startActivity(intent);
     }
 
