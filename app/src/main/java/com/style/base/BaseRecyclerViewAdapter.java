@@ -23,11 +23,9 @@ import java.util.List;
  * Created by XiaJun on 2015/7/2.
  */
 public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    public static final int TYPE_HEADER = 0;
     public Context mContext;
     public LayoutInflater mInflater;
     public List<T> list;
-    private View mHeaderView;
     private OnItemClickListener mListener;
     private OnItemLongClickListener onItemLongClickListener;
 
@@ -41,9 +39,9 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Re
         mInflater = LayoutInflater.from(context);
     }
 
-    public void addHeaderView(View headerView) {
-        mHeaderView = headerView;
-        notifyItemInserted(0);
+    @Override
+    public int getItemCount() {
+        return list.size();
     }
 
     public List<T> getList() {
@@ -83,7 +81,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Re
 
     public void removeData(int position) {
         this.list.remove(position);
-        notifyItemRemoved(getItemPosition(position));
+        notifyItemRemoved(position);
     }
 
     public void removeData(T e) {
@@ -91,13 +89,9 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Re
         notifyDataSetChanged();
     }
 
-    private int getItemPosition(int position) {
-        return mHeaderView == null ? position : position + 1;
-    }
-
     public void updateData(int position, T e) {
         list.set(position, e);
-        notifyItemChanged(getItemPosition(position));
+        notifyItemChanged(position);
     }
 
     public void clearData() {
@@ -105,30 +99,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Re
         notifyDataSetChanged();
     }
 
-    public int getDataSize() {
-        return list.size();
-    }
-
-    @Override
-    public int getItemCount() {
-        int size = getDataSize();
-        int count = mHeaderView == null ? size : size + 1;
-        return count;
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        if (position == 0 && mHeaderView != null)
-            return TYPE_HEADER;
-        return getViewType(position);
-    }
-
-    //返回除header类型的其他view类型
-    public int getViewType(int position) {
-        return 1;
-    }
-
-    public boolean isSetOnItemClickListener() {
+    public boolean isSetOnItemClickListener(int position, int itemViewType) {
         return true;
     }
 
@@ -138,21 +109,15 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Re
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (mHeaderView != null && viewType == TYPE_HEADER)
-            return new HeaderViewHolder(mHeaderView);
         return onCreateItem(parent, viewType);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        int viewType = getItemViewType(position);
-        if (viewType == TYPE_HEADER) return;
-        //int adapterPosition = holder.getAdapterPosition();
-        int layoutPosition = holder.getLayoutPosition();
-        final int index = mHeaderView == null ? layoutPosition : layoutPosition - 1;
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        final int index = position;
         T data = list.get(index);
         onBindItem(holder, index, data);
-        if (isSetOnItemClickListener()) {
+        if (isSetOnItemClickListener(index, getItemViewType(index))) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -170,42 +135,6 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Re
                     return true;
                 }
             });
-        }
-    }
-
-    @Override
-    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
-        super.onAttachedToRecyclerView(recyclerView);
-        RecyclerView.LayoutManager manager = recyclerView.getLayoutManager();
-        if (manager instanceof GridLayoutManager) {
-            final GridLayoutManager gridManager = ((GridLayoutManager) manager);
-            gridManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-                @Override
-                public int getSpanSize(int position) {
-                    return getItemViewType(position) == TYPE_HEADER
-                            ? gridManager.getSpanCount() : 1;
-                }
-            });
-        }
-    }
-
-    @Override
-    public void onViewAttachedToWindow(RecyclerView.ViewHolder holder) {
-        super.onViewAttachedToWindow(holder);
-        ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
-        if (lp != null && lp instanceof StaggeredGridLayoutManager.LayoutParams) {
-            StaggeredGridLayoutManager.LayoutParams p = (StaggeredGridLayoutManager.LayoutParams) lp;
-            if (holder.getLayoutPosition() == 0 && holder.getItemViewType() == TYPE_HEADER) {
-                p.setFullSpan(true);
-            } else {
-                p.setFullSpan(false);
-            }
-        }
-    }
-
-    public class HeaderViewHolder extends RecyclerView.ViewHolder {
-        public HeaderViewHolder(View itemView) {
-            super(itemView);
         }
     }
 
