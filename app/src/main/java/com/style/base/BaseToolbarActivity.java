@@ -1,4 +1,4 @@
-package com.juns.wechat.common;
+package com.style.base;
 
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -8,11 +8,14 @@ import android.widget.TextView;
 
 
 import com.juns.wechat.R;
+import com.style.base.BaseActivity;
+
 import org.simple.eventbus.EventBus;
 
-public abstract class ToolbarActivity extends BaseActivity {
+public abstract class BaseToolbarActivity extends BaseActivity {
     private Toolbar toolbar;
     private TextView tvTitleBase;
+    private ImageView ivBaseToolbarReturn;
 
     @Override
     protected void onCreate(Bundle arg0) {
@@ -24,7 +27,7 @@ public abstract class ToolbarActivity extends BaseActivity {
 
     protected void customTitleOptions(View mContentView) {
         toolbar = (Toolbar) mContentView.findViewById(R.id.toolbar);
-        ImageView ivBaseToolbarReturn = (ImageView) mContentView.findViewById(R.id.iv_base_toolbar_Return);
+        ivBaseToolbarReturn = (ImageView) mContentView.findViewById(R.id.iv_base_toolbar_Return);
         tvTitleBase = (TextView) mContentView.findViewById(R.id.tv_base_toolbar_title);
         if (toolbar != null) {
             toolbar.setTitle("");
@@ -36,6 +39,14 @@ public abstract class ToolbarActivity extends BaseActivity {
                 onClickTitleBack();
             }
         });
+    }
+
+    public Toolbar getToolbar() {
+        return toolbar;
+    }
+
+    public ImageView getIvBaseToolbarReturn() {
+        return ivBaseToolbarReturn;
     }
 
     protected void onClickTitleBack() {

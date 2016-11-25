@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.widget.ProgressBar;
 
 import com.juns.wechat.R;
-import com.juns.wechat.common.BaseActivity;
+import com.style.base.BaseActivity;
 
 public class ShowNormalFileActivity extends BaseActivity {
 	private ProgressBar progressBar;

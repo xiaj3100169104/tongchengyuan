@@ -44,6 +44,6 @@
             android:textSize="18sp"
             android:textColor="@color/white"
             android:layout_marginLeft="10dp"
-            android:layout_centerVertical="true"/>
+            android:layout_gravity="center_vertical"/>
     </LinearLayout>
 </android.support.v7.widget.Toolbar>

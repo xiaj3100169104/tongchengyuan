@@ -1,15 +1,14 @@
-package com.juns.wechat.common;
+package com.style.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 
 import org.simple.eventbus.EventBus;
 
 /**
  * Created by 王者 on 2016/8/7.
  */
-public class BaseFragment extends com.style.base.BaseFragment{
+public class BaseBusFragment extends BaseFragment{
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

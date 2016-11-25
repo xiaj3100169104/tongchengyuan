@@ -16,7 +16,7 @@ public class Skip {
      * 界面跳转请求码
      */
     public static final int CODE_TAKE_CAMERA = 0x000001;// 拍照
-    public static final int CODE_TAKE_LOCAL = 0x000002;// 本地图片
+    public static final int CODE_TAKE_ALBUM = 0x000002;// 从相册中选择
     public static final int CODE_PHOTO_CROP = 0x000003;// 系统裁剪头像
     public static final int CODE_EMPTY_HISTORY = 0x000004;
     public static final int CODE_MAP = 0x000005;

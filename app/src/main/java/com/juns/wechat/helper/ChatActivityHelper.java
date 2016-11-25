@@ -1,5 +1,6 @@
-package com.juns.wechat.activity;
+package com.juns.wechat.helper;
 
+import com.juns.wechat.activity.ChatActivity;
 import com.juns.wechat.bean.MessageBean;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.bean.chat.viewmodel.MsgViewModel;

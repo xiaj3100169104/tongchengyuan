@@ -1,14 +1,13 @@
 package com.juns.wechat.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
 import com.juns.wechat.R;
 import com.juns.wechat.annotation.Id;
-import com.juns.wechat.common.ToolbarActivity;
+import com.style.base.BaseToolbarActivity;
 
-public class SendInviteMessageActivity extends ToolbarActivity {
+public class SendInviteMessageActivity extends BaseToolbarActivity {
     @Id
     private TextView tvRightText;
 

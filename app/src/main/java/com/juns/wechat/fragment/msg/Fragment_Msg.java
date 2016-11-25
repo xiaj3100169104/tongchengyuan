@@ -15,7 +15,7 @@ import com.juns.wechat.R;
 import com.juns.wechat.activity.ChatActivity;
 import com.juns.wechat.adpter.ConversationAdapter;
 import com.juns.wechat.bean.MessageBean;
-import com.juns.wechat.common.BaseFragment;
+import com.style.base.BaseBusFragment;
 import com.juns.wechat.dao.DbDataEvent;
 import com.juns.wechat.dao.MessageDao;
 import com.juns.wechat.database.ChatTable;
@@ -31,10 +31,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 //消息
-public class Fragment_Msg extends BaseFragment {
+public class Fragment_Msg extends BaseBusFragment {
     @Bind(R.id.iv_neterror)
     ImageView ivNeterror;
     @Bind(R.id.tv_connect_errormsg)

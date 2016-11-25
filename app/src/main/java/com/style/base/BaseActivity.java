@@ -2,57 +2,49 @@ package com.style.base;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.juns.wechat.R;
-import com.style.dialog.MaterialProgressDialog;
+import com.juns.wechat.dialog.FlippingLoadingDialog;
+import com.juns.wechat.util.ToastUtil;
 import com.style.manager.LogManager;
 import com.style.manager.ToastManager;
+import com.style.dialog.MaterialProgressDialog;
+import com.style.rxAndroid.BaseRxActivity;
 import com.style.utils.CommonUtil;
 
 import butterknife.ButterKnife;
 
-public abstract class BaseActivity extends AppCompatActivity {
-    protected String TAG = getClass().getSimpleName();
-    protected Context context;
+
+public abstract class BaseActivity extends BaseRxActivity {
+    private Context mContext;
     public LayoutInflater mInflater;
     protected Integer mLayoutResID;
     protected View mContentView;
-    public View statusBar;
-    public AppBarLayout appBarLayout;
-    public Toolbar toolbar;
-    private TextView tvTitleBase;
-
+    private FlippingLoadingDialog mLoadingDialog;
+    protected boolean isVisibleToUser = false;
     private MaterialProgressDialog progressDialog;
     private AlertDialog dlgPrompt;
-
-    public enum TitleMode {
-        NORMAL, CUSTOM
-    }
-
-    public TitleMode getLayoutMode() {
-        return TitleMode.NORMAL;
-    }
 
     public abstract void initData();
 
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
-        context = this;
-        mInflater = LayoutInflater.from(context);
+        mContext = this;
+        mInflater = LayoutInflater.from(mContext);
         if (mLayoutResID != null)
             mContentView = mInflater.inflate(mLayoutResID, null);
         //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE); //横屏
@@ -97,71 +89,44 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     public void setContentView(View mContentView) {
-        TitleMode mode = getLayoutMode();
-        switch (mode) {
-            case NORMAL:
-                customTitleOptions(mContentView);
-                break;
-            case CUSTOM:
-                break;
-        }
+        customTitleOptions(mContentView);
         super.setContentView(mContentView);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onClickTitleBack();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
+    protected void customTitleOptions(View mContentView) {
     }
 
-    protected void onClickTitleBack() {
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            onBackFinish();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void onBackPressed() {
+        onBackFinish();
+    }
+
+    protected void onBackFinish() {
         finish();
     }
 
-    protected void customTitleOptions(View mContentView) {
-        //statusBar = mContentView.findViewById(R.id.status_bar);
-        appBarLayout = (AppBarLayout) mContentView.findViewById(R.id.app_bar);
-        toolbar = (Toolbar) mContentView.findViewById(R.id.toolbar);
-        tvTitleBase = (TextView) mContentView.findViewById(R.id.tv_title_base);
-        if (toolbar != null) {
-            toolbar.setTitle("");
-            setSupportActionBar(toolbar);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isVisibleToUser = true;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isVisibleToUser = false;
+        if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
+            mLoadingDialog.dismiss();
         }
-    }
-
-    protected void setNavigationIcon(int resId) {
-        toolbar.setNavigationIcon(getResources().getDrawable(resId));
-    }
-
-    protected void setTitleCenterText(int resId) {
-        setTitleCenterText(getString(resId));
-    }
-
-    protected void setTitleCenterText(String title) {
-        setText(tvTitleBase, title);
-    }
-
-    protected View getTitleCenterView() {
-        return tvTitleBase;
-    }
-
-    public void resumeTopViewColor() {
-        statusBar.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-        appBarLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-    }
-
-    public void setTopViewColor(int color) {
-        statusBar.setBackgroundColor(getResources().getColor(color));
-        appBarLayout.setBackgroundColor(getResources().getColor(color));
-    }
-
-    public void setTopViewTransparent() {
-        statusBar.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-        appBarLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
     }
 
     @Override
@@ -169,6 +134,37 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onDestroy();
         ButterKnife.unbind(this);
         dismissProgressDialog();
+    }
+
+    protected void skip(Class<?> cls) {
+        startActivity(new Intent(mContext, cls));
+    }
+
+    protected void showToast(int resId) {
+        showToast(getString(resId));
+    }
+
+    protected void showToast(String prompt) {
+        if (isVisibleToUser) {
+            ToastUtil.showToast(prompt, Toast.LENGTH_SHORT);
+        }
+    }
+
+    public void showToastLong(String msg) {
+        ToastManager.showToastLong(mContext, msg);
+    }
+
+    public void showToastLong(int msgId) {
+        ToastManager.showToastLong(mContext, msgId);
+    }
+
+    public FlippingLoadingDialog getLoadingDialog(String msg) {
+        if (mLoadingDialog == null)
+            mLoadingDialog = new FlippingLoadingDialog(this, msg);
+        else {
+            mLoadingDialog.setText(msg);
+        }
+        return mLoadingDialog;
     }
 
     public void showProgressDialog() {
@@ -181,7 +177,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void showProgressDialog(String msg) {
         if (progressDialog == null)
-            progressDialog = new MaterialProgressDialog(context, R.style.Dialog_NoTitle);
+            progressDialog = new MaterialProgressDialog(mContext, R.style.Dialog_NoTitle);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setMessage(msg);
         progressDialog.show();
@@ -197,7 +193,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         LogManager.logE(tag, msg);
     }
 
-    protected void showGiveUpEditDialog(final OnGiveUpEditDialogListener listener) {
+    protected void showGiveUpEditDialog(final com.style.base.BaseActivity.OnGiveUpEditDialogListener listener) {
         if (dlgPrompt == null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("放弃编辑");
@@ -225,24 +221,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         void onNegativeButton();
     }
 
-    public void showToast(String str) {
-        ToastManager.showToast(context, str);
-    }
-
-    public void showToast(int resId) {
-        ToastManager.showToast(context, resId);
-    }
-
-    public void showToastLong(String msg) {
-        ToastManager.showToastLong(context, msg);
-    }
-
-    public void showToastLong(int msgId) {
-        ToastManager.showToastLong(context, msgId);
-    }
-
     protected void setText(TextView textView, int strId) {
-        setText(textView, context.getString(strId));
+        setText(textView, mContext.getString(strId));
     }
 
     protected void setText(TextView textView, String str) {
@@ -254,10 +234,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected int dip2px(float dpValue) {
-        return CommonUtil.dip2px(context, dpValue);
+        return CommonUtil.dip2px(mContext, dpValue);
     }
 
     protected int px2dip(float pxValue) {
-        return CommonUtil.px2dip(context, pxValue);
+        return CommonUtil.px2dip(mContext, pxValue);
     }
 }

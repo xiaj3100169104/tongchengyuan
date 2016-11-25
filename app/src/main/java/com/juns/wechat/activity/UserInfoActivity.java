@@ -12,11 +12,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.juns.wechat.R;
-import com.juns.wechat.annotation.Extra;
-import com.juns.wechat.annotation.Id;
 import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.common.ToolbarActivity;
+import com.style.base.BaseToolbarActivity;
 import com.juns.wechat.dao.FriendDao;
 import com.juns.wechat.exception.UserNotFoundException;
 import com.juns.wechat.manager.AccountManager;
@@ -34,7 +32,7 @@ import butterknife.OnClick;
  * 用户资料
  */
 
-public class UserInfoActivity extends ToolbarActivity implements OnClickListener {
+public class UserInfoActivity extends BaseToolbarActivity implements OnClickListener {
     @Bind(R.id.ivAvatar)
     ImageView ivAvatar;
     @Bind(R.id.tvNickName)

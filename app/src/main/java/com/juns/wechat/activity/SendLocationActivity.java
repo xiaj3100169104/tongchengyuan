@@ -29,15 +29,14 @@ import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.juns.wechat.R;
-import com.juns.wechat.annotation.Id;
-import com.juns.wechat.common.ToolbarActivity;
+import com.style.base.BaseToolbarActivity;
 import com.juns.wechat.util.LogUtil;
 
 import java.util.List;
 
 import butterknife.Bind;
 
-public class SendLocationActivity extends ToolbarActivity implements OnGetGeoCoderResultListener {
+public class SendLocationActivity extends BaseToolbarActivity implements OnGetGeoCoderResultListener {
     @Bind(R.id.ivMarker)
     ImageView ivMarker;
     /**

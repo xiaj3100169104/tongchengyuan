@@ -13,9 +13,8 @@ import android.widget.EditText;
 
 import com.juns.wechat.MainActivity;
 import com.juns.wechat.R;
-import com.juns.wechat.annotation.Content;
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.common.ToolbarActivity;
+import com.style.base.BaseToolbarActivity;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.callback.BaseCallBack;
 import com.juns.wechat.net.response.BaseResponse;
@@ -26,7 +25,6 @@ import com.style.utils.FormatUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.xutils.view.annotation.ViewInject;
 
 import butterknife.Bind;
 import cn.smssdk.EventHandler;
@@ -37,7 +35,7 @@ import cn.smssdk.SMSSDK;
  * 用户注册
  * create by 王者 on 2061/2/7
  */
-public class RegisterActivity extends ToolbarActivity implements OnClickListener {
+public class RegisterActivity extends BaseToolbarActivity implements OnClickListener {
     @Bind(R.id.btnRegister)
 	Button btn_register;
     @Bind(R.id.btn_send)

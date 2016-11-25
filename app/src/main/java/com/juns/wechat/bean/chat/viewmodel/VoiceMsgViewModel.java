@@ -9,13 +9,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.juns.wechat.R;
-import com.juns.wechat.activity.ChatMediaPlayer;
+import com.juns.wechat.helper.ChatMediaPlayer;
 import com.juns.wechat.bean.MessageBean;
 import com.juns.wechat.bean.chat.VoiceMsg;
 import com.juns.wechat.common.ViewHolder;
 import com.juns.wechat.config.MsgType;
 import com.juns.wechat.util.AudioManager;
-import com.juns.wechat.util.LogUtil;
 import com.juns.wechat.util.TimeUtil;
 
 

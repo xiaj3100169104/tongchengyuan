@@ -4,17 +4,14 @@ package com.juns.wechat.activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.TextView;
 
-import com.juns.wechat.Constants;
 import com.juns.wechat.R;
-import com.juns.wechat.common.BaseActivity;
-import com.juns.wechat.common.ToolbarActivity;
+import com.style.base.BaseToolbarActivity;
 import com.juns.wechat.manager.AccountManager;
 
 
 //设置
-public class SettingActivity extends ToolbarActivity implements OnClickListener {
+public class SettingActivity extends BaseToolbarActivity implements OnClickListener {
 
 	@Override
 	public void initData() {

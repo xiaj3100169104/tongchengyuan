@@ -21,24 +21,23 @@ import android.widget.ListView;
 import com.juns.wechat.Constants;
 import com.juns.wechat.R;
 import com.juns.wechat.adpter.ChatAdapter;
-import com.juns.wechat.annotation.Extra;
 import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.bean.MessageBean;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.bean.chat.viewmodel.MsgViewModel;
 import com.juns.wechat.chat.AlertDialog;
 import com.juns.wechat.chat.adpter.MessageAdapter;
-import com.juns.wechat.common.ToolbarActivity;
+import com.style.base.BaseToolbarActivity;
 import com.juns.wechat.dao.DbDataEvent;
 import com.juns.wechat.dao.FriendDao;
 import com.juns.wechat.database.ChatTable;
 import com.juns.wechat.exception.UserNotFoundException;
+import com.juns.wechat.helper.ChatActivityHelper;
+import com.juns.wechat.helper.ChatInputManager;
+import com.juns.wechat.helper.ChatMediaPlayer;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.util.LogUtil;
-import com.style.constant.MyAction;
 import com.style.constant.Skip;
-import com.wangzhe.photopicker.PhotoPicker;
-
 import org.simple.eventbus.Subscriber;
 
 import java.io.File;
@@ -51,7 +50,7 @@ import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
 //聊天页面
-public class ChatActivity extends ToolbarActivity {
+public class ChatActivity extends BaseToolbarActivity {
 
 
     public static final int RESULT_CODE_COPY = 1;
@@ -356,9 +355,8 @@ public class ChatActivity extends ToolbarActivity {
 				}
 				sendVideo(videoPath, file.getAbsolutePath(), duration / 1000);
 
-			} */ else if (requestCode == PhotoPicker.REQUEST_CODE) {  //发送本地图片
-                ArrayList<String> selectedPhotos = data.getStringArrayListExtra(PhotoPicker.KEY_SELECTED_PHOTOS);
-
+			} */ else if (requestCode == Skip.CODE_TAKE_ALBUM) {  //发送本地图片
+                ArrayList<String> selectedPhotos = data.getStringArrayListExtra("paths");
                 sendPicture(selectedPhotos);
             } else if (requestCode == Skip.CODE_SELECT_FILE) { // 发送选择的文件
                 if (data != null) {

@@ -6,9 +6,8 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.juns.wechat.R;
-import com.juns.wechat.annotation.Id;
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.common.ToolbarActivity;
+import com.style.base.BaseToolbarActivity;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.callback.UpdateUserCallBack;
 import com.juns.wechat.net.request.UserRequest;
@@ -17,7 +16,7 @@ import com.juns.wechat.util.NetWorkUtil;
 
 import butterknife.Bind;
 
-public class ModifyNameActivity extends ToolbarActivity {
+public class ModifyNameActivity extends BaseToolbarActivity {
     @Bind(R.id.etInputNick)
     EditText etInputNick;
     private String nickName;

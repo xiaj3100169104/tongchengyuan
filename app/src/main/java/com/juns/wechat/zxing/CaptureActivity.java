@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.Vector;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
@@ -16,22 +15,19 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.zxing.BarcodeFormat;
-import com.juns.wechat.Constants;
 import com.juns.wechat.R;
 import com.juns.wechat.SplashActivity;
-import com.juns.wechat.common.BaseActivity;
+import com.style.base.BaseActivity;
 import com.juns.wechat.zxing.camera.CameraManager;
 import com.juns.wechat.zxing.decoding.CaptureActivityHandler;
 import com.juns.wechat.zxing.decoding.InactivityTimer;

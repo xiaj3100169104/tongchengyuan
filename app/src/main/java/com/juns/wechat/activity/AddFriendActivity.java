@@ -1,18 +1,16 @@
 package com.juns.wechat.activity;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.juns.wechat.R;
-import com.juns.wechat.annotation.Content;
-import com.juns.wechat.common.ToolbarActivity;
+import com.style.base.BaseToolbarActivity;
 
 /**
  * Created by 王宗文 on 2016/6/20.
  */
-public class AddFriendActivity extends ToolbarActivity {
+public class AddFriendActivity extends BaseToolbarActivity {
 
     @Override
     public void initData() {

@@ -1,12 +1,11 @@
 package com.juns.wechat.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.juns.wechat.R;
-import com.juns.wechat.common.ToolbarActivity;
+import com.style.base.BaseToolbarActivity;
 
-public class NewFriendsActivity extends ToolbarActivity {
+public class NewFriendsActivity extends BaseToolbarActivity {
 
     @Override
     public void initData() {

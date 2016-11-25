@@ -1,26 +1,20 @@
 package com.juns.wechat.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.juns.wechat.R;
 import com.juns.wechat.adpter.SearchResultAdapter;
-import com.juns.wechat.annotation.Content;
-import com.juns.wechat.annotation.Extra;
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.common.BaseActivity;
-import com.juns.wechat.common.ToolbarActivity;
-import com.juns.wechat.xmpp.bean.SearchResult;
+import com.style.base.BaseToolbarActivity;
 import com.style.constant.Skip;
 
 import java.util.List;
 
-public class SearchResultActivity extends ToolbarActivity {
+public class SearchResultActivity extends BaseToolbarActivity {
 
     private ListView lvSearchResultList;
     //@Extra(name = ARG_SEARCH_RESULTS)

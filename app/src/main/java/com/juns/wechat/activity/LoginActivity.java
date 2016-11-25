@@ -16,9 +16,8 @@ import android.widget.TextView;
 
 import com.juns.wechat.MainActivity;
 import com.juns.wechat.R;
-import com.juns.wechat.annotation.Id;
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.common.ToolbarActivity;
+import com.style.base.BaseToolbarActivity;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.callback.LoginCallBack;
 import com.juns.wechat.net.request.UserRequest;
@@ -30,7 +29,7 @@ import butterknife.Bind;
 /**
  * create by 王者 on 2016/7/12
  */
-public class LoginActivity extends ToolbarActivity implements OnClickListener {
+public class LoginActivity extends BaseToolbarActivity implements OnClickListener {
     @Bind(R.id.iv_base_toolbar_Return)
     ImageView ivBaseToolbarReturn;
     @Bind(R.id.viewDivider)

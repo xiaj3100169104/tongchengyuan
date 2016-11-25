@@ -377,7 +377,7 @@ public class CommonUtil {
         } else {
             intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         }
-        activity.startActivityForResult(intent, Skip.CODE_TAKE_LOCAL);
+        activity.startActivityForResult(intent, Skip.CODE_TAKE_ALBUM);
     }
 
     public static void selectPhotoFromFragment(Fragment activity) {
@@ -388,7 +388,7 @@ public class CommonUtil {
         } else {
             intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         }
-        activity.startActivityForResult(intent, Skip.CODE_TAKE_LOCAL);
+        activity.startActivityForResult(intent, Skip.CODE_TAKE_ALBUM);
     }
 
     public static List<String> getFromAssets(Context context, String fileName, String charSet) {

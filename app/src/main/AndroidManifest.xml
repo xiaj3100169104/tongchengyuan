@@ -242,8 +242,8 @@
         </activity>
         <activity android:name=".activity.SendLocationActivity">
         </activity>
-        <activity
-            android:name="com.wangzhe.photopicker.PhotoPickerActivity"/>
+        <activity android:name="com.style.album.AlbumActivity"/>
+        <activity android:name="com.style.album.SelectLocalPictureActivity"/>
     </application>
 
 </manifest>

@@ -5,17 +5,15 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.juns.wechat.R;
-import com.juns.wechat.common.ToolbarActivity;
-import com.juns.wechat.util.ToastUtil;
+import com.style.base.BaseToolbarActivity;
 import com.juns.wechat.xmpp.util.SendMessage;
 import com.style.constant.Skip;
 
 import butterknife.Bind;
 
-public class AddFriendFinalActivity extends ToolbarActivity {
+public class AddFriendFinalActivity extends BaseToolbarActivity {
     @Bind(R.id.etReason)
     EditText etReason;
     //@Extra(name = ARG_USER_NAME)

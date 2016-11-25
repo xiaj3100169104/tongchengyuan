@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.juns.wechat.R;
 import com.juns.wechat.activity.MyProfileActivity;
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.common.BaseFragment;
+import com.style.base.BaseBusFragment;
 import com.juns.wechat.dao.DbDataEvent;
 import com.juns.wechat.database.UserTable;
 import com.juns.wechat.manager.AccountManager;
@@ -26,7 +26,7 @@ import com.juns.wechat.activity.SettingActivity;
 import java.util.List;
 
 //我
-public class Fragment_Profile extends BaseFragment implements OnClickListener {
+public class Fragment_Profile extends BaseBusFragment implements OnClickListener {
 	private View layout;
     private ImageView ivAvatar;
 	private TextView tvNickName, tvUserName;

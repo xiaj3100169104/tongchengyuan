@@ -19,7 +19,7 @@ import com.juns.wechat.adpter.ContactAdapter;
 import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.bean.MessageBean;
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.common.BaseFragment;
+import com.style.base.BaseBusFragment;
 import com.juns.wechat.config.MsgType;
 import com.juns.wechat.dao.DbDataEvent;
 import com.juns.wechat.dao.FriendDao;
@@ -42,11 +42,10 @@ import java.util.Comparator;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 //通讯录
 
-public class Fragment_Friends extends BaseFragment implements OnClickListener{
+public class Fragment_Friends extends BaseBusFragment implements OnClickListener{
     @Bind(R.id.tv_unread_invite_msg)
     TextView tvUnreadInviteMsg;
     @Bind(R.id.layout_new_friends)

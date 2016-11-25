@@ -12,21 +12,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.juns.wechat.R;
-import com.juns.wechat.annotation.Content;
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.common.BaseActivity;
+import com.style.base.BaseActivity;
 import com.juns.wechat.net.callback.BaseCallBack;
 import com.juns.wechat.net.request.UserRequest;
 import com.juns.wechat.net.response.BaseResponse;
 import com.juns.wechat.net.response.SearchUserResponse;
 import com.juns.wechat.util.LogUtil;
-import com.juns.wechat.xmpp.bean.SearchResult;
-import com.juns.wechat.xmpp.listener.BaseXmppManagerListener;
-import com.juns.wechat.xmpp.listener.XmppManagerListener;
 import com.style.constant.Skip;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by 王宗文 on 2016/6/20.

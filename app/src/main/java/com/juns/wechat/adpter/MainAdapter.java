@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.juns.wechat.common.BaseFragment;
+import com.style.base.BaseBusFragment;
 import com.juns.wechat.fragment.Fragment_Dicover;
 import com.juns.wechat.fragment.Fragment_Friends;
 import com.juns.wechat.fragment.msg.Fragment_Msg;
@@ -17,7 +17,7 @@ import java.util.List;
  * Created by 王宗文 on 2016/6/10.
  */
 public class MainAdapter extends FragmentPagerAdapter {
-    private List<BaseFragment> fragments;
+    private List<BaseBusFragment> fragments;
 
     public MainAdapter(FragmentManager fm) {
         super(fm);

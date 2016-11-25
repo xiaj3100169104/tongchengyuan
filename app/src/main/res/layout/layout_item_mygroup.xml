@@ -8,7 +8,7 @@
 	<RelativeLayout
 		    android:layout_width="match_parent"
 		android:layout_height="60.0dip"
-		android:background="@drawable/setting_item_selector"
+		android:background="@drawable/bg_pressed_default"
 		android:paddingLeft="10dip">
 		<ImageView
 		    android:id="@+id/ivAvatar"

@@ -1,4 +1,4 @@
-package com.juns.wechat.activity;
+package com.juns.wechat.helper;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -18,6 +18,8 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.juns.wechat.R;
+import com.juns.wechat.activity.ChatActivity;
+import com.juns.wechat.activity.SendLocationActivity;
 import com.juns.wechat.chat.adpter.ExpressionAdapter;
 import com.juns.wechat.chat.adpter.ExpressionPagerAdapter;
 import com.juns.wechat.chat.utils.SmileUtils;
@@ -30,10 +32,11 @@ import com.juns.wechat.util.ThreadPoolUtil;
 import com.juns.wechat.util.ToastUtil;
 import com.juns.wechat.view.AudioRecordButton;
 import com.juns.wechat.xmpp.util.SendMessage;
+import com.style.album.AlbumActivity;
+import com.style.album.SelectLocalPictureActivity;
 import com.style.constant.FileDirectory;
-import com.style.constant.MyAction;
+import com.style.constant.Skip;
 import com.style.utils.CommonUtil;
-import com.wangzhe.photopicker.PhotoPicker;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -289,10 +292,9 @@ public class ChatInputManager implements View.OnClickListener{
      * 从图库获取图片
      */
     private void selectPicFromLocal() {
-        PhotoPicker.builder()
-                .setPhotoCount(9)
-                .setGridColumnCount(3)
-                .start(mChatActivity);
+        Intent intent = new Intent(mChatActivity, AlbumActivity.class);
+        intent.putExtra("maxNum", 9);
+        mChatActivity.startActivityForResult(intent, Skip.CODE_TAKE_ALBUM);
     }
 
     /***

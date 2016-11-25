@@ -15,7 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 
 import com.juns.wechat.R;
-import com.juns.wechat.common.BaseActivity;
+import com.style.base.BaseActivity;
 
 /**
  * 展示视频内容

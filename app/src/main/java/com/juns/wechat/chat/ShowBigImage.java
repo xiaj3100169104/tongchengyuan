@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,14 +15,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.juns.wechat.R;
-import com.juns.wechat.annotation.Content;
-import com.juns.wechat.annotation.Extra;
-import com.juns.wechat.common.ToolbarActivity;
+import com.style.base.BaseToolbarActivity;
 import com.juns.wechat.util.DisplayUtil;
 import com.juns.wechat.util.ImageLoader;
 import com.juns.wechat.util.LogUtil;
@@ -39,7 +35,7 @@ import org.xutils.common.Callback;
  * 下载显示大图
  * 
  */
-public class ShowBigImage extends ToolbarActivity {
+public class ShowBigImage extends BaseToolbarActivity {
 	private PhotoView scaleImageView;
 	private ProgressBar loadLocalPb;
     //@Extra(name = ARG_IMG_NAME)

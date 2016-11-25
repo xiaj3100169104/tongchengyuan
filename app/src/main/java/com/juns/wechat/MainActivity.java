@@ -1,13 +1,9 @@
 package com.juns.wechat;
 
 
-import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.view.ViewPager;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
@@ -17,8 +13,7 @@ import android.widget.TextView;
 import com.juns.wechat.activity.AddFriendActivity;
 import com.juns.wechat.activity.LoginActivity;
 import com.juns.wechat.adpter.MainAdapter;
-import com.juns.wechat.annotation.Content;
-import com.juns.wechat.common.BaseActivity;
+import com.style.base.BaseActivity;
 import com.juns.wechat.dialog.WarnTipDialog;
 import com.juns.wechat.dialog.TitleMenu.ActionItem;
 import com.juns.wechat.dialog.TitleMenu.TitlePopup;

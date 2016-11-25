@@ -8,7 +8,7 @@ import android.view.View;
 
 import com.juns.wechat.R;
 import com.juns.wechat.annotation.Extra;
-import com.juns.wechat.common.ToolbarActivity;
+import com.style.base.BaseToolbarActivity;
 import com.juns.wechat.net.callback.UpdateUserCallBack;
 import com.juns.wechat.net.request.UploadFileRequest;
 import com.juns.wechat.net.response.UpdateUserResponse;
@@ -22,7 +22,7 @@ import java.util.Date;
 import butterknife.Bind;
 import butterknife.OnClick;
 
-public class CropImageActivity extends ToolbarActivity {
+public class CropImageActivity extends BaseToolbarActivity {
 
     @Bind(R.id.clipImageLayout)
     ClipImageLayout clipImageLayout;

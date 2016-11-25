@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.juns.wechat.R;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.ShowBigImage;
-import com.juns.wechat.common.ToolbarActivity;
+import com.style.base.BaseToolbarActivity;
 import com.juns.wechat.dao.DbDataEvent;
 import com.juns.wechat.database.UserTable;
 import com.juns.wechat.dialog.SelectPhotoDialog;
@@ -36,12 +36,8 @@ import butterknife.OnClick;
 /**
  * create by 王者 on 2016/7/14
  */
-public class MyProfileActivity extends ToolbarActivity implements SelectPhotoDialog.OnClickListener {
+public class MyProfileActivity extends BaseToolbarActivity implements SelectPhotoDialog.OnClickListener {
 
-
-    private static final int PHOTO_REQUEST_TAKEPHOTO = 1;// 拍照
-    private static final int PHOTO_REQUEST_GALLERY = 2;// 从相册中选择
-    private static final int PHOTO_REQUEST_CUT = 3;// 结果
     @Bind(R.id.ivAvatar)
     ImageView ivAvatar;
     @Bind(R.id.tvNickName)
@@ -152,20 +148,20 @@ public class MyProfileActivity extends ToolbarActivity implements SelectPhotoDia
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
-                case PHOTO_REQUEST_TAKEPHOTO:
+                case Skip.CODE_TAKE_CAMERA:
                  /*   startPhotoZoom(
                             Uri.fromFile(PhotoUtil.getFile(imageName)),
                             480);*/
                     Uri uri = Uri.fromFile(PhotoUtil.getFile(imageName));
-                    PhotoUtil.cropView(uri, 480, MyProfileActivity.this, PHOTO_REQUEST_CUT, imageName);
+                    PhotoUtil.cropView(uri, 480, MyProfileActivity.this, Skip.CODE_PHOTO_CROP, imageName);
                     break;
 
-                case PHOTO_REQUEST_GALLERY:
+                case Skip.CODE_TAKE_ALBUM:
                     if (data != null)
-                        PhotoUtil.cropView(data.getData(), 480, MyProfileActivity.this, PHOTO_REQUEST_CUT, imageName);
+                        PhotoUtil.cropView(data.getData(), 480, MyProfileActivity.this, Skip.CODE_PHOTO_CROP, imageName);
                     break;
 
-                case PHOTO_REQUEST_CUT:
+                case Skip.CODE_PHOTO_CROP:
 
                     break;
 
@@ -177,14 +173,14 @@ public class MyProfileActivity extends ToolbarActivity implements SelectPhotoDia
     @Override
     public void takePhoto(View v) {
         imageName = getNowTime() + ".png";
-        PhotoUtil.takePhoto(this, PHOTO_REQUEST_TAKEPHOTO, imageName);
+        PhotoUtil.takePhoto(this, Skip.CODE_TAKE_CAMERA, imageName);
         selectPhotoDialog.dismiss();
     }
 
     @Override
     public void openAlbum(View v) {
         imageName = getNowTime() + ".png";
-        PhotoUtil.openAlbum(this, PHOTO_REQUEST_GALLERY);
+        PhotoUtil.openAlbum(this, Skip.CODE_TAKE_ALBUM);
         selectPhotoDialog.dismiss();
     }
 
@@ -193,12 +189,4 @@ public class MyProfileActivity extends ToolbarActivity implements SelectPhotoDia
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMddHHmmssSS");
         return dateFormat.format(date);
     }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
-
-
 }

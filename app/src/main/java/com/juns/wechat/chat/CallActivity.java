@@ -6,7 +6,7 @@ import android.media.Ringtone;
 import android.media.SoundPool;
 import android.os.Bundle;
 
-import com.juns.wechat.common.BaseActivity;
+import com.style.base.BaseActivity;
 
 public class CallActivity extends BaseActivity {
 
