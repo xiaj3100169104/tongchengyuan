@@ -63,7 +63,9 @@ dependencies {
     compile 'org.igniterealtime.smack:smack-android-extensions:4.1.0'
     compile 'org.igniterealtime.smack:smack-tcp:4.1.0'
     compile 'com.makeramen:roundedimageview:2.2.1'
-    compile 'me.zhanghai.android.materialprogressbar:library:1.3.0'
+    //compile 'me.zhanghai.android.materialprogressbar:library:1.3.0'
+    compile project(':MaterialProgressBar')
+
     // add AndroidEventBus dependency
     compile 'org.simple:androideventbus:1.0.5.1'
     compile 'org.xutils:xutils:3.3.36'
