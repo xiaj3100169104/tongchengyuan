@@ -7,11 +7,16 @@ package com.style.constant;
  */
 
 public class MyAction {
-
-
     /**
      * 广播action
      */
+    public static final String ACTION_CALL_CONNECTING = "action.call.connected";
+    public static final String ACTION_CALL_CONNECT_FAILED = "action.call.out.failed";
+    public static final String ACTION_CALL_CONNECTED = "action.call.connected";
+    public static final String ACTION_CALL_HANGUP = "action.call.hangup";
+    public static final String ACTION_CALL_TIME_UPDATE = "action.call.time.update";
+    public static final String ACTION_CALL_END = "action.call.end";
+
     public static final String ACTION_REFRESH_CONVERSATION = "action.refresh.conversation";
 
     public static final String ACTION_FILE_PREPARE_DOWNLOAD = "action.file.prepare.download";

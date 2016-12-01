@@ -158,38 +158,7 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="3ecea51f560650b1ed8a4b99808f52e8"/>
-        <!-- 环信结束 -->
 
-
-        <!-- push应用定义消息receiver声明 -->
-
-
-        <!-- 4.4版本新增的CommandService声明，提升小米和魅族手机上的实际推送到达率 -->
-        <service
-            android:name="com.baidu.android.pushservice.CommandService"
-            android:exported="true"/>
-
-        <receiver
-            android:name="com.baidu.android.pushservice.PushServiceReceiver"
-            android:process=":bdservice_v1">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
-                <action android:name="com.baidu.android.pushservice.action.notification.SHOW"/>
-                <action android:name="com.baidu.android.pushservice.action.media.CLICK"/>
-            </intent-filter>
-        </receiver>
-        <!-- push应用定义消息receiver声明 -->
-        <receiver android:name=".PushMessageReceiver">
-            <intent-filter>
-
-                <!-- 接收push消息 -->
-                <action android:name="com.baidu.android.pushservice.action.MESSAGE"/>
-                <!-- 接收bind,unbind,fetch,delete等反馈消息 -->
-                <action android:name="com.baidu.android.pushservice.action.RECEIVE"/>
-                <action android:name="com.baidu.android.pushservice.action.notification.CLICK"/>
-            </intent-filter>
-        </receiver>
         <receiver android:name=".receiver.WeChatBroadCastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.CONFIGURATION_CHANGED"/>
@@ -201,11 +170,6 @@
         <service
             android:name=".service.XmppService"
             android:exported="true"/>
-
-        <!-- 在百度开发者中心查询应用的API Key -->
-        <meta-data
-            android:name="api_key"
-            android:value="Uvw5AMP15i9v1cUoS5aY7GR1"/>
 
         <activity
             android:name=".activity.SearchResultActivity"
@@ -244,6 +208,8 @@
         </activity>
         <activity android:name="com.style.album.AlbumActivity"/>
         <activity android:name="com.style.album.SelectLocalPictureActivity"/>
+        <activity android:name="com.juns.wechat.activity.CallVoiceBaseActivity"/>
+
     </application>
 
 </manifest>

@@ -128,11 +128,11 @@ public class SendLocationActivity extends BaseToolbarActivity implements OnGetGe
     @Override
     public void onGetReverseGeoCodeResult(ReverseGeoCodeResult reverseGeoCodeResult) {
         String address = reverseGeoCodeResult.getAddress();
+        LogUtil.i("标记: " + address);
         List<PoiInfo> poiInfos = reverseGeoCodeResult.getPoiList();
         for (PoiInfo poiInfo : poiInfos) {
-            LogUtil.i("arredss:" + poiInfo.address);
+            LogUtil.i("附近:" + poiInfo.address);
         }
-        LogUtil.i("addres: " + address);
     }
 
     /**

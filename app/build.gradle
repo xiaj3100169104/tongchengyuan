@@ -71,5 +71,4 @@ dependencies {
     compile 'in.srain.cube:ptr-load-more:1.0.6'
     compile name: 'SMSSDK-2.1.1', ext: 'aar'
     compile name: 'SMSSDKGUI-2.1.1', ext: 'aar'
-    //compile project(':photopicker')
 }

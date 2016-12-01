@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 
 import com.juns.wechat.R;
+import com.juns.wechat.activity.CallVoiceBaseActivity;
 import com.style.album.SelectLocalPictureActivity;
 import com.style.base.BaseBusFragment;
 import com.juns.wechat.zxing.CaptureActivity;
@@ -68,11 +69,10 @@ public class Fragment_Dicover extends BaseBusFragment implements OnClickListener
 		case R.id.txt_saoyisao:// 扫一扫
 			startActivity(new Intent(getActivity(), CaptureActivity.class));
 			break;
-		/*case R.id.txt_yaoyiyao:
-			CommonUtil.startActivity(getActivity(), PublicActivity.class,
-					new BasicNameValuePair(Constants.NAME, getString(R.string.shake)));
+		case R.id.txt_yaoyiyao:
+			startActivity(new Intent(getActivity(), CallVoiceBaseActivity.class));
 			break;
-		case R.id.txt_nearby:
+		/*case R.id.txt_nearby:
 			CommonUtil.startActivity(getActivity(), PublicActivity.class,
 					new BasicNameValuePair(Constants.NAME, getString(R.string.people_nearby)));
 			break;

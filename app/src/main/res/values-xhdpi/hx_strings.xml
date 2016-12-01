@@ -104,8 +104,10 @@
     <string name="confirmpassword">确认密码</string>
     <string name="downwaiting">正在下载文件请稍后</string>
     <string name="mute">静音</string>
+    <string name="speaker">扬声器</string>
     <string name="Hands_free">免提</string>
     <string name="hang_up">挂断</string>
+    <string name="shrink">收起</string>
     <string name="answer">接听</string>
     <string name="unable_to_connect">不能连接到服务器</string>
     <string name="newchat">新建聊天</string>
