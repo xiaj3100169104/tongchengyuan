@@ -1,187 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-	android:gravity="center_horizontal"
-	android:orientation="vertical"
-	android:layout_width="fill_parent"
-	android:layout_height="fill_parent"
-	xmlns:android="http://schemas.android.com/apk/res/android">
-	<ScrollView
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:scrollbars="none">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/window_bg"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
 
-	<LinearLayout
-		android:orientation="vertical"
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content">
-        <include layout="@layout/view_divider" />
-	    <RelativeLayout
-				android:layout_width="fill_parent"
-				android:layout_height="wrap_content"
-				android:paddingTop="8dp"
-				android:paddingBottom="8dp"
-				android:id="@+id/view_user"
-				android:layout_marginTop="10dp"
-			    android:background="@drawable/bg_pressed_default">
-				<ImageView
-					android:id="@+id/ivAvatar"
-					android:layout_marginRight="12dp"
-					android:layout_marginLeft="12dp"
-					android:layout_width="70.0dip"
-					android:layout_height="70.0dip"
-					android:src="@drawable/default_useravatar" />
-				<TextView
-					android:textSize="18.0dip"
-					android:id="@+id/tvNickName"
-					android:layout_marginTop="12dp"
-					android:layout_toRightOf="@+id/ivAvatar"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"/>
-					<TextView
-					android:id="@+id/tvUserName"
-					android:textSize="14.0dip"
-					style="@style/txt_ContextStyle1"
-					android:layout_marginTop="8dp"
-					android:layout_below="@+id/tvNickName"
-					android:layout_toRightOf="@+id/ivAvatar"/>
-					
-					<ImageView
-					android:layout_marginRight="15dp"
-					android:layout_alignParentRight="true"
-					android:layout_centerVertical="true"
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:src="@drawable/right" />
-					
-					  <ImageView
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:id="@+id/view_user"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_pressed_default"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp">
+
+                <ImageView
+                    android:id="@+id/ivAvatar"
+                    android:layout_width="70.0dip"
+                    android:layout_height="70.0dip"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginRight="12dp"
+                    android:src="@drawable/default_useravatar" />
+
+                <TextView
+                    android:id="@+id/tvNickName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:layout_toRightOf="@+id/ivAvatar"
+                    android:textSize="18.0dip" />
+
+                <TextView
+                    android:id="@+id/tvUserName"
+                    style="@style/txt_ContextStyle1"
+                    android:layout_below="@+id/tvNickName"
+                    android:layout_marginTop="8dp"
+                    android:layout_toRightOf="@+id/ivAvatar"
+                    android:textSize="14.0dip" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    android:src="@drawable/right" />
+
+                <ImageView
                     android:id="@+id/ivSex"
-                    android:layout_toRightOf="@+id/tvNickName"
                     android:layout_width="20dp"
                     android:layout_height="20dp"
-					android:layout_marginTop="14dp"
                     android:layout_marginLeft="5dp"
+                    android:layout_marginTop="14dp"
+                    android:layout_toRightOf="@+id/tvNickName"
                     android:src="@drawable/ic_sex_female" />
-			</RelativeLayout>
-			<View
-				android:background="@color/black2"
-				android:layout_width="fill_parent"
-				android:layout_height="1.0dip" />
+            </RelativeLayout>
 
-		<TextView
-            android:id="@+id/txt_album"
-            style="@style/TxtTitle"
-            android:textSize="16sp"
-            android:gravity="center_vertical"
-            android:background="@drawable/bg_pressed_default"
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:layout_marginTop="20dp"
-            android:drawablePadding="10dp"
-            android:drawableLeft="@drawable/icon_me_photo"
-            android:drawableRight="@drawable/right"
-            android:text="@string/my_posts" />
-		<View
-			android:background="@color/black2"
-			android:layout_width="fill_parent"
-			android:layout_height="1.0dip" />
-		<TextView
-					android:id="@+id/txt_collect"
-					style="@style/TxtTitle"
-					android:textSize="16sp"
-					android:gravity="center_vertical"
-					android:background="@drawable/bg_pressed_default"
-					android:layout_width="fill_parent"
-					android:layout_height="50dp"
-					android:paddingLeft="16dp"
-					android:paddingRight="16dp"
-					android:drawablePadding="10dp"
-					android:drawableLeft="@drawable/icon_me_collect"
-					android:drawableRight="@drawable/right"
-					android:text="@string/collection" />
-		<View
-			android:background="@color/black2"
-			android:layout_width="fill_parent"
-			android:layout_height="1.0dip" />
-		
-		<TextView
-					android:id="@+id/txt_money"
-					style="@style/TxtTitle"
-					android:textSize="16sp"
-					android:gravity="center_vertical"
-					android:background="@drawable/bg_pressed_default"
-					android:layout_width="fill_parent"
-					android:layout_height="50dp"
-					android:paddingLeft="16dp"
-					android:paddingRight="16dp"
-					android:drawablePadding="10dp"
-					android:drawableLeft="@drawable/icon_me_money"
-					android:drawableRight="@drawable/right"
-					android:text="@string/wallet" />
-		<View
-			android:background="@color/black2"
-			android:layout_width="fill_parent"
-			android:layout_height="1.0dip" />
-		<TextView
-					android:id="@+id/txt_card"
-					style="@style/TxtTitle"
-					android:textSize="16sp"
-					android:gravity="center_vertical"
-					android:background="@drawable/bg_pressed_default"
-					android:layout_width="fill_parent"
-					android:layout_height="50dp"
-					android:paddingLeft="16dp"
-					android:paddingRight="16dp"
-					android:drawablePadding="10dp"
-					android:drawableLeft="@drawable/icon_me_card"
-					android:drawableRight="@drawable/right"
-					android:text="@string/card_bag" />
-		<View
-			android:background="@color/black2"
-			android:layout_width="fill_parent"
-			android:layout_height="1.0dip" />
-		
-		
-		<TextView
-					android:id="@+id/txt_smail"
-					style="@style/TxtTitle"
-					android:textSize="16sp"
-					android:gravity="center_vertical"
-					android:background="@drawable/bg_pressed_default"
-					android:layout_width="fill_parent"
-					android:layout_height="50dp"
-					android:paddingLeft="16dp"
-					android:paddingRight="16dp"
-					android:layout_marginTop="20dp"
-					android:drawablePadding="10dp"
-					android:drawableLeft="@drawable/icon_me_smail"
-					android:drawableRight="@drawable/right"
-					android:text="@string/expression2" />
-		<View
-			android:background="@color/black2"
-			android:layout_width="fill_parent"
-			android:layout_height="1.0dip" />
-		 
-		<TextView
-					android:id="@+id/txt_setting"
-					style="@style/TxtTitle"
-					android:textSize="16sp"
-					android:gravity="center_vertical"
-					android:background="@drawable/bg_pressed_default"
-					android:layout_width="fill_parent"
-					android:layout_height="50dp"
-					android:paddingLeft="16dp"
-					android:paddingRight="10dp"
-					android:layout_marginTop="20dp"
-					android:drawablePadding="10dp"
-					android:drawableLeft="@drawable/icon_me_setting"
-					android:drawableRight="@drawable/right"
-					android:text="@string/settings" />
-		<View
-				android:background="@color/black2"
-				android:layout_width="fill_parent"
-				android:layout_height="1.0dip" />
-	</LinearLayout>
-	</ScrollView>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:divider="@drawable/divider_common"
+                android:orientation="vertical"
+                android:showDividers="middle">
+
+                <TextView
+                    android:id="@+id/txt_album"
+                    style="@style/TxtTitle"
+                    android:drawableLeft="@drawable/icon_me_photo"
+                    android:drawableRight="@drawable/right"
+                    android:gravity="center_vertical"
+                    android:text="@string/my_posts" />
+
+                <TextView
+                    android:id="@+id/txt_collect"
+                    style="@style/TxtTitle"
+                    android:drawableLeft="@drawable/icon_me_collect"
+                    android:drawableRight="@drawable/right"
+                    android:text="@string/collection" />
+
+                <TextView
+                    android:id="@+id/txt_money"
+                    style="@style/TxtTitle"
+                    android:background="@drawable/bg_pressed_default"
+                    android:drawableLeft="@drawable/icon_me_money"
+                    android:drawableRight="@drawable/right"
+                    android:text="@string/wallet" />
+
+                <TextView
+                    android:id="@+id/txt_card"
+                    style="@style/TxtTitle"
+                    android:drawableLeft="@drawable/icon_me_card"
+                    android:drawableRight="@drawable/right"
+                    android:text="@string/card_bag" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txt_smail"
+                style="@style/TxtTitle"
+                android:layout_marginTop="20dp"
+                android:drawableLeft="@drawable/icon_me_smail"
+                android:drawableRight="@drawable/right"
+                android:text="@string/expression2" />
+
+            <TextView
+                android:id="@+id/txt_setting"
+                style="@style/TxtTitle"
+                android:layout_marginTop="20dp"
+                android:drawableLeft="@drawable/icon_me_setting"
+                android:drawableRight="@drawable/right"
+                android:text="@string/settings" />
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

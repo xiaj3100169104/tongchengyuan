@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">@color/bar_color</color>
+    <color name="colorPrimaryDark">@color/bar_color</color>
     <color name="colorAccent">@color/black_light</color>
     <!-- font color -->
     <color name="text_color_white">#FFFFFF</color>
@@ -14,7 +14,7 @@
     <color name="button_color_press_true">#2e99b6</color>
     <color name="button_color_enable_false">#e8eae9</color>
 
-    <color name="divider_color">@color/gray</color>
+    <color name="divider_color">@color/black2</color>
     <!-- 粉色 -->
     <color name="pink">#ff88b7</color>
     <!-- 主题红色 -->
@@ -65,9 +65,7 @@
     <color name="title_white">#fff7f7f7</color>
     <color name="deep_black">#ff000000</color>
     <color name="black">#ff000000</color>
-    <color name="blacky">#ff000000</color>
     <color name="black1">#7A7E83</color>
-    <color name="blackk1">#ff7c8081</color>
     <color name="blackk">#ffe6e6e6</color>
     <color name="black2">#ffeeeeee</color>
     <color name="blue0">#ff88c1e8</color>

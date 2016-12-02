@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_catalog"
@@ -14,39 +14,40 @@
     <LinearLayout
         style="@style/MMListItem"
         android:layout_width="match_parent"
-        android:layout_height="65.0dip"
-        android:background="@color/white">
-        
+        android:layout_height="@dimen/height_friends_item"
+        android:background="@drawable/bg_pressed_default">
+
         <ImageView
             android:id="@+id/iv_avatar"
             android:layout_width="36dip"
             android:layout_height="36dip"
-            android:layout_marginLeft="4dp"/>
+            android:layout_marginLeft="4dp"
+            android:src="@mipmap/empty_photo"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
-            android:paddingLeft="8.0dip" >
+            android:paddingLeft="8.0dip">
 
             <TextView
                 android:id="@+id/tv_nick"
                 style="@style/MMFontTitleInList"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:singleLine="true"/>
+                android:singleLine="true" />
 
             <CheckBox
                 android:id="@+id/checkbox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:button="@drawable/jy_checkbox_selector"
-                android:focusable="false"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="20dp"/>
-              
+                android:layout_marginRight="20dp"
+                android:button="@drawable/jy_checkbox_selector"
+                android:focusable="false"
+                android:visibility="gone" />
+
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

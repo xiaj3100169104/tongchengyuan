@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="#ffffff"
-              android:orientation="vertical" >
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/layout_new_friends"
         android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:background="@drawable/btn_list_item_bg"
-        android:clickable="true" >
+        android:layout_height="@dimen/height_friends_item"
+        android:background="@drawable/bg_pressed_default"
+        android:clickable="true">
 
         <ImageView
             android:id="@+id/ivAvatar"
@@ -56,9 +56,9 @@
     <RelativeLayout
         android:id="@+id/layout_chat_room"
         android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:background="@drawable/btn_list_item_bg"
-        android:clickable="true" >
+        android:layout_height="@dimen/height_friends_item"
+        android:background="@drawable/bg_pressed_default"
+        android:clickable="true">
 
         <ImageView
             android:id="@+id/iv_avatar2"
@@ -90,9 +90,9 @@
     <RelativeLayout
         android:id="@+id/layout_label"
         android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:background="@drawable/btn_list_item_bg"
-        android:clickable="true" >
+        android:layout_height="@dimen/height_friends_item"
+        android:background="@drawable/bg_pressed_default"
+        android:clickable="true">
 
         <ImageView
             android:id="@+id/iv_avatar3"
@@ -122,11 +122,11 @@
         android:background="#d9d9d9" />
 
     <RelativeLayout
+        android:id="@+id/layout_public"
         android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:background="@drawable/btn_list_item_bg"
-        android:clickable="true"
-        android:id="@+id/layout_public">
+        android:layout_height="@dimen/height_friends_item"
+        android:background="@drawable/bg_pressed_default"
+        android:clickable="true">
 
         <ImageView
             android:id="@+id/iv_avatar4"
