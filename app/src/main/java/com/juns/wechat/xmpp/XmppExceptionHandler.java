@@ -1,6 +1,8 @@
 package com.juns.wechat.xmpp;
 
 import com.juns.wechat.App;
+import com.juns.wechat.bean.UserBean;
+import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.service.XmppService;
 import com.juns.wechat.util.NetWorkUtil;
 import com.juns.wechat.xmpp.event.XmppEvent;
@@ -54,6 +56,7 @@ public class XmppExceptionHandler {
             return;
         }
         lastConnTime = nowTime;
-        XmppService.login(App.getInstance());
+        UserBean account = AccountManager.getInstance().getUser();
+        XmppManagerUtil.asyncLogin(account.getUserName(), account.getPassWord());
     }
 }

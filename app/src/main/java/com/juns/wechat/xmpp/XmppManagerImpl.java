@@ -24,6 +24,7 @@ import org.jivesoftware.smack.filter.StanzaIdFilter;
 import org.jivesoftware.smack.packet.ExtensionElement;
 import org.jivesoftware.smack.packet.IQ;
 import org.jivesoftware.smack.packet.Message;
+import org.jivesoftware.smack.packet.Presence;
 import org.jivesoftware.smack.packet.Stanza;
 import org.jivesoftware.smack.packet.id.StanzaIdUtil;
 import org.jivesoftware.smack.roster.Roster;
@@ -133,6 +134,7 @@ public class XmppManagerImpl implements XmppManager {
                 return true;
             }
             xmppConnection.login(accountName, passWord);
+            sendPresence();
             return true;
         } catch (IOException e) {
             XmppExceptionHandler.handleIOException(e);
@@ -142,6 +144,12 @@ public class XmppManagerImpl implements XmppManager {
             XmppExceptionHandler.handleSmackException(e);
         }
         return false;
+    }
+
+    private void sendPresence() throws SmackException.NotConnectedException {
+        Presence presence = new Presence(Presence.Type.available);
+        presence.setMode(Presence.Mode.chat);
+        xmppConnection.sendStanza(presence);
     }
 
     @Override

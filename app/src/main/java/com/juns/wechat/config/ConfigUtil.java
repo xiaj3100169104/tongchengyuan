@@ -22,7 +22,7 @@ public class ConfigUtil {
 
 
     public static String REAL_XMPP_SERVER = "123.206.34.158";
-    private static String DEBUG_XMPP_SERVER = "123.206.34.158";
+    private static String DEBUG_XMPP_SERVER = "192.168.199.59";
 
     private final static String  DEBUG_XMPP_DOMAIN = "wangzhe";
     public final static String  REAL_XMPP_DOMAIN = "wangzhe";

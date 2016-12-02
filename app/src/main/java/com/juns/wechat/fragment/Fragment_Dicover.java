@@ -14,6 +14,7 @@ import com.juns.wechat.activity.CallVoiceBaseActivity;
 import com.style.album.SelectLocalPictureActivity;
 import com.style.base.BaseBusFragment;
 import com.juns.wechat.zxing.CaptureActivity;
+import com.style.constant.Skip;
 
 public class Fragment_Dicover extends BaseBusFragment implements OnClickListener {
 	// 发现
@@ -70,7 +71,6 @@ public class Fragment_Dicover extends BaseBusFragment implements OnClickListener
 			startActivity(new Intent(getActivity(), CaptureActivity.class));
 			break;
 		case R.id.txt_yaoyiyao:
-			startActivity(new Intent(getActivity(), CallVoiceBaseActivity.class));
 			break;
 		/*case R.id.txt_nearby:
 			CommonUtil.startActivity(getActivity(), PublicActivity.class,

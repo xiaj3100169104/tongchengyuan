@@ -18,8 +18,10 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.juns.wechat.R;
+import com.juns.wechat.activity.CallVoiceBaseActivity;
 import com.juns.wechat.activity.ChatActivity;
 import com.juns.wechat.activity.SendLocationActivity;
+import com.juns.wechat.chat.VoiceCallActivity;
 import com.juns.wechat.chat.adpter.ExpressionAdapter;
 import com.juns.wechat.chat.adpter.ExpressionPagerAdapter;
 import com.juns.wechat.chat.utils.SmileUtils;
@@ -239,7 +241,7 @@ public class ChatInputManager implements View.OnClickListener{
                 sendLocation(); //发送位置
                 break;
             case R.id.view_audio:
-                // 语音通话
+                makeAudioCall(); //语音通话
                 break;
             case R.id.iv_emoticons_normal:
                 CommonUtil.hiddenSoftInput(mChatActivity);
@@ -349,6 +351,15 @@ public class ChatInputManager implements View.OnClickListener{
 
     private void sendLocation(){
         Intent intent = new Intent(mChatActivity, SendLocationActivity.class);
+        mChatActivity.startActivity(intent);
+    }
+
+    /**
+     * 拨打语音电话
+     */
+    private void makeAudioCall(){
+        Intent intent = new Intent(mChatActivity, CallVoiceBaseActivity.class);
+        intent.putExtra(Skip.KEY_USER_NAME, mChatActivity.getContactName());
         mChatActivity.startActivity(intent);
     }
 

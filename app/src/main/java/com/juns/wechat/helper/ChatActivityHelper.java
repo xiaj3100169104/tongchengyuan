@@ -86,8 +86,8 @@ public class ChatActivityHelper {
     }
 
     private void addEntityToViewModel(List<MsgViewModel> msgViewModels,MessageBean entity){
-        int type = entity.getType();
         if(entity == null) return;
+        int type = entity.getType();
         MsgViewModel viewModel = null;
         UserBean contactUser = chatActivity.getContactUser();
         switch (type){

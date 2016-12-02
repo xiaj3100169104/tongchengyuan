@@ -56,7 +56,8 @@ public class XmppConnUtil {
         XMPPTCPConnectionConfiguration configuration = XMPPTCPConnectionConfiguration.builder().setConnectTimeout(CONN_TIME_OUT).
                 setSecurityMode(ConnectionConfiguration.SecurityMode.disabled)
                 .setServiceName(SERVER_NAME).setHost(SERVER_HOST).setPort(SERVER_PORT)
-                .setResource(RESOURCE).setDebuggerEnabled(true).build();
+                .setResource(RESOURCE).setDebuggerEnabled(true)
+                .setSendPresence(false).build();
         xmppConnection = new XMPPTCPConnection(configuration);
         /** 自动向服务器发送ping pong 消息，保持socket连接*/
         ServerPingWithAlarmManager.getInstanceFor(xmppConnection).setEnabled(true);

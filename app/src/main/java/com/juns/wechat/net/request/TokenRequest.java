@@ -29,11 +29,7 @@ public class TokenRequest {
         AccountManager userManager = AccountManager.getInstance();
 
         if(!TextUtils.isEmpty(userManager.getToken())){
-            if(userManager.getTokenRefreshTime() + REFRESH_TIME < System.currentTimeMillis()){
-                return;
-            }else {
-                x.http().post(new TokenParams(userManager.getToken()), callBack);
-            }
+             x.http().post(new TokenParams(userManager.getToken()), callBack);
         }
 
     }
