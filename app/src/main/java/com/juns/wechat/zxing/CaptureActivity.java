@@ -26,7 +26,7 @@ import android.widget.TextView;
 
 import com.google.zxing.BarcodeFormat;
 import com.juns.wechat.R;
-import com.juns.wechat.SplashActivity;
+import com.juns.wechat.activity.SplashActivity;
 import com.style.base.BaseActivity;
 import com.juns.wechat.zxing.camera.CameraManager;
 import com.juns.wechat.zxing.decoding.CaptureActivityHandler;

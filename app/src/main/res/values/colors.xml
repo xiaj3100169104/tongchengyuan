@@ -14,7 +14,7 @@
     <color name="button_color_press_true">#2e99b6</color>
     <color name="button_color_enable_false">#e8eae9</color>
 
-    <color name="divider_color">@color/black2</color>
+    <color name="divider_color">#c8c8c8</color>
     <!-- 粉色 -->
     <color name="pink">#ff88b7</color>
     <!-- 主题红色 -->
