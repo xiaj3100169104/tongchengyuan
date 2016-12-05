@@ -19,5 +19,6 @@
     <dimen name="text_size_18sp">18sp</dimen>
 
     <dimen name="divider_1px_width">1px</dimen>
-
+    <!-- text行间距大小 -->
+    <dimen name="line_Spacing_Extra">3dp</dimen>
 </resources>

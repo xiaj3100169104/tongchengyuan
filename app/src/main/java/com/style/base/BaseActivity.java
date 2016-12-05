@@ -38,7 +38,7 @@ public abstract class BaseActivity extends BaseRxActivity {
     private MaterialProgressDialog progressDialog;
     private AlertDialog dlgPrompt;
 
-    public abstract void initData();
+    protected abstract void initData();
 
     @Override
     protected void onCreate(Bundle arg0) {

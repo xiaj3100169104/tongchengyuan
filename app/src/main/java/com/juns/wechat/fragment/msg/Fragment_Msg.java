@@ -63,7 +63,7 @@ public class Fragment_Msg extends BaseBusFragment {
             @Override
             public void onItemClick(int position, Object data) {
                 MsgItemShow  msgItemShow = (MsgItemShow) data;
-                Intent intent = new Intent(context, ChatActivity.class);
+                Intent intent = new Intent(mContext, ChatActivity.class);
                 intent.putExtra(Skip.KEY_USER_NAME, msgItemShow.msgItem.userName);
                 startActivity(intent);
 

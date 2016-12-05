@@ -1,95 +1,62 @@
 package com.juns.wechat.fragment;
 
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.juns.wechat.R;
 import com.juns.wechat.activity.CallVoiceBaseActivity;
+import com.juns.wechat.activity.FriendCircleActivity;
+import com.juns.wechat.zxing.CaptureActivity;
 import com.style.album.SelectLocalPictureActivity;
 import com.style.base.BaseBusFragment;
-import com.juns.wechat.zxing.CaptureActivity;
 
-public class Fragment_Dicover extends BaseBusFragment implements OnClickListener {
-	// 发现
-	private Activity ctx;
-	private View layout;
+import butterknife.Bind;
+import butterknife.OnClick;
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
-		if (layout == null) {
-			ctx = this.getActivity();
-			layout = ctx.getLayoutInflater().inflate(R.layout.fragment_dicover,
-					null);
-			initViews();
-			initData();
-			setOnListener();
-		} else {
-			ViewGroup parent = (ViewGroup) layout.getParent();
-			if (parent != null) {
-				parent.removeView(layout);
-			}
-		}
-		return layout;
-	}
+public class Fragment_Dicover extends BaseBusFragment {
 
-	private void initViews() {
-		// TODO Auto-generated method stub
+    @Bind(R.id.txt_pengyouquan)
+    TextView txtPengyouquan;
+    @Bind(R.id.txt_saoyisao)
+    TextView txtSaoyisao;
+    @Bind(R.id.txt_yaoyiyao)
+    TextView txtYaoyiyao;
+    @Bind(R.id.txt_nearby)
+    TextView txtNearby;
+    @Bind(R.id.txt_piaoliuping)
+    TextView txtPiaoliuping;
+    @Bind(R.id.txt_shop)
+    TextView txtShop;
+    @Bind(R.id.txt_game)
+    TextView txtGame;
 
-	}
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mLayoutResID = R.layout.fragment_dicover;
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
 
-	private void setOnListener() {
-		// TODO Auto-generated method stub
-		layout.findViewById(R.id.txt_pengyouquan).setOnClickListener(this);
-		layout.findViewById(R.id.txt_saoyisao).setOnClickListener(this);
-		layout.findViewById(R.id.txt_yaoyiyao).setOnClickListener(this);
-		layout.findViewById(R.id.txt_nearby).setOnClickListener(this);
-		layout.findViewById(R.id.txt_piaoliuping).setOnClickListener(this);
-		layout.findViewById(R.id.txt_shop).setOnClickListener(this);
-		layout.findViewById(R.id.txt_game).setOnClickListener(this);
-	}
+    protected void initData() {
+        // TODO Auto-generated method stub
 
-	protected void initData() {
-		// TODO Auto-generated method stub
+    }
 
-	}
+    @OnClick(R.id.txt_pengyouquan) // 朋友圈
+    public void friendCircle() {
+        startActivity(new Intent(getActivity(), FriendCircleActivity.class));
+    }
+    @OnClick(R.id.txt_saoyisao) // 扫一扫
+    public void saoYiSao() {
+        startActivity(new Intent(getActivity(), CaptureActivity.class));
+    }
+    @OnClick(R.id.txt_yaoyiyao) // 摇一摇
+    public void yaoYiYao() {
+        startActivity(new Intent(getActivity(), CallVoiceBaseActivity.class));
+    }
 
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.txt_pengyouquan:// 朋友圈
-			startActivity(new Intent(getActivity(), SelectLocalPictureActivity.class));
-			break;
-		case R.id.txt_saoyisao:// 扫一扫
-			startActivity(new Intent(getActivity(), CaptureActivity.class));
-			break;
-		case R.id.txt_yaoyiyao:
-			startActivity(new Intent(getActivity(), CallVoiceBaseActivity.class));
-			break;
-		/*case R.id.txt_nearby:
-			CommonUtil.startActivity(getActivity(), PublicActivity.class,
-					new BasicNameValuePair(Constants.NAME, getString(R.string.people_nearby)));
-			break;
-		case R.id.txt_piaoliuping:
-			CommonUtil.startActivity(getActivity(), PublicActivity.class,
-					new BasicNameValuePair(Constants.NAME, getString(R.string.drift_bottle)));
-			break;
-		case R.id.txt_shop:
-			CommonUtil.startActivity(getActivity(), PublicActivity.class,
-					new BasicNameValuePair(Constants.NAME, getString(R.string.shopping)));
-			break;
-		case R.id.txt_game:
-			CommonUtil.startActivity(getActivity(), PublicActivity.class,
-					new BasicNameValuePair(Constants.NAME, getString(R.string.games)));
-			break;*/
-		default:
-			break;
-		}
-	}
 }

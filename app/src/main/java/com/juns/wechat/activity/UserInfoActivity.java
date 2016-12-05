@@ -58,6 +58,7 @@ public class UserInfoActivity extends BaseToolbarActivity implements OnClickList
         mLayoutResID = R.layout.activity_user_info;
         super.onCreate(savedInstanceState);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.avatar_menu, menu);

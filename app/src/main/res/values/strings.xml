@@ -32,6 +32,8 @@
     <string name="no_msg">暂时没有新消息</string>
     <string name="wechat_id">微信号</string>
     <string name="my_posts">相册</string>
+    <string name="comment">评论</string>
+    <string name="click_zan">赞</string>
     <string name="collection">收藏</string>
     <string name="wallet">钱包</string>
     <string name="card_bag">卡包</string>

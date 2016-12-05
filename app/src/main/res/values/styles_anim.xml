@@ -16,6 +16,11 @@
         <item name="@android:windowEnterAnimation">@anim/extends_open_from_bottom</item>
         <item name="@android:windowExitAnimation">@anim/extends_close_to_bottom</item>
     </style>
+    <!-- 从左往右伸缩 -->
+    <style name="Animations.ExtendsFromLeft">
+        <item name="@android:windowEnterAnimation">@anim/extends_open_from_left</item>
+        <item name="@android:windowExitAnimation">@anim/extends_close_to_left</item>
+    </style>
     <!-- 底进底出，进大出小 -->
     <style name="Animations.GrowFromBottom">
         <item name="@android:windowEnterAnimation">@anim/grow_from_bottom</item>
