@@ -212,6 +212,7 @@
         <activity android:name="com.style.album.SelectLocalPictureActivity"/>
         <activity android:name="com.juns.wechat.activity.CallVoiceBaseActivity"/>
         <activity android:name="com.juns.wechat.activity.FriendCircleActivity"/>
+        <activity android:name="com.juns.wechat.activity.DynamicPublishActivity"/>
 
     </application>
 

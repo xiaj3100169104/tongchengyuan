@@ -1,14 +1,18 @@
 package com.style.rxAndroid.newwork.callback;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.juns.wechat.App;
+import com.juns.wechat.R;
 import com.style.rxAndroid.newwork.core.NetJsonResult;
+import com.style.utils.CommonUtil;
 
 /**
  * Created by xiajun on 2016/10/8.
  */
-public  class RXNetBeanCallBack<T> extends BaseRXTaskCallBack {
+public class RXNetBeanCallBack<T> extends BaseRXTaskCallBack {
     protected String TAG = "RXNetBeanCallBack";
     protected Class<T> clazz;
 
@@ -16,7 +20,7 @@ public  class RXNetBeanCallBack<T> extends BaseRXTaskCallBack {
         this.clazz = clazz;
     }
 
-    public Object doInBackground(){
+    public Object doInBackground() {
         Log.e(TAG, "doInBackground");
         return null;
     }
@@ -26,7 +30,10 @@ public  class RXNetBeanCallBack<T> extends BaseRXTaskCallBack {
         Log.e(TAG, "onNextOnUIThread");
         NetJsonResult result = (NetJsonResult) data;
         if (clazz != null) {
-            OnSuccess(JSON.parseObject(result.getBody(), clazz));
+            if (result.getCode() == 0)
+                OnSuccess(JSON.parseObject(result.getBody(), clazz));
+            else
+                OnFailed(result.getMsg());
         }
     }
 
@@ -38,6 +45,8 @@ public  class RXNetBeanCallBack<T> extends BaseRXTaskCallBack {
 
     @Override
     public void OnFailed(String message) {
-
+        if (!CommonUtil.isNetWorkConnected(App.getInstance())) {
+            Toast.makeText(App.getInstance(), R.string.network_isnot_available, Toast.LENGTH_SHORT).show();
+        }
     }
 }
