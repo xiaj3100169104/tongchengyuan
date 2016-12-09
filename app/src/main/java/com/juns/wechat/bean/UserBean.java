@@ -30,6 +30,8 @@ public class UserBean implements Parcelable {
 
     @Column(name = "id", isId = true)
     public int id;//
+    @Column(name = "userId")
+    public int userId;// 用户id
     @Column(name = "userName")
     public String userName;// 用户名
     @Column(name = "nickName")
@@ -85,7 +87,15 @@ public class UserBean implements Parcelable {
         }
     }
 
-	public String getType() {
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public String getType() {
 		return type;
 	}
 

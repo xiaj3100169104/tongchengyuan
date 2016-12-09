@@ -4,11 +4,10 @@
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
     android:layout_height="48dp"
-    android:background="@color/bar_color"
     android:minHeight="48dp"
     app:contentInsetEnd="0dp"
     app:contentInsetStart="0dp"
-    app:theme="@style/AppTheme.Toolbar">
+    android:theme="@style/AppTheme.Toolbar">
 
     <RelativeLayout
         android:layout_width="match_parent"

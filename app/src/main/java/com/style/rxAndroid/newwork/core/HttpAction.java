@@ -9,7 +9,7 @@ public class HttpAction {
     protected String TAG = "HttpAction";
 
     private static String testUrl = "https://www.hao123.com/";
-    private static String addDynamicUrl = "https://www.hao123.com/";
+    private static String addDynamicUrl = "http://172.19.23.5:8080/wechat_server/addDynamic";
 
     public static NetJsonResult login(String name) {
         return OkHttpUtil.postAsyn(testUrl, name);

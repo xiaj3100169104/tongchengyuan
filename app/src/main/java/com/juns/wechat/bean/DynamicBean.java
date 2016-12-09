@@ -12,7 +12,7 @@ public class DynamicBean implements Serializable{
 	private Integer publisherId;// 发表人
 	private String content;// 动态内容
 	private String images;// 图片
-	private Date createDate; //创建日期
+	private String createDate; //创建日期
 	private BigInteger modifyDate;///修改信息日期
 	private UserBean user;//发布者
 	private List<CommentBean> supportList; //点赞列表
@@ -54,11 +54,11 @@ public class DynamicBean implements Serializable{
 		this.images = images;
 	}
 
-	public Date getCreateDate() {
+	public String getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
 	}
 

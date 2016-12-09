@@ -55,11 +55,9 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="AppTheme.Toolbar" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="background">@color/bar_color</item>
+        <item name="android:background">@color/bar_color</item>
         <item name="actionMenuTextColor">@color/white</item>
         <item name="actionMenuTextAppearance">@style/TextAppearance.AppCompat.Medium</item>
-        <item name="contentInsetStart">0dp</item>
-        <item name="contentInsetEnd">0dp</item>
     </style>
     
     <style name="AppTheme.SwitchAnimation" parent="@android:style/Animation.Activity">

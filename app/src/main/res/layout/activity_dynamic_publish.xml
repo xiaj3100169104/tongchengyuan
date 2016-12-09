@@ -10,7 +10,7 @@
         android:background="@color/white"
         android:orientation="vertical">
 
-        <include layout="@layout/comm_toolbar" />
+        <include layout="@layout/comm_toolbar_btn" />
 
         <ScrollView
             android:layout_width="match_parent"

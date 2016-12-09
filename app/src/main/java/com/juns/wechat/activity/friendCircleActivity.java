@@ -53,7 +53,7 @@ public class FriendCircleActivity extends BaseToolbarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.select:
-                skip(SelectLocalPictureActivity.class);
+                skip(DynamicPublishActivity.class);
                 break;
         }
         return super.onOptionsItemSelected(item);

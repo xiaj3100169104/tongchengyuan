@@ -291,7 +291,7 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
         String content = etContent.getText().toString();
         final DynamicBean dynamicBean = new DynamicBean();
         dynamicBean.setContent(content);
-        dynamicBean.setPublisherId(curUser.getId());
+        dynamicBean.setPublisherId(curUser.getUserId());
         runTask(new RXNetBeanCallBack(DynamicBean.class) {
             @Override
             public Object doInBackground() {

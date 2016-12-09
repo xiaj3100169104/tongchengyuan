@@ -29,7 +29,7 @@ public class RXNetBeanCallBack<T> extends BaseRXTaskCallBack {
     public void onNextOnUIThread(Object data) {
         Log.e(TAG, "onNextOnUIThread");
         NetJsonResult result = (NetJsonResult) data;
-        if (clazz != null) {
+        if (clazz != null && result != null) {
             if (result.getCode() == 0)
                 OnSuccess(JSON.parseObject(result.getBody(), clazz));
             else

@@ -105,6 +105,9 @@ public class OkHttpUtil {
                     String body = response.body().string();//"{code:0,body: {name: \"夏军\",phone: \"18202823096\"},msg: \"请求成功\"}";
                     Log.e("body", body + "");
                     result = JSON.parseObject(body, NetJsonResult.class);
+                }else{
+                    result.setCode(response.code());
+                    result.setMsg(response.message());
                 }
                 response.body().close();
                 response.close();
