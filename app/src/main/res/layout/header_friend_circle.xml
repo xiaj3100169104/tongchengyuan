@@ -13,7 +13,7 @@
 
         <TextView
             android:textSize="20sp"
-            android:id="@+id/tv_title"
+            android:id="@+id/tv_nick"
             android:text="菲儿"
             android:gravity="right|bottom"
             android:paddingRight="110dp"
@@ -23,7 +23,7 @@
             android:textColor="@color/white"
             android:layout_height="240dp" />
         <ImageView
-            android:id="@+id/head"
+            android:id="@+id/iv_avatar"
             android:contentDescription="@string/app_name"
             android:layout_width="80.0dip"
             android:layout_height="80.0dip"

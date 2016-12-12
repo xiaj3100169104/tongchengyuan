@@ -1,20 +1,27 @@
 package com.juns.wechat.activity;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.model.stream.StreamUriLoader;
 import com.juns.wechat.R;
 import com.juns.wechat.adpter.DynamicAdapter;
-import com.style.album.SelectLocalPictureActivity;
-import com.style.base.BaseActivity;
 import com.style.base.BaseToolbarActivity;
+import com.style.utils.StreamUtil;
 import com.style.view.DividerItemDecoration;
 
+import org.xutils.common.util.FileUtil;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,10 +35,15 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
  * Created by Administrator on 2016/4/11.
  */
 public class FriendCircleActivity extends BaseToolbarActivity {
+
     @Bind(R.id.recyclerView)
     RecyclerView recyclerView;
     @Bind(R.id.ptrFrame)
     PtrClassicFrameLayout ptrFrame;
+    @Bind(R.id.tv_nick)
+    TextView tvNick;
+    @Bind(R.id.iv_avatar)
+    ImageView ivAvatar;
 
     private List<String> dataList;
     private DynamicAdapter adapter;
@@ -62,6 +74,17 @@ public class FriendCircleActivity extends BaseToolbarActivity {
     @Override
     protected void initData() {
         setToolbarTitle(R.string.moments);
+        /*InputStream is = null;
+        try {
+            is = getAssets().open("pig.gif");
+            int size = is.available();
+            StreamUtil.read(is);
+            FileUtil
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+        Glide.with(this).load(R.drawable.pig).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(ivAvatar);
+
         dataList = new ArrayList<>();
         adapter = new DynamicAdapter(this, dataList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
