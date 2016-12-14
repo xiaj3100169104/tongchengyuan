@@ -28,7 +28,7 @@ public abstract class BaseToolbarBtnActivity extends BaseToolbarActivity {
 
     }
 
-    public TextView getViewToolbarRight() {
+    public TextView getToolbarRightView() {
         return viewToolbarRight;
     }
 

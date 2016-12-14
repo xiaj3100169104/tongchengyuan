@@ -1,11 +1,16 @@
 package com.juns.wechat.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -24,12 +29,17 @@ import com.juns.wechat.chat.utils.SmileUtils;
 import com.juns.wechat.chat.widght.ExpandGridView;
 import com.juns.wechat.helper.SimpleExpressionhelper;
 import com.juns.wechat.manager.AccountManager;
+import com.style.album.DynamicPublishImageAdapter;
+import com.style.base.BaseRecyclerViewAdapter;
 import com.style.base.BaseToolbarBtnActivity;
+import com.style.constant.Skip;
+import com.style.dialog.SelAvatarDialog;
 import com.style.rxAndroid.newwork.callback.RXNetBeanCallBack;
 import com.style.rxAndroid.newwork.core.HttpAction;
 import com.style.utils.CommonUtil;
 import com.style.view.CirclePageIndicator;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,26 +51,17 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
 
     @Bind(R.id.et_content)
     EditText etContent;
+    @Bind(R.id.recyclerView)
+    RecyclerView recyclerView;
 
-    /* @BindView(R.id.recyclerView)
-     RecyclerView recyclerView;
-
-     //屏幕高度
-     private int screenHeight = 0;
-     //软件盘弹起后所占高度阀值
-     private int keyHeight = 0;
-
-     private DynamicPublishImageAdapter adapter;
-     private List<String> paths;
-     protected boolean haveContent;
-     private boolean haveImg;
-     protected File photoFile;
-     private AsyncTask<Void, Void, File[]> dealPicTask;
-     private SelAvatarDialog dialog;
-
-     private int mCurrentPage = 0;// 当前表情页
-     private List<String> mFaceMapKeys;*/
     private SimpleExpressionhelper facehelper;
+
+    private DynamicPublishImageAdapter adapter;
+    private List<String> paths;
+    protected boolean haveContent;
+    private boolean haveImg;
+    protected File photoFile;
+    private SelAvatarDialog dialog;
 
     private UserBean curUser;
 
@@ -76,7 +77,7 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
         //setTitleCenterText(R.string.send_message);
         facehelper = new SimpleExpressionhelper(this, etContent);
         facehelper.onCreate();
-        /*paths = null;
+        paths = null;
         paths = new ArrayList<>();
         paths.add(TAG_ADD);
         adapter = new DynamicPublishImageAdapter(DynamicPublishActivity.this, paths);
@@ -98,9 +99,9 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
                 adapter.notifyDataSetChanged();
                 setHaveDynamic();
             }
-        });*/
+        });
 
-        /*etContent.addTextChangedListener(new TextWatcher() {
+        etContent.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
             }
@@ -117,7 +118,7 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
                     haveContent = false;
                 setHaveDynamic();
             }
-        });*/
+        });
 
     }
 
@@ -144,14 +145,18 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
             }
         });
     }
-/*
+
     private void setHaveDynamic() {
         int number = adapter.getItemCount();
         if (number > 1)
             haveImg = true;
         else
             haveImg = false;
-    }*/
+        if (haveContent || haveImg)
+            getToolbarRightView().setEnabled(true);
+        else
+            getToolbarRightView().setEnabled(false);
+    }
 
     private void addUserDynamic() {
         String content = etContent.getText().toString();
@@ -177,13 +182,7 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
                 super.OnFailed(message);
             }
         });
-       /* if (!haveContent && !haveImg) {
-            showToast(R.string.say_something);
-            return;
-        }
-        if (TextUtils.isEmpty(content)) {
-            content = "发表图片";
-        }*/
+
         //showProgressDialog(R.string.publishing);
       /*  UserDynamic ud = new UserDynamic();
         ud.setPublishAccount(curUser.getAccount());
@@ -194,12 +193,12 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
         dealPicTask = new DealPicTask(params).execute();*/
     }
 
-   /* @Override
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
-                case Constants.REQUESTCODE_TAKE_LOCAL:
+                case Skip.CODE_TAKE_ALBUM:
                     if (data != null) {
                         ArrayList<String> newPaths = data.getStringArrayListExtra("paths");
                         paths.clear();
@@ -208,9 +207,9 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
                         adapter.notifyDataSetChanged();
                     }
                     break;
-                case Constants.REQUESTCODE_TAKE_CAMERA:
+                case Skip.CODE_TAKE_CAMERA:
                     if (photoFile.exists()) {
-                        CommUtil.notifyUpdateGallary(this, photoFile);// 通知系统更新相册
+                        CommonUtil.notifyUpdateGallary(this, photoFile);// 通知系统更新相册
                         String filePath = photoFile.getAbsolutePath();// 获取相片的保存路径
                         int size = paths.size();
                         if (size >= 10) {
@@ -229,7 +228,7 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
             }
             setHaveDynamic();
         }
-    }*/
+    }
 
     /*public class DealPicTask extends AsyncTask<Void, Void, File[]> {
         private Params params;
