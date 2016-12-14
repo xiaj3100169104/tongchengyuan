@@ -1,45 +1,15 @@
 package com.juns.wechat.activity;
 
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.View.OnTouchListener;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.GridView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.juns.wechat.R;
 import com.juns.wechat.bean.DynamicBean;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.manager.AccountManager;
-import com.style.base.BaseToolbarActivity;
+import com.juns.wechat.net.callback.AddDynamicCallBack;
+import com.juns.wechat.net.request.AddDynamicRequest;
 import com.style.base.BaseToolbarBtnActivity;
-import com.style.rxAndroid.newwork.callback.RXNetBeanCallBack;
-import com.style.rxAndroid.newwork.core.HttpAction;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
 
 
 import butterknife.Bind;
@@ -292,7 +262,8 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
         final DynamicBean dynamicBean = new DynamicBean();
         dynamicBean.setContent(content);
         dynamicBean.setPublisherId(curUser.getUserId());
-        runTask(new RXNetBeanCallBack(DynamicBean.class) {
+        AddDynamicRequest.addDynamic(content, null, new AddDynamicCallBack());
+       /* runTask(new RXNetBeanCallBack(DynamicBean.class) {
             @Override
             public Object doInBackground() {
                 return HttpAction.addDynamic(dynamicBean);
@@ -310,7 +281,7 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
                 dismissProgressDialog();
                 super.OnFailed(message);
             }
-        });
+        });*/
        /* if (!haveContent && !haveImg) {
             showToast(R.string.say_something);
             return;

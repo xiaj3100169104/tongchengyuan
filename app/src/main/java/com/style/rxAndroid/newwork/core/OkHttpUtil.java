@@ -7,6 +7,7 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.juns.wechat.App;
 import com.juns.wechat.R;
+import com.juns.wechat.manager.AccountManager;
 import com.style.utils.CommonUtil;
 
 import java.io.File;
@@ -74,6 +75,7 @@ public class OkHttpUtil {
                     }
                     builder.add(key, value);
                 }
+                builder.add("token", AccountManager.getInstance().getToken());
                 requestBody = builder.build();
             } else {
                 MultipartBody.Builder multipart = new MultipartBody.Builder();
@@ -97,7 +99,9 @@ public class OkHttpUtil {
                 }
                 requestBody = multipart.build();
             }
+
             Request request = new Request.Builder().url(url).post(requestBody).build();
+
             Call call = client.newCall(request);
             try {
                 Response response = call.execute();

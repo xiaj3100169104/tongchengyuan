@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.juns.wechat.R;
+import com.juns.wechat.annotation.AnnotationUtil;
 import com.juns.wechat.dialog.FlippingLoadingDialog;
 import com.juns.wechat.util.ToastUtil;
 import com.style.manager.LogManager;
@@ -54,6 +55,7 @@ public abstract class BaseActivity extends BaseRxActivity {
         setContentView(mContentView);
         //ButterKnife must set after setContentView
         ButterKnife.bind(this);
+        AnnotationUtil.initAnnotation(this);
         initData();
     }
 

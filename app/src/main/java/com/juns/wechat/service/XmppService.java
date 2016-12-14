@@ -99,7 +99,7 @@ public class XmppService extends Service {
     }
 
     private void initSipSession(){
-        SipClient.getInstance().initSession();
+        //SipClient.getInstance().initSession();
     }
 
     private void destroySipSession(){

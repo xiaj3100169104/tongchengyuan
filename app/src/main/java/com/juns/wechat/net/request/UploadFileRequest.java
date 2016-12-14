@@ -13,6 +13,7 @@ import org.xutils.x;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by 王宗文 on 2016/7/12.
@@ -20,10 +21,10 @@ import java.util.List;
 public class UploadFileRequest {
 
     @HttpRequest(host = ConfigUtil.REAL_API_URL, path = "uploadAvatar")
-    public static class FileParams extends RequestParams{
+    public static class AvatarParams extends RequestParams{
         private String token;
 
-        public FileParams(File file){
+        public AvatarParams(File file){
                 token = AccountManager.getInstance().getToken();
                 List<KeyValue> params = new ArrayList<>();
                 params.add(new KeyValue("avatar", file));
@@ -35,6 +36,10 @@ public class UploadFileRequest {
     }
 
     public static void uploadAvatar(String filePath, UpdateUserCallBack callBack){
-        x.http().post(new FileParams(new File(filePath)), callBack);
+        x.http().post(new AvatarParams(new File(filePath)), callBack);
     }
+
+
+
+
 }
