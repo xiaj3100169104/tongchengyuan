@@ -50,7 +50,7 @@
 
     </LinearLayout>
 
-    <!--<LinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -78,7 +78,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/face_ll"
+            android:id="@+id/layout_face"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="#fff0f0f0"
@@ -97,11 +97,11 @@
                 android:flipInterval="30"
                 android:persistentDrawingCache="animation" />
 
-            <com.channelsoft.im.views.CirclePageIndicator
+            <com.style.view.CirclePageIndicator
                 android:id="@+id/indicator"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dip" />
         </LinearLayout>
-    </LinearLayout>-->
+    </LinearLayout>
 </RelativeLayout>

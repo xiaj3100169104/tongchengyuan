@@ -42,7 +42,7 @@ public class App extends Application {
         SMSSDK.initSDK(this, Constants.MOB_SDK_KEY, Constants.MOB_SDK_SECRET);
         // 百度MAP sdk initialize
         SDKInitializer.initialize(this);
-        Thread.setDefaultUncaughtExceptionHandler(new CustomExceptionHandler());
+        //Thread.setDefaultUncaughtExceptionHandler(new CustomExceptionHandler());
 	}
 
 
@@ -82,7 +82,7 @@ public class App extends Application {
                     e.printStackTrace();
                 }
             }
-            Process.killProcess(Process.myPid());
+            Process.killProcess(Process.myPid());//会导致log消失
         }
     }
 
