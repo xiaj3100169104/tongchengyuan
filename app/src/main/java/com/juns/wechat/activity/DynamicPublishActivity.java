@@ -1,16 +1,47 @@
 package com.juns.wechat.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.juns.wechat.R;
 import com.juns.wechat.bean.DynamicBean;
 import com.juns.wechat.bean.UserBean;
+import com.juns.wechat.chat.adpter.ExpressionAdapter;
+import com.juns.wechat.chat.adpter.ExpressionPagerAdapter;
+import com.juns.wechat.chat.utils.SmileUtils;
+import com.juns.wechat.chat.widght.ExpandGridView;
+import com.juns.wechat.helper.SimpleExpressionhelper;
 import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.net.callback.AddDynamicCallBack;
-import com.juns.wechat.net.request.AddDynamicRequest;
+import com.style.album.DynamicPublishImageAdapter;
+import com.style.base.BaseRecyclerViewAdapter;
 import com.style.base.BaseToolbarBtnActivity;
+import com.style.constant.Skip;
+import com.style.dialog.SelAvatarDialog;
+import com.style.rxAndroid.newwork.callback.RXNetBeanCallBack;
+import com.style.rxAndroid.newwork.core.HttpAction;
+import com.style.utils.CommonUtil;
+import com.style.view.CirclePageIndicator;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 
@@ -20,36 +51,19 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
 
     @Bind(R.id.et_content)
     EditText etContent;
-   /* @BindView(R.id.recyclerView)
+    @Bind(R.id.recyclerView)
     RecyclerView recyclerView;
-    @BindView(R.id.ll_parent)
-    RelativeLayout llParent;
-    @BindView(R.id.iv_smile)
-    CheckBox ivSmile;
-    @BindView(R.id.rl_bottom_smile)
-    LinearLayout rlBottomSmile;
-    @BindView(R.id.face_pager)
-    ViewPager facePager;
-    @BindView(R.id.indicator)
-    CirclePageIndicator indicator;
-    @BindView(R.id.face_ll)
-    LinearLayout faceLl;
-    //屏幕高度
-    private int screenHeight = 0;
-    //软件盘弹起后所占高度阀值
-    private int keyHeight = 0;
+
+    private SimpleExpressionhelper facehelper;
 
     private DynamicPublishImageAdapter adapter;
     private List<String> paths;
     protected boolean haveContent;
     private boolean haveImg;
     protected File photoFile;
-    private AsyncTask<Void, Void, File[]> dealPicTask;
     private SelAvatarDialog dialog;
 
-    private int mCurrentPage = 0;// 当前表情页
-    private List<String> mFaceMapKeys;*/
-   private UserBean curUser;
+    private UserBean curUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +74,9 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
     @Override
     protected void initData() {
         curUser = AccountManager.getInstance().getUser();
-       /* setTitleCenterText(R.string.send_message);
-        initFace();
+        //setTitleCenterText(R.string.send_message);
+        facehelper = new SimpleExpressionhelper(this, etContent);
+        facehelper.onCreate();
         paths = null;
         paths = new ArrayList<>();
         paths.add(TAG_ADD);
@@ -85,14 +100,7 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
                 setHaveDynamic();
             }
         });
-        etContent.setOnTouchListener(new OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent arg1) {
-                // 这句话说的意思告诉父View我自己的事件我自己处理
-                v.getParent().requestDisallowInterceptTouchEvent(true);
-                return false;
-            }
-        });
+
         etContent.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
@@ -112,117 +120,6 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
             }
         });
 
-        //监听软键盘显示状态
-        //获取屏幕高度
-        screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
-        //阀值设置为屏幕高度的1/3
-        keyHeight = screenHeight / 3;
-        //添加layout大小发生改变监听器
-        llParent.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-            @Override
-            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-                //现在认为只要控件将Activity向上推的高度超过了1/3屏幕高，就认为软键盘弹起
-                if (oldBottom != 0 && bottom != 0 && (oldBottom - bottom > keyHeight)) {
-                    showToast("监听到软键盘弹起...");
-                   *//* new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            faceLl.setVisibility(View.GONE);
-                        }
-                    }, 100);*//*
-                  *//*  new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (rlBottomSmile.getVisibility() == View.GONE)
-                                rlBottomSmile.setVisibility(View.VISIBLE);
-                        }
-                    }, 200);*//*
-                    rlBottomSmile.setVisibility(View.VISIBLE);
-
-                } else if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > keyHeight)) {
-                    showToast("监听到软件盘关闭...");
-                    //如果是切换到表情面板而隐藏流量输入法，需要延迟判断表情面板是否显示，如果表情面板是关闭的，操作栏也关闭
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            //如果表情面板是关闭的，操作栏也关闭
-                            if (faceLl.getVisibility() == View.GONE)
-                                rlBottomSmile.setVisibility(View.GONE);
-                        }
-                    }, 200);
-                }
-            }
-        });
-        ivSmile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (faceLl.getVisibility() == View.GONE) {
-                    //隐藏输入法，打开表情面板
-                    hideSoftMouse();
-                    //延迟显示，先让输入法显示
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            faceLl.setVisibility(View.VISIBLE);
-                        }
-                    }, 100);
-                } else {
-                    //隐藏表情面板，打开输入法
-                    faceLl.setVisibility(View.GONE);
-                    toggleSoftInput();
-                }
-            }
-        });
-        etContent.setOnTouchListener(new OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                ivSmile.setChecked(false);//还原表情状态
-                faceLl.setVisibility(View.GONE);
-                return false;
-            }
-        });*/
-    }
-
-    private void toggleSoftInput() {
-        //CommUtil.toggleSoftInput(DynamicPublishActivity.this, etContent);
-    }
-
-    private void showSelPicPopupWindow(int position) {
-       /* int count = adapter.getItemCount();
-        if (position == count - 1) {
-            if (dialog == null) {
-                dialog = new SelAvatarDialog(DynamicPublishActivity.this, R.style.Dialog_NoTitle);
-                dialog.setOnItemClickListener(new SelAvatarDialog.OnItemClickListener() {
-                    @Override
-                    public void OnClickCamera() {
-                        photoFile = CommUtil.takePhoto(DynamicPublishActivity.this, Constants.DIR_APP_IMAGE_CAMERA, String.valueOf(System.currentTimeMillis()) + ".jpg");
-
-                    }
-
-                    @Override
-                    public void OnClickPhoto() {
-                        Intent intent = new Intent(DynamicPublishActivity.this, GallaryActivity.class);
-                        int newCount = adapter.getItemCount();
-                        ArrayList<String> cacheList = new ArrayList<>();
-                        if (newCount > 1) {
-                            for (int i = 0; i < newCount - 1; i++) {
-                                cacheList.add(paths.get(i));
-                            }
-                        }
-                        intent.putStringArrayListExtra("paths", cacheList);
-                        intent.putExtra("maxNum", 9);
-                        startActivityForResult(intent, Constants.REQUESTCODE_TAKE_LOCAL);
-                    }
-
-                    @Override
-                    public void OnClickCancel() {
-
-                    }
-                });
-            }
-            dialog.show();
-        }*/
     }
 
     @Override
@@ -248,22 +145,25 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
             }
         });
     }
-/*
+
     private void setHaveDynamic() {
         int number = adapter.getItemCount();
         if (number > 1)
             haveImg = true;
         else
             haveImg = false;
-    }*/
+        if (haveContent || haveImg)
+            getToolbarRightView().setEnabled(true);
+        else
+            getToolbarRightView().setEnabled(false);
+    }
 
     private void addUserDynamic() {
         String content = etContent.getText().toString();
         final DynamicBean dynamicBean = new DynamicBean();
         dynamicBean.setContent(content);
         dynamicBean.setPublisherId(curUser.getUserId());
-        AddDynamicRequest.addDynamic(content, null, new AddDynamicCallBack());
-       /* runTask(new RXNetBeanCallBack(DynamicBean.class) {
+        runTask(new RXNetBeanCallBack(DynamicBean.class) {
             @Override
             public Object doInBackground() {
                 return HttpAction.addDynamic(dynamicBean);
@@ -281,14 +181,8 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
                 dismissProgressDialog();
                 super.OnFailed(message);
             }
-        });*/
-       /* if (!haveContent && !haveImg) {
-            showToast(R.string.say_something);
-            return;
-        }
-        if (TextUtils.isEmpty(content)) {
-            content = "发表图片";
-        }*/
+        });
+
         //showProgressDialog(R.string.publishing);
       /*  UserDynamic ud = new UserDynamic();
         ud.setPublishAccount(curUser.getAccount());
@@ -299,12 +193,12 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
         dealPicTask = new DealPicTask(params).execute();*/
     }
 
-   /* @Override
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
-                case Constants.REQUESTCODE_TAKE_LOCAL:
+                case Skip.CODE_TAKE_ALBUM:
                     if (data != null) {
                         ArrayList<String> newPaths = data.getStringArrayListExtra("paths");
                         paths.clear();
@@ -313,9 +207,9 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
                         adapter.notifyDataSetChanged();
                     }
                     break;
-                case Constants.REQUESTCODE_TAKE_CAMERA:
+                case Skip.CODE_TAKE_CAMERA:
                     if (photoFile.exists()) {
-                        CommUtil.notifyUpdateGallary(this, photoFile);// 通知系统更新相册
+                        CommonUtil.notifyUpdateGallary(this, photoFile);// 通知系统更新相册
                         String filePath = photoFile.getAbsolutePath();// 获取相片的保存路径
                         int size = paths.size();
                         if (size >= 10) {
@@ -334,7 +228,7 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
             }
             setHaveDynamic();
         }
-    }*/
+    }
 
     /*public class DealPicTask extends AsyncTask<Void, Void, File[]> {
         private Params params;
@@ -414,95 +308,41 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
         }
     }*/
 
-    /*private void initFace() {
-// 将表情map的key保存在数组中
-        Set<String> keySet = FaceMap.getInstance().getFaceMap().keySet();
-        mFaceMapKeys = new ArrayList<String>();
-        mFaceMapKeys.addAll(keySet);
+    private void showSelPicPopupWindow(int position) {
+       /* int count = adapter.getItemCount();
+        if (position == count - 1) {
+            if (dialog == null) {
+                dialog = new SelAvatarDialog(DynamicPublishActivity.this, R.style.Dialog_NoTitle);
+                dialog.setOnItemClickListener(new SelAvatarDialog.OnItemClickListener() {
+                    @Override
+                    public void OnClickCamera() {
+                        photoFile = CommUtil.takePhoto(DynamicPublishActivity.this, Constants.DIR_APP_IMAGE_CAMERA, String.valueOf(System.currentTimeMillis()) + ".jpg");
 
-        List<View> lv = new ArrayList<>();
-        for (int i = 0; i < FaceMap.NUM_PAGE; ++i)
-            lv.add(getGridView(i));
-        FacePageAdeapter adapter = new FacePageAdeapter(lv);
-        facePager.setAdapter(adapter);
-        facePager.setCurrentItem(mCurrentPage);
-        CirclePageIndicator indicator = (CirclePageIndicator) findViewById(Constant
-                .getCompentID("id", "indicator"));
-        indicator.setViewPager(facePager);
-        adapter.notifyDataSetChanged();
-        faceLl.setVisibility(View.GONE);
-        indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
-            @Override
-            public void onPageSelected(int arg0) {
-                mCurrentPage = arg0;
-            }
-
-            @Override
-            public void onPageScrolled(int arg0, float arg1, int arg2) {
-                // do nothing
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int arg0) {
-                // do nothing
-            }
-        });
-    }
-
-    private GridView getGridView(int i) {
-        GridView gv = new GridView(context);
-        gv.setNumColumns(7);
-        gv.setSelector(new ColorDrawable(Color.TRANSPARENT));// 屏蔽GridView默认点击效果
-        gv.setBackgroundColor(Color.TRANSPARENT);
-        gv.setCacheColorHint(Color.TRANSPARENT);
-        gv.setHorizontalSpacing(1);
-        gv.setVerticalSpacing(1);
-        gv.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.MATCH_PARENT));
-        gv.setGravity(Gravity.CENTER);
-        gv.setAdapter(new FaceAdapter(context, i));
-        gv.setOnTouchListener(forbidenScroll());
-        gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-                                    long arg3) {
-                if (arg2 == FaceMap.NUM) {// 删除键的位置
-                    int selection = etContent.getSelectionStart();
-                    String text = etContent.getText().toString();
-                    if (selection > 0) {
-                        String text2 = text.substring(selection - 1);
-                        if ("]".equals(text2)) {
-                            int start = text.lastIndexOf("[");
-                            int end = selection;
-                            etContent.getText().delete(start, end);
-                            return;
-                        }
-                        etContent.getText().delete(selection - 1, selection);
                     }
-                } else {
-                    int count = mCurrentPage * FaceMap.NUM + arg2;
-                    String emojiStr = mFaceMapKeys.get(count);
-                    CharSequence sequence = FaceMap.getEmojiString(DynamicPublishActivity.this, emojiStr, 20);
-                    int index = etContent.getSelectionStart();
-                    Editable edit = etContent.getEditableText();//获取EditText的文字
-                    edit.insert(index, sequence);//光标所在位置插入文字
-                }
-            }
-        });
-        return gv;
-    }
 
-    // 防止viewpage乱滚动
-    private OnTouchListener forbidenScroll() {
-        return new OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_MOVE) {
-                    return true;
-                }
-                return false;
+                    @Override
+                    public void OnClickPhoto() {
+                        Intent intent = new Intent(DynamicPublishActivity.this, GallaryActivity.class);
+                        int newCount = adapter.getItemCount();
+                        ArrayList<String> cacheList = new ArrayList<>();
+                        if (newCount > 1) {
+                            for (int i = 0; i < newCount - 1; i++) {
+                                cacheList.add(paths.get(i));
+                            }
+                        }
+                        intent.putStringArrayListExtra("paths", cacheList);
+                        intent.putExtra("maxNum", 9);
+                        startActivityForResult(intent, Constants.REQUESTCODE_TAKE_LOCAL);
+                    }
+
+                    @Override
+                    public void OnClickCancel() {
+
+                    }
+                });
             }
-        };
-    }*/
+            dialog.show();
+        }*/
+    }
 
 }

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -68,8 +69,8 @@ public class SimpleExpressionhelper {
     ViewPager facePager;
     CirclePageIndicator indicator;
 
-    private Activity mActivity;
-    static Handler mHandler = new Handler();
+    private AppCompatActivity mActivity;
+    Handler mHandler = new Handler();
     //屏幕高度
     private int screenHeight = 0;
     //软件盘弹起后所占高度阀值
@@ -77,10 +78,11 @@ public class SimpleExpressionhelper {
     private List<String> emoticonsFileNames;
 
 
-    public SimpleExpressionhelper(Activity mActivity, EditText etContent) {
+    public SimpleExpressionhelper(AppCompatActivity mActivity, EditText etContent) {
         this.mActivity = mActivity;
         this.etContent = etContent;
-        layoutRoot = mActivity.getWindow().getDecorView();
+        //不能是DecorView，DecorView不能监听layout变化
+        layoutRoot = mActivity.findViewById(R.id.ll_parent);//mActivity.getWindow().getDecorView();
         rlBottomSmile = (LinearLayout) layoutRoot.findViewById(R.id.rl_bottom_smile);
         ivSmile = (CheckBox) layoutRoot.findViewById(R.id.iv_smile);
         layoutFace = (LinearLayout) layoutRoot.findViewById(R.id.layout_face);
