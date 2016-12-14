@@ -155,12 +155,6 @@ public class SimpleExpressionhelper {
             public boolean onTouch(View v, MotionEvent event) {
                 ivSmile.setChecked(false);//还原表情状态
                 layoutFace.setVisibility(View.GONE);
-                return false;
-            }
-        });
-        this.etContent.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent arg1) {
                 // 这句话说的意思告诉父View我自己的事件我自己处理
                 v.getParent().requestDisallowInterceptTouchEvent(true);
                 return false;

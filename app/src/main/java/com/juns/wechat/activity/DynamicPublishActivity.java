@@ -29,9 +29,11 @@ import com.juns.wechat.chat.utils.SmileUtils;
 import com.juns.wechat.chat.widght.ExpandGridView;
 import com.juns.wechat.helper.SimpleExpressionhelper;
 import com.juns.wechat.manager.AccountManager;
+import com.style.album.AlbumActivity;
 import com.style.album.DynamicPublishImageAdapter;
 import com.style.base.BaseRecyclerViewAdapter;
 import com.style.base.BaseToolbarBtnActivity;
+import com.style.constant.FileDirectory;
 import com.style.constant.Skip;
 import com.style.dialog.SelAvatarDialog;
 import com.style.rxAndroid.newwork.callback.RXNetBeanCallBack;
@@ -73,6 +75,9 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
 
     @Override
     protected void initData() {
+        getToolbarRightView().setText("发送");
+        getToolbarRightView().setEnabled(false);
+
         curUser = AccountManager.getInstance().getUser();
         //setTitleCenterText(R.string.send_message);
         facehelper = new SimpleExpressionhelper(this, etContent);
@@ -309,20 +314,20 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
     }*/
 
     private void showSelPicPopupWindow(int position) {
-       /* int count = adapter.getItemCount();
+        int count = adapter.getItemCount();
         if (position == count - 1) {
             if (dialog == null) {
                 dialog = new SelAvatarDialog(DynamicPublishActivity.this, R.style.Dialog_NoTitle);
                 dialog.setOnItemClickListener(new SelAvatarDialog.OnItemClickListener() {
                     @Override
                     public void OnClickCamera() {
-                        photoFile = CommUtil.takePhoto(DynamicPublishActivity.this, Constants.DIR_APP_IMAGE_CAMERA, String.valueOf(System.currentTimeMillis()) + ".jpg");
+                        photoFile = CommonUtil.takePhoto(DynamicPublishActivity.this, FileDirectory.DIR_IMAGE, String.valueOf(System.currentTimeMillis()) + ".jpg");
 
                     }
 
                     @Override
                     public void OnClickPhoto() {
-                        Intent intent = new Intent(DynamicPublishActivity.this, GallaryActivity.class);
+                        Intent intent = new Intent(DynamicPublishActivity.this, AlbumActivity.class);
                         int newCount = adapter.getItemCount();
                         ArrayList<String> cacheList = new ArrayList<>();
                         if (newCount > 1) {
@@ -332,7 +337,7 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
                         }
                         intent.putStringArrayListExtra("paths", cacheList);
                         intent.putExtra("maxNum", 9);
-                        startActivityForResult(intent, Constants.REQUESTCODE_TAKE_LOCAL);
+                        startActivityForResult(intent, Skip.CODE_TAKE_ALBUM);
                     }
 
                     @Override
@@ -342,7 +347,7 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
                 });
             }
             dialog.show();
-        }*/
+        }
     }
 
 }
