@@ -17,7 +17,7 @@ public abstract class BaseCallBack<T> implements Callback.CommonCallback<T>{
     @Override
     public final void onSuccess(T result) {
         BaseResponse response = (BaseResponse) result;
-        if(response.code == 0){
+        if(response.code == BaseResponse.SUCCESS){
             handleResponse(result);
         }else if(response.code == BaseResponse.SERVER_ERROR){
             ToastUtil.showToast("服务器出错了", Toast.LENGTH_SHORT);
@@ -25,7 +25,7 @@ public abstract class BaseCallBack<T> implements Callback.CommonCallback<T>{
         }else if(response.code == BaseResponse.TOKEN_EXPIRED || response.code == BaseResponse.TOKEN_INVALID){
             handleTokenError();
         }else {
-            handleResponse(result);
+            onFailure(response.code, response.msg);
         }
     }
 
@@ -34,8 +34,13 @@ public abstract class BaseCallBack<T> implements Callback.CommonCallback<T>{
         ToastUtil.showToast(R.string.toast_network_error, Toast.LENGTH_SHORT);
     }
 
-    protected abstract void handleResponse(T result);
+    protected void handleResponse(T result){
 
+    }
+
+    protected void onFailure(int code, String msg) {
+
+    }
 
     private void handleTokenError(){
         AccountManager.getInstance().logOut();

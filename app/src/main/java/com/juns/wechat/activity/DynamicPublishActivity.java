@@ -1,34 +1,21 @@
 package com.juns.wechat.activity;
 
-import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.juns.wechat.R;
 import com.juns.wechat.bean.DynamicBean;
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.chat.adpter.ExpressionAdapter;
-import com.juns.wechat.chat.adpter.ExpressionPagerAdapter;
-import com.juns.wechat.chat.utils.SmileUtils;
-import com.juns.wechat.chat.widght.ExpandGridView;
 import com.juns.wechat.helper.SimpleExpressionhelper;
 import com.juns.wechat.manager.AccountManager;
+import com.juns.wechat.net.callback.NetNormalCallBack;
 import com.style.album.AlbumActivity;
 import com.style.album.DynamicPublishImageAdapter;
 import com.style.base.BaseRecyclerViewAdapter;
@@ -37,9 +24,11 @@ import com.style.constant.FileDirectory;
 import com.style.constant.Skip;
 import com.style.dialog.SelAvatarDialog;
 import com.style.rxAndroid.newwork.callback.RXNetBeanCallBack;
-import com.style.rxAndroid.newwork.core.HttpAction;
+import com.juns.wechat.net.request.HttpAction;
+import com.style.rxAndroid.newwork.callback.RXOtherCallBack;
+import com.style.utils.BitmapUtil;
 import com.style.utils.CommonUtil;
-import com.style.view.CirclePageIndicator;
+import com.style.utils.PictureUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -168,23 +157,34 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
         final DynamicBean dynamicBean = new DynamicBean();
         dynamicBean.setContent(content);
         dynamicBean.setPublisherId(curUser.getUserId());
-        runTask(new RXNetBeanCallBack(DynamicBean.class) {
+        HttpAction.addDynamic(content, null, new NetNormalCallBack() {
+            @Override
+            protected void onResultSuccess(Object data, String msg) {
+                super.onResultSuccess(data, msg);
+            }
+
+            @Override
+            protected void onFailure(int code, String msg) {
+                super.onFailure(code, msg);
+            }
+        });
+        showProgressDialog();
+        runTask(new RXOtherCallBack() {
             @Override
             public Object doInBackground() {
-                return HttpAction.addDynamic(dynamicBean);
+                return dealPicture();
             }
 
             @Override
             public void OnSuccess(Object object) {
                 dismissProgressDialog();
-                DynamicBean bean = (DynamicBean) object;
-                bean.setUser(curUser);
+                File[] files = (File[]) object;
+                logE(TAG, "文件个数==" + files.length);
             }
 
             @Override
             public void OnFailed(String message) {
                 dismissProgressDialog();
-                super.OnFailed(message);
             }
         });
 
@@ -235,83 +235,33 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
         }
     }
 
-    /*public class DealPicTask extends AsyncTask<Void, Void, File[]> {
-        private Params params;
-
-        public DealPicTask(Params params) {
-            this.params = params;
-        }
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
-
-        @Override
-        protected File[] doInBackground(Void... params) {
-            int num = adapter.getCount() - 1;
-            File[] files = null;
-            if (num > 0) {
-                try {
-                    files = new File[num];
-                    for (int i = 0; i < num; i++) {
-                        String path = (String) adapter.getItem(i);
-                        if (path != null) {
-                            int degree = PhotoUtil.readPictureDegree(path);
-                            logE("degree", degree + "");
-                            Bitmap bitmap0 = BitmapUtil.revitionImageSize(path, 960, 540, 1280);
-                            Bitmap bitmap = AvatarUtil.rotaingBitmap(bitmap0, degree);
-                            String name = String.valueOf(System.currentTimeMillis()) + ".jpg";
-                            BitmapUtil.saveBitmap(Constants.DIR_APP_IMAGE_CACHE, name, bitmap, 30, true);
-                            String newPath = Constants.DIR_APP_IMAGE_CACHE + "/" + name;
-                            File file = new File(newPath);
-                            if (file.exists())
-                                files[i] = file;
-                        }
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            if (!isCancelled()) {
-                return files;
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(File[] files) {
-            params.putFiles(files);
-            OkHttpUtil.post(OkHttpUtil.ADD_USER_DYNAMIC, params, new OkHttpJsonHandler() {
-                @Override
-                public void onSuccess(JSONObject response) {
-                    hiddenProgressDialog();
-                    try {
-                        String code = response.optString("code");
-                        if (OkHttpUtil.codeEqualsZero(code)) {
-                            UserDynamic ud = JSON.parseObject(response.optString("ud"), UserDynamic.class);
-                            if (null != ud) {
-                                ud.setUser(curUser);
-                                showToast(R.string.publish_success);
-                                setResult(RESULT_OK, new Intent().putExtra(Skip.USERDYNAMIC_KEY, ud));
-                                finish();
-                            }
-                        } else {
-                            showToastMsg(response);
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
+    public File[] dealPicture() {
+        int num = adapter.getItemCount() - 1;
+        File[] files = null;
+        if (num > 0) {
+            try {
+                files = new File[num];
+                for (int i = 0; i < num; i++) {
+                    String path = (String) adapter.getData(i);
+                    if (path != null) {
+                        int degree = PictureUtils.readPictureDegree(path);
+                        logE("degree", degree + "");
+                        Bitmap bitmap0 = BitmapUtil.revitionImageSize(path, 960, 540, 1280);
+                        Bitmap bitmap = PictureUtils.rotaingBitmap(bitmap0, degree);
+                        String name = String.valueOf(System.currentTimeMillis()) + ".imageCache";
+                        BitmapUtil.saveBitmap(FileDirectory.DIR_CACHE, name, bitmap, 30, true);
+                        String newPath = FileDirectory.DIR_CACHE + "/" + name;
+                        File file = new File(newPath);
+                        if (file.exists())
+                            files[i] = file;
                     }
                 }
-
-                @Override
-                public void onFailure(IOException e) {
-                    hiddenProgressDialog();
-                    super.onFailure(e);
-                }
-            });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-    }*/
+        return files;
+    }
 
     private void showSelPicPopupWindow(int position) {
         int count = adapter.getItemCount();
