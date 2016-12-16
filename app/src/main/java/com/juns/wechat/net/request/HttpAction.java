@@ -33,14 +33,14 @@ public class HttpAction {
 
     }
 
-    public static void addDynamic(String content, List<File> fileList, BaseCallBack callBack) {
+    public static void addDynamic(String content, File[] fileList, BaseCallBack callBack) {
         initCommonParams();
         RequestParams params = new RequestParams(URL_ADD_DYNAMIC);
         params.addBodyParameter("content", content);
-        if(fileList != null && !fileList.isEmpty()){
+        if (fileList != null && fileList.length > 0) {
             List<KeyValue> list = new ArrayList<>();
-            for(int i = 0 ; i < fileList.size(); i++){
-                File file = fileList.get(i);
+            for (int i = 0; i < fileList.length; i++) {
+                File file = fileList[i];
                 list.add(new KeyValue("avatar" + i, file));
             }
             MultipartBody multipartBody = new MultipartBody(list, null);

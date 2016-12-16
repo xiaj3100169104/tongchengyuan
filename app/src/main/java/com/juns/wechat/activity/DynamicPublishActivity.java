@@ -16,6 +16,7 @@ import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.helper.SimpleExpressionhelper;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.callback.NetNormalCallBack;
+import com.juns.wechat.util.PhotoUtil;
 import com.style.album.AlbumActivity;
 import com.style.album.DynamicPublishImageAdapter;
 import com.style.base.BaseRecyclerViewAdapter;
@@ -153,21 +154,6 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
     }
 
     private void addUserDynamic() {
-        String content = etContent.getText().toString();
-        final DynamicBean dynamicBean = new DynamicBean();
-        dynamicBean.setContent(content);
-        dynamicBean.setPublisherId(curUser.getUserId());
-        HttpAction.addDynamic(content, null, new NetNormalCallBack() {
-            @Override
-            protected void onResultSuccess(Object data, String msg) {
-                super.onResultSuccess(data, msg);
-            }
-
-            @Override
-            protected void onFailure(int code, String msg) {
-                super.onFailure(code, msg);
-            }
-        });
         showProgressDialog();
         runTask(new RXOtherCallBack() {
             @Override
@@ -177,9 +163,10 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
 
             @Override
             public void OnSuccess(Object object) {
-                dismissProgressDialog();
+                //dismissProgressDialog();
                 File[] files = (File[]) object;
                 logE(TAG, "文件个数==" + files.length);
+                startSend(files);
             }
 
             @Override
@@ -187,15 +174,26 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
                 dismissProgressDialog();
             }
         });
+    }
 
-        //showProgressDialog(R.string.publishing);
-      /*  UserDynamic ud = new UserDynamic();
-        ud.setPublishAccount(curUser.getAccount());
-        ud.setGroupId(curUser.getGroupId());
-        ud.setContent(content);
-        Params params = new Params(ud);
-        params.put("mainAccount", curUser.getMainAccount());
-        dealPicTask = new DealPicTask(params).execute();*/
+    private void startSend(File[] files) {
+        String content = etContent.getText().toString();
+        final DynamicBean dynamicBean = new DynamicBean();
+        dynamicBean.setContent(content);
+        dynamicBean.setPublisherId(curUser.getUserId());
+        HttpAction.addDynamic(content, files, new NetNormalCallBack() {
+            @Override
+            protected void onResultSuccess(Object data, String msg) {
+                dismissProgressDialog();
+                super.onResultSuccess(data, msg);
+            }
+
+            @Override
+            protected void onFailure(int code, String msg) {
+                dismissProgressDialog();
+                super.onFailure(code, msg);
+            }
+        });
     }
 
     @Override
@@ -239,25 +237,21 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
         int num = adapter.getItemCount() - 1;
         File[] files = null;
         if (num > 0) {
-            try {
-                files = new File[num];
-                for (int i = 0; i < num; i++) {
-                    String path = (String) adapter.getData(i);
-                    if (path != null) {
-                        int degree = PictureUtils.readPictureDegree(path);
-                        logE("degree", degree + "");
-                        Bitmap bitmap0 = BitmapUtil.revitionImageSize(path, 960, 540, 1280);
-                        Bitmap bitmap = PictureUtils.rotaingBitmap(bitmap0, degree);
-                        String name = String.valueOf(System.currentTimeMillis()) + ".imageCache";
-                        BitmapUtil.saveBitmap(FileDirectory.DIR_CACHE, name, bitmap, 30, true);
-                        String newPath = FileDirectory.DIR_CACHE + "/" + name;
-                        File file = new File(newPath);
-                        if (file.exists())
-                            files[i] = file;
-                    }
+            files = new File[num];
+            for (int i = 0; i < num; i++) {
+                String path = (String) adapter.getData(i);
+                if (path != null) {
+                    int degree = PictureUtils.readPictureDegree(path);
+                    logE("degree", degree + "");
+                    Bitmap bitmap0 = BitmapUtil.revitionImageSize(path, 960, 540, 1280);
+                    Bitmap bitmap = PictureUtils.rotaingBitmap(bitmap0, degree);
+                    String name = PhotoUtil.getUniqueImgName();
+                    BitmapUtil.saveBitmap(FileDirectory.DIR_CACHE, name, bitmap, 30, true);
+                    String newPath = FileDirectory.DIR_CACHE + "/" + name;
+                    File file = new File(newPath);
+                    if (file.exists())
+                        files[i] = file;
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
         }
         return files;
