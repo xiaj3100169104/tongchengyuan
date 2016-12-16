@@ -31,6 +31,7 @@ public class SettingActivity extends BaseToolbarActivity implements OnClickListe
 		findViewById(R.id.txt_msgtip).setOnClickListener(this);
 		findViewById(R.id.txt_usersafe).setOnClickListener(this);
 		findViewById(R.id.txt_yinsi).setOnClickListener(this);
+		findViewById(R.id.txt_tongyong).setOnClickListener(this);
 		findViewById(R.id.txt_about).setOnClickListener(this);
 	}
 

@@ -1,8 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ll_parent"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/gray_light">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -47,8 +46,6 @@
                     android:layout_marginTop="10dp" />
             </LinearLayout>
         </ScrollView>
-
-        <include layout="@layout/layout_more_dynamic_publish" />
     </LinearLayout>
 
     <LinearLayout
@@ -58,7 +55,7 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/rl_bottom_smile"
+            android:id="@+id/rl_bottom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
@@ -76,33 +73,6 @@
                 android:layout_marginTop="5dp"
                 android:background="@drawable/sel_switch_emoji"
                 android:button="@null" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layout_face"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:background="#fff0f0f0"
-            android:orientation="vertical"
-            android:paddingBottom="5dip"
-            android:paddingTop="5dip"
-            android:visibility="gone">
-
-            <android.support.v4.view.ViewPager
-                android:id="@+id/face_pager"
-                android:layout_width="fill_parent"
-                android:layout_height="120dp"
-                android:layout_marginLeft="5dip"
-                android:layout_marginRight="5dip"
-                android:background="#0000"
-                android:flipInterval="30"
-                android:persistentDrawingCache="animation" />
-
-            <com.style.view.CirclePageIndicator
-                android:id="@+id/indicator"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dip" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

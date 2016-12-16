@@ -18,6 +18,7 @@
     <string name="back">返回</string>
     <string name="save">保存</string>
     <string name="send">发送</string>
+    <string name="complete">完成</string>
 
     <string name="album">相册</string>
     <string name="explain">说明</string>
@@ -35,6 +36,9 @@
     <string name="comment">评论</string>
     <string name="click_zan">赞</string>
     <string name="collection">收藏</string>
+    <string name="my_collection">我的收藏</string>
+    <string name="note">笔记</string>
+
     <string name="wallet">钱包</string>
     <string name="card_bag">卡包</string>
     <string name="expression2">表情</string>

@@ -16,6 +16,7 @@ import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.helper.SimpleExpressionhelper;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.callback.NetNormalCallBack;
+import com.juns.wechat.net.request.HttpAction;
 import com.style.album.AlbumActivity;
 import com.style.album.DynamicPublishImageAdapter;
 import com.style.base.BaseRecyclerViewAdapter;
@@ -23,8 +24,6 @@ import com.style.base.BaseToolbarBtnActivity;
 import com.style.constant.FileDirectory;
 import com.style.constant.Skip;
 import com.style.dialog.SelAvatarDialog;
-import com.style.rxAndroid.newwork.callback.RXNetBeanCallBack;
-import com.juns.wechat.net.request.HttpAction;
 import com.style.rxAndroid.newwork.callback.RXOtherCallBack;
 import com.style.utils.BitmapUtil;
 import com.style.utils.CommonUtil;
@@ -37,15 +36,13 @@ import java.util.List;
 import butterknife.Bind;
 
 
-public class DynamicPublishActivity extends BaseToolbarBtnActivity {
+public class AddNoteActivity extends BaseToolbarBtnActivity {
     private static final String TAG_ADD = "addTag";
 
     @Bind(R.id.et_content)
     EditText etContent;
     @Bind(R.id.recyclerView)
     RecyclerView recyclerView;
-
-    private SimpleExpressionhelper facehelper;
 
     private DynamicPublishImageAdapter adapter;
     private List<String> paths;
@@ -58,23 +55,21 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mLayoutResID = R.layout.activity_dynamic_publish;
+        mLayoutResID = R.layout.activity_add_note;
         super.onCreate(savedInstanceState);
     }
 
     @Override
     protected void initData() {
-        getToolbarRightView().setText("发送");
+        setToolbarTitle(R.string.note);
+        getToolbarRightView().setText(R.string.complete);
         getToolbarRightView().setEnabled(false);
 
         curUser = AccountManager.getInstance().getUser();
-        setToolbarTitle("");
-        facehelper = new SimpleExpressionhelper(this, etContent);
-        facehelper.onCreate();
         paths = null;
         paths = new ArrayList<>();
         paths.add(TAG_ADD);
-        adapter = new DynamicPublishImageAdapter(DynamicPublishActivity.this, paths);
+        adapter = new DynamicPublishImageAdapter(AddNoteActivity.this, paths);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4);
         gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -157,7 +152,7 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
         final DynamicBean dynamicBean = new DynamicBean();
         dynamicBean.setContent(content);
         dynamicBean.setPublisherId(curUser.getUserId());
-        HttpAction.addDynamic(content, null, new NetNormalCallBack() {
+       /* HttpAction.addDynamic(content, null, new NetNormalCallBack() {
             @Override
             protected void onResultSuccess(Object data, String msg) {
                 super.onResultSuccess(data, msg);
@@ -167,7 +162,7 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
             protected void onFailure(int code, String msg) {
                 super.onFailure(code, msg);
             }
-        });
+        });*/
         showProgressDialog();
         runTask(new RXOtherCallBack() {
             @Override
@@ -187,15 +182,6 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
                 dismissProgressDialog();
             }
         });
-
-        //showProgressDialog(R.string.publishing);
-      /*  UserDynamic ud = new UserDynamic();
-        ud.setPublishAccount(curUser.getAccount());
-        ud.setGroupId(curUser.getGroupId());
-        ud.setContent(content);
-        Params params = new Params(ud);
-        params.put("mainAccount", curUser.getMainAccount());
-        dealPicTask = new DealPicTask(params).execute();*/
     }
 
     @Override
@@ -267,17 +253,17 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
         int count = adapter.getItemCount();
         if (position == count - 1) {
             if (dialog == null) {
-                dialog = new SelAvatarDialog(DynamicPublishActivity.this, R.style.Dialog_NoTitle);
+                dialog = new SelAvatarDialog(AddNoteActivity.this, R.style.Dialog_NoTitle);
                 dialog.setOnItemClickListener(new SelAvatarDialog.OnItemClickListener() {
                     @Override
                     public void OnClickCamera() {
-                        photoFile = CommonUtil.takePhoto(DynamicPublishActivity.this, FileDirectory.DIR_IMAGE, String.valueOf(System.currentTimeMillis()) + ".jpg");
+                        photoFile = CommonUtil.takePhoto(AddNoteActivity.this, FileDirectory.DIR_IMAGE, String.valueOf(System.currentTimeMillis()) + ".jpg");
 
                     }
 
                     @Override
                     public void OnClickPhoto() {
-                        Intent intent = new Intent(DynamicPublishActivity.this, AlbumActivity.class);
+                        Intent intent = new Intent(AddNoteActivity.this, AlbumActivity.class);
                         int newCount = adapter.getItemCount();
                         ArrayList<String> cacheList = new ArrayList<>();
                         if (newCount > 1) {

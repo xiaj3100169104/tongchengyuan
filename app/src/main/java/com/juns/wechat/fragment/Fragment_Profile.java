@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.juns.wechat.R;
+import com.juns.wechat.activity.FriendCircleActivity;
+import com.juns.wechat.activity.MyCollectActivity;
 import com.juns.wechat.activity.MyProfileActivity;
 import com.juns.wechat.bean.UserBean;
 import com.style.base.BaseBusFragment;
@@ -31,12 +33,6 @@ public class Fragment_Profile extends BaseBusFragment implements OnClickListener
     private ImageView ivAvatar;
 	private TextView tvNickName, tvUserName;
     private UserBean account;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
-    }
 
     @Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -92,19 +88,15 @@ public class Fragment_Profile extends BaseBusFragment implements OnClickListener
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.view_user:
-			startActivity(new Intent(getActivity(), MyProfileActivity.class));
+			skip(MyProfileActivity.class);
 			break;
-		/*case R.id.txt_album:// 相册
-			CommonUtil.startActivity(getActivity(), PublicActivity.class,
-					new BasicNameValuePair(Constants.NAME,
-							getString(R.string.my_posts)));
+		case R.id.txt_album:// 相册
+			skip(FriendCircleActivity.class);
 			break;
 		case R.id.txt_collect:// 收藏
-			CommonUtil.startActivity(getActivity(), PublicActivity.class,
-					new BasicNameValuePair(Constants.NAME,
-							getString(R.string.collection)));
+			skip(MyCollectActivity.class);
 			break;
-		case R.id.txt_money:// 钱包
+		/*case R.id.txt_money:// 钱包
 			CommonUtil.startActivity(getActivity(), PublicActivity.class,
 					new BasicNameValuePair(Constants.NAME,
 							getString(R.string.wallet)));

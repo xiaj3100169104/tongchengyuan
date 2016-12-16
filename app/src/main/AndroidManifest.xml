@@ -213,6 +213,8 @@
         <activity android:name="com.juns.wechat.activity.CallVoiceBaseActivity"/>
         <activity android:name="com.juns.wechat.activity.FriendCircleActivity"/>
         <activity android:name="com.juns.wechat.activity.DynamicPublishActivity"/>
+        <activity android:name="com.juns.wechat.activity.MyCollectActivity"/>
+        <activity android:name="com.juns.wechat.activity.AddNoteActivity"/>
 
     </application>
 
