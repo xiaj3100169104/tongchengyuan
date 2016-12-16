@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="#ebebeb"
-              android:orientation="vertical" >
-    <include android:id="@+id/toolbar" layout="@layout/comm_toolbar" />
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ebebeb"
+    android:orientation="vertical">
+
+    <include layout="@layout/comm_toolbar" />
 
     <RelativeLayout
         android:id="@+id/rlAvatar"
@@ -12,7 +13,7 @@
         android:layout_height="80dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/btn_list_item_bg"
-        android:clickable="true" >
+        android:clickable="true">
 
         <ImageView
             android:id="@+id/ivAvatar"
@@ -46,7 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@drawable/btn_list_item_bg"
-        android:clickable="true" >
+        android:clickable="true">
 
         <TextView
             android:id="@+id/tv_temp_name"
@@ -88,7 +89,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@drawable/btn_list_item_bg"
-        android:clickable="true" >
+        android:clickable="true">
 
         <TextView
             android:id="@+id/tv_temp_fxid"
@@ -129,7 +130,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@drawable/btn_list_item_bg"
-        android:clickable="true" >
+        android:clickable="true">
 
         <TextView
             android:id="@+id/tv_temp_erweima"
@@ -165,7 +166,7 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@drawable/btn_list_item_bg"
-        android:clickable="true" >
+        android:clickable="true">
 
         <TextView
             android:id="@+id/tv_temp_address"
@@ -185,7 +186,7 @@
         android:layout_height="48dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/btn_list_item_bg"
-        android:clickable="true" >
+        android:clickable="true">
 
         <TextView
             android:id="@+id/tv_temp_sex"
@@ -221,13 +222,14 @@
             android:layout_marginRight="12dp"
             android:background="#dadada" />
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/rlRegion"
         android:layout_width="match_parent"
         android:layout_height="48dp"
 
         android:background="@drawable/btn_list_item_bg"
-        android:clickable="true" >
+        android:clickable="true">
 
         <TextView
             android:id="@+id/tv_temp_region"
@@ -263,13 +265,14 @@
             android:layout_marginRight="12dp"
             android:background="#dadada" />
     </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/rlSignature"
         android:layout_width="match_parent"
         android:layout_height="48dp"
 
         android:background="@drawable/btn_list_item_bg"
-        android:clickable="true" >
+        android:clickable="true">
 
         <TextView
             android:id="@+id/tv_temp_sign"

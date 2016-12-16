@@ -119,7 +119,7 @@
                 android:layout_marginTop="20dp"
                 android:drawableLeft="@drawable/icon_me_setting"
                 android:drawableRight="@drawable/right"
-                android:text="@string/settings" />
+                android:text="@string/setting" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

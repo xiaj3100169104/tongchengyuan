@@ -53,11 +53,6 @@ public class MyProfileActivity extends BaseToolbarActivity implements SelectPhot
     private SelectSexDialog selectSexDialog;
     private String imageName;
 
-    @Override
-    public void initData() {
-        setData();
-        EventBus.getDefault().register(this);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +60,11 @@ public class MyProfileActivity extends BaseToolbarActivity implements SelectPhot
         super.onCreate(savedInstanceState);
     }
 
+    @Override
+    public void initData() {
+        setToolbarTitle(R.string.my_profile);
+        setData();
+    }
     private void setData() {
         account = AccountManager.getInstance().getUser();
         tvNickName.setText(account.getNickName() == null ? "" : account.getNickName());
@@ -89,10 +89,14 @@ public class MyProfileActivity extends BaseToolbarActivity implements SelectPhot
         startActivity(intent);
     }
 
-
     @OnClick(R.id.rlNickName)
     public void modifyNickName() {
-        startActivity(new Intent(this, ModifyNameActivity.class));
+        skip(ModifyNameActivity.class);
+    }
+
+    @OnClick(R.id.rlQrCode)
+    public void myQRCodeCard() {
+        skip(MyQRCodeActivity.class);
     }
 
     @OnClick(R.id.rlSex)

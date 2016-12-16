@@ -65,19 +65,11 @@
         </activity>
         <activity
             android:name=".activity.LoginActivity"
-            android:label="@string/label_activity_login"
-            android:launchMode="singleTop"
-            android:screenOrientation="portrait">
+            android:launchMode="singleTop">
         </activity>
-        <activity
-            android:name=".activity.RegisterActivity"
-            android:label="@string/label_activity_register"
-            android:screenOrientation="portrait">
+        <activity android:name=".activity.RegisterActivity">
         </activity>
-        <activity
-            android:name=".activity.UserInfoActivity"
-            android:label="@string/label_activity_user_info"
-            android:screenOrientation="portrait">
+        <activity android:name=".activity.UserInfoActivity">
         </activity>
         <activity
             android:name=".activity.NewFriendsListActivity"
@@ -140,9 +132,7 @@
             android:windowSoftInputMode="stateAlwaysHidden">
         </activity>
         <activity
-            android:name=".activity.AddFriendActivity"
-            android:label="@string/label_activity_add_friend"
-            android:screenOrientation="portrait"/>
+            android:name=".activity.AddFriendActivity"/>
         <activity
             android:name=".activity.SearchActivity"
             android:screenOrientation="portrait"/>
@@ -179,28 +169,20 @@
             android:exported="true"/>
 
         <activity
-            android:name=".activity.SearchResultActivity"
-            android:label="@string/label_activity_show_search_result"
-            android:screenOrientation="portrait">
+            android:name=".activity.SearchResultActivity">
         </activity>
         <activity
-            android:name=".activity.MyProfileActivity"
-            android:label="@string/label_activity_my_profile"
-            android:screenOrientation="portrait">
+            android:name=".activity.MyProfileActivity">
         </activity>
         <activity
-            android:name=".activity.ModifyNameActivity"
-            android:label="@string/label_activity_modify_name"
-            android:screenOrientation="portrait">
+            android:name=".activity.ModifyNameActivity">
         </activity>
         <activity
             android:name=".activity.CropImageActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".activity.SendInviteMessageActivity"
-            android:label="@string/label_activity_send_invite_message"
-            android:screenOrientation="portrait">
+            android:name=".activity.SendInviteMessageActivity">
         </activity>
         <activity
             android:name=".activity.AddFriendFinalActivity"
@@ -215,6 +197,7 @@
         <activity android:name="com.juns.wechat.activity.DynamicPublishActivity"/>
         <activity android:name="com.juns.wechat.activity.MyCollectActivity"/>
         <activity android:name="com.juns.wechat.activity.AddNoteActivity"/>
+        <activity android:name="com.juns.wechat.activity.MyQRCodeActivity"/>
 
     </application>
 
