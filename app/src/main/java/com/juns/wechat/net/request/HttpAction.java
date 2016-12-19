@@ -36,6 +36,7 @@ public class HttpAction {
     public static void addDynamic(String content, File[] fileList, BaseCallBack callBack) {
         initCommonParams();
         RequestParams params = new RequestParams(URL_ADD_DYNAMIC);
+        params.addBodyParameter("token", token);
         params.addBodyParameter("content", content);
         if (fileList != null && fileList.length > 0) {
             List<KeyValue> list = new ArrayList<>();

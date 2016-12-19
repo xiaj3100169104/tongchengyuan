@@ -8,7 +8,7 @@ import com.juns.wechat.BuildConfig;
  * *****************************************************
  */
 public class ConfigUtil {
-    public static final String REAL_SERVER = "http://192.168.199.108:8080";
+    public static final String REAL_SERVER = "http://www.wangzongwen.cn";//"http://192.168.199.108:8080";
     public static final String REAL_API_URL = REAL_SERVER + "/wechat_server";
 
 

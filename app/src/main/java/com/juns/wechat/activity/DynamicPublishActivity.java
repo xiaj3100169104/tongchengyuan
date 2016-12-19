@@ -16,6 +16,7 @@ import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.helper.SimpleExpressionhelper;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.callback.NetNormalCallBack;
+import com.juns.wechat.net.request.AddDynamicRequest;
 import com.juns.wechat.util.PhotoUtil;
 import com.style.album.AlbumActivity;
 import com.style.album.DynamicPublishImageAdapter;
@@ -178,9 +179,6 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
 
     private void startSend(File[] files) {
         String content = etContent.getText().toString();
-        final DynamicBean dynamicBean = new DynamicBean();
-        dynamicBean.setContent(content);
-        dynamicBean.setPublisherId(curUser.getUserId());
         HttpAction.addDynamic(content, files, new NetNormalCallBack() {
             @Override
             protected void onResultSuccess(Object data, String msg) {
@@ -194,6 +192,7 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
                 super.onFailure(code, msg);
             }
         });
+        //AddDynamicRequest.addDynamic(content, );
     }
 
     @Override
@@ -246,6 +245,7 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
                     Bitmap bitmap0 = BitmapUtil.revitionImageSize(path, 960, 540, 1280);
                     Bitmap bitmap = PictureUtils.rotaingBitmap(bitmap0, degree);
                     String name = PhotoUtil.getUniqueImgName();
+                    logE(TAG, "唯一缓存文件名==" + name);
                     BitmapUtil.saveBitmap(FileDirectory.DIR_CACHE, name, bitmap, 30, true);
                     String newPath = FileDirectory.DIR_CACHE + "/" + name;
                     File file = new File(newPath);

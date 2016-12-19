@@ -3,6 +3,7 @@ package com.juns.wechat.net.request;
 import com.juns.wechat.config.ConfigUtil;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.callback.AddDynamicCallBack;
+import com.style.utils.StringUtil;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.http.RequestParams;
@@ -25,7 +26,18 @@ public class AddDynamicRequest {
         private String token;
         private String content;
 
+        public AddDynamicParams(String content, File[] fileList){
+            List<File> list = null;
+            if(fileList != null && fileList.length>0){
+                list = StringUtil.Array2List(fileList);
+            }
+            initParams(content, list);
+        }
+
         public AddDynamicParams(String content, List<File> fileList){
+            initParams(content, fileList);
+        }
+        private void initParams(String content, List<File> fileList) {
             token = AccountManager.getInstance().getToken();
             this.content = content;
 
@@ -40,6 +52,7 @@ public class AddDynamicRequest {
             }
 
         }
+
     }
 
     public static void addDynamic(String content, List<File> images, AddDynamicCallBack callBack){

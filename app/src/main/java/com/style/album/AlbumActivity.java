@@ -101,7 +101,7 @@ public class AlbumActivity extends BaseToolbarActivity {
             public void onItemClick(int position, Object data) {
                 ImageItem item = list.get(position);
                 double sizeM = item.getSize() / 1024.00 / 1024.00;
-                Log.e("GallaryActivity", "选中图片的大小是-->" + sizeM);
+                Log.e(TAG, "选中图片的大小是-->" + sizeM);
 
                 boolean isSelected = item.isSelected();
                 if (!isSelected) { // 未被选中
