@@ -79,11 +79,6 @@
             android:name=".activity.SettingActivity"
             android:screenOrientation="portrait">
         </activity>
-
-        <activity
-            android:name=".zxing.CaptureActivity"
-            android:screenOrientation="portrait">
-        </activity>
         <service android:name=".view.UpdateService"/>
 
         <!-- 环信开始 -->
@@ -198,6 +193,7 @@
         <activity android:name="com.juns.wechat.activity.MyCollectActivity"/>
         <activity android:name="com.juns.wechat.activity.AddNoteActivity"/>
         <activity android:name="com.juns.wechat.activity.MyQRCodeActivity"/>
+        <activity android:name="com.juns.wechat.activity.QRScanActivity"/>
 
     </application>
 

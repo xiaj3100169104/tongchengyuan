@@ -13,46 +13,54 @@
         android:layout_margin="30dp"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:id="@+id/view_user"
+        <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/head"
+                android:id="@+id/iv_avatar"
                 android:layout_width="70.0dip"
                 android:layout_height="70.0dip"
                 android:src="@drawable/default_useravatar" />
 
-            <TextView
-                android:id="@+id/tvNickName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="17dp"
-                android:layout_toRightOf="@+id/head"
-                android:text="菲儿"
-                android:textSize="18.0dip" />
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="10dp">
 
-            <TextView
-                android:id="@+id/tvUserName"
-                style="@style/txt_ContextStyle1"
-                android:layout_below="@+id/tvNickName"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="5dp"
-                android:layout_toRightOf="@+id/head"
-                android:text="微信号：dada20150625"
-                android:textSize="14.0dip" />
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/ivSex"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="22dp"
-                android:layout_toRightOf="@+id/tvNickName"
-                android:src="@drawable/ic_sex_female" />
-        </RelativeLayout>
+                    <TextView
+                        android:id="@+id/tvNickName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="菲儿"
+                        android:textSize="18.0dip" />
+
+                    <ImageView
+                        android:id="@+id/ivSex"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/tvNickName"
+                        android:src="@drawable/ic_sex_female" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tvUserName"
+                    style="@style/txt_ContextStyle1"
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@+id/iv_avatar"
+                    android:text="微信号：dada20150625"
+                    android:textSize="14.0dip" />
+            </LinearLayout>
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/img_code"

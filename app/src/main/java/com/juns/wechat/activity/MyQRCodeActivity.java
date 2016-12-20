@@ -1,28 +1,22 @@
 package com.juns.wechat.activity;
 
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.juns.wechat.R;
-import com.juns.wechat.adpter.DynamicAdapter;
+import com.juns.wechat.bean.UserBean;
+import com.juns.wechat.manager.AccountManager;
+import com.juns.wechat.util.ImageLoader;
 import com.style.base.BaseToolbarActivity;
-import com.style.view.DividerItemDecoration;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 import butterknife.Bind;
-import in.srain.cube.views.ptr.PtrClassicFrameLayout;
-import in.srain.cube.views.ptr.PtrDefaultHandler2;
-import in.srain.cube.views.ptr.PtrFrameLayout;
 
 
 /**
@@ -30,6 +24,18 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
  */
 public class MyQRCodeActivity extends BaseToolbarActivity {
 
+
+    @Bind(R.id.iv_avatar)
+    ImageView ivAvatar;
+    @Bind(R.id.tvNickName)
+    TextView tvNickName;
+    @Bind(R.id.ivSex)
+    ImageView ivSex;
+    @Bind(R.id.tvUserName)
+    TextView tvUserName;
+    @Bind(R.id.img_code)
+    ImageView imgCode;
+    private UserBean curUser;
 
     @Override
     protected void onCreate(Bundle arg0) {
@@ -56,6 +62,28 @@ public class MyQRCodeActivity extends BaseToolbarActivity {
     @Override
     protected void initData() {
         setToolbarTitle(R.string.qr_card);
+        setData();
+    }
 
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus){
+        // TODO Auto-generated method stub
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus){
+            initQRcode();
+
+        }
+    }
+
+    private void initQRcode() {
+        Bitmap mBitmap = CodeUtils.createImage(curUser.getUserName(), imgCode.getWidth(), imgCode.getHeight(), BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
+        imgCode.setImageBitmap(mBitmap);
+    }
+
+    private void setData() {
+        curUser = AccountManager.getInstance().getUser();
+        tvNickName.setText(curUser.getNickName() == null ? curUser.getUserName() : curUser.getNickName());
+        tvUserName.setText(curUser.getUserName());
+        ImageLoader.loadAvatar(ivAvatar, curUser.getHeadUrl());
     }
 }

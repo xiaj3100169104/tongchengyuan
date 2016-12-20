@@ -24,6 +24,7 @@ import android.text.TextUtils;
 
 
 import com.baidu.mapapi.SDKInitializer;
+import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
 import org.xutils.x;
 
@@ -43,6 +44,7 @@ public class App extends Application {
         // 百度MAP sdk initialize
         SDKInitializer.initialize(this);
         //Thread.setDefaultUncaughtExceptionHandler(new CustomExceptionHandler());
+		ZXingLibrary.initDisplayOpinion(this);
 	}
 
 

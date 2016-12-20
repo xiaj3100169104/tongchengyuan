@@ -118,10 +118,4 @@ public class Fragment_Profile extends BaseBusFragment implements OnClickListener
 			break;
 		}
 	}
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
-    }
 }

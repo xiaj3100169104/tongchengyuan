@@ -23,6 +23,10 @@ public class Skip {
     public static final int CODE_COPY_AND_PASTE = 0x000006;
     public static final int CODE_SELECT_FILE = 0x000007;
     /**
+     * 二维码扫描跳转Activity RequestCode
+     */
+    public static final int CODE_QR_CAMERA = 0x000008;
+    /**
      * 界面跳转传值key
      */
     public static final String KEY_USER_NAME = "user_name";
