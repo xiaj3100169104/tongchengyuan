@@ -2,12 +2,20 @@ package com.juns.wechat.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.juns.wechat.MainActivity;
 import com.juns.wechat.R;
 import com.style.base.BaseToolbarActivity;
+import com.style.constant.Skip;
+import com.style.utils.CommonUtil;
+import com.style.utils.FileUtil;
 import com.uuzuche.lib_zxing.activity.CaptureFragment;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 
@@ -24,6 +32,24 @@ public class QRScanActivity extends BaseToolbarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         mLayoutResID = R.layout.activity_qr_scan;
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.friend_circle, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.select:
+                if (CommonUtil.isSDcardAvailable()) {
+                    CommonUtil.selectPhoto(this);
+                }
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -55,6 +81,10 @@ public class QRScanActivity extends BaseToolbarActivity {
         });
     }
 
+    private void onGetQRcodeSuccess(Bitmap mBitmap, String result) {
+        logE(TAG, "二维码==" + result);
+        finish();
+    }
 
     /**
      * 二维码解析回调函数
@@ -62,24 +92,44 @@ public class QRScanActivity extends BaseToolbarActivity {
     CodeUtils.AnalyzeCallback analyzeCallback = new CodeUtils.AnalyzeCallback() {
         @Override
         public void onAnalyzeSuccess(Bitmap mBitmap, String result) {
-            Intent resultIntent = new Intent();
-            Bundle bundle = new Bundle();
-            bundle.putInt(CodeUtils.RESULT_TYPE, CodeUtils.RESULT_SUCCESS);
-            bundle.putString(CodeUtils.RESULT_STRING, result);
-            resultIntent.putExtras(bundle);
-            QRScanActivity.this.setResult(RESULT_OK, resultIntent);
-            QRScanActivity.this.finish();
+            onGetQRcodeSuccess(mBitmap, result);
         }
 
         @Override
         public void onAnalyzeFailed() {
-            Intent resultIntent = new Intent();
-            Bundle bundle = new Bundle();
-            bundle.putInt(CodeUtils.RESULT_TYPE, CodeUtils.RESULT_FAILED);
-            bundle.putString(CodeUtils.RESULT_STRING, "");
-            resultIntent.putExtras(bundle);
-            QRScanActivity.this.setResult(RESULT_OK, resultIntent);
-            QRScanActivity.this.finish();
         }
     };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //处理二维码扫描结果
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case Skip.CODE_TAKE_ALBUM:
+                    if (data != null) {
+                        try {
+                            showProgressDialog();
+                            Uri uri = data.getData();
+                            String path = FileUtil.UriToRealFilePath(this, uri);
+                            CodeUtils.analyzeBitmap(path, new CodeUtils.AnalyzeCallback() {
+                                @Override
+                                public void onAnalyzeSuccess(Bitmap mBitmap, String result) {
+                                    dismissProgressDialog();
+                                    onGetQRcodeSuccess(mBitmap, result);
+                                }
+
+                                @Override
+                                public void onAnalyzeFailed() {
+
+                                }
+                            });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    break;
+            }
+        }
+    }
 }

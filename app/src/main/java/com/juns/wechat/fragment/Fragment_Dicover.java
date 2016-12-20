@@ -50,12 +50,11 @@ public class Fragment_Dicover extends BaseBusFragment {
 
     @OnClick(R.id.txt_pengyouquan) // 朋友圈
     public void friendCircle() {
-        startActivity(new Intent(getActivity(), FriendCircleActivity.class));
+        skip(FriendCircleActivity.class);
     }
     @OnClick(R.id.txt_saoyisao) // 扫一扫
     public void saoYiSao() {
-        Intent intent = new Intent(getActivity().getApplication(), QRScanActivity.class);
-        getActivity().startActivityForResult(intent, Skip.CODE_QR_CAMERA);
+        skip(QRScanActivity.class);
     }
     @OnClick(R.id.txt_yaoyiyao) // 摇一摇
     public void yaoYiYao() {
