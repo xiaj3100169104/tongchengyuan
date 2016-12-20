@@ -90,7 +90,7 @@ public class Fragment_Friends extends BaseBusFragment implements OnClickListener
             public void onItemClick(int position, Object data) {
                 FriendBean rosterBean = (FriendBean) data;
                 Intent intent = new Intent(getActivity(), UserInfoActivity.class);
-                intent.putExtra(Skip.KEY_USER_NAME, rosterBean.getContactName());
+                intent.putExtra(Skip.KEY_USER_NAME, rosterBean.getContactedId());
 
                 getActivity().startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.push_left_in,

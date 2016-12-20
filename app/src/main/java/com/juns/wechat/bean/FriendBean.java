@@ -17,8 +17,8 @@ import org.xutils.ex.DbException;
 @Table(name = FriendTable.TABLE_NAME, onCreated = FriendTable.CREATE_INDEX)
 public class FriendBean {
     public static final String ID = "id";
-    public static final String OWNER_NAME = "ownerName";
-    public static final String CONTACT_NAME = "contactName";
+    public static final String OWNER_ID = "ownerId";
+    public static final String CONTACT_ID = "contactedId";
     public static final String SUB_TYPE = "subType";
     public static final String REMARK = "remark";
     public static final String FLAG = "flag";
@@ -26,10 +26,10 @@ public class FriendBean {
 
     @Column(name = "id", isId = true)
     private int id;
-    @Column(name = "ownerName")
-    private String ownerName;
-    @Column(name = "contactName")
-    private String contactName;
+    @Column(name = "ownerId")
+    private int ownerId;
+    @Column(name = "contactedId")
+    private int contactedId;
     @Column(name = "subType")
     private String subType;
     @Column(name = "remark")
@@ -52,20 +52,20 @@ public class FriendBean {
         this.id = id;
     }
 
-    public String getOwnerName() {
-        return ownerName;
+    public int getOwnerId() {
+        return ownerId;
     }
 
-    public void setOwnerName(String ownerName) {
-        this.ownerName = ownerName;
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
     }
 
-    public String getContactName() {
-        return contactName;
+    public int getContactedId() {
+        return contactedId;
     }
 
-    public void setContactName(String contactName) {
-        this.contactName = contactName;
+    public void setContactedId(int contactedId) {
+        this.contactedId = contactedId;
     }
 
     public String getSubType() {
@@ -110,7 +110,7 @@ public class FriendBean {
 
     public UserBean getContactUser() throws UserNotFoundException{
         try {
-            return DbUtil.getDbManager().selector(UserBean.class).where("userName", "=", contactName).findFirst();
+            return DbUtil.getDbManager().selector(UserBean.class).where("userName", "=", contactedId).findFirst();
         } catch (DbException e) {
             e.printStackTrace();
             throw new UserNotFoundException(e);

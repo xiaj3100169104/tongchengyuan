@@ -59,8 +59,8 @@ public class FriendDao extends BaseDao<FriendBean>{
     }
 
     public FriendBean findByOwnerAndContactName(String ownerName, String contactName){
-        WhereBuilder whereBuilder = WhereBuilder.b(FriendBean.OWNER_NAME, "=", ownerName);
-        whereBuilder.and(FriendBean.CONTACT_NAME, "=", contactName);
+        WhereBuilder whereBuilder = WhereBuilder.b(FriendBean.OWNER_ID, "=", ownerName);
+        whereBuilder.and(FriendBean.CONTACT_ID, "=", contactName);
         return findByParams(whereBuilder);
     }
 
