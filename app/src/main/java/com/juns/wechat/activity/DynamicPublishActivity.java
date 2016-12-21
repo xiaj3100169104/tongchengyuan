@@ -17,6 +17,7 @@ import com.juns.wechat.helper.SimpleExpressionhelper;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.callback.NetNormalCallBack;
 import com.juns.wechat.net.request.AddDynamicRequest;
+import com.juns.wechat.net.response.BaseResponse;
 import com.juns.wechat.util.PhotoUtil;
 import com.style.album.AlbumActivity;
 import com.style.album.DynamicPublishImageAdapter;
@@ -166,7 +167,8 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
             public void OnSuccess(Object object) {
                 //dismissProgressDialog();
                 File[] files = (File[]) object;
-                logE(TAG, "文件个数==" + files.length);
+                if (files != null)
+                    logE(TAG, "文件个数==" + files.length);
                 startSend(files);
             }
 
@@ -179,11 +181,12 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
 
     private void startSend(File[] files) {
         String content = etContent.getText().toString();
-        HttpAction.addDynamic(content, files, new NetNormalCallBack() {
+        HttpAction.addDynamic(content, files, new NetNormalCallBack<BaseResponse<DynamicBean>>() {
             @Override
             protected void onResultSuccess(Object data, String msg) {
                 dismissProgressDialog();
                 super.onResultSuccess(data, msg);
+                DynamicBean bean = (DynamicBean) data;
             }
 
             @Override

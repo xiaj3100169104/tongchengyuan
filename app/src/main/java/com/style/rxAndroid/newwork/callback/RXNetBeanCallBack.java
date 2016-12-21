@@ -31,7 +31,7 @@ public class RXNetBeanCallBack<T> extends BaseRXTaskCallBack {
         NetJsonResult result = (NetJsonResult) data;
         if (clazz != null && result != null) {
             if (result.getCode() == 0)
-                OnSuccess(JSON.parseObject(result.getBody(), clazz));
+                OnSuccess(JSON.parseObject(result.getData(), clazz));
             else
                 OnFailed(result.getMsg());
         }

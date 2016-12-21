@@ -3,6 +3,7 @@ package com.juns.wechat.net.request;
 import com.juns.wechat.config.ConfigUtil;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.callback.BaseCallBack;
+import com.juns.wechat.net.callback.NetNormalCallBack;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.http.RequestParams;
@@ -33,7 +34,7 @@ public class HttpAction {
 
     }
 
-    public static void addDynamic(String content, File[] fileList, BaseCallBack callBack) {
+    public static void addDynamic(String content, File[] fileList, NetNormalCallBack callBack) {
         initCommonParams();
         RequestParams params = new RequestParams(URL_ADD_DYNAMIC);
         params.addBodyParameter("token", token);
