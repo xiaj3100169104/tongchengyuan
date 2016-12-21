@@ -24,6 +24,7 @@ import android.text.TextUtils;
 
 
 import com.baidu.mapapi.SDKInitializer;
+import com.juns.wechat.manager.AccountManager;
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
 import org.xutils.x;
@@ -32,12 +33,13 @@ import cn.smssdk.SMSSDK;
 
 public class App extends Application {
 
-	private static Context _context;
+	private static Context mContext;
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		_context = this;
+		mContext = this;
+
         x.Ext.init(this);
         x.Ext.setDebug(BuildConfig.DEBUG); // 开启debug会影响性能
         SMSSDK.initSDK(this, Constants.MOB_SDK_KEY, Constants.MOB_SDK_SECRET);
@@ -45,7 +47,9 @@ public class App extends Application {
         SDKInitializer.initialize(this);
         //Thread.setDefaultUncaughtExceptionHandler(new CustomExceptionHandler());
 		ZXingLibrary.initDisplayOpinion(this);
-	}
+        AccountManager.getInstance().init(mContext);
+
+    }
 
 
     /**
@@ -101,7 +105,7 @@ public class App extends Application {
 	}
 
 	public static Context getInstance() {
-		return _context;
+		return mContext;
 	}
 
 	public static String getHJYCacheDir() {

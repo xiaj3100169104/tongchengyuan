@@ -24,19 +24,19 @@ public class FriendBean {
     public static final String FLAG = "flag";
     public static final String MODIFY_DATE = "modifyDate";
 
-    @Column(name = "id", isId = true)
+    @Column(name = ID, isId = true)
     private int id;
-    @Column(name = "ownerId")
+    @Column(name = OWNER_ID)
     private int ownerId;
-    @Column(name = "contactedId")
+    @Column(name = CONTACT_ID)
     private int contactedId;
-    @Column(name = "subType")
+    @Column(name = SUB_TYPE)
     private String subType;
-    @Column(name = "remark")
+    @Column(name = REMARK)
     private String remark;
-    @Column(name = "flag")
+    @Column(name = FLAG)
     private int flag;
-    @Column(name = "modifyDate")
+    @Column(name = MODIFY_DATE)
     private long modifyDate;
     private String sortLetters;
 
