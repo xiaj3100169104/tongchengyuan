@@ -1,6 +1,7 @@
 package com.juns.wechat.activity;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,7 +15,10 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.stream.StreamUriLoader;
 import com.juns.wechat.R;
 import com.juns.wechat.adpter.DynamicAdapter;
+import com.juns.wechat.bean.DynamicBean;
 import com.style.base.BaseToolbarActivity;
+import com.style.constant.Skip;
+import com.style.utils.CommonUtil;
 import com.style.utils.StreamUtil;
 import com.style.view.DividerItemDecoration;
 
@@ -45,7 +49,7 @@ public class FriendCircleActivity extends BaseToolbarActivity {
     @Bind(R.id.iv_avatar)
     ImageView ivAvatar;
 
-    private List<String> dataList;
+    private List<DynamicBean> dataList;
     private DynamicAdapter adapter;
     private int page = 1;
 
@@ -65,7 +69,7 @@ public class FriendCircleActivity extends BaseToolbarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.select:
-                skip(DynamicPublishActivity.class);
+                skipForResult(DynamicPublishActivity.class, Skip.CODE_PUBLISH_DYNAMIC);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -74,15 +78,7 @@ public class FriendCircleActivity extends BaseToolbarActivity {
     @Override
     protected void initData() {
         setToolbarTitle(R.string.moments);
-        /*InputStream is = null;
-        try {
-            is = getAssets().open("pig.gif");
-            int size = is.available();
-            StreamUtil.read(is);
-            FileUtil
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
+
         Glide.with(this).load(R.drawable.pig).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(ivAvatar);
 
         dataList = new ArrayList<>();
@@ -140,7 +136,7 @@ public class FriendCircleActivity extends BaseToolbarActivity {
             @Override
             public void run() {
                 ptrFrame.refreshComplete();
-                if (page == 1) {
+                /*if (page == 1) {
                     List<String> list = new ArrayList<>();
                     for (int i = 0; i < 10; i++) {
                         list.add("item-----" + String.valueOf(i));
@@ -156,8 +152,24 @@ public class FriendCircleActivity extends BaseToolbarActivity {
                     }
                     adapter.addData(list);
                 }
-                page++;
+                page++;*/
             }
         }, 1000);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case Skip.CODE_PUBLISH_DYNAMIC:
+                    if (data != null) {
+                        DynamicBean bean = (DynamicBean) data.getSerializableExtra("sendDynamic");
+                        dataList.add(0, bean);
+                        adapter.notifyDataSetChanged();
+                    }
+                    break;
+            }
+        }
     }
 }

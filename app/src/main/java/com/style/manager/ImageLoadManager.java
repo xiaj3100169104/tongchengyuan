@@ -6,8 +6,11 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.juns.wechat.R;
+import com.juns.wechat.config.ConfigUtil;
 
 public class ImageLoadManager {
+    private static final String REMOTE_PATH = ConfigUtil.REAL_SERVER + "/upload/";
+
     public static void loadNormalAvatar(Context context, ImageView imageView, String url) {
         if (!TextUtils.isEmpty(url))
         Glide.with(context).load(url).error(R.mipmap.ic_launcher).into(imageView);
@@ -21,5 +24,10 @@ public class ImageLoadManager {
     public static void loadBigPicture(Context context, ImageView imageView, String url) {
         if (!TextUtils.isEmpty(url))
         Glide.with(context).load(url).error(R.mipmap.image_fail).into(imageView);
+    }
+
+    public static void loadNormalPicture2(Context context, ImageView imageView, String url) {
+        if (!TextUtils.isEmpty(url))
+            Glide.with(context).load(REMOTE_PATH  + url).placeholder(R.mipmap.empty_photo).error(R.mipmap.image_fail).into(imageView);
     }
 }

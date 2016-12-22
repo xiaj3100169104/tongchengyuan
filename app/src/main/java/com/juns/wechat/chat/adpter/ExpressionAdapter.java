@@ -31,6 +31,7 @@ public class ExpressionAdapter extends ArrayAdapter<String> {
 		String filename = getItem(position);
 		int resId = getContext().getResources().getIdentifier(filename,
 				"drawable", getContext().getPackageName());
+
 		imageView.setImageResource(resId);
 
 		return convertView;

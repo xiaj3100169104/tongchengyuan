@@ -1,31 +1,26 @@
-package com.juns.wechat.net.request;
+package com.juns.wechat.net.common;
 
 import com.juns.wechat.config.ConfigUtil;
 import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.net.callback.BaseCallBack;
-import com.juns.wechat.net.callback.NetNormalCallBack;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.http.RequestParams;
 import org.xutils.http.body.MultipartBody;
-import org.xutils.x;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by vong on 2016/5/19.
+ * Created by xiajun on 2016/12/22.
  */
 public class HttpAction {
     protected String TAG = "HttpAction";
-
     private static String URL_BASE = ConfigUtil.REAL_API_URL;
     private static String URL_ADD_DYNAMIC = URL_BASE + "/addDynamic";
 
     private static String userId;
     private static String token;
-
     private static void initCommonParams() {
         token = AccountManager.getInstance().getToken();
     }
@@ -34,7 +29,7 @@ public class HttpAction {
 
     }
 
-    public static void addDynamic(String content, File[] fileList, NetNormalCallBack callBack) {
+    public static void addDynamic(String content, File[] fileList, NetBeanCallback callback) {
         initCommonParams();
         RequestParams params = new RequestParams(URL_ADD_DYNAMIC);
         params.addBodyParameter("token", token);
@@ -48,7 +43,7 @@ public class HttpAction {
             MultipartBody multipartBody = new MultipartBody(list, null);
             params.setRequestBody(multipartBody);
         }
-        x.http().post(params, callBack);
+        NetWorkManager.getInstance().post(params, callback);
     }
 }
 

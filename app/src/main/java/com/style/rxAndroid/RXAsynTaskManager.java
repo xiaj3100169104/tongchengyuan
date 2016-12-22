@@ -1,7 +1,7 @@
 package com.style.rxAndroid;
 
 
-import com.style.rxAndroid.newwork.callback.BaseRXTaskCallBack;
+import com.style.rxAndroid.callback.BaseRXTaskCallBack;
 
 import java.util.HashMap;
 import java.util.Map;

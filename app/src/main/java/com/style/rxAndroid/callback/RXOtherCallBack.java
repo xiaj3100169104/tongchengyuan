@@ -1,4 +1,4 @@
-package com.style.rxAndroid.newwork.callback;
+package com.style.rxAndroid.callback;
 
 import android.util.Log;
 
