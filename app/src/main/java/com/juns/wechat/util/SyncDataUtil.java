@@ -25,7 +25,7 @@ public class SyncDataUtil {
     }
 
     private static void syncFriendData(){
-        long lastModifyDate = FriendDao.getInstance().getLastModifyDate(AccountManager.getInstance().getUserName());
+        long lastModifyDate = FriendDao.getInstance().getLastModifyDate(AccountManager.getInstance().getUserId());
         FriendRequest.syncFriendData(lastModifyDate, new BaseCallBack<SyncFriendResponse>() {
             @Override
             protected void handleResponse(SyncFriendResponse result) {
@@ -42,9 +42,9 @@ public class SyncDataUtil {
     }
 
     private static void syncUserData(){
-        String[] userNames = FriendDao.getInstance().getNotExistUsersInFriend(AccountManager.getInstance().getUserName());
-        long lastModifyDate = UserDao.getInstance().getLastModifyDate(AccountManager.getInstance().getUserName());
-        UserRequest.syncUserData(userNames, lastModifyDate, new BaseCallBack<UserListResponse>() {
+        Integer[] userIds = FriendDao.getInstance().getNotExistUsersInFriend(AccountManager.getInstance().getUser().getUserId());
+        long lastModifyDate = UserDao.getInstance().getLastModifyDate(AccountManager.getInstance().getUserId());
+        UserRequest.syncUserData(userIds, lastModifyDate, new BaseCallBack<UserListResponse>() {
             @Override
             protected void handleResponse(UserListResponse result) {
                 if(result.code == BaseResponse.SUCCESS){

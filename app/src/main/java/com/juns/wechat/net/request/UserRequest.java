@@ -90,18 +90,18 @@ public class UserRequest extends RequestParams {
         private long modifyDate;
         private String token;
 
-        public SyncUserParams(String[] userNames, long modifyDate){
+        public SyncUserParams(Integer[] userNames, long modifyDate){
             this.modifyDate = modifyDate;
             if(userNames != null && userNames.length != 0){
-                for(String userName : userNames){
-                    addBodyParameter("userNames[]", userName);
+                for(Integer userName : userNames){
+                    addBodyParameter("userNames[]", String.valueOf(userName));
                 }
             }
             token = AccountManager.getInstance().getToken();
         }
     }
 
-    public static void syncUserData(String[] userNames,
+    public static void syncUserData(Integer[] userNames,
                                     long lastModifyDate, BaseCallBack<UserListResponse> callBack){
         x.http().post(new SyncUserParams(userNames, lastModifyDate), callBack);
     }

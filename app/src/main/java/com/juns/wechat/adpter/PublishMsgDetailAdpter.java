@@ -9,7 +9,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.juns.wechat.Constants;
 import com.juns.wechat.R;
 import com.juns.wechat.common.ViewHolder;
 //订阅号信息详情页面
