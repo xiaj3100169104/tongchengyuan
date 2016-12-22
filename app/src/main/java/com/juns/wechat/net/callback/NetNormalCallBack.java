@@ -8,6 +8,7 @@ import com.juns.wechat.bean.DynamicBean;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.response.BaseResponse;
+import com.juns.wechat.util.LogUtil;
 import com.style.rxAndroid.newwork.core.NetJsonResult;
 
 /**
@@ -15,23 +16,15 @@ import com.style.rxAndroid.newwork.core.NetJsonResult;
  */
 public class NetNormalCallBack<T> extends BaseNetBeanCallBack<T> {
     protected String TAG = "NetNormalCallBack";
-    protected Class<T> clazz;
-    protected TypeReference<T> type;
+
 
     public NetNormalCallBack() {
     }
 
-    public NetNormalCallBack(Class<T> clazz) {
-        this.clazz = clazz;
-    }
-
-    public NetNormalCallBack(TypeReference<T> type) {
-        this.type = type;
-    }
 
     @Override
-    protected void handleResponse(Object result) {
-        Object data = null;
+    protected void handleResponse(T data) {
+        LogUtil.i(data.toString());
         //String jsonData = (String) result.data;
         /*Log.e(TAG, "jsonData==" + jsonData);
         if (this.clazz != null)
@@ -39,10 +32,10 @@ public class NetNormalCallBack<T> extends BaseNetBeanCallBack<T> {
         if (this.type != null)
             data = JSON.parseObject(jsonData, this.type);
         onResultSuccess(data, result.msg);*/
-        onResultSuccess(result,"");
+        onResultSuccess(data,"");
     }
 
-    protected void onResultSuccess(Object data, String msg) {
+    protected void onResultSuccess(T data, String msg) {
 
     }
 

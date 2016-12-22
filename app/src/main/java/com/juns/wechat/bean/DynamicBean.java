@@ -2,6 +2,7 @@ package com.juns.wechat.bean;
 
 import com.juns.wechat.net.JsonResponseParser;
 
+import org.xutils.db.annotation.Column;
 import org.xutils.http.annotation.HttpResponse;
 
 import java.io.Serializable;
@@ -9,18 +10,18 @@ import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
-@HttpResponse(parser = JsonResponseParser.class)
 public class DynamicBean implements Serializable{
 
 	private Integer dynamicId;// Id
 	private Integer publisherId;// 发表人
 	private String content;// 动态内容
 	private String images;// 图片
-	private String createDate; //创建日期
-	private BigInteger modifyDate;///修改信息日期
-	private UserBean user;//发布者
+	@Column(name = "createDate")
+	private Date createDate;
+	private long modifyDate;///修改信息日期
+	/*private UserBean user;//发布者
 	private List<CommentBean> supportList; //点赞列表
-	private List<CommentBean> commentList;//评论列表
+	private List<CommentBean> commentList;//评论列表*/
 
     public DynamicBean(){
 
@@ -58,23 +59,23 @@ public class DynamicBean implements Serializable{
 		this.images = images;
 	}
 
-	public String getCreateDate() {
+	public Date getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(String createDate) {
+	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
 
-	public BigInteger getModifyDate() {
+	public long getModifyDate() {
 		return modifyDate;
 	}
 
-	public void setModifyDate(BigInteger modifyDate) {
+	public void setModifyDate(long modifyDate) {
 		this.modifyDate = modifyDate;
 	}
 
-	public UserBean getUser() {
+/*	public UserBean getUser() {
 		return user;
 	}
 
@@ -96,6 +97,6 @@ public class DynamicBean implements Serializable{
 
 	public void setCommentList(List<CommentBean> commentList) {
 		this.commentList = commentList;
-	}
+	}*/
 
 }

@@ -5,19 +5,20 @@ import android.widget.Toast;
 import com.juns.wechat.R;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.response.BaseResponse;
+import com.juns.wechat.util.LogUtil;
 import com.juns.wechat.util.ToastUtil;
 import com.style.rxAndroid.newwork.core.NetJsonResult;
 
 import org.xutils.common.Callback;
 
 
-public abstract class BaseNetBeanCallBack<T> implements Callback.CommonCallback<T>{
+public abstract class BaseNetBeanCallBack<T> implements Callback.CommonCallback<BaseResponse<T>>{
 
     @Override
-    public void onSuccess(Object result) {
-        BaseResponse response = (BaseResponse) result;
+    public void onSuccess(BaseResponse<T> response) {
+        LogUtil.i(response.toString());
         if(response.code == BaseResponse.SUCCESS){
-            handleResponse( response.data);
+            handleResponse(response.data);
         }else if(response.code == BaseResponse.SERVER_ERROR){
             ToastUtil.showToast("服务器出错了", Toast.LENGTH_SHORT);
             onFailure(response.code, response.msg);
@@ -34,7 +35,7 @@ public abstract class BaseNetBeanCallBack<T> implements Callback.CommonCallback<
 
     }
 
-    protected void handleResponse(Object result){
+    protected void handleResponse(T data){
 
     }
 
