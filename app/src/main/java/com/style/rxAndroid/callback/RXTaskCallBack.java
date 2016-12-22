@@ -1,4 +1,4 @@
-package com.style.rxAndroid.newwork.callback;
+package com.style.rxAndroid.callback;
 
 /**
  * Created by xiajun on 2016/10/8.

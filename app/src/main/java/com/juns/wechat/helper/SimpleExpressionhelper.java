@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -196,6 +197,11 @@ public class SimpleExpressionhelper {
     private View getGridChildView(int i) {
         View view = View.inflate(mActivity, R.layout.expression_gridview, null);
         ExpandGridView gv = (ExpandGridView) view.findViewById(R.id.gridview);
+        gv.setNumColumns(7);
+        /*int verticalSpacing = CommonUtil.dip2px(mActivity, 20);
+        gv.setVerticalSpacing(verticalSpacing);
+        gv.setHorizontalSpacing(verticalSpacing);*/
+        gv.setStretchMode(GridView.STRETCH_COLUMN_WIDTH);
         List<String> list = new ArrayList<>();
         if (i == 1) {
             List<String> list1 = emoticonsFileNames.subList(0, 20);

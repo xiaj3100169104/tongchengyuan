@@ -1,15 +1,9 @@
 package com.juns.wechat.bean;
 
-import com.juns.wechat.net.JsonResponseParser;
-
-import org.xutils.http.annotation.HttpResponse;
-
 import java.io.Serializable;
 import java.math.BigInteger;
-import java.util.Date;
 import java.util.List;
 
-@HttpResponse(parser = JsonResponseParser.class)
 public class DynamicBean implements Serializable{
 
 	private Integer dynamicId;// Id

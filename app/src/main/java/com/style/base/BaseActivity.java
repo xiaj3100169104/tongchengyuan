@@ -133,6 +133,10 @@ public abstract class BaseActivity extends BaseRxActivity {
         startActivity(new Intent(mContext, cls));
     }
 
+    protected void skipForResult(Class<?> cls, int requestCode) {
+        startActivityForResult(new Intent(mContext, cls), requestCode);
+    }
+
     protected void showToast(int resId) {
         showToast(getString(resId));
     }

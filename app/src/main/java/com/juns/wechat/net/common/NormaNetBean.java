@@ -1,19 +1,17 @@
-package com.style.rxAndroid.newwork.core;
+package com.juns.wechat.net.common;
 
-/**
- * Created by xiajun on 2016/10/9.
- */
-public class NetJsonResult {
+public class NormaNetBean {
     public int code;
 
     public String data;
 
     public String msg;
 
-    public void setCode(int code){
+    public void setCode(int code) {
         this.code = code;
     }
-    public int getCode(){
+
+    public int getCode() {
         return this.code;
     }
 
@@ -25,10 +23,13 @@ public class NetJsonResult {
         this.data = data;
     }
 
-    public void setMsg(String msg){
+    public void setMsg(String msg) {
         this.msg = msg;
     }
-    public String getMsg(){
+
+    public String getMsg() {
         return this.msg;
     }
+
+
 }

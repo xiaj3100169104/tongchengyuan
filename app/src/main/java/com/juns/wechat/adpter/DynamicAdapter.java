@@ -13,8 +13,13 @@ import android.widget.TextView;
 
 
 import com.juns.wechat.R;
+import com.juns.wechat.bean.DynamicBean;
 import com.juns.wechat.chat.utils.SmileUtils;
 import com.style.base.BaseRecyclerViewAdapter;
+import com.style.manager.ImageLoadManager;
+import com.style.utils.DateUtil;
+import com.style.utils.MyDateUtil;
+import com.style.utils.StringUtil;
 
 import java.util.List;
 
@@ -39,8 +44,10 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter {
     public void onBindItem(RecyclerView.ViewHolder viewHolder, int position, Object data) {
         final int pos = position;
         final ViewHolder holder = (ViewHolder) viewHolder;
-        final String bean = (String) data;
-        holder.tvContent.setText(SmileUtils.getSmiledText(mContext, "[):0][):0][):0][):0]哈哈哈"));
+        final DynamicBean bean = (DynamicBean) data;
+        holder.tvContent.setText(SmileUtils.getSmiledText(mContext, bean.getContent()));
+        holder.tvTime.setText(MyDateUtil.getTimeFromNow(bean.getCreateDate(), MyDateUtil.FORMAT_yyyy_MM_dd_HH_mm_ss));
+
         holder.ivDiscuss.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,45 +55,52 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter {
             }
         });
         holder.glImages.removeAllViews();
-        int imageNum = pos % 9;
-        if (imageNum == 1) {
-            holder.glImages.setRowCount(1);
-            holder.glImages.setColumnCount(1);
-            GridLayout.Spec rowSpec = GridLayout.spec(0);     //设置它的行和列
-            GridLayout.Spec columnSpec = GridLayout.spec(0);
-            GridLayout.LayoutParams params = new GridLayout.LayoutParams(rowSpec, columnSpec);
-            //params.setGravity(Gravity.LEFT | Gravity.TOP);
-            ImageView image = new ImageView(mContext);
-            params.width = dip2px(160);
-            params.height = dip2px(100);
-            image.setLayoutParams(params);
-            image.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            image.setImageResource(R.mipmap.empty_photo);
-            holder.glImages.addView(image, params);
-        } else if (imageNum > 1 && imageNum < 10) {
-            logE("imagenum--", imageNum + "");
-            holder.glImages.setRowCount(imageNum / 3 + 1);
-            holder.glImages.setColumnCount(3);
-            for (int i = 0; i < imageNum; i++) {
-                int row = i / 3;
-                int column = (i - row * 3) % 3;
-                logE("row--", row + "");
-                logE("column--", column + "");
-
-                GridLayout.Spec rowSpec = GridLayout.spec(row);     //设置它的行和列
-                GridLayout.Spec columnSpec = GridLayout.spec(column);
+        List<String> images = StringUtil.getList(bean.getImages(), ",");
+        int imageNum = 0;//pos % 9;
+        if (images != null && images.size() > 0)
+            imageNum = images.size();
+        if (imageNum>0){
+            if (imageNum == 1) {
+                holder.glImages.setRowCount(1);
+                holder.glImages.setColumnCount(1);
+                GridLayout.Spec rowSpec = GridLayout.spec(0);     //设置它的行和列
+                GridLayout.Spec columnSpec = GridLayout.spec(0);
                 GridLayout.LayoutParams params = new GridLayout.LayoutParams(rowSpec, columnSpec);
+                //params.setGravity(Gravity.LEFT | Gravity.TOP);
                 ImageView image = new ImageView(mContext);
-                params.width = dip2px(80);
-                params.height = dip2px(80);
-                params.leftMargin = dip2px(1);
-                params.topMargin = dip2px(1);
-                params.bottomMargin = dip2px(1);
-                params.rightMargin = dip2px(1);
+                params.width = dip2px(160);
+                params.height = dip2px(100);
                 image.setLayoutParams(params);
                 image.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                image.setImageResource(R.mipmap.empty_photo);
+                //image.setImageResource(R.mipmap.empty_photo);
+                ImageLoadManager.loadNormalPicture2(mContext, image, images.get(0));
                 holder.glImages.addView(image, params);
+            } else if (imageNum > 1 && imageNum < 10) {
+                logE("imagenum--", imageNum + "");
+                holder.glImages.setRowCount(imageNum / 3 + 1);
+                holder.glImages.setColumnCount(3);
+                for (int i = 0; i < imageNum; i++) {
+                    int row = i / 3;
+                    int column = (i - row * 3) % 3;
+                    logE("row--", row + "");
+                    logE("column--", column + "");
+
+                    GridLayout.Spec rowSpec = GridLayout.spec(row);     //设置它的行和列
+                    GridLayout.Spec columnSpec = GridLayout.spec(column);
+                    GridLayout.LayoutParams params = new GridLayout.LayoutParams(rowSpec, columnSpec);
+                    ImageView image = new ImageView(mContext);
+                    params.width = dip2px(80);
+                    params.height = dip2px(80);
+                    params.leftMargin = dip2px(1);
+                    params.topMargin = dip2px(1);
+                    params.bottomMargin = dip2px(1);
+                    params.rightMargin = dip2px(1);
+                    image.setLayoutParams(params);
+                    image.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    //image.setImageResource(R.mipmap.empty_photo);
+                    ImageLoadManager.loadNormalPicture2(mContext, image, images.get(i));
+                    holder.glImages.addView(image, params);
+                }
             }
         }
         /*if (null != testdataList) {
