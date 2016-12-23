@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.juns.wechat.MainActivity;
+import com.juns.wechat.activity.MainActivity;
 import com.juns.wechat.R;
 import com.juns.wechat.activity.NewFriendsListActivity;
 import com.juns.wechat.activity.UserInfoActivity;
@@ -183,11 +183,6 @@ public class Fragment_Friends extends BaseBusFragment implements OnClickListener
             default:
                 break;
         }
-    }
-
-    @Override
-    protected boolean registerEventBus() {
-        return true;
     }
 
     public class UploadPhoneComparator implements Comparator<FriendBean> {

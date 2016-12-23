@@ -1,6 +1,6 @@
 package com.juns.wechat.net.common;
 
-public class NormaNetBean {
+public class NetNormaBean {
     public int code;
 
     public String data;

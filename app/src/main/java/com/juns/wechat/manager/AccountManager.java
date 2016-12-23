@@ -5,7 +5,7 @@ import android.text.TextUtils;
 
 import com.juns.wechat.App;
 import com.juns.wechat.Constants;
-import com.juns.wechat.MainActivity;
+import com.juns.wechat.activity.MainActivity;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.dao.UserDao;
 import com.juns.wechat.util.SharedPreferencesUtil;
@@ -64,7 +64,6 @@ public class AccountManager {
                     if (!TextUtils.isEmpty(userName) && !TextUtils.isEmpty(password)) {
                         setUserId(user.getUserId());
                         setUserName(userName);
-                        setUserPassWord(password);
                     }
                 }
             }

@@ -260,7 +260,7 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
         int count = adapter.getItemCount();
         if (position == count - 1) {
             if (dialog == null) {
-                dialog = new SelAvatarDialog(DynamicPublishActivity.this, R.style.Dialog_NoTitle);
+                dialog = new SelAvatarDialog(DynamicPublishActivity.this);
                 dialog.setOnItemClickListener(new SelAvatarDialog.OnItemClickListener() {
                     @Override
                     public void OnClickCamera() {

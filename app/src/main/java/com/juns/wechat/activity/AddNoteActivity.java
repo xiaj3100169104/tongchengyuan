@@ -250,7 +250,7 @@ public class AddNoteActivity extends BaseToolbarBtnActivity {
         int count = adapter.getItemCount();
         if (position == count - 1) {
             if (dialog == null) {
-                dialog = new SelAvatarDialog(AddNoteActivity.this, R.style.Dialog_NoTitle);
+                dialog = new SelAvatarDialog(AddNoteActivity.this);
                 dialog.setOnItemClickListener(new SelAvatarDialog.OnItemClickListener() {
                     @Override
                     public void OnClickCamera() {

@@ -120,7 +120,7 @@ public class SelectLocalPictureActivity extends BaseToolbarActivity {
         int count = adapter.getItemCount();
         if (position == count - 1) {
             if (dialog == null) {
-                dialog = new SelAvatarDialog(this, R.style.Dialog_NoTitle);
+                dialog = new SelAvatarDialog(this);
                 dialog.setOnItemClickListener(new SelAvatarDialog.OnItemClickListener() {
                     @Override
                     public void OnClickCamera() {

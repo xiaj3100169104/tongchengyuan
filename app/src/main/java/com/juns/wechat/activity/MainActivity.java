@@ -1,9 +1,7 @@
-package com.juns.wechat;
+package com.juns.wechat.activity;
 
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -11,11 +9,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.juns.wechat.activity.AddFriendActivity;
-import com.juns.wechat.activity.LoginActivity;
-import com.juns.wechat.activity.QRScanActivity;
+import com.juns.wechat.R;
 import com.juns.wechat.adpter.MainAdapter;
 import com.style.base.BaseActivity;
 import com.juns.wechat.dialog.WarnTipDialog;
@@ -23,10 +18,6 @@ import com.juns.wechat.dialog.TitleMenu.ActionItem;
 import com.juns.wechat.dialog.TitleMenu.TitlePopup;
 import com.juns.wechat.dialog.TitleMenu.TitlePopup.OnItemOnClickListener;
 import com.juns.wechat.service.XmppService;
-import com.style.constant.Skip;
-import com.style.utils.FileUtil;
-import com.uuzuche.lib_zxing.activity.CaptureActivity;
-import com.uuzuche.lib_zxing.activity.CodeUtils;
 
 public class MainActivity extends BaseActivity {
     private TextView txt_title;

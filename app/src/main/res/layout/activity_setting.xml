@@ -32,7 +32,8 @@
                 android:layout_marginTop="20dp"
                 android:divider="@drawable/divider_common"
                 android:orientation="vertical"
-                android:showDividers="middle">
+                android:showDividers="middle"     android:dividerPadding="@dimen/activity_horizontal_margin"
+                >
 
                 <TextView
                     android:id="@+id/txt_msgtip"

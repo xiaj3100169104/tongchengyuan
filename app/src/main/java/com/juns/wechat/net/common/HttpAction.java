@@ -18,9 +18,11 @@ public class HttpAction {
     protected String TAG = "HttpAction";
     private static String URL_BASE = ConfigUtil.REAL_API_URL;
     private static String URL_ADD_DYNAMIC = URL_BASE + "/addDynamic";
+    private static String URL_GET_DYNAMICS_FRIEND_CIRCLE = URL_BASE + "/getDynamicsByPage";
 
     private static String userId;
     private static String token;
+
     private static void initCommonParams() {
         token = AccountManager.getInstance().getToken();
     }
@@ -29,6 +31,11 @@ public class HttpAction {
 
     }
 
+    /**
+     * @param content  动态内容
+     * @param fileList 图片列表
+     * @param callback
+     */
     public static void addDynamic(String content, File[] fileList, NetBeanCallback callback) {
         initCommonParams();
         RequestParams params = new RequestParams(URL_ADD_DYNAMIC);
@@ -43,6 +50,23 @@ public class HttpAction {
             MultipartBody multipartBody = new MultipartBody(list, null);
             params.setRequestBody(multipartBody);
         }
+        NetWorkManager.getInstance().post(params, callback);
+    }
+
+    /**
+     * @param action    0:刷新；1：加载更多
+     * @param dynamicId 最新记录的id
+     * @param limit     当前页条数
+     * @param callback
+     */
+    public static void getFriendCircleDynamic(int action, int dynamicId, int limit, NetBeanCallback callback) {
+        initCommonParams();
+        RequestParams params = new RequestParams(URL_GET_DYNAMICS_FRIEND_CIRCLE);
+        params.addBodyParameter("token", token);
+        if (action == 1)
+            params.addParameter("action", action);
+        params.addParameter("dynamicId", dynamicId);
+        params.addParameter("limit", limit);
         NetWorkManager.getInstance().post(params, callback);
     }
 }

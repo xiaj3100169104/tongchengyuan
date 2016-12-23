@@ -8,9 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import com.juns.wechat.MainActivity;
 import com.juns.wechat.R;
 import com.style.base.BaseToolbarActivity;
 import com.style.constant.Skip;

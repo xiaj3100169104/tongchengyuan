@@ -29,6 +29,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:divider="@drawable/divider_common"
+                android:dividerPadding="@dimen/activity_horizontal_margin"
                 android:orientation="vertical"
                 android:showDividers="middle">
 
@@ -52,6 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:divider="@drawable/divider_common"
+                android:dividerPadding="@dimen/activity_horizontal_margin"
                 android:orientation="vertical"
                 android:showDividers="middle">
 
@@ -76,6 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:divider="@drawable/divider_common"
+                android:dividerPadding="@dimen/activity_horizontal_margin"
                 android:orientation="vertical"
                 android:showDividers="middle">
 

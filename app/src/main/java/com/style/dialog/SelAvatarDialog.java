@@ -18,6 +18,10 @@ public class SelAvatarDialog extends Dialog {
     private OnItemClickListener mListener;
     private Button bt_selCancel;
 
+    public SelAvatarDialog(Context context) {
+        this(context, R.style.Dialog_NoTitle);
+    }
+
     public SelAvatarDialog(Context context, int theme) {
         super(context, theme);
         setOwnerActivity((Activity) context);

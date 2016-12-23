@@ -32,7 +32,7 @@ public class NetBeanCallback<T> implements Callback.CommonCallback<String> {
     @Override
     public void onSuccess(String result) {
         Log.e(TAG, "result==" + result);
-        NormaNetBean response = JSON.parseObject(result, NormaNetBean.class);
+        NetNormaBean response = JSON.parseObject(result, NetNormaBean.class);
         int code = response.code;
         String jsonData = response.data;
         String msg = response.msg;
