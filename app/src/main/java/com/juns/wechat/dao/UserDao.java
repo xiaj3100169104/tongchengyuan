@@ -27,11 +27,11 @@ public class UserDao extends BaseDao<UserBean>{
     private static final String GET_LAST_MODIFY_DATE =
             "SELECT max(t.modifyDate) as lastModifyDate FROM ( " +
                     "SELECT t1.* FROM (select u.* from wcUser u, wcFriend r where " +
-                    "(r.ownerName = ? and u.userName = r.contactName) and (r.subType = 'both' or r.subType = 'from')) t1" +
+                    "(r.ownerId = ? and u.userName = r.contactedId) and (r.subType = 'both' or r.subType = 'from')) t1" +
                     " UNION SELECT u.* from wcUser u WHERE u.userName = ?) t";
 
     private static final String QUERY_MY_FRIENDS =
-            "select * from wcUser u, wcFriend f where f.ownerName = ? and f.contactName = u.userName";
+            "select * from wcUser u, wcFriend f where f.ownerId = ? and f.contactedId = u.userName";
 
     private static UserDao mInstance;
 
