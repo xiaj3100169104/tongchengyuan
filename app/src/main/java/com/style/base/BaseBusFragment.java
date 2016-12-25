@@ -13,9 +13,7 @@ public class BaseBusFragment extends BaseFragment{
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(registerEventBus()){
-            EventBus.getDefault().register(this);
-        }
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -31,12 +29,6 @@ public class BaseBusFragment extends BaseFragment{
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(registerEventBus()){
-            EventBus.getDefault().unregister(this);
-        }
-    }
-
-    protected boolean registerEventBus(){
-        return false;
+        EventBus.getDefault().unregister(this);
     }
 }

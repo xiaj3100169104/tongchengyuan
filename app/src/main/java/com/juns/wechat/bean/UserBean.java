@@ -10,12 +10,14 @@ import com.juns.wechat.database.UserTable;
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Table(name = UserTable.TABLE_NAME, onCreated = UserTable.CREATE_INDEX)
-public class UserBean implements Parcelable {
+public class UserBean implements Serializable {
 	public static final String ID = "id";
-	public static final String USERNAME = "userName";
+    public static final String USER_ID = "userId";
+    public static final String USERNAME = "userName";
     public static final String NICKNAME = "nickName";
 	public static final String PASSWORD = "passWord";
 	public static final String HEADURL = "headUrl";
@@ -28,33 +30,33 @@ public class UserBean implements Parcelable {
     public static final String CREATE_DATE = "createDate";
     public static final String MODIFY_DATE = "modifyDate";
 
-    @Column(name = "id", isId = true)
+    @Column(name = ID, isId = true)
     public int id;//
-    @Column(name = "userId")
+    @Column(name = USER_ID)
     public int userId;// 用户id
-    @Column(name = "userName")
+    @Column(name = USERNAME)
     public String userName;// 用户名
-    @Column(name = "nickName")
+    @Column(name = NICKNAME)
     public String nickName; //昵称
-    @Column(name = "passWord")
+    @Column(name = PASSWORD)
     public String passWord;// 头像保存路径
-    @Column(name = "telephone")
+    @Column(name = TELEPHONE)
     public String telephone;// 手机号
-    @Column(name = "headUrl")
+    @Column(name = HEADURL)
     public String headUrl;// 头像保存路径
-    @Column(name = "signature")
+    @Column(name = SIGNATURE)
     public String signature;// 个性签名
-    @Column(name = "sex")
+    @Column(name = SEX)
     public String sex;// 性别: M男士，W女士
-    @Column(name = "location")
+    @Column(name = LOCATION)
     public String location;// 位置信息
-    @Column(name = "birthday")
+    @Column(name = BIRTHDAY)
     public String birthday;// 生日
-    @Column(name = "type")
+    @Column(name = TYPE)
     public String type;// N-正常用户，P-公众账号
-    @Column(name = "createDate")
+    @Column(name = CREATE_DATE)
     public Date createDate;
-    @Column(name = "modifyDate")
+    @Column(name = MODIFY_DATE)
     public long modifyDate;
 
     public UserBean(){
@@ -205,55 +207,4 @@ public class UserBean implements Parcelable {
         }
         return userName;
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(this.id);
-        dest.writeString(this.userName);
-        dest.writeString(this.nickName);
-        dest.writeString(this.passWord);
-        dest.writeString(this.telephone);
-        dest.writeString(this.headUrl);
-        dest.writeString(this.signature);
-        dest.writeString(this.sex);
-        dest.writeString(this.location);
-        dest.writeString(this.birthday);
-        dest.writeString(this.type);
-        dest.writeLong(this.createDate != null ? this.createDate.getTime() : -1);
-        dest.writeLong(this.modifyDate);
-    }
-
-    protected UserBean(Parcel in) {
-        this.id = in.readInt();
-        this.userName = in.readString();
-        this.nickName = in.readString();
-        this.passWord = in.readString();
-        this.telephone = in.readString();
-        this.headUrl = in.readString();
-        this.signature = in.readString();
-        this.sex = in.readString();
-        this.location = in.readString();
-        this.birthday = in.readString();
-        this.type = in.readString();
-        long tmpCreateDate = in.readLong();
-        this.createDate = tmpCreateDate == -1 ? null : new Date(tmpCreateDate);
-        this.modifyDate = in.readLong();
-    }
-
-    public static final Parcelable.Creator<UserBean> CREATOR = new Parcelable.Creator<UserBean>() {
-        @Override
-        public UserBean createFromParcel(Parcel source) {
-            return new UserBean(source);
-        }
-
-        @Override
-        public UserBean[] newArray(int size) {
-            return new UserBean[size];
-        }
-    };
 }

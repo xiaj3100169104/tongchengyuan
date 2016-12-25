@@ -14,7 +14,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.juns.wechat.MainActivity;
 import com.juns.wechat.R;
 import com.juns.wechat.bean.UserBean;
 import com.style.base.BaseToolbarActivity;

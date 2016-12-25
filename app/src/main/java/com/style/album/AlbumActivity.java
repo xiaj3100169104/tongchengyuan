@@ -2,14 +2,12 @@ package com.style.album;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.AppBarLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,13 +18,9 @@ import android.widget.TextView;
 import com.juns.wechat.R;
 import com.style.base.BaseRecyclerViewAdapter;
 import com.style.base.BaseToolbarActivity;
-import com.style.constant.FileDirectory;
-import com.style.rxAndroid.BaseRxActivity;
-import com.style.rxAndroid.newwork.callback.RXOtherCallBack;
-import com.style.utils.PictureUtils;
+import com.style.rxAndroid.callback.RXOtherCallBack;
 import com.style.view.DividerItemDecoration;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,7 +95,7 @@ public class AlbumActivity extends BaseToolbarActivity {
             public void onItemClick(int position, Object data) {
                 ImageItem item = list.get(position);
                 double sizeM = item.getSize() / 1024.00 / 1024.00;
-                Log.e("GallaryActivity", "选中图片的大小是-->" + sizeM);
+                Log.e(TAG, "选中图片的大小是-->" + sizeM);
 
                 boolean isSelected = item.isSelected();
                 if (!isSelected) { // 未被选中

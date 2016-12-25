@@ -9,7 +9,7 @@ import org.xutils.http.annotation.HttpResponse;
  * Created by 王宗文 on 2016/7/7.
  */
 @HttpResponse(parser = JsonResponseParser.class)
-public class BaseResponse {
+public class BaseResponse<T> {
     public static final int SUCCESS = 0;
 
     public static final int SERVER_ERROR = 500; //服务器异常
@@ -19,6 +19,7 @@ public class BaseResponse {
 
     public int code;
     public String msg;
+    public T data;
 
     @HttpResponse(parser = JsonResponseParser.class)
     public class LoginResponse extends BaseResponse {

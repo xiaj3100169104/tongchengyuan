@@ -15,8 +15,7 @@ import com.juns.wechat.bean.DynamicBean;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.helper.SimpleExpressionhelper;
 import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.net.callback.NetNormalCallBack;
-import com.juns.wechat.net.request.AddDynamicRequest;
+import com.juns.wechat.net.common.NetBeanCallback;
 import com.juns.wechat.util.PhotoUtil;
 import com.style.album.AlbumActivity;
 import com.style.album.DynamicPublishImageAdapter;
@@ -25,9 +24,8 @@ import com.style.base.BaseToolbarBtnActivity;
 import com.style.constant.FileDirectory;
 import com.style.constant.Skip;
 import com.style.dialog.SelAvatarDialog;
-import com.style.rxAndroid.newwork.callback.RXNetBeanCallBack;
-import com.juns.wechat.net.request.HttpAction;
-import com.style.rxAndroid.newwork.callback.RXOtherCallBack;
+import com.juns.wechat.net.common.HttpAction;
+import com.style.rxAndroid.callback.RXOtherCallBack;
 import com.style.utils.BitmapUtil;
 import com.style.utils.CommonUtil;
 import com.style.utils.PictureUtils;
@@ -180,20 +178,20 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
 
     private void startSend(File[] files) {
         String content = etContent.getText().toString();
-        HttpAction.addDynamic(content, files, new NetNormalCallBack() {
+        HttpAction.addDynamic(content, files, new NetBeanCallback<DynamicBean>(DynamicBean.class) {
             @Override
-            protected void onResultSuccess(Object data, String msg) {
+            protected void onResultSuccess(DynamicBean data) {
                 dismissProgressDialog();
-                super.onResultSuccess(data, msg);
+                data.setUser(curUser);
+                setResult(RESULT_OK, new Intent().putExtra("sendDynamic", data));
+                finish();
             }
 
             @Override
-            protected void onFailure(int code, String msg) {
+            protected void onFailure(String msg) {
                 dismissProgressDialog();
-                super.onFailure(code, msg);
             }
         });
-        //AddDynamicRequest.addDynamic(content, );
     }
 
     @Override
@@ -262,7 +260,7 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
         int count = adapter.getItemCount();
         if (position == count - 1) {
             if (dialog == null) {
-                dialog = new SelAvatarDialog(DynamicPublishActivity.this, R.style.Dialog_NoTitle);
+                dialog = new SelAvatarDialog(DynamicPublishActivity.this);
                 dialog.setOnItemClickListener(new SelAvatarDialog.OnItemClickListener() {
                     @Override
                     public void OnClickCamera() {

@@ -1,33 +1,20 @@
 package com.juns.wechat.activity;
 
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.net.sip.SipAudioCall;
-import android.net.sip.SipException;
-import android.net.sip.SipManager;
-import android.net.sip.SipProfile;
-import android.net.sip.SipRegistrationListener;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.juns.wechat.R;
-import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.config.ConfigUtil;
-import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.util.LogUtil;
 import com.juns.wechat.util.SipClient;
 import com.style.base.BaseActivity;
 import com.style.constant.MyAction;
 import com.style.constant.Skip;
-
-import java.text.ParseException;
 
 import butterknife.Bind;
 
@@ -63,7 +50,7 @@ public class CallVoiceBaseActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle arg0) {
-        mLayoutResID = R.layout.act_call_voice;
+        mLayoutResID = R.layout.activity_call_voice;
         super.onCreate(arg0);
     }
 

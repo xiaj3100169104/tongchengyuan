@@ -22,6 +22,8 @@ public class Skip {
     public static final int CODE_MAP = 0x000005;
     public static final int CODE_COPY_AND_PASTE = 0x000006;
     public static final int CODE_SELECT_FILE = 0x000007;
+    public static final int CODE_PUBLISH_DYNAMIC = 0x000008;
+
     /**
      * 界面跳转传值key
      */

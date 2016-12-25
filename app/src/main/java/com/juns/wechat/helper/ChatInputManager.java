@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -439,6 +440,12 @@ public class ChatInputManager implements View.OnClickListener{
     private View getGridChildView(int i) {
         View view = View.inflate(mChatActivity, R.layout.expression_gridview, null);
         ExpandGridView gv = (ExpandGridView) view.findViewById(R.id.gridview);
+        gv.setNumColumns(7);
+        gv.setStretchMode(GridView.STRETCH_COLUMN_WIDTH);
+       /* int verticalSpacing = CommonUtil.dip2px(mChatActivity, 20);
+        gv.setVerticalSpacing(verticalSpacing);
+        gv.setHorizontalSpacing(verticalSpacing);
+        gv.setStretchMode(GridView.STRETCH_SPACING_UNIFORM);*/
         List<String> list = new ArrayList<>();
         if (i == 1) {
             List<String> list1 = emoticonsFileNames.subList(0, 20);

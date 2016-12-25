@@ -2,9 +2,7 @@ package com.juns.wechat.bean;
 
 import java.io.Serializable;
 import java.math.BigInteger;
-import java.util.Date;
 import java.util.List;
-
 
 public class DynamicBean implements Serializable{
 

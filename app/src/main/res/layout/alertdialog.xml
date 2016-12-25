@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#ffffff"
     android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:paddingLeft="10dp"
     android:paddingRight="10dp">
 
@@ -14,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone" >
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/tv_title"
@@ -47,8 +45,7 @@
         android:id="@+id/ll_content2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-          >
+        android:orientation="vertical">
 
         <View
             android:layout_width="match_parent"
@@ -72,7 +69,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone" >
+        android:visibility="gone">
 
         <View
             android:layout_width="match_parent"
@@ -96,7 +93,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone" >
+        android:visibility="gone">
 
         <View
             android:layout_width="match_parent"
@@ -120,7 +117,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone" >
+        android:visibility="gone">
 
         <View
             android:layout_width="match_parent"

@@ -17,26 +17,26 @@ import org.xutils.ex.DbException;
 @Table(name = FriendTable.TABLE_NAME, onCreated = FriendTable.CREATE_INDEX)
 public class FriendBean {
     public static final String ID = "id";
-    public static final String OWNER_NAME = "ownerName";
-    public static final String CONTACT_NAME = "contactName";
+    public static final String OWNER_ID = "ownerId";
+    public static final String CONTACT_ID = "contactedId";
     public static final String SUB_TYPE = "subType";
     public static final String REMARK = "remark";
     public static final String FLAG = "flag";
     public static final String MODIFY_DATE = "modifyDate";
 
-    @Column(name = "id", isId = true)
+    @Column(name = ID, isId = true)
     private int id;
-    @Column(name = "ownerName")
-    private String ownerName;
-    @Column(name = "contactName")
-    private String contactName;
-    @Column(name = "subType")
+    @Column(name = OWNER_ID)
+    private int ownerId;
+    @Column(name = CONTACT_ID)
+    private int contactedId;
+    @Column(name = SUB_TYPE)
     private String subType;
-    @Column(name = "remark")
+    @Column(name = REMARK)
     private String remark;
-    @Column(name = "flag")
+    @Column(name = FLAG)
     private int flag;
-    @Column(name = "modifyDate")
+    @Column(name = MODIFY_DATE)
     private long modifyDate;
     private String sortLetters;
 
@@ -52,20 +52,20 @@ public class FriendBean {
         this.id = id;
     }
 
-    public String getOwnerName() {
-        return ownerName;
+    public int getOwnerId() {
+        return ownerId;
     }
 
-    public void setOwnerName(String ownerName) {
-        this.ownerName = ownerName;
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
     }
 
-    public String getContactName() {
-        return contactName;
+    public int getContactedId() {
+        return contactedId;
     }
 
-    public void setContactName(String contactName) {
-        this.contactName = contactName;
+    public void setContactedId(int contactedId) {
+        this.contactedId = contactedId;
     }
 
     public String getSubType() {
@@ -110,7 +110,7 @@ public class FriendBean {
 
     public UserBean getContactUser() throws UserNotFoundException{
         try {
-            return DbUtil.getDbManager().selector(UserBean.class).where("userName", "=", contactName).findFirst();
+            return DbUtil.getDbManager().selector(UserBean.class).where("userName", "=", contactedId).findFirst();
         } catch (DbException e) {
             e.printStackTrace();
             throw new UserNotFoundException(e);

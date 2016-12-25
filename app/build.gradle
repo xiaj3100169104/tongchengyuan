@@ -51,7 +51,6 @@ dependencies {
     compile 'com.android.support:multidex:1.0.0'
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.jakewharton:butterknife:7.0.1'
-    compile 'com.squareup.okhttp3:okhttp:3.4.1'
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'com.alibaba:fastjson:1.1.54.android'
 // Because RxAndroid releases are few and far between, it is recommended you also
@@ -72,4 +71,7 @@ dependencies {
     compile 'in.srain.cube:ptr-load-more:1.0.6'
     compile name: 'SMSSDK-2.1.1', ext: 'aar'
     compile name: 'SMSSDKGUI-2.1.1', ext: 'aar'
+    //二维码库
+    compile 'cn.yipianfengye.android:zxing-library:2.1'
+
 }

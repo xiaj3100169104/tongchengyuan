@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
-    android:divider="@drawable/divider_gray"
-    android:showDividers="middle"
     android:background="#ffffff"
-    android:orientation="vertical">
+    android:divider="@drawable/divider_gray"
+    android:orientation="vertical"
+    android:showDividers="middle">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
             android:id="@+id/item_camera"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:background="@color/white"
+            android:background="@drawable/bg_pressed_default"
             android:text="拍照"
             android:textColor="#585858"
             android:textSize="18sp" />
@@ -33,7 +33,7 @@
             android:id="@+id/item_photo"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:background="@color/white"
+            android:background="@drawable/bg_pressed_default"
             android:text="从相册中选取"
             android:textColor="#585858"
             android:textSize="18sp" />
@@ -48,7 +48,7 @@
             android:id="@+id/item_cancel"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:background="@color/white"
+            android:background="@drawable/bg_pressed_default"
             android:text="取消"
             android:textColor="#585858"
             android:textSize="18sp" />

@@ -105,9 +105,11 @@ public class MyDateUtil {
         return new SimpleDateFormat(format, Locale.CHINA).format(date);
     }
 
-    /*
-         * @param 返回描述性时间，"今天 HH:mm"，"昨天 HH:mm"，"前天 HH:mm",yyyy-MM-dd HH:mm
-         */
+    /**
+     * @param strTime 时间字符串
+     * @param formatType 格式
+     * @return  返回描述性时间:多久前
+     */
     public static String getTimeFromNow(String strTime, String formatType) {
         if (!strTimeIsTheCorrectFormatType(strTime, formatType)) {
             return null;
@@ -266,6 +268,7 @@ public class MyDateUtil {
             return currentTime;
         }
     }
+
     // 时间戳：long类型转换为String类型
     // currentTime要转换的long类型的时间
     // formatType要转换的string类型的时间格式

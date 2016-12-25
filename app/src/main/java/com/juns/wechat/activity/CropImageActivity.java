@@ -15,6 +15,8 @@ import com.juns.wechat.net.response.UpdateUserResponse;
 import com.juns.wechat.util.PhotoUtil;
 import com.juns.wechat.view.ClipImageLayout;
 
+import org.jivesoftware.smack.packet.id.StanzaIdUtil;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -48,19 +50,13 @@ public class CropImageActivity extends BaseToolbarActivity {
 
     }
 
-    @OnClick(R.id.tvRightText)
+    @OnClick(R.id.view_toolbar_right)
     public void saveInfo(View v) {
         Bitmap croppedBitmap = clipImageLayout.clip();
-        imageName = getNowTime() + ".image";
+        imageName = StanzaIdUtil.newStanzaId() + ".image";
         PhotoUtil.saveBitmap(croppedBitmap, PhotoUtil.PHOTO_PATH + "/" + imageName);
 
         updateAvatarInServer(imageName);
-    }
-
-    private String getNowTime() {
-        Date date = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MMddHHmmssSS");
-        return dateFormat.format(date);
     }
 
     private void updateAvatarInServer(String imageName) {

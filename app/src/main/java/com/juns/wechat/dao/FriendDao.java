@@ -22,14 +22,14 @@ import java.util.Map;
  */
 public class FriendDao extends BaseDao<FriendBean>{
     private static final String GET_LAST_MODIFY_DATE =
-            "SELECT max(f.modifyDate) as lastModifyDate from wcFriend f where f.ownerName = ? and " +
+            "SELECT max(f.modifyDate) as lastModifyDate from wcFriend f where f.ownerId = ? and " +
                     "(f.subType = 'both' or f.subType = 'from')";
 
     private static final String SELECT_NOT_EXIST_USER_IN_FRIEND =
-            "select contactName from wcFriend where ownerName = ? and contactName not in (select userName from wcUser)";
+            "select contactedId from wcFriend where ownerId = ? and contactedId not in (select userName from wcUser)";
 
     private static final String QUERY_MY_FRIENDS =
-            "select * from wcFriend where ownerName = ? and contactName in (select userName from wcUser)";
+            "select * from wcFriend where ownerId = ? and contactedId in (select userName from wcUser)";
 
     private static FriendDao mInstance;
 
@@ -59,17 +59,17 @@ public class FriendDao extends BaseDao<FriendBean>{
     }
 
     public FriendBean findByOwnerAndContactName(String ownerName, String contactName){
-        WhereBuilder whereBuilder = WhereBuilder.b(FriendBean.OWNER_NAME, "=", ownerName);
-        whereBuilder.and(FriendBean.CONTACT_NAME, "=", contactName);
+        WhereBuilder whereBuilder = WhereBuilder.b(FriendBean.OWNER_ID, "=", ownerName);
+        whereBuilder.and(FriendBean.CONTACT_ID, "=", contactName);
         return findByParams(whereBuilder);
     }
 
-    public long getLastModifyDate(String userName){
+    public long getLastModifyDate(int userId){
         long lastModifyDate = 0;
 
         SqlInfo sqlInfo = new SqlInfo(GET_LAST_MODIFY_DATE);
         List<KeyValue> keyValues = new ArrayList<>();
-        KeyValue keyValue1 = new KeyValue("key1", userName);
+        KeyValue keyValue1 = new KeyValue("key1", userId);
         keyValues.add(keyValue1);
         sqlInfo.addBindArgs(keyValues);
 
@@ -85,23 +85,23 @@ public class FriendDao extends BaseDao<FriendBean>{
         return lastModifyDate;
     }
 
-    public String[] getNotExistUsersInFriend(String ownerName){
+    public Integer[] getNotExistUsersInFriend(int ownerId){
         SqlInfo sqlInfo = new SqlInfo(SELECT_NOT_EXIST_USER_IN_FRIEND);
         List<KeyValue> keyValues = new ArrayList<>();
-        KeyValue keyValue1 = new KeyValue("key1", ownerName);
+        KeyValue keyValue1 = new KeyValue("key1", ownerId);
         keyValues.add(keyValue1);
         sqlInfo.addBindArgs(keyValues);
 
-        List<String> userNames = new ArrayList<>();
+        List<Integer> userNames = new ArrayList<>();
         try {
             Cursor cursor = dbManager.execQuery(sqlInfo);
             while (cursor.moveToNext()){
-                String contactName = cursor.getString(cursor.getColumnIndex("contactName"));
-                userNames.add(contactName);
+                int contactedId = cursor.getInt((cursor.getColumnIndex(FriendBean.CONTACT_ID)));
+                userNames.add(contactedId);
             }
             closeCursor(cursor);
             if(!userNames.isEmpty()){
-                String[] userNameArray = new String[1];
+                Integer[] userNameArray = new Integer[1];
                 return userNames.toArray(userNameArray);
             }
         } catch (DbException e) {

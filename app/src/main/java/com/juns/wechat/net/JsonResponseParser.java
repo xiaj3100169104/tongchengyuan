@@ -7,8 +7,13 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
+import com.google.gson.reflect.TypeToken;
+import com.juns.wechat.bean.DynamicBean;
 import com.juns.wechat.bean.UserBean;
+import com.juns.wechat.net.response.BaseResponse;
+import com.juns.wechat.util.LogUtil;
 
+import org.xutils.common.util.ParameterizedTypeUtil;
 import org.xutils.http.app.ResponseParser;
 import org.xutils.http.request.UriRequest;
 
@@ -40,6 +45,7 @@ public class JsonResponseParser implements ResponseParser {
      */
     @Override
     public Object parse(Type resultType, Class<?> resultClass, String result) throws Throwable {
+
         if (resultClass == List.class) {
             return gson.fromJson(result, resultType);
             // return JSON.parseArray(result, (Class<?>) ParameterizedTypeUtil.getParameterizedType(resultType, List.class, 0));

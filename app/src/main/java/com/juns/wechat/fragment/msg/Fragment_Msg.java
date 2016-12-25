@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.juns.wechat.MainActivity;
+import com.juns.wechat.activity.MainActivity;
 import com.juns.wechat.R;
 import com.juns.wechat.activity.ChatActivity;
 import com.juns.wechat.adpter.ConversationAdapter;
@@ -104,10 +104,4 @@ public class Fragment_Msg extends BaseBusFragment {
             refreshData(); //重新加载数据
         }
     }
-
-    @Override
-    protected boolean registerEventBus() {
-        return true;
-    }
-
 }

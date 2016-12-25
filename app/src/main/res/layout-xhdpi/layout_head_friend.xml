@@ -2,8 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#ffffff"
-    android:orientation="vertical">
+    android:divider="@drawable/divider_common"
+    android:dividerPadding="@dimen/activity_horizontal_margin"
+    android:orientation="vertical"
+    android:showDividers="middle|end">
 
     <RelativeLayout
         android:id="@+id/layout_new_friends"
@@ -46,13 +48,6 @@
             android:visibility="gone" />
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.1dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:background="#d9d9d9" />
-
     <RelativeLayout
         android:id="@+id/layout_chat_room"
         android:layout_width="match_parent"
@@ -80,13 +75,6 @@
             android:textSize="16sp" />
     </RelativeLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.1dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:background="#d9d9d9" />
-
     <RelativeLayout
         android:id="@+id/layout_label"
         android:layout_width="match_parent"
@@ -113,13 +101,6 @@
             android:textColor="#353535"
             android:textSize="16sp" />
     </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.1dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:background="#d9d9d9" />
 
     <RelativeLayout
         android:id="@+id/layout_public"

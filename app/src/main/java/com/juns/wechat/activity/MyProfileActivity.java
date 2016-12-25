@@ -36,7 +36,7 @@ import butterknife.OnClick;
 /**
  * create by 王者 on 2016/7/14
  */
-public class MyProfileActivity extends BaseToolbarActivity implements SelectPhotoDialog.OnClickListener {
+public class MyProfileActivity extends BaseToolbarActivity {
 
     @Bind(R.id.ivAvatar)
     ImageView ivAvatar;
@@ -53,16 +53,17 @@ public class MyProfileActivity extends BaseToolbarActivity implements SelectPhot
     private SelectSexDialog selectSexDialog;
     private String imageName;
 
-    @Override
-    public void initData() {
-        setData();
-        EventBus.getDefault().register(this);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         mLayoutResID = R.layout.activity_my_profile;
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void initData() {
+        setToolbarTitle(R.string.my_profile);
+        setData();
     }
 
     private void setData() {
@@ -77,7 +78,22 @@ public class MyProfileActivity extends BaseToolbarActivity implements SelectPhot
     @OnClick(R.id.rlAvatar)
     public void modifyAvatar() {
         if (selectPhotoDialog == null) {
-            selectPhotoDialog = SelectPhotoDialog.createDialog(this, this);
+            selectPhotoDialog = new SelectPhotoDialog(this);
+            selectPhotoDialog.setOnItemClickListener(new SelectPhotoDialog.OnItemClickListener() {
+                @Override
+                public void takePhoto(View v) {
+                    imageName = getNowTime() + ".png";
+                    PhotoUtil.takePhoto(MyProfileActivity.this, Skip.CODE_TAKE_CAMERA, imageName);
+                    selectPhotoDialog.dismiss();
+                }
+
+                @Override
+                public void openAlbum(View v) {
+                    imageName = getNowTime() + ".png";
+                    PhotoUtil.openAlbum(MyProfileActivity.this, Skip.CODE_TAKE_ALBUM);
+                    selectPhotoDialog.dismiss();
+                }
+            });
         }
         selectPhotoDialog.show();
     }
@@ -89,29 +105,40 @@ public class MyProfileActivity extends BaseToolbarActivity implements SelectPhot
         startActivity(intent);
     }
 
-
     @OnClick(R.id.rlNickName)
     public void modifyNickName() {
-        startActivity(new Intent(this, ModifyNameActivity.class));
+        skip(ModifyNameActivity.class);
+    }
+
+    @OnClick(R.id.rlQrCode)
+    public void myQRCodeCard() {
+        skip(MyQRCodeActivity.class);
     }
 
     @OnClick(R.id.rlSex)
     public void modifySex() {
         final String sex = account.getSex();
-        int position = UserBean.Sex.isMan(sex) ? 0 : 1;
-        selectSexDialog = SelectSexDialog.createDialog(this, position);
-        selectSexDialog.setOnItemClickListener(new SelectSexDialog.OnItemClickListener() {
-            @Override
-            public void onItemClicked(int oldPosition, int newPosition) {
-                if (oldPosition == newPosition) {
-                    selectSexDialog.dismiss();
-                } else {
-                    String sex = newPosition == 0 ? UserBean.Sex.MAN.value : UserBean.Sex.WOMAN.value;
-                    modifySexToServer(sex);
+        final int position = UserBean.Sex.isMan(sex) ? 0 : 1;
+        if (selectSexDialog == null) {
+            selectSexDialog = new SelectSexDialog(this);
+            selectSexDialog.setOnItemClickListener(new SelectSexDialog.OnItemClickListener() {
+                @Override
+                public void onClickMan(View v) {
+                    if (position == 1)
+                        modifySexToServer(UserBean.Sex.MAN.value);
+                    else
+                        selectSexDialog.dismiss();
                 }
-            }
-        });
 
+                @Override
+                public void onClickWoman(View v) {
+                    if (position == 0)
+                        modifySexToServer(UserBean.Sex.WOMAN.value);
+                    else
+                        selectSexDialog.dismiss();
+                }
+            });
+        }
         selectSexDialog.show();
     }
 
@@ -168,20 +195,6 @@ public class MyProfileActivity extends BaseToolbarActivity implements SelectPhot
             }
             super.onActivityResult(requestCode, resultCode, data);
         }
-    }
-
-    @Override
-    public void takePhoto(View v) {
-        imageName = getNowTime() + ".png";
-        PhotoUtil.takePhoto(this, Skip.CODE_TAKE_CAMERA, imageName);
-        selectPhotoDialog.dismiss();
-    }
-
-    @Override
-    public void openAlbum(View v) {
-        imageName = getNowTime() + ".png";
-        PhotoUtil.openAlbum(this, Skip.CODE_TAKE_ALBUM);
-        selectPhotoDialog.dismiss();
     }
 
     private String getNowTime() {

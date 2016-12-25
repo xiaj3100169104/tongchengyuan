@@ -14,7 +14,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="20dp">
+
             <RelativeLayout
                 android:id="@+id/view_user"
                 android:layout_width="fill_parent"
@@ -71,6 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:divider="@drawable/divider_common"
+                android:dividerPadding="@dimen/activity_horizontal_margin"
                 android:orientation="vertical"
                 android:showDividers="middle">
 
@@ -88,6 +91,17 @@
                     android:drawableLeft="@drawable/icon_me_collect"
                     android:drawableRight="@drawable/right"
                     android:text="@string/collection" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:divider="@drawable/divider_common"
+                android:dividerPadding="@dimen/activity_horizontal_margin"
+                android:orientation="vertical"
+                android:showDividers="middle">
 
                 <TextView
                     android:id="@+id/txt_money"
@@ -119,7 +133,7 @@
                 android:layout_marginTop="20dp"
                 android:drawableLeft="@drawable/icon_me_setting"
                 android:drawableRight="@drawable/right"
-                android:text="@string/settings" />
+                android:text="@string/setting" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

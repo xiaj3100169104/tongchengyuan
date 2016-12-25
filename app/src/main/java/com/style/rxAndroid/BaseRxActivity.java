@@ -2,8 +2,7 @@ package com.style.rxAndroid;
 
 import android.support.v7.app.AppCompatActivity;
 
-import com.style.base.BaseActivity;
-import com.style.rxAndroid.newwork.callback.BaseRXTaskCallBack;
+import com.style.rxAndroid.callback.BaseRXTaskCallBack;
 
 import java.util.ArrayList;
 import java.util.List;

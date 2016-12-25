@@ -48,9 +48,10 @@
             </LinearLayout>
         </ScrollView>
 
+        <include layout="@layout/layout_more_dynamic_publish" />
     </LinearLayout>
 
-    <!--<LinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -60,25 +61,25 @@
             android:id="@+id/rl_bottom_smile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
             android:divider="@drawable/divider_gray"
-            android:showDividers="beginning"
             android:orientation="vertical"
-            android:background="@color/white">
+            android:showDividers="beginning">
 
             <CheckBox
                 android:id="@+id/iv_smile"
                 style="@style/text_white_17sp"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:layout_marginLeft="20dp"
-                android:button="@null"
-                android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:background="@drawable/sel_switch_emoji" />
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/sel_switch_emoji"
+                android:button="@null" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/face_ll"
+            android:id="@+id/layout_face"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="#fff0f0f0"
@@ -97,11 +98,11 @@
                 android:flipInterval="30"
                 android:persistentDrawingCache="animation" />
 
-            <com.channelsoft.im.views.CirclePageIndicator
+            <com.style.view.CirclePageIndicator
                 android:id="@+id/indicator"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dip" />
         </LinearLayout>
-    </LinearLayout>-->
+    </LinearLayout>
 </RelativeLayout>

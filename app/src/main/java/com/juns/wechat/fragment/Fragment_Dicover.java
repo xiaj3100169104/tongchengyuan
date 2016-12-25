@@ -11,14 +11,16 @@ import android.widget.TextView;
 import com.juns.wechat.R;
 import com.juns.wechat.activity.CallVoiceBaseActivity;
 import com.juns.wechat.activity.FriendCircleActivity;
-import com.juns.wechat.zxing.CaptureActivity;
-import com.style.album.SelectLocalPictureActivity;
+import com.juns.wechat.activity.QRScanActivity;
 import com.style.base.BaseBusFragment;
+import com.style.constant.Skip;
+import com.uuzuche.lib_zxing.activity.CaptureActivity;
 
 import butterknife.Bind;
 import butterknife.OnClick;
 
 public class Fragment_Dicover extends BaseBusFragment {
+
 
     @Bind(R.id.txt_pengyouquan)
     TextView txtPengyouquan;
@@ -48,11 +50,11 @@ public class Fragment_Dicover extends BaseBusFragment {
 
     @OnClick(R.id.txt_pengyouquan) // 朋友圈
     public void friendCircle() {
-        startActivity(new Intent(getActivity(), FriendCircleActivity.class));
+        skip(FriendCircleActivity.class);
     }
     @OnClick(R.id.txt_saoyisao) // 扫一扫
     public void saoYiSao() {
-        startActivity(new Intent(getActivity(), CaptureActivity.class));
+        skip(QRScanActivity.class);
     }
     @OnClick(R.id.txt_yaoyiyao) // 摇一摇
     public void yaoYiYao() {

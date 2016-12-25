@@ -1,90 +1,74 @@
 package com.juns.wechat.dialog;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.view.MotionEvent;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.View;
-import android.widget.RadioButton;
-import android.widget.RelativeLayout;
+import android.view.Window;
+import android.widget.Button;
 
 import com.juns.wechat.R;
 
 /**
- * Created by 王者 on 2016/9/12.
+ * Created by 王宗文 on 2016/7/16.
  */
-public class SelectSexDialog extends Dialog {
-    private RadioButton[] rbSexs;
-    private RelativeLayout rlManContainer;
-    private RelativeLayout rlWomanContainer;
-    private int oldPosition;
+public class SelectSexDialog extends Dialog{
+    private Button tvTakePhoto;
+    private Button tvOpenAlbum;
     private OnItemClickListener mListener;
+    private Context context;
 
     public SelectSexDialog(Context context) {
-        super(context);
+        this(context, R.style.Dialog_NoTitle);
     }
 
     public SelectSexDialog(Context context, int theme) {
         super(context, theme);
+        this.context = context;
+        setOwnerActivity((Activity) context);
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_select_sex);
-        rlManContainer = (RelativeLayout) findViewById(R.id.rlManContainer);
-        rlWomanContainer = (RelativeLayout) findViewById(R.id.rlWomanContainer);
-        rbSexs = new RadioButton[2];
-        rbSexs[0] = (RadioButton) findViewById(R.id.rbMan);
-        rbSexs[1] = (RadioButton) findViewById(R.id.rbWoman);
+        tvTakePhoto = (Button) findViewById(R.id.item_camera);
+        tvOpenAlbum = (Button) findViewById(R.id.item_photo);
 
-        rbSexs[oldPosition].setChecked(true);
-        rbSexs[1 - oldPosition].setChecked(false);
-        setListener();
-    }
+        tvTakePhoto.setText("男");
+        tvOpenAlbum.setText("女");
 
-    public static SelectSexDialog createDialog(Context context, int position){
-        SelectSexDialog selectSexDialog = new SelectSexDialog(context);
-        selectSexDialog.oldPosition = position;
-        return selectSexDialog;
+        tvTakePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onClickMan(v);
+            }
+        });
+
+        tvOpenAlbum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.onClickWoman(v);
+            }
+        });
+        Window window = getWindow();
+        window.getDecorView().setPadding(0, 0, 0, 0);
+        window.setGravity(Gravity.CENTER);
+        DisplayMetrics dm = new DisplayMetrics();
+        ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(dm);
+        window.setLayout(dm.widthPixels-200, window.getAttributes().height);
+       // window.setWindowAnimations(R.style.Animations_SlideInFromBottom_OutToBottom);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener){
-        mListener = listener;
-    }
-
-    private void setListener(){
-        rlManContainer.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                rbSexs[0].setChecked(true);
-                rbSexs[1].setChecked(false);
-
-                if(mListener != null){
-                    mListener.onItemClicked(oldPosition, 0);
-                }
-                oldPosition = 0;
-                return true;
-            }
-        });
-
-        rlWomanContainer.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                rbSexs[0].setChecked(false);
-                rbSexs[1].setChecked(true);
-
-                if(mListener != null){
-                    mListener.onItemClicked(oldPosition, 1);
-                }
-                oldPosition = 1;
-
-                return true;
-            }
-        });
+        this.mListener = listener;
     }
 
     public interface OnItemClickListener{
-        void onItemClicked(int oldPosition, int newPosition);
+        void onClickMan(View v);
+        void onClickWoman(View v);
     }
 }

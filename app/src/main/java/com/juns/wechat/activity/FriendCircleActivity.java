@@ -1,6 +1,7 @@
 package com.juns.wechat.activity;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,12 +10,18 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.TypeReference;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.model.stream.StreamUriLoader;
 import com.juns.wechat.R;
 import com.juns.wechat.adpter.DynamicAdapter;
+import com.juns.wechat.bean.DynamicBean;
+import com.juns.wechat.net.common.HttpAction;
+import com.juns.wechat.net.common.NetBeanCallback;
 import com.style.base.BaseToolbarActivity;
+import com.style.constant.Skip;
+import com.style.utils.CommonUtil;
 import com.style.utils.StreamUtil;
 import com.style.view.DividerItemDecoration;
 
@@ -35,7 +42,8 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
  * Created by Administrator on 2016/4/11.
  */
 public class FriendCircleActivity extends BaseToolbarActivity {
-
+    private static int ACTION_REFRESH = 0;
+    private static int ACTION_LOAD_MORE = 1;
     @Bind(R.id.recyclerView)
     RecyclerView recyclerView;
     @Bind(R.id.ptrFrame)
@@ -45,9 +53,10 @@ public class FriendCircleActivity extends BaseToolbarActivity {
     @Bind(R.id.iv_avatar)
     ImageView ivAvatar;
 
-    private List<String> dataList;
+    private List<DynamicBean> dataList;
     private DynamicAdapter adapter;
     private int page = 1;
+    private int action = ACTION_REFRESH;
 
     @Override
     protected void onCreate(Bundle arg0) {
@@ -65,7 +74,7 @@ public class FriendCircleActivity extends BaseToolbarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.select:
-                skip(DynamicPublishActivity.class);
+                skipForResult(DynamicPublishActivity.class, Skip.CODE_PUBLISH_DYNAMIC);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -74,15 +83,7 @@ public class FriendCircleActivity extends BaseToolbarActivity {
     @Override
     protected void initData() {
         setToolbarTitle(R.string.moments);
-        /*InputStream is = null;
-        try {
-            is = getAssets().open("pig.gif");
-            int size = is.available();
-            StreamUtil.read(is);
-            FileUtil
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
+
         Glide.with(this).load(R.drawable.pig).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(ivAvatar);
 
         dataList = new ArrayList<>();
@@ -97,13 +98,17 @@ public class FriendCircleActivity extends BaseToolbarActivity {
 
             @Override
             public void onLoadMoreBegin(PtrFrameLayout frame) {
-                updateData();
+                //updateData();
+                action = ACTION_LOAD_MORE;
+                getData();
             }
 
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-                page = 1;
-                updateData();
+                //page = 1;
+                //updateData();
+                action = ACTION_REFRESH;
+                getData();
             }
 
         });
@@ -133,6 +138,37 @@ public class FriendCircleActivity extends BaseToolbarActivity {
 
             }
         });
+        getData();
+    }
+
+    private void getData() {
+        int dynamicId = 0;
+        if (action == ACTION_LOAD_MORE) {
+            if (dataList.size() > 0) {
+                dynamicId = dataList.get(dataList.size() - 1).getDynamicId();
+            }
+        }
+        HttpAction.getFriendCircleDynamic(action, dynamicId, 6, new NetBeanCallback<List<DynamicBean>>(new TypeReference<List<DynamicBean>>() {
+                }) {
+                    @Override
+                    protected void onResultSuccess(List<DynamicBean> data) {
+                        ptrFrame.refreshComplete();
+                        if (data != null && data.size() > 0) {
+                            if (action == ACTION_REFRESH)
+                                adapter.clearData();
+                            dataList.addAll(data);
+                        }
+                        adapter.notifyDataSetChanged();
+                    }
+
+                    @Override
+                    protected void onFailure(String msg) {
+                        ptrFrame.refreshComplete();
+                        showToast(msg);
+                    }
+                }
+
+        );
     }
 
     protected void updateData() {
@@ -140,7 +176,7 @@ public class FriendCircleActivity extends BaseToolbarActivity {
             @Override
             public void run() {
                 ptrFrame.refreshComplete();
-                if (page == 1) {
+                /*if (page == 1) {
                     List<String> list = new ArrayList<>();
                     for (int i = 0; i < 10; i++) {
                         list.add("item-----" + String.valueOf(i));
@@ -156,8 +192,24 @@ public class FriendCircleActivity extends BaseToolbarActivity {
                     }
                     adapter.addData(list);
                 }
-                page++;
+                page++;*/
             }
         }, 1000);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case Skip.CODE_PUBLISH_DYNAMIC:
+                    if (data != null) {
+                        DynamicBean bean = (DynamicBean) data.getSerializableExtra("sendDynamic");
+                        dataList.add(0, bean);
+                        adapter.notifyDataSetChanged();
+                    }
+                    break;
+            }
+        }
     }
 }

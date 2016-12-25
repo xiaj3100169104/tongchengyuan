@@ -119,7 +119,7 @@ public class SearchActivity extends BaseActivity {
     private void showSearchResult(ArrayList<UserBean> userBeans){
         if(userBeans != null && !userBeans.isEmpty()){
             Intent intent = new Intent(SearchActivity.this, SearchResultActivity.class);
-            intent.putParcelableArrayListExtra(Skip.KEY_SEARCH_RESULTS, userBeans);
+            intent.putExtra(Skip.KEY_SEARCH_RESULTS, userBeans);
             startActivity(intent);
         }else {
             showToast("没有搜索到用户");

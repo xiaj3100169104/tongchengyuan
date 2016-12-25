@@ -1,0 +1,34 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 动画风格 -->
+    <style name="Layouts" />
+    <!-- 一般水平布局元素父风格 -->
+    <style name="Layouts.base_normal">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/height_normal</item>
+        <item name="android:background">@drawable/bg_pressed_default</item>
+        <item name="android:paddingLeft">@dimen/activity_horizontal_margin</item>
+        <item name="android:paddingRight">@dimen/activity_horizontal_margin</item>
+        <item name="android:clickable">true</item>
+    </style>
+    <!-- 一般水平线性布局元素风格 -->
+    <style name="Layouts.normal_LinearLayout" parent="Layouts.base_normal">
+        <item name="android:gravity">center_vertical</item>
+    </style>
+    <!-- 一般水平相对布局元素风格 -->
+    <style name="Layouts.normal_RelativeLayout" parent="Layouts.base_normal">
+
+    </style>
+    <!-- 一般适配器水平布局元素风格 -->
+    <style name="normal_layout_adapter_item" parent="Layouts.base_normal">
+        <item name="android:clickable">false</item>
+    </style>
+
+    <!--<style name="redText">
+        <item name="android:minHeight">20dp</item>
+        <item name="android:minWidth">20dp</item>
+        <item name="android:background">@drawable/shape_circle_textview</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">10sp</item>
+    </style>-->
+</resources>

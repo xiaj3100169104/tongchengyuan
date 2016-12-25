@@ -252,13 +252,15 @@ public class PictureUtils {
      * @return Bitmap
      * @throws
      */
-    public static Bitmap rotaingImageView(int angle, Bitmap bitmap) {
-        // 旋转图片 动作
-        Matrix matrix = new Matrix();
-        matrix.postRotate(angle);
-        // 创建新的图片
-        Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-        return resizedBitmap;
+    public static Bitmap rotaingBitmap(Bitmap bitmap, int angle) {
+        if (bitmap != null && angle!= 0) {// 旋转图片 动作
+            // 旋转图片 动作
+            Matrix matrix = new Matrix();
+            matrix.postRotate(angle);
+            // 创建新的图片
+            bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        }
+        return bitmap;
     }
 
     /**

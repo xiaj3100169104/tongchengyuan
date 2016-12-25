@@ -1,302 +1,191 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="#ebebeb"
-              android:orientation="vertical" >
-    <include android:id="@+id/toolbar" layout="@layout/comm_toolbar" />
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/window_bg"
+    android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/rlAvatar"
+    <include layout="@layout/comm_toolbar" />
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="@drawable/btn_list_item_bg"
-        android:clickable="true" >
+        android:divider="@drawable/divider_common"
+        android:dividerPadding="@dimen/activity_horizontal_margin"
+        android:orientation="vertical"
+        android:showDividers="middle">
 
-        <ImageView
-            android:id="@+id/ivAvatar"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="12dp"
-            android:src="@drawable/default_useravatar" />
+        <RelativeLayout
+            android:id="@+id/rlAvatar"
+            style="@style/Layouts.normal_RelativeLayout"
+            android:layout_height="80dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:text="头像"
-            android:textColor="#353535"
-            android:textSize="16sp" />
+            <ImageView
+                android:id="@+id/ivAvatar"
+                android:layout_width="64dp"
+                android:layout_height="64dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/default_useravatar" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.1dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:background="#dadada" />
-    </RelativeLayout>
+            <TextView
+                style="@style/text_black_16sp"
+                android:layout_centerVertical="true"
+                android:text="头像" />
+        </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/rlNickName"
+        <RelativeLayout
+            android:id="@+id/rlNickName"
+            style="@style/Layouts.normal_RelativeLayout">
+
+            <TextView
+                style="@style/text_black_16sp"
+                android:layout_centerVertical="true"
+                android:text="昵称" />
+
+            <TextView
+                android:id="@+id/tvNickName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:ellipsize="end"
+                android:gravity="right"
+                android:singleLine="true"
+                android:text="黄方意"
+                android:textColor="#AAAAAA"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlUserName"
+            style="@style/Layouts.normal_RelativeLayout">
+
+            <TextView
+                style="@style/text_black_16sp"
+                android:layout_centerVertical="true"
+                android:text="微信号" />
+
+            <TextView
+                android:id="@+id/tvUserName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:ellipsize="end"
+                android:gravity="right"
+                android:singleLine="true"
+                android:textColor="#AAAAAA"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlQrCode"
+            style="@style/Layouts.normal_RelativeLayout">
+
+            <TextView
+                style="@style/text_black_16sp"
+                android:layout_centerVertical="true"
+                android:text="二维码名片" />
+
+            <ImageView
+                android:id="@+id/ivQrCode"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/a_5" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/re_address"
+            style="@style/Layouts.normal_RelativeLayout">
+
+            <TextView
+                style="@style/text_black_16sp"
+                android:layout_centerVertical="true"
+                android:text="我的地址" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@drawable/btn_list_item_bg"
-        android:clickable="true" >
-
-        <TextView
-            android:id="@+id/tv_temp_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:text="昵称"
-            android:textColor="#353535"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/tvNickName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
-            android:layout_toRightOf="@id/tv_temp_name"
-            android:ellipsize="end"
-            android:gravity="right"
-            android:singleLine="true"
-            android:text="黄方意"
-            android:textColor="#AAAAAA"
-            android:textSize="14sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.1dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:background="#dadada" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/rlUserName"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@drawable/btn_list_item_bg"
-        android:clickable="true" >
-
-        <TextView
-            android:id="@+id/tv_temp_fxid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:text="微信号"
-            android:textColor="#353535"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/tvUserName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
-            android:layout_toRightOf="@id/tv_temp_fxid"
-            android:ellipsize="end"
-            android:gravity="right"
-            android:singleLine="true"
-            android:textColor="#AAAAAA"
-            android:textSize="14sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.1dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:background="#dadada" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/rlQrCode"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@drawable/btn_list_item_bg"
-        android:clickable="true" >
-
-        <TextView
-            android:id="@+id/tv_temp_erweima"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:text="二维码名片"
-            android:textColor="#353535"
-            android:textSize="16sp" />
-
-        <ImageView
-            android:id="@+id/ivQrCode"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
-            android:src="@drawable/a_5" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.1dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:background="#dadada" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/re_address"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@drawable/btn_list_item_bg"
-        android:clickable="true" >
-
-        <TextView
-            android:id="@+id/tv_temp_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:text="我的地址"
-            android:textColor="#353535"
-            android:textSize="16sp" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/rlSex"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:background="@drawable/btn_list_item_bg"
-        android:clickable="true" >
+        android:divider="@drawable/divider_common"
+        android:dividerPadding="@dimen/activity_horizontal_margin"
+        android:orientation="vertical"
+        android:showDividers="middle">
 
-        <TextView
-            android:id="@+id/tv_temp_sex"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:text="性别"
-            android:textColor="#353535"
-            android:textSize="16sp" />
+        <RelativeLayout
+            android:id="@+id/rlSex"
+            style="@style/Layouts.normal_RelativeLayout">
 
-        <TextView
-            android:id="@+id/tvSex"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
-            android:layout_toRightOf="@id/tv_temp_sex"
-            android:ellipsize="end"
-            android:gravity="right"
-            android:singleLine="true"
-            android:text="男"
-            android:textColor="#AAAAAA"
-            android:textSize="14sp" />
+            <TextView
+                style="@style/text_black_16sp"
+                android:layout_centerVertical="true"
+                android:text="性别" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.1dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:background="#dadada" />
-    </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/rlRegion"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
+            <TextView
+                android:id="@+id/tvSex"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:ellipsize="end"
+                android:gravity="right"
+                android:singleLine="true"
+                android:text="男"
+                android:textColor="#AAAAAA"
+                android:textSize="14sp" />
+        </RelativeLayout>
 
-        android:background="@drawable/btn_list_item_bg"
-        android:clickable="true" >
+        <RelativeLayout
+            android:id="@+id/rlRegion"
+            style="@style/Layouts.normal_RelativeLayout">
 
-        <TextView
-            android:id="@+id/tv_temp_region"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:text="地区"
-            android:textColor="#353535"
-            android:textSize="16sp" />
+            <TextView
+                style="@style/text_black_16sp"
+                android:layout_centerVertical="true"
+                android:text="地区" />
 
-        <TextView
-            android:id="@+id/tvRegion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
-            android:layout_toRightOf="@id/tv_temp_region"
-            android:ellipsize="end"
-            android:gravity="right"
-            android:singleLine="true"
-            android:text="安徽合肥"
-            android:textColor="#AAAAAA"
-            android:textSize="14sp" />
+            <TextView
+                android:id="@+id/tvRegion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:ellipsize="end"
+                android:gravity="right"
+                android:singleLine="true"
+                android:text="安徽合肥"
+                android:textColor="#AAAAAA"
+                android:textSize="14sp" />
+        </RelativeLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.1dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:background="#dadada" />
-    </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/rlSignature"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
+        <RelativeLayout
+            android:id="@+id/rlSignature"
+            style="@style/Layouts.normal_RelativeLayout">
 
-        android:background="@drawable/btn_list_item_bg"
-        android:clickable="true" >
+            <TextView
+                style="@style/text_black_16sp"
+                android:layout_centerVertical="true"
+                android:text="个性签名" />
 
-        <TextView
-            android:id="@+id/tv_temp_sign"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            android:text="个性签名"
-            android:textColor="#353535"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/tvSignature"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
-            android:layout_toRightOf="@id/tv_temp_sign"
-            android:ellipsize="end"
-            android:gravity="right"
-            android:singleLine="true"
-            android:text="志存高远，脚踏实地"
-            android:textColor="#AAAAAA"
-            android:textSize="14sp" />
-
-
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/tvSignature"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:ellipsize="end"
+                android:gravity="right"
+                android:singleLine="true"
+                android:text="志存高远，脚踏实地"
+                android:textColor="#AAAAAA"
+                android:textSize="14sp" />
+        </RelativeLayout>
+    </LinearLayout>
 </LinearLayout>

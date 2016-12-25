@@ -9,6 +9,7 @@ import com.juns.wechat.fragment.Fragment_Dicover;
 import com.juns.wechat.fragment.Fragment_Friends;
 import com.juns.wechat.fragment.msg.Fragment_Msg;
 import com.juns.wechat.fragment.Fragment_Profile;
+import com.style.base.BaseFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
  * Created by 王宗文 on 2016/6/10.
  */
 public class MainAdapter extends FragmentPagerAdapter {
-    private List<BaseBusFragment> fragments;
+    private List<BaseFragment> fragments;
 
     public MainAdapter(FragmentManager fm) {
         super(fm);

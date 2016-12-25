@@ -5,47 +5,46 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.juns.wechat.MainActivity;
 import com.juns.wechat.R;
+import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.manager.AccountManager;
 
 public class SplashActivity extends Activity {
-	private boolean isLogin; //用户是否已经登录
-	private Handler mHandler = new Handler();
+    private Handler mHandler = new Handler();
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_start);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_start);
 
-		isLogin = AccountManager.getInstance().isLogin();
-		if (isLogin) {
-			pageToHome();
-		} else {
-			pageToLogin();
-		}
-	}
+        UserBean userBean = AccountManager.getInstance().getUser();
+        if (userBean != null) {
+            pageToHome();
+        } else {
+            pageToLogin();
+        }
+    }
 
-	private void pageToHome() {
-		mHandler.postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				Intent intent = new Intent(SplashActivity.this, MainActivity.class);
-				startActivity(intent);
+    private void pageToHome() {
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                startActivity(intent);
                 finish();
-			}
-		}, 600);
-	}
+            }
+        }, 600);
+    }
 
-	private void pageToLogin() {
-		mHandler.postDelayed(new Runnable() {
-			@Override
-			public void run() {
-				Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-				startActivity(intent);
+    private void pageToLogin() {
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                startActivity(intent);
                 finish();
-			}
-		}, 600);
-	}
+            }
+        }, 600);
+    }
 
 }

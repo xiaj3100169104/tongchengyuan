@@ -27,11 +27,11 @@ public class UserDao extends BaseDao<UserBean>{
     private static final String GET_LAST_MODIFY_DATE =
             "SELECT max(t.modifyDate) as lastModifyDate FROM ( " +
                     "SELECT t1.* FROM (select u.* from wcUser u, wcFriend r where " +
-                    "(r.ownerId = ? and u.userName = r.contactedId) and (r.subType = 'both' or r.subType = 'from')) t1" +
-                    " UNION SELECT u.* from wcUser u WHERE u.userName = ?) t";
+                    "(r.ownerId = ? and u.userId = r.contactedId) and (r.subType = 'both' or r.subType = 'from')) t1" +
+                    " UNION SELECT u.* from wcUser u WHERE u.userId = ?) t";
 
     private static final String QUERY_MY_FRIENDS =
-            "select * from wcUser u, wcFriend f where f.ownerId = ? and f.contactedId = u.userName";
+            "select * from wcUser u, wcFriend f where f.ownerId = ? and f.contactedId = u.userId";
 
     private static UserDao mInstance;
 
@@ -65,13 +65,13 @@ public class UserDao extends BaseDao<UserBean>{
         return findByParams(whereBuilder);
     }
 
-    public long getLastModifyDate(String userName){
+    public long getLastModifyDate(int userId){
         long lastModifyDate = 0;
 
         SqlInfo sqlInfo = new SqlInfo(GET_LAST_MODIFY_DATE);
         List<KeyValue> keyValues = new ArrayList<>();
-        KeyValue keyValue1 = new KeyValue("key1", userName);
-        KeyValue keyValue2 = new KeyValue("key2", userName);
+        KeyValue keyValue1 = new KeyValue("key1", userId);
+        KeyValue keyValue2 = new KeyValue("key2", userId);
         keyValues.add(keyValue1);
         keyValues.add(keyValue2);
         sqlInfo.addBindArgs(keyValues);
