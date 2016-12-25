@@ -60,12 +60,12 @@ public class HttpAction {
      * @param callback
      */
     public static void getFriendCircleDynamic(int action, int dynamicId, int limit, NetBeanCallback callback) {
-        initCommonParams();
-        RequestParams params = new RequestParams(URL_GET_DYNAMICS_FRIEND_CIRCLE);
-        params.addBodyParameter("token", token);
+        //initCommonParams();
+        TokenRequestParams params = new TokenRequestParams(URL_GET_DYNAMICS_FRIEND_CIRCLE);
+        //params.addBodyParameter("token", token);
+        params.addParameter("action", action);
         if (action == 1)
-            params.addParameter("action", action);
-        params.addParameter("dynamicId", dynamicId);
+            params.addParameter("dynamicId", dynamicId);
         params.addParameter("limit", limit);
         NetWorkManager.getInstance().post(params, callback);
     }

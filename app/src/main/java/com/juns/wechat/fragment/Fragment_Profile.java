@@ -1,6 +1,5 @@
 package com.juns.wechat.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,8 +16,8 @@ import com.juns.wechat.activity.SettingActivity;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.dao.DbDataEvent;
 import com.juns.wechat.database.UserTable;
+import com.juns.wechat.helper.CommonViewHelper;
 import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.util.ImageLoader;
 import com.style.base.BaseBusFragment;
 
 import org.simple.eventbus.Subscriber;
@@ -36,8 +35,10 @@ public class Fragment_Profile extends BaseBusFragment implements OnClickListener
     TextView tvNickName;
     @Bind(R.id.tvUserName)
     TextView tvUserName;
+    @Bind(R.id.ivSex)
+    ImageView ivSex;
 
-    private UserBean account;
+    private UserBean curUser;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -68,7 +69,7 @@ public class Fragment_Profile extends BaseBusFragment implements OnClickListener
             List<UserBean> updateData = event.data;
             if (updateData != null && !updateData.isEmpty()) {
                 for (UserBean userBean : updateData) {
-                    if (userBean.getUserName().equals(account.getUserName())) {
+                    if (userBean.getUserName().equals(curUser.getUserName())) {
                         updateUserView();
                     }
                 }
@@ -77,11 +78,9 @@ public class Fragment_Profile extends BaseBusFragment implements OnClickListener
     }
 
     private void updateUserView() {
-        account = AccountManager.getInstance().getUser();
-        tvUserName.setText("微信号：" + account.getUserName());
-        tvNickName.setText(account.getNickName() == null ? account.getUserName() : account.getNickName());
+        curUser = AccountManager.getInstance().getUser();
+        CommonViewHelper.setUserViewInfo(curUser, ivAvatar, tvNickName, ivSex, tvUserName, true);
 
-        ImageLoader.loadAvatar(ivAvatar, account.getHeadUrl());
     }
 
     @Override
@@ -117,5 +116,11 @@ public class Fragment_Profile extends BaseBusFragment implements OnClickListener
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 }

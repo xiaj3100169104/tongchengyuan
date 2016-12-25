@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.juns.wechat.R;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.ShowBigImage;
+import com.juns.wechat.helper.CommonViewHelper;
 import com.style.base.BaseToolbarActivity;
 import com.juns.wechat.dao.DbDataEvent;
 import com.juns.wechat.database.UserTable;
@@ -47,7 +48,7 @@ public class MyProfileActivity extends BaseToolbarActivity {
     @Bind(R.id.tvSex)
     TextView tvSex;
 
-    private UserBean account;
+    private UserBean curUser;
 
     private SelectPhotoDialog selectPhotoDialog;
     private SelectSexDialog selectSexDialog;
@@ -67,12 +68,11 @@ public class MyProfileActivity extends BaseToolbarActivity {
     }
 
     private void setData() {
-        account = AccountManager.getInstance().getUser();
-        tvNickName.setText(account.getNickName() == null ? "" : account.getNickName());
-        tvUserName.setText(account.getUserName());
-        String sex = account.getSex();
+        curUser = AccountManager.getInstance().getUser();
+        CommonViewHelper.setUserViewInfo(curUser, ivAvatar, tvNickName, null, tvUserName, false);
+
+        String sex = curUser.getSex();
         tvSex.setText(UserBean.Sex.isMan(sex) ? "男" : "女");
-        ImageLoader.loadAvatar(ivAvatar, account.getHeadUrl());
     }
 
     @OnClick(R.id.rlAvatar)
@@ -101,7 +101,7 @@ public class MyProfileActivity extends BaseToolbarActivity {
     @OnClick(R.id.ivAvatar)
     public void showBigAvatar() {
         Intent intent = new Intent(this, ShowBigImage.class);
-        intent.putExtra(Skip.KEY_IMG_NAME, account.getHeadUrl());
+        intent.putExtra(Skip.KEY_IMG_NAME, curUser.getHeadUrl());
         startActivity(intent);
     }
 
@@ -117,7 +117,7 @@ public class MyProfileActivity extends BaseToolbarActivity {
 
     @OnClick(R.id.rlSex)
     public void modifySex() {
-        final String sex = account.getSex();
+        final String sex = curUser.getSex();
         final int position = UserBean.Sex.isMan(sex) ? 0 : 1;
         if (selectSexDialog == null) {
             selectSexDialog = new SelectSexDialog(this);
@@ -148,7 +148,7 @@ public class MyProfileActivity extends BaseToolbarActivity {
             List<UserBean> updateData = event.data;
             if (updateData != null && !updateData.isEmpty()) {
                 for (UserBean userBean : updateData) {
-                    if (userBean.getUserName().equals(account.getUserName())) {
+                    if (userBean.getUserName().equals(curUser.getUserName())) {
                         setData();
                     }
                 }
@@ -157,7 +157,7 @@ public class MyProfileActivity extends BaseToolbarActivity {
     }
 
     private void modifySexToServer(String sex) {
-        UserRequest.updateUser(account.getUserName(), UserBean.SEX, sex, new UpdateUserCallBack() {
+        UserRequest.updateUser(curUser.getUserName(), UserBean.SEX, sex, new UpdateUserCallBack() {
             @Override
             protected void handleResponse(UpdateUserResponse result) {
                 super.handleResponse(result);

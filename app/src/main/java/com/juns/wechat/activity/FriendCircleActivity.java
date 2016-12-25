@@ -138,7 +138,6 @@ public class FriendCircleActivity extends BaseToolbarActivity {
 
             }
         });
-        getData();
     }
 
     private void getData() {
