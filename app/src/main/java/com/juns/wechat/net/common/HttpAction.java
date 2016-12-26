@@ -36,7 +36,7 @@ public class HttpAction {
      * @param fileList 图片列表
      * @param callback
      */
-    public static void addDynamic(String content, File[] fileList, NetBeanCallback callback) {
+    public static void addDynamic(String content, File[] fileList, NetDataBeanCallback callback) {
         initCommonParams();
         RequestParams params = new RequestParams(URL_ADD_DYNAMIC);
         params.addBodyParameter("token", token);
@@ -59,7 +59,7 @@ public class HttpAction {
      * @param limit     当前页条数
      * @param callback
      */
-    public static void getFriendCircleDynamic(int action, int dynamicId, int limit, NetBeanCallback callback) {
+    public static void getFriendCircleDynamic(int action, int dynamicId, int limit, NetDataBeanCallback callback) {
         initCommonParams();
         RequestParams params = new RequestParams(URL_GET_DYNAMICS_FRIEND_CIRCLE);
         params.addBodyParameter("token", token);

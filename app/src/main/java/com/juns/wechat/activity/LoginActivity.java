@@ -88,7 +88,7 @@ public class LoginActivity extends BaseToolbarActivity implements OnClickListene
         switch (v.getId()) {
             case R.id.tv_wenti:
             /*CommonUtil.startActivity(LoginActivity.this, WebViewActivity.class,
-					new BasicNameValuePair(Constants.Title, "帮助"),
+                    new BasicNameValuePair(Constants.Title, "帮助"),
 					new BasicNameValuePair(Constants.URL,
 							"http://weixin.qq.com/"));*/
                 break;
@@ -105,8 +105,8 @@ public class LoginActivity extends BaseToolbarActivity implements OnClickListene
     }
 
     private void startLogin() {
-        userName = etInputName.getText().toString().trim();
-        password = etPassWord.getText().toString().trim();
+        userName = etInputName.getText().toString().trim().replace(" ", "");
+        password = etPassWord.getText().toString().trim().replace(" ", "");
         if (!TextUtils.isEmpty(userName) && !TextUtils.isEmpty(password)) {
             login(userName, password);
         } else {
@@ -128,17 +128,12 @@ public class LoginActivity extends BaseToolbarActivity implements OnClickListene
         @Override
         protected void handleResponse(BaseResponse.LoginResponse result) {
             super.handleResponse(result);
-            if (result.code == 0) {
-                AccountManager.getInstance().setUserPassWord(password);
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                finish();
-            } else {
-                handleFailed(result);
-            }
-
+            AccountManager.getInstance().setUserPassWord(password);
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            finish();
         }
 
-        protected void handleFailed(BaseResponse.LoginResponse result) {
+        protected void onFailure(int code, String msg) {
             showToast("用户名或密码错误");
             getLoadingDialog("正在登录...").dismiss();
         }

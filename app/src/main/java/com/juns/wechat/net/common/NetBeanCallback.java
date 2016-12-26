@@ -1,20 +1,15 @@
 package com.juns.wechat.net.common;
 
-import android.util.Log;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.juns.wechat.R;
-import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.net.response.BaseResponse;
 import com.juns.wechat.util.ToastUtil;
 
-import org.xutils.common.Callback;
 
-
-public class NetBeanCallback<T> implements Callback.CommonCallback<String> {
-    protected String TAG = "NetNormalCallBack";
+public class NetBeanCallback<T> extends NetStringCallback {
+    protected String TAG = "NetBeanCallback";
     protected Class<T> clazz;
     protected TypeReference<T> type;
 
@@ -31,30 +26,14 @@ public class NetBeanCallback<T> implements Callback.CommonCallback<String> {
 
     @Override
     public void onSuccess(String result) {
-        Log.e(TAG, "result==" + result);
-        NetNormaBean response = JSON.parseObject(result, NetNormaBean.class);
-        int code = response.code;
-        String jsonData = response.data;
-        String msg = response.msg;
+        super.onSuccess(result);
+        T data = null;
+        if (this.clazz != null)
+            data = JSON.parseObject(result, this.clazz);
+        if (this.type != null)
+            data = JSON.parseObject(result, this.type);
 
-        if (code == BaseResponse.SUCCESS) {
-            T data = null;
-            if (this.clazz != null)
-                data = JSON.parseObject(jsonData, this.clazz);
-            if (this.type != null)
-                data = JSON.parseObject(jsonData, this.type);
-
-            onResultSuccess(data);
-            onResultSuccess(data, msg);
-        } else {
-            onFailure(msg);
-            onFailure(code, msg);
-            if (code == BaseResponse.SERVER_ERROR) {
-                ToastUtil.showToast("服务器出错了", Toast.LENGTH_SHORT);
-            } else if (code == BaseResponse.TOKEN_EXPIRED || code == BaseResponse.TOKEN_INVALID) {
-                handleTokenError();
-            }
-        }
+        onResultSuccess(data);
     }
 
     @Override
@@ -67,20 +46,8 @@ public class NetBeanCallback<T> implements Callback.CommonCallback<String> {
 
     }
 
-    protected void onResultSuccess(T data, String msg) {
-
-    }
-
     protected void onFailure(String msg) {
 
-    }
-
-    protected void onFailure(int code, String msg) {
-
-    }
-
-    private void handleTokenError() {
-        AccountManager.getInstance().logOut();
     }
 
     @Override

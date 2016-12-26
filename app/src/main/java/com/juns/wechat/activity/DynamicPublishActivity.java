@@ -15,7 +15,7 @@ import com.juns.wechat.bean.DynamicBean;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.helper.SimpleExpressionhelper;
 import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.net.common.NetBeanCallback;
+import com.juns.wechat.net.common.NetDataBeanCallback;
 import com.juns.wechat.util.PhotoUtil;
 import com.style.album.AlbumActivity;
 import com.style.album.DynamicPublishImageAdapter;
@@ -178,9 +178,9 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
 
     private void startSend(File[] files) {
         String content = etContent.getText().toString();
-        HttpAction.addDynamic(content, files, new NetBeanCallback<DynamicBean>(DynamicBean.class) {
+        HttpAction.addDynamic(content, files, new NetDataBeanCallback<DynamicBean>(DynamicBean.class) {
             @Override
-            protected void onResultSuccess(DynamicBean data) {
+            protected void onCodeSuccess(DynamicBean data) {
                 dismissProgressDialog();
                 data.setUser(curUser);
                 setResult(RESULT_OK, new Intent().putExtra("sendDynamic", data));
@@ -188,7 +188,7 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
             }
 
             @Override
-            protected void onFailure(String msg) {
+            protected void onCodeFailure(String msg) {
                 dismissProgressDialog();
             }
         });

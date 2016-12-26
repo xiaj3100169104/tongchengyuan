@@ -13,22 +13,15 @@ import android.widget.TextView;
 import com.alibaba.fastjson.TypeReference;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.model.stream.StreamUriLoader;
 import com.juns.wechat.R;
 import com.juns.wechat.adpter.DynamicAdapter;
 import com.juns.wechat.bean.DynamicBean;
 import com.juns.wechat.net.common.HttpAction;
-import com.juns.wechat.net.common.NetBeanCallback;
+import com.juns.wechat.net.common.NetDataBeanCallback;
 import com.style.base.BaseToolbarActivity;
 import com.style.constant.Skip;
-import com.style.utils.CommonUtil;
-import com.style.utils.StreamUtil;
 import com.style.view.DividerItemDecoration;
 
-import org.xutils.common.util.FileUtil;
-
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -148,10 +141,10 @@ public class FriendCircleActivity extends BaseToolbarActivity {
                 dynamicId = dataList.get(dataList.size() - 1).getDynamicId();
             }
         }
-        HttpAction.getFriendCircleDynamic(action, dynamicId, 6, new NetBeanCallback<List<DynamicBean>>(new TypeReference<List<DynamicBean>>() {
+        HttpAction.getFriendCircleDynamic(action, dynamicId, 6, new NetDataBeanCallback<List<DynamicBean>>(new TypeReference<List<DynamicBean>>() {
                 }) {
                     @Override
-                    protected void onResultSuccess(List<DynamicBean> data) {
+                    protected void onCodeSuccess(List<DynamicBean> data) {
                         ptrFrame.refreshComplete();
                         if (data != null && data.size() > 0) {
                             if (action == ACTION_REFRESH)
@@ -162,7 +155,7 @@ public class FriendCircleActivity extends BaseToolbarActivity {
                     }
 
                     @Override
-                    protected void onFailure(String msg) {
+                    protected void onCodeFailure(String msg) {
                         ptrFrame.refreshComplete();
                         showToast(msg);
                     }
