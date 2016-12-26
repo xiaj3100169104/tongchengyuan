@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.juns.wechat.R;
 import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.bean.UserBean;
+import com.juns.wechat.helper.CommonViewHelper;
 import com.style.base.BaseToolbarActivity;
 import com.juns.wechat.dao.FriendDao;
 import com.juns.wechat.exception.UserNotFoundException;
@@ -47,7 +48,7 @@ public class UserInfoActivity extends BaseToolbarActivity implements OnClickList
     //@Extra(name = ARG_USER_NAME)
     private String userName;
 
-    private UserBean account = AccountManager.getInstance().getUser();
+    private UserBean curUser = AccountManager.getInstance().getUser();
     private FriendBean friendBean;
     private UserBean userBean;
     private String subType = null;
@@ -77,13 +78,13 @@ public class UserInfoActivity extends BaseToolbarActivity implements OnClickList
 
     public void initData() {
         userName = getIntent().getStringExtra(Skip.KEY_USER_NAME);
-        if (userName.equals(account.getUserName())) {  //查看自己的信息
-            userBean = account;
+        if (userName.equals(curUser.getUserName())) {  //查看自己的信息
+            userBean = curUser;
             setData();
             return;
         }
 
-        friendBean = FriendDao.getInstance().findByOwnerAndContactName(account.getUserName(), userName);
+        friendBean = FriendDao.getInstance().findByOwnerAndContactName(curUser.getUserName(), userName);
         if (friendBean == null) {  //不是好友关系
             UserRequest.queryUserData(userName, queryUserCallBack);
         } else {
@@ -98,11 +99,9 @@ public class UserInfoActivity extends BaseToolbarActivity implements OnClickList
     }
 
     private void setData() {
-        tvNickName.setText(userBean.getShowName());
-        tvUserName.setText("微信号：" + userBean.getUserName());
-        ImageLoader.loadAvatar(ivAvatar, userBean.getHeadUrl());
+        CommonViewHelper.setUserViewInfo(userBean, ivAvatar, tvNickName, ivSex, tvUserName, true);
 
-        if (userName.equals(account.getUserName())) {
+        if (userName.equals(curUser.getUserName())) {
             btnSendMsg.setText("个人信息");
         } else {
             if (subType == null) {
@@ -132,7 +131,7 @@ public class UserInfoActivity extends BaseToolbarActivity implements OnClickList
 
     @OnClick(R.id.btnSendMsg)
     public void onClick(View v) {
-        if (userName.equals(account.getUserName())) {
+        if (userName.equals(curUser.getUserName())) {
             startActivity(new Intent(this, MyProfileActivity.class));
             return;
         }

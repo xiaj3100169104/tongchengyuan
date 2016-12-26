@@ -14,7 +14,10 @@ import android.widget.TextView;
 
 import com.juns.wechat.R;
 import com.juns.wechat.bean.DynamicBean;
+import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.utils.SmileUtils;
+import com.juns.wechat.helper.CommonViewHelper;
+import com.juns.wechat.manager.AccountManager;
 import com.style.base.BaseRecyclerViewAdapter;
 import com.style.manager.ImageLoadManager;
 import com.style.utils.DateUtil;
@@ -45,6 +48,9 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter {
         final int pos = position;
         final ViewHolder holder = (ViewHolder) viewHolder;
         final DynamicBean bean = (DynamicBean) data;
+        UserBean user = AccountManager.getInstance().getUser();//bean.getUser();
+        CommonViewHelper.setUserViewInfo(user, holder.ivAvatar, holder.tvNike, null, null, false);
+
         holder.tvContent.setText(SmileUtils.getSmiledText(mContext, bean.getContent()));
         holder.tvTime.setText(MyDateUtil.getTimeFromNow(bean.getCreateDate(), MyDateUtil.FORMAT_yyyy_MM_dd_HH_mm_ss));
 

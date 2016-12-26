@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.juns.wechat.R;
 import com.juns.wechat.bean.UserBean;
+import com.juns.wechat.helper.CommonViewHelper;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.util.ImageLoader;
 import com.style.base.BaseToolbarActivity;
@@ -82,8 +83,6 @@ public class MyQRCodeActivity extends BaseToolbarActivity {
 
     private void setData() {
         curUser = AccountManager.getInstance().getUser();
-        tvNickName.setText(curUser.getNickName() == null ? curUser.getUserName() : curUser.getNickName());
-        tvUserName.setText(curUser.getUserName());
-        ImageLoader.loadAvatar(ivAvatar, curUser.getHeadUrl());
+        CommonViewHelper.setUserViewInfo(curUser, ivAvatar, tvNickName, ivSex, tvUserName, true);
     }
 }
