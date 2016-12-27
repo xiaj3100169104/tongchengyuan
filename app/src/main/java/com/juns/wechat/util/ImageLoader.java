@@ -1,11 +1,13 @@
 package com.juns.wechat.util;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.juns.wechat.App;
 import com.juns.wechat.R;
 import com.juns.wechat.config.ConfigUtil;
@@ -31,54 +33,68 @@ public class ImageLoader {
     private static int maxWidth = DisplayUtil.dip2px(App.getInstance(), 130);
     private static int minWidth = DisplayUtil.dip2px(App.getInstance(), 80);
 
-    private static final ImageOptions OPTIONS = new ImageOptions.Builder()
+    private static final ImageOptions OPTIONS_AVATAR = new ImageOptions.Builder()
             .setFailureDrawableId(R.drawable.default_useravatar)
             .setLoadingDrawableId(R.drawable.default_useravatar)
             .build();
+    private static final ImageOptions OPTIONS_PICTURE = new ImageOptions.Builder()
+            .setFailureDrawableId(R.mipmap.image_fail)
+            .setLoadingDrawableId(R.mipmap.empty_photo)
+            .build();
 
-    public static void loadAvatar(ImageView imageView, String fileName){
-        if(TextUtils.isEmpty(fileName)){
+    public static void loadAvatar(ImageView imageView, String fileName) {
+        if (TextUtils.isEmpty(fileName)) {
             imageView.setImageResource(R.drawable.default_useravatar);
-        }else {
-            x.image().bind(imageView, REMOTE_PATH  + fileName, OPTIONS);
+        } else {
+            x.image().bind(imageView, REMOTE_PATH + fileName, OPTIONS_AVATAR);
         }
     }
 
-    public static void loadAvatar(ImageView imageView, String fileName, Callback.CommonCallback<Drawable> callback){
-        if(TextUtils.isEmpty(fileName)){
+    public static void loadPicture(ImageView imageView, String fileName) {
+        if (!TextUtils.isEmpty(fileName))
+            x.image().bind(imageView, REMOTE_PATH + fileName, OPTIONS_PICTURE);
+    }
+
+    public static void loadBigPicture(ImageView imageView, String fileName, Callback.CommonCallback<Drawable> callback) {
+        if (!TextUtils.isEmpty(fileName))
+            x.image().bind(imageView, REMOTE_PATH + fileName, OPTIONS_PICTURE, callback);
+    }
+
+    public static void loadBigAvatar(ImageView imageView, String fileName, Callback.CommonCallback<Drawable> callback) {
+        if (TextUtils.isEmpty(fileName)) {
             imageView.setImageResource(R.drawable.default_useravatar);
-        }else {
-            x.image().bind(imageView, REMOTE_PATH  + fileName, OPTIONS, callback);
+        } else {
+            x.image().bind(imageView, REMOTE_PATH + fileName, OPTIONS_AVATAR, callback);
         }
     }
 
-    public static void loadTriangleImage(ImageView imageView, String filePath, int direction){
-        if(bitmapCache == null){
+    public static void loadTriangleImage(ImageView imageView, String filePath, int direction) {
+        if (bitmapCache == null) {
             bitmapCache = new LruCache<>(30);
         }
         Bitmap cache = bitmapCache.get(filePath + "_" + direction);
-        if(cache != null){
+        if (cache != null) {
             imageView.setImageBitmap(cache);
-        }else {
+        } else {
             Bitmap source = BitmapFactory.decodeFile(filePath);
             Bitmap wantToLoad;
-            if(source != null){
+            if (source != null) {
                 int bw = source.getWidth();
                 int bh = source.getHeight();
                 int w = 0;
                 int h = 0;
-                if(bw > bh){
+                if (bw > bh) {
                     w = maxWidth;
-                }else {
+                } else {
                     w = minWidth;
                 }
                 h = (int) (bh * ((float) w / bw));
                 Bitmap bitmap = Bitmap.createScaledBitmap(source, w, h, false);
                 source.recycle();
                 int bgResId = 0;
-                if(direction == 0){
+                if (direction == 0) {
                     bgResId = R.drawable.chat_adapter_to_bg_left;
-                }else {
+                } else {
                     bgResId = R.drawable.chat_adapter_to_bg;
                 }
                 Bitmap bitmap_bg = BitmapFactory.decodeResource(App.getInstance().getResources(), bgResId);
@@ -86,10 +102,10 @@ public class ImageLoader {
 
                 bitmapCache.put(filePath + "_" + direction, wantToLoad); //未成功加载可能是图片尚未下载下来，不要放进缓存
 
-            }else {
-                if(direction == 0){
+            } else {
+                if (direction == 0) {
                     wantToLoad = BitmapFactory.decodeResource(App.getInstance().getResources(), R.drawable.aev);
-                }else {
+                } else {
                     wantToLoad = BitmapFactory.decodeResource(App.getInstance().getResources(), R.drawable.aex);
                 }
             }

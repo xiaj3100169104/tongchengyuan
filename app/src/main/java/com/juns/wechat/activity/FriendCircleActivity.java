@@ -3,6 +3,7 @@ package com.juns.wechat.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -46,6 +47,7 @@ public class FriendCircleActivity extends BaseToolbarActivity {
     @Bind(R.id.iv_avatar)
     ImageView ivAvatar;
 
+    private static List<DynamicBean> cacheList;
     private List<DynamicBean> dataList;
     private DynamicAdapter adapter;
     private int page = 1;
@@ -105,12 +107,6 @@ public class FriendCircleActivity extends BaseToolbarActivity {
             }
 
         });
-        ptrFrame.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                ptrFrame.autoRefresh(true);
-            }
-        }, 500);
 
         adapter.setOnClickDiscussListener(new DynamicAdapter.OnClickDiscussListener() {
             @Override
@@ -131,6 +127,25 @@ public class FriendCircleActivity extends BaseToolbarActivity {
 
             }
         });
+
+        //防止刚进去不显示头部
+        if (cacheList != null) {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    dataList.addAll(cacheList);
+                    adapter.notifyDataSetChanged();
+                }
+            }, 500);
+        }
+
+        //缓存加载完了再执行刷新
+        ptrFrame.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ptrFrame.autoRefresh(true);
+            }
+        }, 1000);
     }
 
     private void getData() {
@@ -141,26 +156,33 @@ public class FriendCircleActivity extends BaseToolbarActivity {
             }
         }
         HttpAction.getFriendCircleDynamic(action, dynamicId, 6, new NetDataBeanCallback<List<DynamicBean>>(new TypeReference<List<DynamicBean>>() {
-                }) {
-                    @Override
-                    protected void onCodeSuccess(List<DynamicBean> data) {
-                        ptrFrame.refreshComplete();
-                        if (data != null && data.size() > 0) {
-                            if (action == ACTION_REFRESH)
-                                adapter.clearData();
-                            dataList.addAll(data);
-                        }
-                        adapter.notifyDataSetChanged();
+        }) {
+            @Override
+            protected void onCodeSuccess(List<DynamicBean> data) {
+                ptrFrame.refreshComplete();
+                if (data != null && data.size() > 0) {
+                    if (action == ACTION_REFRESH) {
+                        dataList.clear();
+                        setFirstPageCacheData(data);
                     }
-
-                    @Override
-                    protected void onCodeFailure(String msg) {
-                        ptrFrame.refreshComplete();
-                        showToast(msg);
-                    }
+                    dataList.addAll(data);
                 }
+                adapter.notifyDataSetChanged();
+            }
 
-        );
+            @Override
+            protected void onCodeFailure(String msg) {
+                ptrFrame.refreshComplete();
+                showToast(msg);
+            }
+        });
+    }
+
+    private void setFirstPageCacheData(List<DynamicBean> data) {
+        if (cacheList == null)
+            cacheList = new ArrayList<>();
+        cacheList.clear();
+        cacheList.addAll(data);
     }
 
     protected void updateData() {

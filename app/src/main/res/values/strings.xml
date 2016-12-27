@@ -82,4 +82,7 @@
     <string name="tooshort">录音时间过短</string>
 
     <string name="instruction">当设计的UI与地图部分重叠时，设置地图的padding值,以防止UI遮挡</string>
+
+    <string name="viewpager_indicator">%1$d/%2$d</string>
+
 </resources>

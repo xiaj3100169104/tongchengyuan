@@ -73,5 +73,7 @@ dependencies {
     compile name: 'SMSSDKGUI-2.1.1', ext: 'aar'
     //二维码库
     compile 'cn.yipianfengye.android:zxing-library:2.1'
+    //图片缩放
+    //compile 'com.github.chrisbanes:PhotoView:latest.release.here'
 
 }

@@ -1,6 +1,7 @@
 package com.juns.wechat.adpter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,21 +19,25 @@ import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.utils.SmileUtils;
 import com.juns.wechat.helper.CommonViewHelper;
 import com.juns.wechat.manager.AccountManager;
+import com.juns.wechat.util.ImageLoader;
 import com.style.base.BaseRecyclerViewAdapter;
 import com.style.manager.ImageLoadManager;
 import com.style.utils.DateUtil;
 import com.style.utils.MyDateUtil;
 import com.style.utils.StringUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import uk.viewpager.ImagePagerActivity;
 
 
 public class DynamicAdapter extends BaseRecyclerViewAdapter {
     private PopupWindow menuWindow;
     private OnClickDiscussListener mDiscussListener;
+    private OnClickImageListener mImageListener;
 
     public DynamicAdapter(Context mContext, List list) {
         super(mContext, list);
@@ -60,55 +65,9 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter {
                 showMenuWindow(pos, bean, holder.itemView.getRootView(), v);
             }
         });
-        holder.glImages.removeAllViews();
         List<String> images = StringUtil.getList(bean.getImages(), ",");
-        int imageNum = 0;//pos % 9;
-        if (images != null && images.size() > 0)
-            imageNum = images.size();
-        if (imageNum>0){
-            if (imageNum == 1) {
-                holder.glImages.setRowCount(1);
-                holder.glImages.setColumnCount(1);
-                GridLayout.Spec rowSpec = GridLayout.spec(0);     //设置它的行和列
-                GridLayout.Spec columnSpec = GridLayout.spec(0);
-                GridLayout.LayoutParams params = new GridLayout.LayoutParams(rowSpec, columnSpec);
-                //params.setGravity(Gravity.LEFT | Gravity.TOP);
-                ImageView image = new ImageView(mContext);
-                params.width = dip2px(160);
-                params.height = dip2px(100);
-                image.setLayoutParams(params);
-                image.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                //image.setImageResource(R.mipmap.empty_photo);
-                ImageLoadManager.loadNormalPicture2(mContext, image, images.get(0));
-                holder.glImages.addView(image, params);
-            } else if (imageNum > 1 && imageNum < 10) {
-                logE("imagenum--", imageNum + "");
-                holder.glImages.setRowCount(imageNum / 3 + 1);
-                holder.glImages.setColumnCount(3);
-                for (int i = 0; i < imageNum; i++) {
-                    int row = i / 3;
-                    int column = (i - row * 3) % 3;
-                    logE("row--", row + "");
-                    logE("column--", column + "");
+        dealImages(mContext, holder.glImages, images);
 
-                    GridLayout.Spec rowSpec = GridLayout.spec(row);     //设置它的行和列
-                    GridLayout.Spec columnSpec = GridLayout.spec(column);
-                    GridLayout.LayoutParams params = new GridLayout.LayoutParams(rowSpec, columnSpec);
-                    ImageView image = new ImageView(mContext);
-                    params.width = dip2px(80);
-                    params.height = dip2px(80);
-                    params.leftMargin = dip2px(1);
-                    params.topMargin = dip2px(1);
-                    params.bottomMargin = dip2px(1);
-                    params.rightMargin = dip2px(1);
-                    image.setLayoutParams(params);
-                    image.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                    //image.setImageResource(R.mipmap.empty_photo);
-                    ImageLoadManager.loadNormalPicture2(mContext, image, images.get(i));
-                    holder.glImages.addView(image, params);
-                }
-            }
-        }
         /*if (null != testdataList) {
             holder.gvImage.setVisibility(View.VISIBLE);
             DynamicImgAdapter adapterImages = new DynamicImgAdapter(mContext, testdataList);
@@ -205,6 +164,83 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter {
         }*/
     }
 
+    private void dealImages(Context mContext, GridLayout glImages, final List<String> images) {
+        glImages.removeAllViews();
+
+        int imageNum = 0;//pos % 9;
+        if (images != null && images.size() > 0) {
+            glImages.setVisibility(View.VISIBLE);
+            imageNum = images.size();
+        } else {
+            glImages.setVisibility(View.GONE);
+        }
+        if (imageNum > 0) {
+            if (imageNum == 1) {
+                glImages.setRowCount(1);
+                glImages.setColumnCount(1);
+                GridLayout.Spec rowSpec = GridLayout.spec(0);     //设置它的行和列
+                GridLayout.Spec columnSpec = GridLayout.spec(0);
+                GridLayout.LayoutParams params = new GridLayout.LayoutParams(rowSpec, columnSpec);
+                //params.setGravity(Gravity.LEFT | Gravity.TOP);
+                ImageView image = new ImageView(mContext);
+                params.width = dip2px(160);
+                params.height = dip2px(100);
+                image.setLayoutParams(params);
+                image.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                //image.setImageResource(R.mipmap.empty_photo);
+                ImageLoader.loadPicture(image, images.get(0));
+                glImages.addView(image, params);
+                image.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        skip2imageBrower(0, images);
+                    }
+                });
+            } else if (imageNum > 1 && imageNum < 10) {
+                logE("imagenum--", imageNum + "");
+                glImages.setRowCount(imageNum / 3 + 1);
+                glImages.setColumnCount(3);
+                for (int i = 0; i < imageNum; i++) {
+                    final int index = i;
+                    int row = i / 3;
+                    int column = (i - row * 3) % 3;
+                    logE("row--", row + "");
+                    logE("column--", column + "");
+
+                    GridLayout.Spec rowSpec = GridLayout.spec(row);     //设置它的行和列
+                    GridLayout.Spec columnSpec = GridLayout.spec(column);
+                    GridLayout.LayoutParams params = new GridLayout.LayoutParams(rowSpec, columnSpec);
+                    ImageView image = new ImageView(mContext);
+                    params.width = dip2px(80);
+                    params.height = dip2px(80);
+                    params.leftMargin = dip2px(1);
+                    params.topMargin = dip2px(1);
+                    params.bottomMargin = dip2px(1);
+                    params.rightMargin = dip2px(1);
+                    image.setLayoutParams(params);
+                    image.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                    //image.setImageResource(R.mipmap.empty_photo);
+                    ImageLoader.loadPicture(image, images.get(i));
+                    glImages.addView(image, params);
+                    image.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            skip2imageBrower(index, images);
+                        }
+                    });
+                }
+            }
+        }
+    }
+
+    private void skip2imageBrower(int position, List<String> imgs) {
+        Intent intent = new Intent(mContext, ImagePagerActivity.class);
+        // 图片url,为了演示这里使用常量，一般从数据库中或网络中获取
+        intent.putStringArrayListExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, (ArrayList<String>) imgs);
+        intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, position);
+        mContext.startActivity(intent);
+    }
+
     private void showMenuWindow(final int pos, final Object data, View rootView, View v) {
         if (menuWindow == null) {
             View view = mInflater.inflate(R.layout.popupwindow_discuss_option, (ViewGroup) rootView, false);
@@ -271,6 +307,14 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter {
 
     public void setOnClickDiscussListener(OnClickDiscussListener mDiscussListener) {
         this.mDiscussListener = mDiscussListener;
+    }
+
+    public interface OnClickImageListener {
+        void OnClickImage(int position, Object data);
+    }
+
+    public void setOnClickImageListener(OnClickImageListener mImageListener) {
+        this.mImageListener = mImageListener;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

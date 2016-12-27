@@ -25,9 +25,4 @@ public class ImageLoadManager {
         if (!TextUtils.isEmpty(url))
         Glide.with(context).load(url).error(R.mipmap.image_fail).into(imageView);
     }
-
-    public static void loadNormalPicture2(Context context, ImageView imageView, String url) {
-        if (!TextUtils.isEmpty(url))
-            Glide.with(context).load(REMOTE_PATH  + url).placeholder(R.mipmap.empty_photo).error(R.mipmap.image_fail).into(imageView);
-    }
 }

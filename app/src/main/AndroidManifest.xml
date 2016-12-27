@@ -194,7 +194,8 @@
         <activity android:name="com.juns.wechat.activity.AddNoteActivity"/>
         <activity android:name="com.juns.wechat.activity.MyQRCodeActivity"/>
         <activity android:name="com.juns.wechat.activity.QRScanActivity"/>
-
+        <!-- 图片浏览 -->
+        <activity android:name="uk.viewpager.ImagePagerActivity"/>
     </application>
 
 </manifest>
