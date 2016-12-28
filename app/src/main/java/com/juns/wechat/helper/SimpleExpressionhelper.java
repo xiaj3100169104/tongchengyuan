@@ -17,6 +17,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -120,12 +121,10 @@ public class SimpleExpressionhelper {
                 }
             }
         });
-        viewSmile.setOnClickListener(new View.OnClickListener() {
+        viewSmile.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                boolean isChecked = viewSmile.isChecked();
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
-                    viewSmile.setChecked(false);
                     //隐藏输入法，打开表情面板
                     CommonUtil.hideSoftMouse(SimpleExpressionhelper.this.mActivity);
                     //延迟显示，先让输入法隐藏
@@ -136,13 +135,13 @@ public class SimpleExpressionhelper {
                         }
                     }, 100);
                 } else {
-                    viewSmile.setChecked(true);
                     //隐藏表情面板，打开输入法
                     layoutFace.setVisibility(View.GONE);
                     CommonUtil.showSoftInput(SimpleExpressionhelper.this.mActivity, SimpleExpressionhelper.this.etContent);
                 }
             }
         });
+
         this.etContent.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -144,8 +145,9 @@ public class ChatInputManager implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 rlInputText.setBackgroundResource(R.drawable.input_bar_bg_active);
-                llMore.setVisibility(View.GONE);
                 viewEmoticon.setChecked(false);
+                viewMore.setChecked(false);
+                llMore.setVisibility(View.GONE);
                 llEmoticonContainer.setVisibility(View.GONE);
                 llMoreFunctionContainer.setVisibility(View.GONE);
             }
@@ -192,11 +194,22 @@ public class ChatInputManager implements View.OnClickListener {
             }
         });
 
-        viewEmoticon.setOnClickListener(this);
         btnSetModeKeyBoard.setOnClickListener(this);
         btnSetModeVoice.setOnClickListener(this);
         btnSend.setOnClickListener(this);
-        viewMore.setOnClickListener(this);
+        viewEmoticon.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                onClickFaceView(b);
+            }
+        });
+
+        viewMore.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                onClickMoreView(b);
+            }
+        });
 
         mChatActivity.findViewById(R.id.view_camera).setOnClickListener(this);
         mChatActivity.findViewById(R.id.view_file).setOnClickListener(this);
@@ -245,12 +258,12 @@ public class ChatInputManager implements View.OnClickListener {
             case R.id.btn_set_mode_keyboard:
                 setModeKeyboard(view);
                 break;
-            case R.id.view_emoticon:
+           /* case R.id.view_emoticon:
                 onClickFaceView();
                 break;
             case R.id.view_more:
                 onClickMoreView(view);
-                break;
+                break;*/
             case R.id.btn_set_mode_voice:
                 setModeVoice(view);
                 break;
@@ -391,17 +404,11 @@ public class ChatInputManager implements View.OnClickListener {
         }
     }
 
-    private void onClickFaceView() {
-        boolean isChecked = viewEmoticon.isChecked();
-        if (isChecked) {//选中表示表情界面已打开，需关闭
+    private void onClickFaceView(boolean isChecked) {
+        if (isChecked) {//选中表示打开对应界面
+            viewMore.setChecked(false);//让更多按钮置于未选中状态
             CommonUtil.hiddenSoftInput(mChatActivity);
-            llMoreFunctionContainer.setVisibility(View.GONE);
-            llEmoticonContainer.setVisibility(View.GONE);
-            llMore.setVisibility(View.GONE);
-        } else {
-            //隐藏输入法，打开表情面板
-            CommonUtil.hiddenSoftInput(mChatActivity);
-            //延迟显示，先让输入法隐藏
+            //先隐藏输入法,然后延迟显示
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -410,26 +417,18 @@ public class ChatInputManager implements View.OnClickListener {
                     llEmoticonContainer.setVisibility(View.VISIBLE);
                 }
             }, 100);
+
+        } else {
+            //CommonUtil.hiddenSoftInput(mChatActivity);
+            llEmoticonContainer.setVisibility(View.GONE);
         }
-        viewEmoticon.setChecked(!isChecked);
     }
 
-    /**
-     * 显示或隐藏图标按钮页
-     *
-     * @param view
-     */
-    public void onClickMoreView(View view) {
-        boolean isChecked = viewMore.isChecked();
-        if (isChecked) {//选中表示表情界面已打开，需关闭
+    public void onClickMoreView(boolean isChecked) {
+        if (isChecked) {//选中表示打开对应界面
+            viewEmoticon.setChecked(false);//让表情按钮置于未选中状态
             CommonUtil.hiddenSoftInput(mChatActivity);
-            llMoreFunctionContainer.setVisibility(View.GONE);
-            llEmoticonContainer.setVisibility(View.GONE);
-            llMore.setVisibility(View.GONE);
-        } else {
-            //隐藏输入法，打开表情面板
-            CommonUtil.hiddenSoftInput(mChatActivity);
-            //延迟显示，先让输入法隐藏
+            //先隐藏输入法,然后延迟显示
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -438,8 +437,11 @@ public class ChatInputManager implements View.OnClickListener {
                     llEmoticonContainer.setVisibility(View.GONE);
                 }
             }, 100);
+
+        } else {
+            //CommonUtil.hiddenSoftInput(mChatActivity);
+            llMoreFunctionContainer.setVisibility(View.GONE);
         }
-        viewMore.setChecked(!isChecked);
     }
 
     /**

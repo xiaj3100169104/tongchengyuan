@@ -51,7 +51,6 @@ public class AddNoteActivity extends BaseToolbarBtnActivity {
     private SelAvatarDialog dialog;
 
     private UserBean curUser;
-    private CheckBox viewSmile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +63,6 @@ public class AddNoteActivity extends BaseToolbarBtnActivity {
         setToolbarTitle(R.string.note);
         getToolbarRightView().setText(R.string.complete);
         getToolbarRightView().setEnabled(false);
-        viewSmile = (CheckBox) findViewById(R.id.view_smile);
 
         curUser = AccountManager.getInstance().getUser();
         paths = null;
@@ -109,18 +107,7 @@ public class AddNoteActivity extends BaseToolbarBtnActivity {
                 setHaveDynamic();
             }
         });
-        viewSmile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean isChecked = viewSmile.isChecked();
-                if (isChecked) {
-                    viewSmile.setChecked(false);
 
-                } else {
-                    viewSmile.setChecked(true);
-                 }
-            }
-        });
     }
 
     @Override
