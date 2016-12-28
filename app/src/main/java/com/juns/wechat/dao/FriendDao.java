@@ -26,10 +26,11 @@ public class FriendDao extends BaseDao<FriendBean>{
                     "(f.subType = 'both' or f.subType = 'from')";
 
     private static final String SELECT_NOT_EXIST_USER_IN_FRIEND =
-            "select contactedId from wcFriend where ownerId = ? and contactedId not in (select userName from wcUser)";
+            "select contactId from wcFriend where ownerId = ? and contactId not in (select userId from wcUser)";
 
     private static final String QUERY_MY_FRIENDS =
-            "select * from wcFriend where ownerId = ? and contactedId in (select userName from wcUser)";
+            "select * from wcFriend f where ownerId = ? and " +
+                    "(f.subType = 'both' or f.subType = 'from') and flag != -1";
 
     private static FriendDao mInstance;
 
@@ -40,9 +41,9 @@ public class FriendDao extends BaseDao<FriendBean>{
         return mInstance;
     }
 
-    public List<FriendBean> getMyFriends(String ownerName){
+    public List<FriendBean> getMyFriends(int ownerId){
         SqlInfo sqlInfo = new SqlInfo(QUERY_MY_FRIENDS);
-        sqlInfo.addBindArg(new KeyValue("key1", ownerName));
+        sqlInfo.addBindArg(new KeyValue("key1", ownerId));
         List<FriendBean> friendBeen = new ArrayList<>();
         try {
             Cursor cursor = dbManager.execQuery(sqlInfo);
@@ -58,9 +59,9 @@ public class FriendDao extends BaseDao<FriendBean>{
         return null;
     }
 
-    public FriendBean findByOwnerAndContactName(String ownerName, String contactName){
-        WhereBuilder whereBuilder = WhereBuilder.b(FriendBean.OWNER_ID, "=", ownerName);
-        whereBuilder.and(FriendBean.CONTACT_ID, "=", contactName);
+    public FriendBean findByOwnerAndContactName(int ownerId, int contactId){
+        WhereBuilder whereBuilder = WhereBuilder.b(FriendBean.OWNER_ID, "=", ownerId);
+        whereBuilder.and(FriendBean.CONTACT_ID, "=", contactId);
         return findByParams(whereBuilder);
     }
 

@@ -86,10 +86,17 @@ public class HttpAction {
         NetWorkManager.getInstance().post(params, callback);
     }
 
-    public static void queryUserData(String queryName, NetDataBeanCallback callback) {
+    public static void queryUserData(int userId, NetDataBeanCallback callback) {
         TokenRequestParams params = new TokenRequestParams(URL_QUERY_USER);
         //params.addBodyParameter("token", token);
-        params.addParameter("queryName", queryName);
+        params.addParameter("userId", userId);
+        NetWorkManager.getInstance().post(params, callback);
+    }
+
+    public static void queryUserData(String userName, NetDataBeanCallback callback) {
+        TokenRequestParams params = new TokenRequestParams(URL_QUERY_USER);
+        //params.addBodyParameter("token", token);
+        params.addParameter("userName", userName);
         NetWorkManager.getInstance().post(params, callback);
     }
 

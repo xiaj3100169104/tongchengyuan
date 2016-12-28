@@ -89,6 +89,7 @@ public class ChatActivity extends BaseToolbarActivity {
     public String playMsgId;
 
     //@Extra(name = ARG_USER_NAME)
+    private int contactId;
     private String contactName;
 
     private ChatInputManager chatInputManager;
@@ -128,10 +129,11 @@ public class ChatActivity extends BaseToolbarActivity {
      * initData
      */
     public void initData() {
-        contactName = getIntent().getStringExtra(Skip.KEY_USER_NAME);
-        friendBean = FriendDao.getInstance().findByOwnerAndContactName(account.getUserName(), contactName);
+        contactId = getIntent().getIntExtra(Skip.KEY_USER_ID, 0);
+        friendBean = FriendDao.getInstance().findByOwnerAndContactName(account.getUserId(), contactId);
         try {
             contactUser = friendBean.getContactUser();
+            contactName = contactUser.getUserName();
         } catch (UserNotFoundException e) {
             e.printStackTrace();
             finish();
@@ -196,7 +198,6 @@ public class ChatActivity extends BaseToolbarActivity {
         String forward_msg_id = getIntent().getStringExtra("forward_msg_id");
         if (forward_msg_id != null) {
             // 显示发送要转发的消息
-            forwardMessage(forward_msg_id);
         }
 
     }
@@ -547,29 +548,6 @@ public class ChatActivity extends BaseToolbarActivity {
         // "groupId", toChatUsername)), REQUEST_CODE_GROUP_DETAIL);
     }
 
-    /**
-     * 消息回执BroadcastReceiver
-     */
-    private BroadcastReceiver ackMessageReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            abortBroadcast();
-
-            String msgid = intent.getStringExtra("msgid");
-            String from = intent.getStringExtra("from");
-		/*	EMConversation conversation = EMChatManager.getDbManager()
-					.getConversation(from);
-			if (conversation != null) {
-				// 把message设为已读
-				EMMessage msg = conversation.getMessage(msgid);
-				if (msg != null) {
-					msg.isAcked = true;
-				}
-			}*/
-            adapter.notifyDataSetChanged();
-
-        }
-    };
 
     @Override
     protected void onDestroy() {
@@ -604,85 +582,8 @@ public class ChatActivity extends BaseToolbarActivity {
         // 点击notification bar进入聊天页面，保证只有一个聊天页面
         String username = intent.getStringExtra("userId");
 
-
     }
 
-    /**
-     * 转发消息
-     *
-     * @param forward_msg_id
-     */
-    protected void forwardMessage(String forward_msg_id) {
-		/*EMMessage forward_msg = EMChatManager.getDbManager().getMessage(
-				forward_msg_id);
-		EMMessage.Type type = forward_msg.getType();
-		switch (type) {
-		case TXT:
-			// 获取消息内容，发送消息
-			String content = ((TextMessageBody) forward_msg.getBody())
-					.getMessage();
-			sendText(content);
-			break;
-		case IMAGE:
-			// 发送图片
-			String filePath = ((ImageMessageBody) forward_msg.getBody())
-					.getLocalUrl();
-			if (filePath != null) {
-				File file = new File(filePath);
-				if (!file.exists()) {
-					// 不存在大图发送缩略图
-					filePath = ImageUtils.getThumbnailImagePath(filePath);
-				}
-				sendPicture(filePath);
-			}
-			break;
-		default:
-			break;
-		}*/
-    }
-
-    /**
-     * 监测群组解散或者被T事件
-     *
-     */
-	/*class GroupListener extends GroupReomveListener {
-
-		@Override
-		public void onUserRemoved(final String groupId, String groupName) {
-			runOnUiThread(new Runnable() {
-				String st13 = getResources().getString(R.string.you_are_group);
-
-				public void run() {
-					if (toChatUsername.equals(groupId)) {
-						Toast.makeText(ChatActivity.this, st13, 1).show();
-						// if (GroupDeatilActivity.instance != null)
-						// GroupDeatilActivity.instance.finish();
-						// finish();
-					}
-				}
-			});
-		}
-
-		@Override
-		public void onGroupDestroy(final String groupId, String groupName) {
-			// 群组解散正好在此页面，提示群组被解散，并finish此页面
-			runOnUiThread(new Runnable() {
-				String st14 = getResources().getString(
-						R.string.the_current_group);
-
-				public void run() {
-					if (toChatUsername.equals(groupId)) {
-						Toast.makeText(ChatActivity.this, st14, 1).show();
-						// if (GroupDeatilActivity.instance != null)
-						// GroupDeatilActivity.instance.finish();
-						// finish();
-					}
-				}
-			});
-		}
-
-	}
-*/
 
 
 }

@@ -13,6 +13,7 @@ import java.util.Date;
 public class MsgItem{
     public int itemId;
     public String userName;
+    public int userId;
     public String content;
     public int type;
     public Date date;

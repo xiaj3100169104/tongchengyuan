@@ -14,6 +14,7 @@ public class NetBeanCallback<T> extends NetStringCallback {
     protected TypeReference<T> type;
 
     public NetBeanCallback() {
+
     }
 
     public NetBeanCallback(Class<T> clazz) {

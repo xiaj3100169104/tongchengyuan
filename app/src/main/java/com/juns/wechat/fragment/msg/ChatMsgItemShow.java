@@ -30,11 +30,11 @@ public class ChatMsgItemShow extends MsgItemShow {
 
     @Override
     public void showTitle(final TextView textView) {
-        friendBean = FriendDao.getInstance().findByOwnerAndContactName(myselfName, msgItem.userName);
+        friendBean = FriendDao.getInstance().findByOwnerAndContactName(myselfId, msgItem.userId);
         if(friendBean != null){
             textView.setText(friendBean.getShowName());
         }else {  //陌生人
-            HttpAction.queryUserData(msgItem.userName, new NetDataBeanCallback<UserBean>(UserBean.class) {
+            HttpAction.queryUserData(msgItem.userId, new NetDataBeanCallback<UserBean>(UserBean.class) {
                 @Override
                 protected void onCodeSuccess(UserBean data) {
                     if (data != null) {
@@ -64,7 +64,7 @@ public class ChatMsgItemShow extends MsgItemShow {
             if(stranger != null){
                 ImageLoader.loadAvatar(iv, stranger.getHeadUrl());
             }else {
-                HttpAction.queryUserData(msgItem.userName, new NetDataBeanCallback<UserBean>(UserBean.class) {
+                HttpAction.queryUserData(msgItem.userId, new NetDataBeanCallback<UserBean>(UserBean.class) {
                     @Override
                     protected void onCodeSuccess(UserBean data) {
                         if (data != null) {
@@ -95,7 +95,7 @@ public class ChatMsgItemShow extends MsgItemShow {
     @Override
     public void onItemClick() {
         Intent intent = new Intent(mContext, ChatActivity.class);
-        intent.putExtra(Skip.KEY_USER_NAME, msgItem.userName);
+        intent.putExtra(Skip.KEY_USER_ID, msgItem.userId);
         mContext.startActivity(intent);
     }
 

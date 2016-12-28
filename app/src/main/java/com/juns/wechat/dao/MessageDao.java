@@ -80,6 +80,7 @@ public class MessageDao extends BaseDao<MessageBean>{
                 MsgItem msgItem = new MsgItem();
                 msgItem.itemId = cursor.getInt(cursor.getColumnIndex("id"));
                 msgItem.userName = cursor.getString(cursor.getColumnIndex("otherName"));
+                msgItem.userId = UserDao.getInstance().findByName(userName).getUserId();
                 msgItem.content = cursor.getString(cursor.getColumnIndex("typeDesc"));
                 long time = cursor.getLong(cursor.getColumnIndex("date"));
                 msgItem.date = new Date(time);

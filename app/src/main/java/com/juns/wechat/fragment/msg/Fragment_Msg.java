@@ -64,7 +64,7 @@ public class Fragment_Msg extends BaseBusFragment {
             public void onItemClick(int position, Object data) {
                 MsgItemShow  msgItemShow = (MsgItemShow) data;
                 Intent intent = new Intent(mContext, ChatActivity.class);
-                intent.putExtra(Skip.KEY_USER_NAME, msgItemShow.msgItem.userName);
+                intent.putExtra(Skip.KEY_USER_ID, msgItemShow.msgItem.userId);
                 startActivity(intent);
 
             }

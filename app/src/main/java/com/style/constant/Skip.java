@@ -27,6 +27,7 @@ public class Skip {
     /**
      * 界面跳转传值key
      */
+    public static final String KEY_USER_ID = "user_id";
     public static final String KEY_USER_NAME = "user_name";
     public static final String KEY_SEARCH_RESULTS = "search_results";
     public static final String KEY_IMG_NAME = "img_name";
