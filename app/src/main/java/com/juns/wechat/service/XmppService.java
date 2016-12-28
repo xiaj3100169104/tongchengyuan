@@ -15,7 +15,10 @@ import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.config.ConfigUtil;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.callback.RefreshTokenCallBack;
+import com.juns.wechat.net.common.HttpAction;
+import com.juns.wechat.net.common.NetDataBeanCallback;
 import com.juns.wechat.net.request.TokenRequest;
+import com.juns.wechat.net.response.TokenBean;
 import com.juns.wechat.net.response.TokenResponse;
 import com.juns.wechat.util.LogUtil;
 import com.juns.wechat.util.SipClient;
@@ -88,7 +91,19 @@ public class XmppService extends Service {
         if(AccountManager.getInstance().getTokenRefreshTime() + REFRESH_TIME > System.currentTimeMillis()){
            init();
         }else {
-            TokenRequest.refreshToken(callBack);
+            //TokenRequest.refreshToken(callBack);
+            HttpAction.refreshToken(new NetDataBeanCallback<TokenBean>(TokenBean.class) {
+                @Override
+                protected void onCodeSuccess(TokenBean data) {
+                    AccountManager.getInstance().setToken(data.token);
+                    init();
+                }
+
+                @Override
+                protected void onCodeFailure(String msg) {
+
+                }
+            });
         }
     }
 

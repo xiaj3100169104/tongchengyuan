@@ -7,6 +7,8 @@ import android.widget.EditText;
 
 import com.juns.wechat.R;
 import com.juns.wechat.bean.UserBean;
+import com.juns.wechat.net.common.HttpAction;
+import com.juns.wechat.net.common.NetDataBeanCallback;
 import com.style.base.BaseToolbarActivity;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.callback.UpdateUserCallBack;
@@ -59,7 +61,21 @@ public class ModifyNameActivity extends BaseToolbarActivity {
         }
         String userName = AccountManager.getInstance().getUserName();
         nickName = etInputNick.getText().toString();
-        UserRequest.updateUser(userName, UserBean.NICKNAME, nickName, updateUserCallBack);
+        //UserRequest.updateUser(userName, UserBean.NICKNAME, nickName, updateUserCallBack);
+        HttpAction.updateUser(UserBean.NICKNAME, nickName, new NetDataBeanCallback<UserBean>(UserBean.class) {
+            @Override
+            protected void onCodeSuccess(UserBean data) {
+                dismissProgressDialog();
+                AccountManager.getInstance().setUser(data);
+                finish();
+            }
+
+            @Override
+            protected void onCodeFailure(String msg) {
+                dismissProgressDialog();
+                showToast(msg);
+            }
+        });
     }
 
     private UpdateUserCallBack updateUserCallBack = new UpdateUserCallBack() {

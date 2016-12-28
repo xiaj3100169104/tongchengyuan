@@ -13,6 +13,10 @@ import android.widget.EditText;
 
 import com.juns.wechat.R;
 import com.juns.wechat.bean.UserBean;
+import com.juns.wechat.net.common.HttpAction;
+import com.juns.wechat.net.common.NetDataBeanCallback;
+import com.juns.wechat.net.response.LoginBean;
+import com.juns.wechat.net.response.RegisterBean;
 import com.style.base.BaseToolbarActivity;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.callback.BaseCallBack;
@@ -182,8 +186,31 @@ public class RegisterActivity extends BaseToolbarActivity implements OnClickList
 			getLoadingDialog("正在注册...").dismiss();
 			return;
 		}
-        UserRequest.register(name, pwd, registerCallBack);
-    }
+        //UserRequest.register(name, pwd, registerCallBack);
+		HttpAction.register(name, pwd, new NetDataBeanCallback<RegisterBean>(RegisterBean.class) {
+			@Override
+			protected void onCodeSuccess() {
+				//dismissProgressDialog();
+				login();
+			}
+
+			@Override
+			protected void onCodeFailure(int code,RegisterBean data) {
+				getLoadingDialog("正在注册...").dismiss();
+				if(code == 1){  //参数错误
+					getLoadingDialog("正在注册...").dismiss();
+					if(data.errField.equalsIgnoreCase(UserBean.USERNAME)){
+						showToast("用户名不合法");
+					}else if(data.errField.equalsIgnoreCase(UserBean.PASSWORD)){
+						showToast("密码长度不能小于6位");
+					}
+				}else if(code == 2){
+					getLoadingDialog("正在注册...").dismiss();
+					showToast("该用户已注册，可以直接登录");
+				}
+			}
+		});
+	}
 
     private BaseCallBack<BaseResponse.RegisterResponse> registerCallBack = new BaseCallBack<BaseResponse.RegisterResponse>(){
 
@@ -219,7 +246,24 @@ public class RegisterActivity extends BaseToolbarActivity implements OnClickList
 	};
 
     private void login(){
-		UserRequest.login(userName, passWord, loginCallBack);
+		//UserRequest.login(userName, passWord, loginCallBack);
+		HttpAction.login(userName, passWord, new NetDataBeanCallback<LoginBean>(LoginBean.class) {
+			@Override
+			protected void onCodeSuccess(LoginBean data) {
+				dismissProgressDialog();
+				AccountManager.getInstance().setUser(data.userBean);
+				AccountManager.getInstance().setToken(data.token);
+				AccountManager.getInstance().setUserPassWord(passWord);
+				skip(MainActivity.class);
+				finish();
+			}
+
+			@Override
+			protected void onCodeFailure(String msg) {
+				dismissProgressDialog();
+				showToast(msg);
+			}
+		});
     }
 
     private LoginCallBack loginCallBack = new LoginCallBack() {

@@ -117,10 +117,4 @@ public class Fragment_Profile extends BaseBusFragment implements OnClickListener
                 break;
         }
     }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
-    }
 }

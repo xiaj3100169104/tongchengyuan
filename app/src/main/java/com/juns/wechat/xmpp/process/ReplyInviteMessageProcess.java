@@ -3,11 +3,15 @@ package com.juns.wechat.xmpp.process;
 import android.content.Context;
 
 import com.juns.wechat.bean.MessageBean;
+import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.bean.chat.InviteMsg;
 import com.juns.wechat.bean.chat.TextMsg;
 import com.juns.wechat.config.MsgType;
 import com.juns.wechat.dao.MessageDao;
+import com.juns.wechat.dao.UserDao;
 import com.juns.wechat.net.callback.QueryUserCallBack;
+import com.juns.wechat.net.common.HttpAction;
+import com.juns.wechat.net.common.NetDataBeanCallback;
 import com.juns.wechat.net.request.UserRequest;
 import com.juns.wechat.net.response.BaseResponse;
 
@@ -29,14 +33,29 @@ public class ReplyInviteMessageProcess extends MessageProcess {
     public void processMessage(final MessageBean messageBean) {
         inviteMsg = (InviteMsg) messageBean.getMsgObj();
         if(inviteMsg.reply != InviteMsg.Reply.ACCEPT.value) return;  //非法状态
-        UserRequest.queryUserData(messageBean.getOtherName(), new QueryUserCallBack() {
+        HttpAction.queryUserData(messageBean.getOtherName(), new NetDataBeanCallback<UserBean>(UserBean.class) {
+            @Override
+            protected void onCodeSuccess(UserBean data) {
+                if (data != null) {
+                    UserDao.getInstance().replace(data);
+                    saveMessageToDB(messageBean);
+                    noticeShow(messageBean, null);
+                }
+            }
+
+            @Override
+            protected void onCodeFailure(String msg) {
+
+            }
+        });
+       /* UserRequest.queryUserData(messageBean.getOtherName(), new QueryUserCallBack() {
             @Override
             protected void handleResponse(BaseResponse.QueryUserResponse result) {
                 super.handleResponse(result);  //将用户信息存到数据库
                 saveMessageToDB(messageBean);
                 noticeShow(messageBean, null);
             }
-        });
+        });*/
     }
 
     /**

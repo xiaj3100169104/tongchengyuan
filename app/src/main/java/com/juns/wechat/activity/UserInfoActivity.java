@@ -11,10 +11,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.TypeReference;
 import com.juns.wechat.R;
 import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.bean.UserBean;
+import com.juns.wechat.dao.UserDao;
 import com.juns.wechat.helper.CommonViewHelper;
+import com.juns.wechat.net.common.HttpAction;
+import com.juns.wechat.net.common.NetDataBeanCallback;
 import com.style.base.BaseToolbarActivity;
 import com.juns.wechat.dao.FriendDao;
 import com.juns.wechat.exception.UserNotFoundException;
@@ -25,6 +29,8 @@ import com.juns.wechat.net.response.BaseResponse;
 import com.juns.wechat.util.ImageLoader;
 import com.juns.wechat.util.ToastUtil;
 import com.style.constant.Skip;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -86,7 +92,21 @@ public class UserInfoActivity extends BaseToolbarActivity implements OnClickList
 
         friendBean = FriendDao.getInstance().findByOwnerAndContactName(curUser.getUserName(), userName);
         if (friendBean == null) {  //不是好友关系
-            UserRequest.queryUserData(userName, queryUserCallBack);
+            //UserRequest.queryUserData(userName, queryUserCallBack);
+            HttpAction.queryUserData(userName, new NetDataBeanCallback<UserBean>(UserBean.class) {
+                @Override
+                protected void onCodeSuccess(UserBean data) {
+                    if (data != null) {
+                        userBean =data;
+                        setData();
+                    }
+                }
+
+                @Override
+                protected void onCodeFailure(String msg) {
+
+                }
+            });
         } else {
             subType = friendBean.getSubType();
             try {

@@ -16,6 +16,9 @@ import android.widget.TextView;
 
 import com.juns.wechat.R;
 import com.juns.wechat.bean.UserBean;
+import com.juns.wechat.net.common.HttpAction;
+import com.juns.wechat.net.common.NetDataBeanCallback;
+import com.juns.wechat.net.response.LoginBean;
 import com.style.base.BaseToolbarActivity;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.callback.LoginCallBack;
@@ -114,13 +117,30 @@ public class LoginActivity extends BaseToolbarActivity implements OnClickListene
         }
     }
 
-    private void login(String userName, String password) {
+    private void login(String userName, final String password) {
         if (!CommonUtil.isNetWorkConnected(this)) {
             showToast(R.string.toast_network_unavailable);
             return;
         }
         getLoadingDialog("正在登录...").show();
-        UserRequest.login(userName, password, loginCallBack);
+        //UserRequest.login(userName, password, loginCallBack);
+        HttpAction.login(userName, password, new NetDataBeanCallback<LoginBean>(LoginBean.class) {
+            @Override
+            protected void onCodeSuccess(LoginBean data) {
+                dismissProgressDialog();
+                AccountManager.getInstance().setUser(data.userBean);
+                AccountManager.getInstance().setToken(data.token);
+                AccountManager.getInstance().setUserPassWord(password);
+                skip(MainActivity.class);
+                finish();
+            }
+
+            @Override
+            protected void onCodeFailure(String msg) {
+                dismissProgressDialog();
+                showToast(msg);
+            }
+        });
     }
 
     private LoginCallBack loginCallBack = new LoginCallBack() {

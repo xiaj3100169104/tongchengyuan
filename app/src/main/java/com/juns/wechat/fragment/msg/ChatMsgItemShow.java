@@ -10,6 +10,8 @@ import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.dao.FriendDao;
 import com.juns.wechat.net.callback.QueryUserCallBack;
+import com.juns.wechat.net.common.HttpAction;
+import com.juns.wechat.net.common.NetDataBeanCallback;
 import com.juns.wechat.net.request.UserRequest;
 import com.juns.wechat.net.response.BaseResponse;
 import com.juns.wechat.util.ImageLoader;
@@ -32,13 +34,27 @@ public class ChatMsgItemShow extends MsgItemShow {
         if(friendBean != null){
             textView.setText(friendBean.getShowName());
         }else {  //陌生人
-            UserRequest.queryUserData(msgItem.userName, new QueryUserCallBack() {
+            HttpAction.queryUserData(msgItem.userName, new NetDataBeanCallback<UserBean>(UserBean.class) {
+                @Override
+                protected void onCodeSuccess(UserBean data) {
+                    if (data != null) {
+                        stranger = data;
+                        textView.setText(stranger.getShowName());
+                    }
+                }
+
+                @Override
+                protected void onCodeFailure(String msg) {
+
+                }
+            });
+           /* UserRequest.queryUserData(msgItem.userName, new QueryUserCallBack() {
                 @Override
                 protected void handleResponse(BaseResponse.QueryUserResponse result) {
                     stranger = result.userBean;
                     textView.setText(stranger.getShowName());
                 }
-            });
+            });*/
         }
     }
 
@@ -48,13 +64,27 @@ public class ChatMsgItemShow extends MsgItemShow {
             if(stranger != null){
                 ImageLoader.loadAvatar(iv, stranger.getHeadUrl());
             }else {
-                UserRequest.queryUserData(msgItem.userName, new QueryUserCallBack() {
+                HttpAction.queryUserData(msgItem.userName, new NetDataBeanCallback<UserBean>(UserBean.class) {
+                    @Override
+                    protected void onCodeSuccess(UserBean data) {
+                        if (data != null) {
+                            stranger = data;
+                            ImageLoader.loadAvatar(iv, stranger.getHeadUrl());
+                        }
+                    }
+
+                    @Override
+                    protected void onCodeFailure(String msg) {
+
+                    }
+                });
+                /*UserRequest.queryUserData(msgItem.userName, new QueryUserCallBack() {
                     @Override
                     protected void handleResponse(BaseResponse.QueryUserResponse result) {
                         stranger = result.userBean;
                         ImageLoader.loadAvatar(iv, stranger.getHeadUrl());
                     }
-                });
+                });*/
             }
         }else {
             ImageLoader.loadAvatar(iv, friendBean.getHeadUrl());

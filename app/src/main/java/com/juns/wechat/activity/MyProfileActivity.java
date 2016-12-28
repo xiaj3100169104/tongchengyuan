@@ -11,6 +11,8 @@ import com.juns.wechat.R;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.ShowBigImage;
 import com.juns.wechat.helper.CommonViewHelper;
+import com.juns.wechat.net.common.HttpAction;
+import com.juns.wechat.net.common.NetDataBeanCallback;
 import com.style.base.BaseToolbarActivity;
 import com.juns.wechat.dao.DbDataEvent;
 import com.juns.wechat.database.UserTable;
@@ -157,7 +159,21 @@ public class MyProfileActivity extends BaseToolbarActivity {
     }
 
     private void modifySexToServer(String sex) {
-        UserRequest.updateUser(curUser.getUserName(), UserBean.SEX, sex, new UpdateUserCallBack() {
+        HttpAction.updateUser(UserBean.SEX, sex, new NetDataBeanCallback<UserBean>(UserBean.class) {
+            @Override
+            protected void onCodeSuccess(UserBean data) {
+                dismissProgressDialog();
+                AccountManager.getInstance().setUser(data);
+                finish();
+            }
+
+            @Override
+            protected void onCodeFailure(String msg) {
+                dismissProgressDialog();
+                showToast(msg);
+            }
+        });
+        /*UserRequest.updateUser(curUser.getUserName(), UserBean.SEX, sex, new UpdateUserCallBack() {
             @Override
             protected void handleResponse(UpdateUserResponse result) {
                 super.handleResponse(result);
@@ -169,7 +185,7 @@ public class MyProfileActivity extends BaseToolbarActivity {
                 super.onError(ex, isOnCallback);
                 selectSexDialog.dismiss();
             }
-        });
+        });*/
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

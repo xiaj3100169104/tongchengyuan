@@ -8,6 +8,10 @@ import android.view.View;
 
 import com.juns.wechat.R;
 import com.juns.wechat.annotation.Extra;
+import com.juns.wechat.bean.UserBean;
+import com.juns.wechat.manager.AccountManager;
+import com.juns.wechat.net.common.HttpAction;
+import com.juns.wechat.net.common.NetDataBeanCallback;
 import com.style.base.BaseToolbarActivity;
 import com.juns.wechat.net.callback.UpdateUserCallBack;
 import com.juns.wechat.net.request.UploadFileRequest;
@@ -61,7 +65,21 @@ public class CropImageActivity extends BaseToolbarActivity {
 
     private void updateAvatarInServer(String imageName) {
         String filePath = PhotoUtil.PHOTO_PATH + "/" + imageName;
-        UploadFileRequest.uploadAvatar(filePath, callBack);
+        //UploadFileRequest.uploadAvatar(filePath, callBack);
+        HttpAction.uploadAvatar(filePath, new NetDataBeanCallback<UserBean>(UserBean.class) {
+            @Override
+            protected void onCodeSuccess(UserBean data) {
+                dismissProgressDialog();
+                AccountManager.getInstance().setUser(data);
+                finish();
+            }
+
+            @Override
+            protected void onCodeFailure(String msg) {
+                dismissProgressDialog();
+                showToast(msg);
+            }
+        });
     }
 
     private UpdateUserCallBack callBack = new UpdateUserCallBack() {

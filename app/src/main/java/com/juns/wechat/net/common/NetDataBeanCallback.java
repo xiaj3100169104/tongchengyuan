@@ -37,18 +37,20 @@ public class NetDataBeanCallback<T> implements Callback.CommonCallback<String> {
         String jsonData = response.data;
         String msg = response.msg;
 
-        if (code == BaseResponse.SUCCESS) {
-            T data = null;
-            if (this.clazz != null)
-                data = JSON.parseObject(jsonData, this.clazz);
-            if (this.type != null)
-                data = JSON.parseObject(jsonData, this.type);
+        T data = null;
+        if (this.clazz != null)
+            data = JSON.parseObject(jsonData, this.clazz);
+        if (this.type != null)
+            data = JSON.parseObject(jsonData, this.type);
 
+        if (code == BaseResponse.SUCCESS) {
+            onCodeSuccess();
             onCodeSuccess(data);
             onCodeSuccess(data, msg);
         } else {
             onCodeFailure(msg);
             onCodeFailure(code, msg);
+            onCodeFailure(code, data);
             if (code == BaseResponse.SERVER_ERROR) {
                 ToastUtil.showToast("服务器出错了", Toast.LENGTH_SHORT);
             } else if (code == BaseResponse.TOKEN_EXPIRED || code == BaseResponse.TOKEN_INVALID) {
@@ -62,7 +64,9 @@ public class NetDataBeanCallback<T> implements Callback.CommonCallback<String> {
         ToastUtil.showToast(R.string.toast_network_error, Toast.LENGTH_SHORT);
         onCodeFailure("网络错误，请检查网络设置");
     }
+    protected void onCodeSuccess() {
 
+    }
     protected void onCodeSuccess(T data) {
 
     }
@@ -78,7 +82,9 @@ public class NetDataBeanCallback<T> implements Callback.CommonCallback<String> {
     protected void onCodeFailure(int code, String msg) {
 
     }
+    protected void onCodeFailure(int code, T data) {
 
+    }
     private void handleTokenError() {
         AccountManager.getInstance().logOut();
     }

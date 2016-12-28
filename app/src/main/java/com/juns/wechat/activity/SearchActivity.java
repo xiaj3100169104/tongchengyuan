@@ -11,8 +11,11 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.TypeReference;
 import com.juns.wechat.R;
 import com.juns.wechat.bean.UserBean;
+import com.juns.wechat.net.common.HttpAction;
+import com.juns.wechat.net.common.NetDataBeanCallback;
 import com.style.base.BaseActivity;
 import com.juns.wechat.net.callback.BaseCallBack;
 import com.juns.wechat.net.request.UserRequest;
@@ -22,6 +25,7 @@ import com.juns.wechat.util.LogUtil;
 import com.style.constant.Skip;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by 王宗文 on 2016/6/20.
@@ -95,7 +99,21 @@ public class SearchActivity extends BaseActivity {
 
         LogUtil.i("start search");
 
-        UserRequest.searchUser(search, callBack);
+        //UserRequest.searchUser(search, callBack);
+        HttpAction.searchUser(search, new NetDataBeanCallback<List<UserBean>>(new TypeReference<List<UserBean>>() {
+        }) {
+            @Override
+            protected void onCodeSuccess(List<UserBean> data) {
+                progressDialog.dismiss();
+                showSearchResult(data);
+            }
+
+            @Override
+            protected void onCodeFailure(String msg) {
+                progressDialog.dismiss();
+                showToast(msg);
+            }
+        });
     }
 
     private BaseCallBack<SearchUserResponse> callBack = new BaseCallBack<SearchUserResponse>() {
@@ -116,10 +134,11 @@ public class SearchActivity extends BaseActivity {
         }
     };
 
-    private void showSearchResult(ArrayList<UserBean> userBeans){
+    private void showSearchResult(List<UserBean> userBeans){
         if(userBeans != null && !userBeans.isEmpty()){
+            ArrayList<UserBean> data = (ArrayList<UserBean>) userBeans;
             Intent intent = new Intent(SearchActivity.this, SearchResultActivity.class);
-            intent.putExtra(Skip.KEY_SEARCH_RESULTS, userBeans);
+            intent.putExtra(Skip.KEY_SEARCH_RESULTS, data);
             startActivity(intent);
         }else {
             showToast("没有搜索到用户");

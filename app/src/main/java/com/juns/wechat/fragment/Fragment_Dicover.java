@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.juns.wechat.R;
 import com.juns.wechat.activity.CallVoiceBaseActivity;
+import com.juns.wechat.activity.ChatActivity;
 import com.juns.wechat.activity.FriendCircleActivity;
 import com.juns.wechat.activity.QRScanActivity;
 import com.style.base.BaseBusFragment;
@@ -58,7 +59,10 @@ public class Fragment_Dicover extends BaseBusFragment {
     }
     @OnClick(R.id.txt_yaoyiyao) // 摇一摇
     public void yaoYiYao() {
-        startActivity(new Intent(getActivity(), CallVoiceBaseActivity.class));
+        skip(CallVoiceBaseActivity.class);
     }
-
+    @OnClick(R.id.txt_nearby) // 摇一摇
+    public void nearby() {
+        skip(ChatActivity.class);
+    }
 }
