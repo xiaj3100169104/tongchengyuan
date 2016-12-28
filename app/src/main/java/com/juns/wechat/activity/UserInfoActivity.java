@@ -51,8 +51,7 @@ public class UserInfoActivity extends BaseToolbarActivity implements OnClickList
     @Bind(R.id.btnSendMsg)
     Button btnSendMsg;
 
-    //@Extra(name = ARG_USER_NAME)
-    private String userName;
+    private int userId;
 
     private UserBean curUser = AccountManager.getInstance().getUser();
     private FriendBean friendBean;
@@ -83,17 +82,17 @@ public class UserInfoActivity extends BaseToolbarActivity implements OnClickList
     }
 
     public void initData() {
-        userName = getIntent().getStringExtra(Skip.KEY_USER_NAME);
-        if (userName.equals(curUser.getUserName())) {  //查看自己的信息
+        userId = getIntent().getIntExtra(Skip.KEY_USER_ID, 0);
+        if (userId == curUser.getUserId()) {  //查看自己的信息
             userBean = curUser;
             setData();
             return;
         }
 
-        friendBean = FriendDao.getInstance().findByOwnerAndContactName(curUser.getUserName(), userName);
+        friendBean = FriendDao.getInstance().findByOwnerAndContactName(curUser.getUserId(), userId);
         if (friendBean == null) {  //不是好友关系
             //UserRequest.queryUserData(userName, queryUserCallBack);
-            HttpAction.queryUserData(userName, new NetDataBeanCallback<UserBean>(UserBean.class) {
+            HttpAction.queryUserData(userId, new NetDataBeanCallback<UserBean>(UserBean.class) {
                 @Override
                 protected void onCodeSuccess(UserBean data) {
                     if (data != null) {
@@ -121,7 +120,7 @@ public class UserInfoActivity extends BaseToolbarActivity implements OnClickList
     private void setData() {
         CommonViewHelper.setUserViewInfo(userBean, ivAvatar, tvNickName, ivSex, tvUserName, true);
 
-        if (userName.equals(curUser.getUserName())) {
+        if (userId == curUser.getUserId()) {
             btnSendMsg.setText("个人信息");
         } else {
             if (subType == null) {
@@ -132,36 +131,19 @@ public class UserInfoActivity extends BaseToolbarActivity implements OnClickList
         }
     }
 
-    private QueryUserCallBack queryUserCallBack = new QueryUserCallBack() {
-        @Override
-        protected void handleResponse(BaseResponse.QueryUserResponse result) {
-            if (result.code == 0) {
-                userBean = result.userBean;
-                setData();
-            } else {
-                handleFailed(result);
-            }
-
-        }
-
-        protected void handleFailed(BaseResponse.QueryUserResponse result) {
-            ToastUtil.showToast("该用户不存在", Toast.LENGTH_SHORT);
-        }
-    };
-
     @OnClick(R.id.btnSendMsg)
     public void onClick(View v) {
-        if (userName.equals(curUser.getUserName())) {
+        if (userId == curUser.getUserId()) {
             startActivity(new Intent(this, MyProfileActivity.class));
             return;
         }
         if (subType == null) {
             Intent intent = new Intent(UserInfoActivity.this, AddFriendFinalActivity.class);
-            intent.putExtra(Skip.KEY_USER_NAME, userName);
+            intent.putExtra(Skip.KEY_USER_NAME, userBean.getUserName());
             startActivity(intent);
         } else {
             Intent intent = new Intent(UserInfoActivity.this, ChatActivity.class);
-            intent.putExtra(Skip.KEY_USER_NAME, userName);
+            intent.putExtra(Skip.KEY_USER_ID, userId);
             startActivity(intent);
         }
     }

@@ -122,7 +122,7 @@ public class LoginActivity extends BaseToolbarActivity implements OnClickListene
             showToast(R.string.toast_network_unavailable);
             return;
         }
-        getLoadingDialog("正在登录...").show();
+        showProgressDialog("正在登录。。。");
         //UserRequest.login(userName, password, loginCallBack);
         HttpAction.login(userName, password, new NetDataBeanCallback<LoginBean>(LoginBean.class) {
             @Override

@@ -18,7 +18,7 @@ import org.xutils.ex.DbException;
 public class FriendBean {
     public static final String ID = "id";
     public static final String OWNER_ID = "ownerId";
-    public static final String CONTACT_ID = "contactedId";
+    public static final String CONTACT_ID = "contactId";
     public static final String SUB_TYPE = "subType";
     public static final String REMARK = "remark";
     public static final String FLAG = "flag";
@@ -29,7 +29,7 @@ public class FriendBean {
     @Column(name = OWNER_ID)
     private int ownerId;
     @Column(name = CONTACT_ID)
-    private int contactedId;
+    private int contactId;
     @Column(name = SUB_TYPE)
     private String subType;
     @Column(name = REMARK)
@@ -60,12 +60,12 @@ public class FriendBean {
         this.ownerId = ownerId;
     }
 
-    public int getContactedId() {
-        return contactedId;
+    public int getContactId() {
+        return contactId;
     }
 
-    public void setContactedId(int contactedId) {
-        this.contactedId = contactedId;
+    public void setContactId(int contactId) {
+        this.contactId = contactId;
     }
 
     public String getSubType() {
@@ -110,7 +110,7 @@ public class FriendBean {
 
     public UserBean getContactUser() throws UserNotFoundException{
         try {
-            return DbUtil.getDbManager().selector(UserBean.class).where("userName", "=", contactedId).findFirst();
+            return DbUtil.getDbManager().selector(UserBean.class).where(UserBean.USER_ID, "=", contactId).findFirst();
         } catch (DbException e) {
             e.printStackTrace();
             throw new UserNotFoundException(e);

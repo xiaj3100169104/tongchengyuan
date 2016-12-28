@@ -11,7 +11,8 @@ import org.xutils.ex.DbException;
  */
 public class FriendTable {
     public static final String TABLE_NAME = "wcFriend";
-    public static final String CREATE_INDEX = "create unique index index_rosters on wcFriend(ownerName, contactName)";
+    public static final String CREATE_INDEX = "create unique index index_rosters on wcFriend(" +
+            FriendBean.OWNER_ID  + ", " + FriendBean.CONTACT_ID  + ")";
     public static final String DELETE_INDEX = "drop index index_rosters";
 
 

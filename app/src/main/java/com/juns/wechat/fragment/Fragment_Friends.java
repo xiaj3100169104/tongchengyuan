@@ -60,13 +60,14 @@ public class Fragment_Friends extends BaseBusFragment implements OnClickListener
     RecyclerView recyclerView;
     @Bind(R.id.sideBar)
     SideBar sideBar;
-    private FriendDao rosterDao = FriendDao.getInstance();
+    private FriendDao friendDao = FriendDao.getInstance();
     private List<FriendBean> dataList;
     private LinearLayoutManager layoutManager;
 
     private ContactAdapter adapter;
 
     private String account = AccountManager.getInstance().getUserName();
+    private int accountId = AccountManager.getInstance().getUserId();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -90,7 +91,7 @@ public class Fragment_Friends extends BaseBusFragment implements OnClickListener
             public void onItemClick(int position, Object data) {
                 FriendBean rosterBean = (FriendBean) data;
                 Intent intent = new Intent(getActivity(), UserInfoActivity.class);
-                intent.putExtra(Skip.KEY_USER_NAME, rosterBean.getContactedId());
+                intent.putExtra(Skip.KEY_USER_ID, rosterBean.getContactId());
 
                 getActivity().startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.push_left_in,
@@ -129,7 +130,7 @@ public class Fragment_Friends extends BaseBusFragment implements OnClickListener
     }
 
     private void setFriendData() {
-        List<FriendBean> list = rosterDao.getMyFriends(account);
+        List<FriendBean> list = friendDao.getMyFriends(accountId);
         if (null != list) {
             int size = list.size();
             for (int i = 0; i < size; i++) {

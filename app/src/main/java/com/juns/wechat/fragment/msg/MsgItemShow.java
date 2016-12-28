@@ -16,6 +16,7 @@ import com.juns.wechat.util.TimeUtil;
 public abstract class MsgItemShow {
     protected MsgItem msgItem;
     protected String myselfName = AccountManager.getInstance().getUserName();
+    protected int myselfId = AccountManager.getInstance().getUserId();
     protected Context mContext;
 
     public MsgItemShow(Context context, MsgItem msgItem){
