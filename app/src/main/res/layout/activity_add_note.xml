@@ -64,8 +64,7 @@
             android:showDividers="beginning">
 
             <CheckBox
-                android:id="@+id/iv_smile"
-                style="@style/text_white_17sp"
+                android:id="@+id/view_smile"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginBottom="5dp"

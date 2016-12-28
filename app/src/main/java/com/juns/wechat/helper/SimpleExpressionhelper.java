@@ -64,7 +64,7 @@ public class SimpleExpressionhelper {
     private static final String EMOTION_NAME_DELETE = "f_emotion_del_normal";
     EditText etContent;
     View layoutRoot;
-    CheckBox ivSmile;
+    CheckBox viewSmile;
     LinearLayout rlBottomSmile;
     LinearLayout layoutFace;
     ViewPager facePager;
@@ -85,7 +85,7 @@ public class SimpleExpressionhelper {
         //不能是DecorView，DecorView不能监听layout变化
         layoutRoot = mActivity.findViewById(R.id.ll_parent);//mActivity.getWindow().getDecorView();
         rlBottomSmile = (LinearLayout) layoutRoot.findViewById(R.id.rl_bottom_smile);
-        ivSmile = (CheckBox) layoutRoot.findViewById(R.id.iv_smile);
+        viewSmile = (CheckBox) layoutRoot.findViewById(R.id.view_smile);
         layoutFace = (LinearLayout) layoutRoot.findViewById(R.id.layout_face);
         facePager = (ViewPager) layoutRoot.findViewById(R.id.face_pager);
         indicator = (CirclePageIndicator) layoutRoot.findViewById(R.id.indicator);
@@ -102,21 +102,8 @@ public class SimpleExpressionhelper {
                 //现在认为只要控件将Activity向上推的高度超过了1/3屏幕高，就认为软键盘弹起
                 if (oldBottom != 0 && bottom != 0 && (oldBottom - bottom > keyHeight)) {
                     Log.e(TAG, "监听到软键盘弹起");
-                   /* new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            faceLl.setVisibility(View.GONE);
-                        }
-                    }, 100);*//*
-                  /*  new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (rlBottomSmile.getVisibility() == View.GONE)
-                                rlBottomSmile.setVisibility(View.VISIBLE);
-                        }
-                    }, 200);*/
                     rlBottomSmile.setVisibility(View.VISIBLE);
-
+                    viewSmile.setChecked(false);
                 } else if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > keyHeight)) {
                     Log.e(TAG, "监听到软件盘关闭");
                     //如果是切换到表情面板而隐藏流量输入法，需要延迟判断表情面板是否显示，如果表情面板是关闭的，操作栏也关闭
@@ -124,20 +111,24 @@ public class SimpleExpressionhelper {
                         @Override
                         public void run() {
                             //如果表情面板是关闭的，操作栏也关闭
-                            if (layoutFace.getVisibility() == View.GONE)
+                            if (layoutFace.getVisibility() == View.GONE){
+                                viewSmile.setChecked(false);
                                 rlBottomSmile.setVisibility(View.GONE);
+                            }
                         }
                     }, 200);
                 }
             }
         });
-        ivSmile.setOnClickListener(new View.OnClickListener() {
+        viewSmile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (layoutFace.getVisibility() == View.GONE) {
+                boolean isChecked = viewSmile.isChecked();
+                if (isChecked) {
+                    viewSmile.setChecked(false);
                     //隐藏输入法，打开表情面板
-                    hideSoftMouse();
-                    //延迟显示，先让输入法显示
+                    CommonUtil.hideSoftMouse(SimpleExpressionhelper.this.mActivity);
+                    //延迟显示，先让输入法隐藏
                     mHandler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -145,16 +136,17 @@ public class SimpleExpressionhelper {
                         }
                     }, 100);
                 } else {
+                    viewSmile.setChecked(true);
                     //隐藏表情面板，打开输入法
                     layoutFace.setVisibility(View.GONE);
-                    toggleSoftInput();
+                    CommonUtil.showSoftInput(SimpleExpressionhelper.this.mActivity, SimpleExpressionhelper.this.etContent);
                 }
             }
         });
         this.etContent.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                ivSmile.setChecked(false);//还原表情状态
+                viewSmile.setChecked(false);//还原表情状态
                 layoutFace.setVisibility(View.GONE);
                 // 这句话说的意思告诉父View我自己的事件我自己处理
                 v.getParent().requestDisallowInterceptTouchEvent(true);
@@ -260,16 +252,5 @@ public class SimpleExpressionhelper {
             }
         });
         return view;
-    }
-
-    //隐藏软键盘
-    public void hideSoftMouse() {
-        InputMethodManager imm = (InputMethodManager) mActivity.getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (mActivity.getCurrentFocus() != null)
-            imm.hideSoftInputFromWindow(mActivity.getCurrentFocus().getWindowToken(), 0);
-    }
-
-    private void toggleSoftInput() {
-        CommonUtil.toggleSoftInput(mActivity, etContent);
     }
 }

@@ -40,7 +40,7 @@ public class NetDataBeanCallback<T> implements Callback.CommonCallback<String> {
         T data = null;
         if (this.clazz != null)
             data = JSON.parseObject(jsonData, this.clazz);
-        if (this.type != null)   
+        if (this.type != null)
             data = JSON.parseObject(jsonData, this.type);
 
         if (code == BaseResponse.SUCCESS) {

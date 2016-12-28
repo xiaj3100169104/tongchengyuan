@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
     android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#f2f0eb"
-    android:orientation="vertical"
-    android:keepScreenOn="true">
+    android:keepScreenOn="true"
+    android:orientation="vertical">
 
-    <include android:id="@+id/toolbar" layout="@layout/comm_toolbar" />
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/comm_toolbar" />
 
     <RelativeLayout
-		android:layout_width="match_parent"
-		android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_weight="1">
 
         <in.srain.cube.views.ptr.PtrClassicFrameLayout
@@ -28,12 +29,12 @@
                 android:layout_height="match_parent"
                 android:cacheColorHint="#00000000"
                 android:divider="@null"
-                android:scrollbars="none"
-                android:fadingEdge="none"/>
+                android:fadingEdge="none"
+                android:scrollbars="none" />
 
         </in.srain.cube.views.ptr.PtrClassicFrameLayout>
 
-	</RelativeLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/bar_bottom"
@@ -42,10 +43,12 @@
         android:orientation="vertical"
         android:paddingBottom="2dip"
         android:paddingTop="2dip">
+
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="#B5B5B3" />
+
         <LinearLayout
             android:id="@+id/rl_bottom"
             android:layout_width="match_parent"
@@ -54,6 +57,7 @@
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingTop="4dp">
+
             <Button
                 android:id="@+id/btn_set_mode_voice"
                 android:layout_width="32dp"
@@ -61,6 +65,7 @@
                 android:layout_marginLeft="12dp"
                 android:background="@drawable/chatting_setmode_voice_btn"
                 android:visibility="visible" />
+
             <Button
                 android:id="@+id/btn_set_mode_keyboard"
                 android:layout_width="32dp"
@@ -68,6 +73,7 @@
                 android:layout_marginLeft="12dp"
                 android:background="@drawable/chatting_setmode_keyboard_btn"
                 android:visibility="gone" />
+
             <LinearLayout
                 android:id="@+id/ll_press_to_speak"
                 android:layout_width="0dp"
@@ -80,16 +86,18 @@
                 android:background="@drawable/chat_press_speak_btn"
                 android:gravity="center"
                 android:visibility="gone">
+
                 <com.juns.wechat.view.AudioRecordButton
                     android:id="@+id/btn_record"
                     android:layout_width="match_parent"
                     android:layout_height="34dp"
+                    android:background="@color/transparent"
+                    android:minHeight="0dp"
                     android:text="@string/button_pushtotalk"
                     android:textColor="#666666"
-                    android:textSize="16sp"
-                    android:background="@color/transparent"
-                    android:minHeight="0dp"/>
+                    android:textSize="16sp" />
             </LinearLayout>
+
             <RelativeLayout
                 android:id="@+id/rl_input_text"
                 android:layout_width="0dp"
@@ -99,6 +107,7 @@
                 android:layout_marginRight="6dp"
                 android:layout_weight="1"
                 android:gravity="bottom">
+
                 <com.juns.wechat.chat.widght.PasteEditText
                     android:id="@+id/et_input_text"
                     android:layout_width="match_parent"
@@ -112,35 +121,29 @@
                     android:paddingRight="1dp"
                     android:paddingTop="3dp"
                     android:textSize="18sp" />
-                <ImageView
-                    android:id="@+id/iv_emoticons_normal"
+
+                <CheckBox
+                    android:id="@+id/view_emoticon"
                     android:layout_width="24dip"
                     android:layout_height="24dip"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical|right"
                     android:layout_margin="1dip"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/chatting_biaoqing_btn_normal"
-                    android:visibility="visible" />
-                <ImageView
-                    android:id="@+id/iv_emoticons_checked"
-                    android:layout_width="24dip"
-                    android:layout_height="24dip"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="center_vertical|right"
-                    android:layout_margin="1dip"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/chatting_biaoqing_btn_enable"
-                    android:visibility="invisible" />
+                    android:button="@null"
+                    android:checked="false"
+                    android:background="@drawable/chatting_biaoqing_btn_normal" />
             </RelativeLayout>
-            <Button
-                android:id="@+id/btn_more"
-                android:layout_width="32dip"
-                android:layout_height="32dip"
+
+            <CheckBox
+                android:id="@+id/view_more"
+                android:layout_width="24dip"
+                android:layout_height="24dip"
+                android:button="@null"
+                android:checked="false"
                 android:layout_marginRight="12dp"
-                android:background="@drawable/type_select_btn"/>
+                android:background="@drawable/type_select_btn" />
+
             <Button
                 android:id="@+id/btn_send"
                 android:layout_width="70dp"
@@ -153,6 +156,7 @@
                 android:textSize="16sp"
                 android:visibility="gone" />
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/ll_more"
             android:layout_width="match_parent"
@@ -169,12 +173,13 @@
                 android:layout_height="160dp"
                 android:orientation="vertical"
                 android:visibility="visible">
+
                 <android.support.v4.view.ViewPager
                     android:id="@+id/viewPager"
-                    android:paddingTop="10dp"
-                    android:background="@drawable/menu_bg"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/menu_bg"
+                    android:paddingTop="10dp" />
             </LinearLayout>
 
             <!-- 图片，表情，名片等按钮 -->
@@ -185,6 +190,7 @@
                 android:orientation="vertical"
                 android:paddingBottom="5dp"
                 android:visibility="gone">
+
                 <include layout="@layout/layout_chat_tool" />
             </LinearLayout>
         </LinearLayout>
