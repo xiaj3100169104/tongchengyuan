@@ -19,6 +19,7 @@ public class NetDataBeanCallback<T> implements Callback.CommonCallback<String> {
     protected TypeReference<T> type;
 
     public NetDataBeanCallback() {
+
     }
 
     public NetDataBeanCallback(Class<T> clazz) {

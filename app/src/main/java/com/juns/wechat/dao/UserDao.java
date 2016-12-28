@@ -27,11 +27,11 @@ public class UserDao extends BaseDao<UserBean>{
     private static final String GET_LAST_MODIFY_DATE =
             "SELECT max(t.modifyDate) as lastModifyDate FROM ( " +
                     "SELECT t1.* FROM (select u.* from wcUser u, wcFriend r where " +
-                    "(r.ownerId = ? and u.userId = r.contactedId) and (r.subType = 'both' or r.subType = 'from')) t1" +
+                    "(r.ownerId = ? and u.userId = r.contactId) and (r.subType = 'both' or r.subType = 'from')) t1" +
                     " UNION SELECT u.* from wcUser u WHERE u.userId = ?) t";
 
     private static final String QUERY_MY_FRIENDS =
-            "select * from wcUser u, wcFriend f where f.ownerId = ? and f.contactedId = u.userId";
+            "select * from wcUser u, wcFriend f where f.ownerId = ? and f.contactId = u.userId";
 
     private static UserDao mInstance;
 
@@ -40,24 +40,6 @@ public class UserDao extends BaseDao<UserBean>{
             mInstance = new UserDao();
         }
         return mInstance;
-    }
-
-    public List<UserBean> getMyFriends(String userName){
-        SqlInfo sqlInfo = new SqlInfo(QUERY_MY_FRIENDS);
-        sqlInfo.addBindArg(new KeyValue("key1", userName));
-        List<UserBean> userBeen = new ArrayList<>();
-        try {
-            Cursor cursor = dbManager.execQuery(sqlInfo);
-            while (cursor.moveToNext()){
-                UserBean userBean = CursorUtil.fromCursor(cursor, UserBean.class);
-                userBeen.add(userBean);
-            }
-            closeCursor(cursor);
-            return userBeen;
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     public UserBean findByName(String userName){
