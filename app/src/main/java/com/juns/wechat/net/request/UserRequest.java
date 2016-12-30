@@ -101,25 +101,7 @@ public class UserRequest extends RequestParams {
         }
     }
 
-    public static void syncUserData(Integer[] userNames,
-                                    long lastModifyDate, BaseCallBack<UserListResponse> callBack){
-        x.http().post(new SyncUserParams(userNames, lastModifyDate), callBack);
-    }
 
-    @HttpRequest(host = ConfigUtil.REAL_API_URL, path = "queryUser")
-    public static class QueryUserParams extends RequestParams{
-        private String queryName;
-        private String token;
-
-        public QueryUserParams(String queryName){
-            this.queryName = queryName;
-            token = AccountManager.getInstance().getToken();
-        }
-    }
-
-    public static void queryUserData(String queryName, QueryUserCallBack callBack){
-        x.http().post(new QueryUserParams(queryName), callBack);
-    }
 
     @HttpRequest(host = ConfigUtil.REAL_API_URL, path = "getUsersByNames")
     public static class GetUsersParams extends RequestParams{

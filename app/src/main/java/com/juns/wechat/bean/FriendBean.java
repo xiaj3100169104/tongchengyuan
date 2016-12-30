@@ -110,11 +110,13 @@ public class FriendBean {
 
     public UserBean getContactUser() throws UserNotFoundException{
         try {
-            return DbUtil.getDbManager().selector(UserBean.class).where(UserBean.USER_ID, "=", contactId).findFirst();
+            UserBean userBean =
+                    DbUtil.getDbManager().selector(UserBean.class).where(UserBean.USER_ID, "=", contactId).findFirst();
+            if(userBean != null) return userBean;
         } catch (DbException e) {
             e.printStackTrace();
-            throw new UserNotFoundException(e);
         }
+        throw new UserNotFoundException();
     }
 
     public String getShowName(){

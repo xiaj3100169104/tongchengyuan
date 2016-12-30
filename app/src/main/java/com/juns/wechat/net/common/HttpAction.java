@@ -2,6 +2,7 @@ package com.juns.wechat.net.common;
 
 import com.juns.wechat.config.ConfigUtil;
 import com.juns.wechat.manager.AccountManager;
+import com.juns.wechat.util.LogUtil;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.http.RequestParams;
@@ -74,13 +75,13 @@ public class HttpAction {
         NetWorkManager.getInstance().post(params, callback);
     }
 
-    public static void syncUserData(Integer[] userNames, long lastModifyDate, NetDataBeanCallback callback) {
+    public static void syncUserData(Integer[] userIds, long lastModifyDate, NetDataBeanCallback callback) {
         TokenRequestParams params = new TokenRequestParams(URL_SYNC_USER_DATA);
         //params.addBodyParameter("token", token);
         params.addParameter("modifyDate", lastModifyDate);
-        if (userNames != null && userNames.length != 0) {
-            for (Integer userName : userNames) {
-                params.addBodyParameter("userNames[]", String.valueOf(userName));
+        if (userIds != null && userIds.length != 0) {
+            for (Integer userId : userIds) {
+                params.addBodyParameter("userIds[]", userId + "");
             }
         }
         NetWorkManager.getInstance().post(params, callback);

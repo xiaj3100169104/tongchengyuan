@@ -19,6 +19,7 @@ import com.juns.wechat.dao.UserDao;
 import com.juns.wechat.helper.CommonViewHelper;
 import com.juns.wechat.net.common.HttpAction;
 import com.juns.wechat.net.common.NetDataBeanCallback;
+import com.juns.wechat.util.LogUtil;
 import com.style.base.BaseToolbarActivity;
 import com.juns.wechat.dao.FriendDao;
 import com.juns.wechat.exception.UserNotFoundException;

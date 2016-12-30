@@ -15,6 +15,7 @@ import com.juns.wechat.net.common.NetDataBeanCallback;
 import com.juns.wechat.net.request.UserRequest;
 import com.juns.wechat.net.response.BaseResponse;
 import com.juns.wechat.util.ImageLoader;
+import com.juns.wechat.util.LogUtil;
 import com.style.constant.Skip;
 
 /**
@@ -26,11 +27,11 @@ public class ChatMsgItemShow extends MsgItemShow {
 
     public ChatMsgItemShow(Context context, MsgItem msgItem){
         super(context, msgItem);
+        friendBean = FriendDao.getInstance().findByOwnerAndContactName(myselfId, msgItem.userId);
     }
 
     @Override
     public void showTitle(final TextView textView) {
-        friendBean = FriendDao.getInstance().findByOwnerAndContactName(myselfId, msgItem.userId);
         if(friendBean != null){
             textView.setText(friendBean.getShowName());
         }else {  //陌生人
