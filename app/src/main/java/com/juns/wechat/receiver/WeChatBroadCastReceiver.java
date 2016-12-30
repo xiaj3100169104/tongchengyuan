@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.service.XmppService;
 import com.juns.wechat.util.LogUtil;
 import com.juns.wechat.xmpp.XmppConnUtil;
@@ -23,6 +24,9 @@ public class WeChatBroadCastReceiver extends BroadcastReceiver {;
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
         LogUtil.i("action : " + action);
+        if(!AccountManager.getInstance().isLogin()){
+            return;
+        }
         if(action.equals(Intent.ACTION_BOOT_COMPLETED) || action.equals(Intent.ACTION_USER_PRESENT)){
             loginToXmpp(context);
         }else if(action.equals(ConnectivityManager.CONNECTIVITY_ACTION)){
