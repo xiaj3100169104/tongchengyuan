@@ -12,18 +12,13 @@ import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.common.HttpAction;
 import com.juns.wechat.net.common.NetDataBeanCallback;
-import com.style.base.BaseToolbarActivity;
-import com.juns.wechat.net.callback.UpdateUserCallBack;
-import com.juns.wechat.net.request.UploadFileRequest;
-import com.juns.wechat.net.response.UpdateUserResponse;
 import com.juns.wechat.util.PhotoUtil;
 import com.juns.wechat.view.ClipImageLayout;
+import com.style.base.BaseToolbarActivity;
 
 import org.jivesoftware.smack.packet.id.StanzaIdUtil;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -81,13 +76,4 @@ public class CropImageActivity extends BaseToolbarActivity {
             }
         });
     }
-
-    private UpdateUserCallBack callBack = new UpdateUserCallBack() {
-        @Override
-        protected void handleResponse(UpdateUserResponse result) {
-            super.handleResponse(result);
-            finish();
-        }
-
-    };
 }

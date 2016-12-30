@@ -16,14 +16,11 @@ import android.widget.TextView;
 
 import com.juns.wechat.R;
 import com.juns.wechat.bean.UserBean;
+import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.common.HttpAction;
 import com.juns.wechat.net.common.NetDataBeanCallback;
 import com.juns.wechat.net.response.LoginBean;
 import com.style.base.BaseToolbarActivity;
-import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.net.callback.LoginCallBack;
-import com.juns.wechat.net.request.UserRequest;
-import com.juns.wechat.net.response.BaseResponse;
 import com.style.utils.CommonUtil;
 
 import butterknife.Bind;
@@ -142,29 +139,6 @@ public class LoginActivity extends BaseToolbarActivity implements OnClickListene
             }
         });
     }
-
-    private LoginCallBack loginCallBack = new LoginCallBack() {
-
-        @Override
-        protected void handleResponse(BaseResponse.LoginResponse result) {
-            super.handleResponse(result);
-            AccountManager.getInstance().setUserPassWord(password);
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            finish();
-        }
-
-        protected void onFailure(int code, String msg) {
-            showToast("用户名或密码错误");
-            getLoadingDialog("正在登录...").dismiss();
-        }
-
-        @Override
-        public void onError(Throwable ex, boolean isOnCallback) {
-            showToast(R.string.toast_network_error);
-            getLoadingDialog("正在登录...").dismiss();
-        }
-    };
-
     // EditText监听器
     class TextChange implements TextWatcher {
 

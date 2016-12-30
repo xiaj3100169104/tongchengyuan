@@ -3,24 +3,16 @@ package com.juns.wechat.service;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.net.sip.SipAudioCall;
-import android.net.sip.SipManager;
-import android.net.sip.SipProfile;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.config.ConfigUtil;
 import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.net.callback.RefreshTokenCallBack;
 import com.juns.wechat.net.common.HttpAction;
 import com.juns.wechat.net.common.NetDataBeanCallback;
-import com.juns.wechat.net.request.TokenRequest;
 import com.juns.wechat.net.response.TokenBean;
-import com.juns.wechat.net.response.TokenResponse;
-import com.juns.wechat.util.LogUtil;
 import com.juns.wechat.util.SipClient;
 import com.juns.wechat.util.SyncDataUtil;
 import com.juns.wechat.xmpp.XmppManagerImpl;
@@ -120,17 +112,6 @@ public class XmppService extends Service {
     private void destroySipSession(){
         SipClient.getInstance().destroySession();
     }
-
-
-    private RefreshTokenCallBack callBack = new RefreshTokenCallBack() {
-        @Override
-        protected void handleResponse(TokenResponse result) {
-            super.handleResponse(result);
-            init();
-        }
-
-
-    };
 
     public static void login(Context context){
         Intent service = new Intent(context, XmppService.class);

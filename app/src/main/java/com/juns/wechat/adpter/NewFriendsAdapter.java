@@ -9,26 +9,18 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.alibaba.fastjson.TypeReference;
 import com.juns.wechat.R;
+import com.juns.wechat.activity.UserInfoActivity;
 import com.juns.wechat.bean.MessageBean;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.bean.chat.InviteMsg;
 import com.juns.wechat.common.ViewHolder;
-import com.juns.wechat.activity.UserInfoActivity;
 import com.juns.wechat.dao.MessageDao;
 import com.juns.wechat.dao.UserDao;
-import com.juns.wechat.net.callback.AddFriendCallBack;
-import com.juns.wechat.net.callback.QueryUserCallBack;
 import com.juns.wechat.net.common.HttpAction;
 import com.juns.wechat.net.common.NetDataBeanCallback;
-import com.juns.wechat.net.request.FriendRequest;
-import com.juns.wechat.net.request.UserRequest;
-import com.juns.wechat.net.response.BaseResponse;
 import com.juns.wechat.util.ImageLoader;
-import com.juns.wechat.util.ToastUtil;
 import com.juns.wechat.xmpp.util.SendMessage;
 import com.style.constant.Skip;
 
@@ -164,42 +156,5 @@ public class NewFriendsAdapter extends BaseAdapter {
 
         SendMessage.sendReplyInviteMsg(otherName, reply, reason);
     }
-
-    class MyAddFriendCallBack extends AddFriendCallBack {
-        private MessageBean messageBean;
-
-        public MyAddFriendCallBack(MessageBean messageBean) {
-            this.messageBean = messageBean;
-        }
-
-        @Override
-        protected void handleResponse(BaseResponse result) {
-            super.handleResponse(result);
-            if (result.code == BaseResponse.SUCCESS) {
-                InviteMsg inviteMsg = (InviteMsg) messageBean.getMsgObj();
-                int reply = InviteMsg.Reply.ACCEPT.value;
-                inviteMsg.reply = reply;
-                messageBean.setMsg(inviteMsg.toJson());
-                MessageDao.getInstance().update(messageBean);
-                notifyDataSetChanged();
-                sendMessageToOther(messageBean.getOtherName(), reply);
-            } else {
-                handleFailed(result);
-            }
-
-        }
-
-        protected void handleFailed(BaseResponse result) {
-            ToastUtil.showToast("添加好友失败，请稍后重试", Toast.LENGTH_SHORT);
-        }
-    }
-
-    private QueryUserCallBack queryUserCallBack = new QueryUserCallBack() {
-        @Override
-        protected void handleResponse(BaseResponse.QueryUserResponse result) {
-            super.handleResponse(result);  //在本地数据库保存起来
-            notifyDataSetChanged();
-        }
-    };
 
 }

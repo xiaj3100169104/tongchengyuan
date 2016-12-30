@@ -3,11 +3,7 @@ package com.juns.wechat.net.common;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
 import com.juns.wechat.R;
-import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.net.response.BaseResponse;
 import com.juns.wechat.util.ToastUtil;
 
 import org.xutils.common.Callback;

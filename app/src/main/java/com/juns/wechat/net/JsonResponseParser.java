@@ -2,24 +2,11 @@ package com.juns.wechat.net;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
-import com.google.gson.reflect.TypeToken;
-import com.juns.wechat.bean.DynamicBean;
-import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.net.response.BaseResponse;
-import com.juns.wechat.util.LogUtil;
 
-import org.xutils.common.util.ParameterizedTypeUtil;
 import org.xutils.http.app.ResponseParser;
 import org.xutils.http.request.UriRequest;
 
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**

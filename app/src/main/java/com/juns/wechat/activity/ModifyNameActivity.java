@@ -7,14 +7,11 @@ import android.widget.EditText;
 
 import com.juns.wechat.R;
 import com.juns.wechat.bean.UserBean;
+import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.common.HttpAction;
 import com.juns.wechat.net.common.NetDataBeanCallback;
-import com.style.base.BaseToolbarActivity;
-import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.net.callback.UpdateUserCallBack;
-import com.juns.wechat.net.request.UserRequest;
-import com.juns.wechat.net.response.UpdateUserResponse;
 import com.juns.wechat.util.NetWorkUtil;
+import com.style.base.BaseToolbarActivity;
 
 import butterknife.Bind;
 
@@ -77,17 +74,4 @@ public class ModifyNameActivity extends BaseToolbarActivity {
             }
         });
     }
-
-    private UpdateUserCallBack updateUserCallBack = new UpdateUserCallBack() {
-        @Override
-        protected void handleResponse(UpdateUserResponse result) {
-            super.handleResponse(result);
-            finish();
-        }
-
-        @Override
-        public void onError(Throwable ex, boolean isOnCallback) {
-            showToast(R.string.toast_network_error);
-        }
-    };
 }

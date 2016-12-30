@@ -13,17 +13,14 @@ import android.widget.EditText;
 
 import com.juns.wechat.R;
 import com.juns.wechat.bean.UserBean;
+import com.juns.wechat.manager.AccountManager;
+
 import com.juns.wechat.net.common.HttpAction;
 import com.juns.wechat.net.common.NetDataBeanCallback;
 import com.juns.wechat.net.response.LoginBean;
 import com.juns.wechat.net.response.RegisterBean;
-import com.style.base.BaseToolbarActivity;
-import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.net.callback.BaseCallBack;
-import com.juns.wechat.net.response.BaseResponse;
-import com.juns.wechat.net.request.UserRequest;
-import com.juns.wechat.net.callback.LoginCallBack;
 import com.juns.wechat.util.NetWorkUtil;
+import com.style.base.BaseToolbarActivity;
 import com.style.utils.FormatUtil;
 
 import org.json.JSONException;
@@ -212,41 +209,7 @@ public class RegisterActivity extends BaseToolbarActivity implements OnClickList
 		});
 	}
 
-    private BaseCallBack<BaseResponse.RegisterResponse> registerCallBack = new BaseCallBack<BaseResponse.RegisterResponse>(){
-
-        @Override
-        protected void handleResponse(BaseResponse.RegisterResponse result) {
-            if(result.code == BaseResponse.SUCCESS){
-                login();
-            }else {
-                handleFailed(result);
-            }
-
-        }
-
-        protected void handleFailed(BaseResponse.RegisterResponse result) {
-            if(result.code == 1){  //参数错误
-                getLoadingDialog("正在注册...").dismiss();
-                if(result.errField.equalsIgnoreCase(UserBean.USERNAME)){
-                    showToast("用户名不合法");
-                }else if(result.errField.equalsIgnoreCase(UserBean.PASSWORD)){
-                    showToast("密码长度不能小于6位");
-                }
-            }else if(result.code == 2){
-                getLoadingDialog("正在注册...").dismiss();
-                showToast("该用户已注册，可以直接登录");
-            }
-        }
-
-		@Override
-		public void onError(Throwable ex, boolean isOnCallback) {
-            super.onError(ex, isOnCallback);
-			getLoadingDialog("正在注册...").dismiss();
-		}
-	};
-
     private void login(){
-		//UserRequest.login(userName, passWord, loginCallBack);
 		HttpAction.login(userName, passWord, new NetDataBeanCallback<LoginBean>(LoginBean.class) {
 			@Override
 			protected void onCodeSuccess(LoginBean data) {
@@ -265,31 +228,6 @@ public class RegisterActivity extends BaseToolbarActivity implements OnClickList
 			}
 		});
     }
-
-    private LoginCallBack loginCallBack = new LoginCallBack() {
-
-        @Override
-        protected void handleResponse(BaseResponse.LoginResponse result) {
-            super.handleResponse(result);
-            if(result.code == BaseResponse.SUCCESS){
-                AccountManager.getInstance().setUserPassWord(passWord);
-				skip(MainActivity.class);
-            }else {
-                handleFailed(result);
-            }
-        }
-
-        protected void handleFailed(BaseResponse.LoginResponse result) {
-            showToast("用户名或密码错误");
-            getLoadingDialog("正在注册...").dismiss();
-        }
-
-        @Override
-        public void onError(Throwable ex, boolean isOnCallback) {
-            showToast(R.string.toast_network_error);
-            getLoadingDialog("正在注册...").dismiss();
-        }
-    };
 
 	// 手机号 EditText监听器
 	class TelTextChange implements TextWatcher {

@@ -16,12 +16,8 @@ import com.juns.wechat.R;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.net.common.HttpAction;
 import com.juns.wechat.net.common.NetDataBeanCallback;
-import com.style.base.BaseActivity;
-import com.juns.wechat.net.callback.BaseCallBack;
-import com.juns.wechat.net.request.UserRequest;
-import com.juns.wechat.net.response.BaseResponse;
-import com.juns.wechat.net.response.SearchUserResponse;
 import com.juns.wechat.util.LogUtil;
+import com.style.base.BaseActivity;
 import com.style.constant.Skip;
 
 import java.util.ArrayList;
@@ -99,7 +95,6 @@ public class SearchActivity extends BaseActivity {
 
         LogUtil.i("start search");
 
-        //UserRequest.searchUser(search, callBack);
         HttpAction.searchUser(search, new NetDataBeanCallback<List<UserBean>>(new TypeReference<List<UserBean>>() {
         }) {
             @Override
@@ -115,24 +110,6 @@ public class SearchActivity extends BaseActivity {
             }
         });
     }
-
-    private BaseCallBack<SearchUserResponse> callBack = new BaseCallBack<SearchUserResponse>() {
-        @Override
-        protected void handleResponse(SearchUserResponse result) {
-            progressDialog.dismiss();
-            if(result.code == BaseResponse.SUCCESS){
-                ArrayList<UserBean> userBeans = result.userBeans;
-                showSearchResult(userBeans);
-            }
-        }
-
-        @Override
-        public void onError(Throwable ex, boolean isOnCallback) {
-            super.onError(ex, isOnCallback);
-            ex.printStackTrace();
-            progressDialog.dismiss();
-        }
-    };
 
     private void showSearchResult(List<UserBean> userBeans){
         if(userBeans != null && !userBeans.isEmpty()){

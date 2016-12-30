@@ -1,6 +1,5 @@
 package com.juns.wechat.activity;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -13,9 +12,6 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.ListView;
 
 import com.juns.wechat.Constants;
@@ -27,7 +23,6 @@ import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.bean.chat.viewmodel.MsgViewModel;
 import com.juns.wechat.chat.AlertDialog;
 import com.juns.wechat.chat.adpter.MessageAdapter;
-import com.style.base.BaseToolbarActivity;
 import com.juns.wechat.dao.DbDataEvent;
 import com.juns.wechat.dao.FriendDao;
 import com.juns.wechat.database.ChatTable;
@@ -37,7 +32,9 @@ import com.juns.wechat.helper.ChatInputManager;
 import com.juns.wechat.helper.ChatMediaPlayer;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.util.LogUtil;
+import com.style.base.BaseToolbarActivity;
 import com.style.constant.Skip;
+
 import org.simple.eventbus.Subscriber;
 
 import java.io.File;
@@ -71,15 +68,9 @@ public class ChatActivity extends BaseToolbarActivity {
     @Bind(R.id.ptRefresh)
     PtrClassicFrameLayout ptRefresh;
 
-
     private ClipboardManager clipboard;
-
-    private InputMethodManager manager;
-
     private Drawable[] micImages;
     private int chatType;
-
-    public static ChatActivity activityInstance = null;
 
     //private VoiceRecorder voiceRecorder;
     private MessageAdapter adapter;
@@ -171,14 +162,10 @@ public class ChatActivity extends BaseToolbarActivity {
             }
         });
 
-        hideKeyboard(); //隐藏软键盘
-
         setUpView();
     }
 
     private void setUpView() {
-        activityInstance = this;
-
         // position = getIntent().getIntExtra("position", -1);
         clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
 
@@ -562,20 +549,6 @@ public class ChatActivity extends BaseToolbarActivity {
         super.onPause();
         ChatMediaPlayer.getInstance().release();
     }
-
-    /**
-     * 隐藏软键盘
-     */
-    private void hideKeyboard() {
-        manager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        if (getWindow().getAttributes().softInputMode != WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN) {
-            EditText etInputText = (EditText) findViewById(R.id.et_input_text);
-            manager.hideSoftInputFromWindow(etInputText
-                    .getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        }
-
-    }
-
 
     @Override
     protected void onNewIntent(Intent intent) {

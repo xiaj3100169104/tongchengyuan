@@ -7,7 +7,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.juns.wechat.R;
 import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.net.response.BaseResponse;
 import com.juns.wechat.util.ToastUtil;
 
 import org.xutils.common.Callback;
@@ -44,7 +43,7 @@ public class NetDataBeanCallback<T> implements Callback.CommonCallback<String> {
         if (this.type != null)
             data = JSON.parseObject(jsonData, this.type);
 
-        if (code == BaseResponse.SUCCESS) {
+        if (code == NetDataBean.SUCCESS) {
             onCodeSuccess();
             onCodeSuccess(data);
             onCodeSuccess(data, msg);
@@ -52,9 +51,9 @@ public class NetDataBeanCallback<T> implements Callback.CommonCallback<String> {
             onCodeFailure(msg);
             onCodeFailure(code, msg);
             onCodeFailure(code, data);
-            if (code == BaseResponse.SERVER_ERROR) {
+            if (code == NetDataBean.SERVER_ERROR) {
                 ToastUtil.showToast("服务器出错了", Toast.LENGTH_SHORT);
-            } else if (code == BaseResponse.TOKEN_EXPIRED || code == BaseResponse.TOKEN_INVALID) {
+            } else if (code == NetDataBean.TOKEN_EXPIRED || code == NetDataBean.TOKEN_INVALID) {
                 handleTokenError();
             }
         }

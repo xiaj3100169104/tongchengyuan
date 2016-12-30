@@ -9,11 +9,8 @@ import com.juns.wechat.bean.chat.TextMsg;
 import com.juns.wechat.config.MsgType;
 import com.juns.wechat.dao.MessageDao;
 import com.juns.wechat.dao.UserDao;
-import com.juns.wechat.net.callback.QueryUserCallBack;
 import com.juns.wechat.net.common.HttpAction;
 import com.juns.wechat.net.common.NetDataBeanCallback;
-import com.juns.wechat.net.request.UserRequest;
-import com.juns.wechat.net.response.BaseResponse;
 
 import org.jivesoftware.smack.packet.id.StanzaIdUtil;
 
@@ -48,14 +45,6 @@ public class ReplyInviteMessageProcess extends MessageProcess {
 
             }
         });
-       /* UserRequest.queryUserData(messageBean.getOtherName(), new QueryUserCallBack() {
-            @Override
-            protected void handleResponse(BaseResponse.QueryUserResponse result) {
-                super.handleResponse(result);  //将用户信息存到数据库
-                saveMessageToDB(messageBean);
-                noticeShow(messageBean, null);
-            }
-        });*/
     }
 
     /**

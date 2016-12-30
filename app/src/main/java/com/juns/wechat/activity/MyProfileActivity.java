@@ -10,23 +10,18 @@ import android.widget.TextView;
 import com.juns.wechat.R;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.ShowBigImage;
-import com.juns.wechat.helper.CommonViewHelper;
-import com.juns.wechat.net.common.HttpAction;
-import com.juns.wechat.net.common.NetDataBeanCallback;
-import com.style.base.BaseToolbarActivity;
 import com.juns.wechat.dao.DbDataEvent;
 import com.juns.wechat.database.UserTable;
 import com.juns.wechat.dialog.SelectPhotoDialog;
 import com.juns.wechat.dialog.SelectSexDialog;
+import com.juns.wechat.helper.CommonViewHelper;
 import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.net.callback.UpdateUserCallBack;
-import com.juns.wechat.net.request.UserRequest;
-import com.juns.wechat.net.response.UpdateUserResponse;
-import com.juns.wechat.util.ImageLoader;
+import com.juns.wechat.net.common.HttpAction;
+import com.juns.wechat.net.common.NetDataBeanCallback;
 import com.juns.wechat.util.PhotoUtil;
+import com.style.base.BaseToolbarActivity;
 import com.style.constant.Skip;
 
-import org.simple.eventbus.EventBus;
 import org.simple.eventbus.Subscriber;
 
 import java.text.SimpleDateFormat;
@@ -173,19 +168,6 @@ public class MyProfileActivity extends BaseToolbarActivity {
                 showToast(msg);
             }
         });
-        /*UserRequest.updateUser(curUser.getUserName(), UserBean.SEX, sex, new UpdateUserCallBack() {
-            @Override
-            protected void handleResponse(UpdateUserResponse result) {
-                super.handleResponse(result);
-                selectSexDialog.dismiss();
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                super.onError(ex, isOnCallback);
-                selectSexDialog.dismiss();
-            }
-        });*/
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

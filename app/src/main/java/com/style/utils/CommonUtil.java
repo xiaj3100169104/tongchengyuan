@@ -149,10 +149,6 @@ public class CommonUtil {
      * 隐藏软键盘
      */
     public static void hiddenSoftInput(Activity activity) {
-        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-    }
-    //隐藏软键盘
-    public static void hideSoftMouse(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (activity.getCurrentFocus() != null)
             imm.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
@@ -164,7 +160,6 @@ public class CommonUtil {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
     }
-
     /*
      * 切换软键盘状态
      */

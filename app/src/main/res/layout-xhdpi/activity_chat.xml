@@ -132,7 +132,7 @@
                     android:layout_margin="1dip"
                     android:button="@null"
                     android:checked="false"
-                    android:background="@drawable/chatting_biaoqing_btn_normal" />
+                    android:background="@drawable/sel_switch_emoji_chat" />
             </RelativeLayout>
 
             <CheckBox

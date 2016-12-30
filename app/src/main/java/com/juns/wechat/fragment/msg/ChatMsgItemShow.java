@@ -9,13 +9,9 @@ import com.juns.wechat.activity.ChatActivity;
 import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.dao.FriendDao;
-import com.juns.wechat.net.callback.QueryUserCallBack;
 import com.juns.wechat.net.common.HttpAction;
 import com.juns.wechat.net.common.NetDataBeanCallback;
-import com.juns.wechat.net.request.UserRequest;
-import com.juns.wechat.net.response.BaseResponse;
 import com.juns.wechat.util.ImageLoader;
-import com.juns.wechat.util.LogUtil;
 import com.style.constant.Skip;
 
 /**
@@ -79,13 +75,6 @@ public class ChatMsgItemShow extends MsgItemShow {
 
                     }
                 });
-                /*UserRequest.queryUserData(msgItem.userName, new QueryUserCallBack() {
-                    @Override
-                    protected void handleResponse(BaseResponse.QueryUserResponse result) {
-                        stranger = result.userBean;
-                        ImageLoader.loadAvatar(iv, stranger.getHeadUrl());
-                    }
-                });*/
             }
         }else {
             ImageLoader.loadAvatar(iv, friendBean.getHeadUrl());

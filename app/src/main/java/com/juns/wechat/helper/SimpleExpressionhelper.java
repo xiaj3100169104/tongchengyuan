@@ -126,7 +126,7 @@ public class SimpleExpressionhelper {
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
                     //隐藏输入法，打开表情面板
-                    CommonUtil.hideSoftMouse(SimpleExpressionhelper.this.mActivity);
+                    CommonUtil.hiddenSoftInput(SimpleExpressionhelper.this.mActivity);
                     //延迟显示，先让输入法隐藏
                     mHandler.postDelayed(new Runnable() {
                         @Override
