@@ -60,7 +60,7 @@
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_marginLeft="15dp"
-                android:src="@drawable/default_useravatar"
+                android:src="@drawable/default_avatar"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
@@ -161,7 +161,7 @@
                 android:layout_height="60dp"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/tv_xiangce_temp"
-                android:src="@drawable/default_useravatar" />
+                android:src="@drawable/default_avatar" />
 
             <ImageView
                 android:layout_marginLeft="8dp"
@@ -170,7 +170,7 @@
                 android:layout_height="60dp"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/iv_image1"
-                android:src="@drawable/default_useravatar" />
+                android:src="@drawable/default_avatar" />
             <ImageView
                 android:layout_marginLeft="8dp"
                 android:id="@+id/iv_image3"
@@ -178,7 +178,7 @@
                 android:layout_height="60dp"
                 android:layout_centerVertical="true"
                 android:layout_toRightOf="@id/iv_image2"
-                android:src="@drawable/default_useravatar" />
+                android:src="@drawable/default_avatar" />
         </RelativeLayout>
 
         <Button

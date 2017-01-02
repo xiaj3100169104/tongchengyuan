@@ -25,7 +25,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_width="60.0dip"
                 android:layout_height="60.0dip"
-                android:src="@drawable/head" />
+                android:src="@drawable/default_avatar" />
  
 
             <TextView

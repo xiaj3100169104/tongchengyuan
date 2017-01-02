@@ -17,8 +17,12 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.juns.wechat.R;
 import com.juns.wechat.adpter.DynamicAdapter;
 import com.juns.wechat.bean.DynamicBean;
+import com.juns.wechat.bean.UserBean;
+import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.common.HttpAction;
 import com.juns.wechat.net.common.NetDataBeanCallback;
+import com.juns.wechat.util.ImageLoader;
+import com.makeramen.roundedimageview.RoundedImageView;
 import com.style.base.BaseToolbarActivity;
 import com.style.constant.Skip;
 import com.style.view.DividerItemDecoration;
@@ -45,13 +49,14 @@ public class FriendCircleActivity extends BaseToolbarActivity {
     @Bind(R.id.tv_nick)
     TextView tvNick;
     @Bind(R.id.iv_avatar)
-    ImageView ivAvatar;
+    RoundedImageView ivAvatar;
 
     private static List<DynamicBean> cacheList;
     private List<DynamicBean> dataList;
     private DynamicAdapter adapter;
     private int page = 1;
     private int action = ACTION_REFRESH;
+    private UserBean curUser;
 
     @Override
     protected void onCreate(Bundle arg0) {
@@ -79,7 +84,10 @@ public class FriendCircleActivity extends BaseToolbarActivity {
     protected void initData() {
         setToolbarTitle(R.string.moments);
 
-        Glide.with(this).load(R.drawable.pig).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(ivAvatar);
+        //Glide.with(this).load(R.drawable.pig).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(ivAvatar);
+        curUser = AccountManager.getInstance().getUser();
+        ImageLoader.loadAvatar(ivAvatar, curUser.getHeadUrl());
+        tvNick.setText(curUser.getShowName());
 
         dataList = new ArrayList<>();
         adapter = new DynamicAdapter(this, dataList);

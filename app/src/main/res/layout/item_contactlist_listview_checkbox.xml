@@ -37,7 +37,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="12dp"
-            android:src="@drawable/default_useravatar" />
+            android:src="@drawable/default_avatar" />
 
         <RelativeLayout
             android:layout_width="match_parent"

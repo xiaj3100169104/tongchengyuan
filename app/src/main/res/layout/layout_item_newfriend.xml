@@ -15,7 +15,7 @@
 			android:layout_width="45dip"
 			android:layout_height="45dip"
 			android:layout_centerVertical="true"
-			android:src="@drawable/head" />
+			android:src="@drawable/default_avatar" />
 		<TextView
 		    android:id="@+id/tv_title"
                 style="@style/MMFontTitleInList"

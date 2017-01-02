@@ -30,7 +30,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="11dp"
             android:scaleType="fitXY"
-            android:src="@drawable/head" />
+            android:src="@drawable/default_avatar" />
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -32,7 +32,7 @@
                     android:layout_height="70.0dip"
                     android:layout_marginLeft="12dp"
                     android:layout_marginRight="12dp"
-                    android:src="@drawable/default_useravatar" />
+                    android:src="@drawable/default_avatar" />
 
                 <TextView
                     android:id="@+id/tvNickName"

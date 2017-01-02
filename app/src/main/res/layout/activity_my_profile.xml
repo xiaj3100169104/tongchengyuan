@@ -27,7 +27,7 @@
                 android:layout_height="64dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/default_useravatar" />
+                android:src="@drawable/default_avatar" />
 
             <TextView
                 style="@style/text_black_16sp"

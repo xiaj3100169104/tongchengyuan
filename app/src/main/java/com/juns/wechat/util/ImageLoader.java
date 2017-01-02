@@ -1,13 +1,12 @@
 package com.juns.wechat.util;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
 import com.juns.wechat.App;
 import com.juns.wechat.R;
 import com.juns.wechat.config.ConfigUtil;
@@ -17,15 +16,11 @@ import org.xutils.common.Callback;
 import org.xutils.image.ImageOptions;
 import org.xutils.x;
 
-import java.io.File;
-import java.lang.ref.WeakReference;
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Created by 王宗文 on 2016/7/16.
  */
 public class ImageLoader {
+    private static final String TAG = "ImageLoader";
     private static final String LOCAL_PATH = PhotoUtil.PHOTO_PATH;
     private static final String REMOTE_PATH = ConfigUtil.REAL_SERVER + "/upload/";
     private static LruCache<String, Bitmap> bitmapCache;
@@ -34,8 +29,8 @@ public class ImageLoader {
     private static int minWidth = DisplayUtil.dip2px(App.getInstance(), 80);
 
     private static final ImageOptions OPTIONS_AVATAR = new ImageOptions.Builder()
-            .setFailureDrawableId(R.drawable.default_useravatar)
-            .setLoadingDrawableId(R.drawable.default_useravatar)
+            .setFailureDrawableId(R.drawable.default_avatar)
+            .setLoadingDrawableId(R.drawable.default_avatar)
             .build();
     private static final ImageOptions OPTIONS_PICTURE = new ImageOptions.Builder()
             .setFailureDrawableId(R.mipmap.image_fail)
@@ -44,15 +39,18 @@ public class ImageLoader {
 
     public static void loadAvatar(ImageView imageView, String fileName) {
         if (TextUtils.isEmpty(fileName)) {
-            imageView.setImageResource(R.drawable.default_useravatar);
+            imageView.setImageResource(R.drawable.default_avatar);
         } else {
             x.image().bind(imageView, REMOTE_PATH + fileName, OPTIONS_AVATAR);
         }
     }
 
     public static void loadPicture(ImageView imageView, String fileName) {
-        if (!TextUtils.isEmpty(fileName))
-            x.image().bind(imageView, REMOTE_PATH + fileName, OPTIONS_PICTURE);
+        if (!TextUtils.isEmpty(fileName)) {
+            String url = REMOTE_PATH + fileName;
+            Log.e(TAG, url);
+            x.image().bind(imageView, url, OPTIONS_PICTURE);
+        }
     }
 
     public static void loadBigPicture(ImageView imageView, String fileName, Callback.CommonCallback<Drawable> callback) {
@@ -62,7 +60,7 @@ public class ImageLoader {
 
     public static void loadBigAvatar(ImageView imageView, String fileName, Callback.CommonCallback<Drawable> callback) {
         if (TextUtils.isEmpty(fileName)) {
-            imageView.setImageResource(R.drawable.default_useravatar);
+            imageView.setImageResource(R.drawable.default_avatar);
         } else {
             x.image().bind(imageView, REMOTE_PATH + fileName, OPTIONS_AVATAR, callback);
         }

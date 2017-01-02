@@ -36,7 +36,7 @@
             android:layout_height="45dp"
             android:layout_gravity="center_vertical"
             android:scaleType="fitXY"
-            android:src="@drawable/head" />
+            android:src="@drawable/default_avatar" />
 
         <TextView
             android:id="@+id/name"

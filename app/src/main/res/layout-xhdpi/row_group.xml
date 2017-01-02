@@ -12,7 +12,7 @@
         android:layout_alignParentLeft="true"
         android:padding="5dp"
         android:layout_marginLeft="4dp"
-        android:src="@drawable/head" />
+        android:src="@drawable/default_avatar" />
 
     <TextView
         android:id="@+id/name"

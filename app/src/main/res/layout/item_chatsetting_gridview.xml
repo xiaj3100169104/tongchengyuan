@@ -15,7 +15,7 @@
             android:layout_height="56dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="12dp"
-            android:src="@drawable/head" />
+            android:src="@drawable/default_avatar" />
 
         <ImageView
             android:id="@+id/badge_delete"

@@ -24,7 +24,7 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/default_useravatar"/>
+                    android:src="@drawable/default_avatar"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"

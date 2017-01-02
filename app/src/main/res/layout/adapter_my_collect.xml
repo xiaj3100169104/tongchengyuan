@@ -32,7 +32,7 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/head" />
+                        android:src="@drawable/default_avatar" />
 
                     <TextView
                         android:id="@+id/tv_nike"
@@ -87,7 +87,7 @@
                     android:layout_width="220dp"
                     android:layout_height="120dp"
                     android:scaleType="fitXY"
-                    android:src="@mipmap/empty_photo" />
+                    android:src="@drawable/default_image" />
 
             </RelativeLayout>
         </LinearLayout>

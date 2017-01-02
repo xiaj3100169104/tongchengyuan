@@ -14,7 +14,7 @@
             android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/default_useravatar"
+            android:src="@drawable/default_avatar"
             android:layout_centerInParent="true"/>
 
         <ProgressBar

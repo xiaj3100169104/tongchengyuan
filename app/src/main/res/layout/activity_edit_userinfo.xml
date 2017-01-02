@@ -23,7 +23,7 @@
                 android:id="@+id/head"
                 android:layout_width="90.0dip"
                 android:layout_height="90.0dip"
-                android:src="@drawable/head" />
+                android:src="@drawable/default_avatar" />
 
              
               <ImageView
