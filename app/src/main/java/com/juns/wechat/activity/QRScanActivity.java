@@ -81,6 +81,7 @@ public class QRScanActivity extends BaseToolbarActivity {
 
     private void onGetQRcodeSuccess(Bitmap mBitmap, String result) {
         logE(TAG, "二维码==" + result);
+        startActivity(new Intent(this, UserInfoActivity.class).putExtra(Skip.KEY_USER_ID, Integer.valueOf(result)));
         finish();
     }
 
