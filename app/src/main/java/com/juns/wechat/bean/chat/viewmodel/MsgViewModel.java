@@ -29,8 +29,10 @@ public abstract class MsgViewModel implements Comparable<MsgViewModel> {
 
     private long mMsgTime, mPrevMsgTime;
     private final long MSG_TIME_INTERVAL = 120000L; //两分钟
+    protected int myselfuserId;
+    protected int otherUserId;
 
-    public MsgViewModel(Context context, MessageBean messageBean){
+    public MsgViewModel(Context context, MessageBean messageBean) {
         messageDao = MessageDao.getInstance();
         mContext = context;
         mInflater = LayoutInflater.from(context);
@@ -42,44 +44,50 @@ public abstract class MsgViewModel implements Comparable<MsgViewModel> {
     /**
      * 在初始化该类及其子类后，应该马上调用这个方法设置必须值
      */
-    public final void setInfo(String myselfName, String myselfAvatar, String otherName, String otherAvatar){
+    public final void setInfo(int myselfuserId, String myselfName, String myselfAvatar, int otherUserId, String otherName, String otherAvatar) {
+        this.myselfuserId = myselfuserId;
         this.myselfName = myselfName;
         this.myselfAvatar = myselfAvatar;
+        this.otherUserId = otherUserId;
         this.otherName = otherName;
         this.otherAvatar = otherAvatar;
     }
 
     /**
      * 是否显示自己，用来判断消失是在左边还是右边显示
+     *
      * @return 显示自己返回true
      */
-    public final boolean isShowMyself(){
+    public final boolean isShowMyself() {
         int direction = messageBean.getDirection();
         return direction == MessageBean.Direction.OUTGOING.value;
     }
 
     /**
      * 返回messageEntity的Id
+     *
      * @return
      */
-    public final int getId(){
+    public final int getId() {
         return messageBean.getId();
     }
 
     /**
      * 是否显示时间
+     *
      * @return
      */
-    public final boolean isShowTime(){
+    public final boolean isShowTime() {
         return mMsgTime - mPrevMsgTime > MSG_TIME_INTERVAL;
     }
 
     /**
      * 加载用户头像
+     *
      * @param icon
      * @param url
      */
-    public void loadUrl(ImageView icon, String url){
+    public void loadUrl(ImageView icon, String url) {
         ImageLoader.loadAvatar(icon, url);
     }
 
@@ -88,11 +96,11 @@ public abstract class MsgViewModel implements Comparable<MsgViewModel> {
     /**
      * 将该条消息标记为已读
      */
-    public final void markAsRead(){
-        if(messageBean.getDirection() == MessageBean.Direction.OUTGOING.value){
+    public final void markAsRead() {
+        if (messageBean.getDirection() == MessageBean.Direction.OUTGOING.value) {
             return;
         }
-        if(messageBean.getState() != MessageBean.State.NEW.value){
+        if (messageBean.getState() != MessageBean.State.NEW.value) {
             return;
         }
         messageBean.setState(MessageBean.State.READ.value);
@@ -101,8 +109,9 @@ public abstract class MsgViewModel implements Comparable<MsgViewModel> {
 
     /**
      * 返回该viewModel的类型，adapter根据类型来正确的展示
-     * @see com.juns.wechat.adpter.ChatAdapter#getItemViewType(int)
+     *
      * @return
+     * @see com.juns.wechat.adpter.ChatAdapter#getItemViewType(int)
      */
     public abstract int getType();
 
@@ -116,7 +125,7 @@ public abstract class MsgViewModel implements Comparable<MsgViewModel> {
     /**
      * 删除该条消息
      */
-    public final void delete(){
+    public final void delete() {
         messageBean.setFlag(Flag.INVALID.value());
         messageDao.update(messageBean);
     }
@@ -124,22 +133,22 @@ public abstract class MsgViewModel implements Comparable<MsgViewModel> {
     /**
      * 点击用户头像的事件
      */
-    protected void onUserPhotoClick(String userName){
+    protected void onUserPhotoClick(int userId) {
         Intent intent = new Intent(mContext, UserInfoActivity.class);
-        intent.putExtra(Skip.KEY_USER_NAME, userName);
+        intent.putExtra(Skip.KEY_USER_ID, userId);
         mContext.startActivity(intent);
     }
 
 
-    public final void setPrevMsgTime(long prevMsgTime){
+    public final void setPrevMsgTime(long prevMsgTime) {
         mPrevMsgTime = prevMsgTime;
     }
 
-    public final long getPrevMsgTime(){
+    public final long getPrevMsgTime() {
         return mPrevMsgTime;
     }
 
-    public final long getMsgTime(){
+    public final long getMsgTime() {
         return mMsgTime;
     }
 

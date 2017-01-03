@@ -31,7 +31,7 @@
                     android:id="@+id/tvNickName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="黄方意"
+                    android:text="备注"
                     android:textColor="#353535"
                     android:textSize="16sp" />
 

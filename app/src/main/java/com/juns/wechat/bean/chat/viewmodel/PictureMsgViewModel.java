@@ -99,9 +99,9 @@ public class PictureMsgViewModel extends MsgViewModel implements View.OnClickLis
     @Override
     public void onClick(View v) {
         if(isShowMyself()){
-            super.onUserPhotoClick(myselfName);
+            super.onUserPhotoClick(myselfuserId);
         }else {
-            super.onUserPhotoClick(otherName);
+            super.onUserPhotoClick(otherUserId);
         }
     }
 

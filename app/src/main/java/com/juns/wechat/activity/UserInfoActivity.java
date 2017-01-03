@@ -72,6 +72,7 @@ public class UserInfoActivity extends BaseToolbarActivity implements OnClickList
     }
 
     public void initData() {
+        setToolbarTitle("详细资料");
         userId = getIntent().getIntExtra(Skip.KEY_USER_ID, 0);
         if (userId == curUser.getUserId()) {  //查看自己的信息
             userBean = curUser;

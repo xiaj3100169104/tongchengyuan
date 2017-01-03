@@ -90,9 +90,9 @@ public class VoiceMsgViewModel extends MsgViewModel implements View.OnClickListe
     public void onClick(View v) {
         if(v.getId() == R.id.iv_avatar){
             if(isShowMyself()){
-                super.onUserPhotoClick(myselfName);
+                super.onUserPhotoClick(myselfuserId);
             }else {
-                super.onUserPhotoClick(otherName);
+                super.onUserPhotoClick(otherUserId);
             }
         }else if(v.getId() == R.id.rl_content_container){
             if(!isShowMyself()){

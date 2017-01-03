@@ -32,30 +32,30 @@ public class ChatActivityHelper {
     private UserBean account = AccountManager.getInstance().getUser();
 
 
-    public ChatActivityHelper(ChatActivity chatActivity){
+    public ChatActivityHelper(ChatActivity chatActivity) {
         this.chatActivity = chatActivity;
         this.myselfName = account.getUserName();
         this.otherName = chatActivity.getContactName();
         messageDao = MessageDao.getInstance();
     }
 
-    public void onCreate(){
+    public void onCreate() {
         initQueryIndex(myselfName, otherName);
         markAsRead(myselfName, otherName);
     }
 
-    private void initQueryIndex(String myselfName, String otherName){
+    private void initQueryIndex(String myselfName, String otherName) {
         int size = messageDao.getMessageCount(myselfName, otherName);
         mQueryIndex = size > SIZE ? size - SIZE : 0;
     }
 
-    private List<MessageBean> getMessagesByIndexAndSize(){
+    private List<MessageBean> getMessagesByIndexAndSize() {
         return messageDao.getMessagesByIndexAndSize(myselfName, otherName, mQueryIndex, SIZE);
     }
 
-    public void loadMessagesFromDb(){
+    public void loadMessagesFromDb() {
         List<MessageBean> messageBeen = getMessagesByIndexAndSize();
-        if(messageBeen == null || messageBeen.isEmpty()) {
+        if (messageBeen == null || messageBeen.isEmpty()) {
             notifyActivityDataSetChanged(false);
             return;
         }
@@ -68,29 +68,30 @@ public class ChatActivityHelper {
         notifyActivityDataSetChanged(true);
     }
 
-    private void notifyActivityDataSetChanged(boolean hasNewData){
+    private void notifyActivityDataSetChanged(boolean hasNewData) {
         chatActivity.loadDataComplete(hasNewData);
     }
 
     /**
      * 由于消息是从上向下展示，下拉刷新查询出消息应该放在数据链表头部
+     *
      * @param messageEntities
      */
-    private void addEntityToViewModel(List<MsgViewModel> msgViewModels, List<MessageBean> messageEntities){
+    private void addEntityToViewModel(List<MsgViewModel> msgViewModels, List<MessageBean> messageEntities) {
         int size = messageEntities.size();
-        for(int i = size - 1; i >= 0 ; i--){
+        for (int i = size - 1; i >= 0; i--) {
             MessageBean entity = messageEntities.get(i);
             addEntityToViewModel(msgViewModels, entity);
         }
         Collections.sort(msgViewModels);  //要将消息重新排一次序
     }
 
-    private void addEntityToViewModel(List<MsgViewModel> msgViewModels,MessageBean entity){
-        if(entity == null) return;
+    private void addEntityToViewModel(List<MsgViewModel> msgViewModels, MessageBean entity) {
+        if (entity == null) return;
         int type = entity.getType();
         MsgViewModel viewModel = null;
         UserBean contactUser = chatActivity.getContactUser();
-        switch (type){
+        switch (type) {
             case MsgType.MSG_TYPE_TEXT:
                 viewModel = new TextMsgViewModel(chatActivity, entity);
                 break;
@@ -103,8 +104,8 @@ public class ChatActivityHelper {
             default:
                 break;
         }
-        if(viewModel != null){
-            viewModel.setInfo(account.getUserName(), account.getHeadUrl(), contactUser.getUserName(), contactUser.getHeadUrl());
+        if (viewModel != null) {
+            viewModel.setInfo(account.getUserId(), account.getUserName(), account.getHeadUrl(), contactUser.getUserId(), contactUser.getUserName(), contactUser.getHeadUrl());
             viewModel.markAsRead();
             msgViewModels.add(viewModel);
         }
@@ -112,25 +113,26 @@ public class ChatActivityHelper {
 
     /**
      * 处理一条消息，在观察到一条数据变化时调用。下拉刷新出来的数据不应该调用此方法
+     *
      * @param entity
      */
-    public void processOneMessage(List<MsgViewModel> msgViewModels, MessageBean entity, int action){
+    public void processOneMessage(List<MsgViewModel> msgViewModels, MessageBean entity, int action) {
         int position = -1;
-        for(int i = 0 ; i < msgViewModels.size() ; i++){
+        for (int i = 0; i < msgViewModels.size(); i++) {
             MsgViewModel viewModel = msgViewModels.get(i);
-            if(entity.getId() == viewModel.getId()){
+            if (entity.getId() == viewModel.getId()) {
                 position = i;
                 break;
             }
         }
-        switch (action){
+        switch (action) {
             case DbDataEvent.SAVE:
                 addEntityToViewModel(msgViewModels, entity);
                 Collections.sort(msgViewModels);
                 chatActivity.refreshOneData(true);
-            break;
+                break;
             case DbDataEvent.UPDATE:
-                if(position != -1){
+                if (position != -1) {
                     msgViewModels.remove(position);
                 }
                 addEntityToViewModel(msgViewModels, entity);
@@ -145,9 +147,10 @@ public class ChatActivityHelper {
 
     /**
      * 将未读消息状态置为已读状态
+     *
      * @param otherName
      */
-    public void markAsRead(final String myselfName, final String otherName){
+    public void markAsRead(final String myselfName, final String otherName) {
         ThreadPoolUtil.execute(new Runnable() {
             @Override
             public void run() {
@@ -156,7 +159,7 @@ public class ChatActivityHelper {
         });
     }
 
-    public void onDestroy(){
+    public void onDestroy() {
         chatActivity = null;
     }
 

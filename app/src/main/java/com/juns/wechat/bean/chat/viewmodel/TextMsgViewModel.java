@@ -106,9 +106,9 @@ public class TextMsgViewModel extends MsgViewModel implements View.OnClickListen
     @Override
     public void onClick(View v) {
         if(isShowMyself()){
-            super.onUserPhotoClick(myselfName);
+            super.onUserPhotoClick(myselfuserId);
         }else {
-            super.onUserPhotoClick(otherName);
+            super.onUserPhotoClick(otherUserId);
         }
     }
 
