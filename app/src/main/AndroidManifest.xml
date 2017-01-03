@@ -88,11 +88,11 @@
             android:windowSoftInputMode="adjustResize">
         </activity>
         <activity
-            android:name=".chat.VoiceCallActivity"
+            android:name=".chat.voice.VoiceCallActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".chat.VideoCallActivity"
+            android:name=".chat.video.VideoCallActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
@@ -105,7 +105,7 @@
             android:theme="@style/MyDialogStyle">
         </activity>
         <activity
-            android:name=".chat.ContextMenu"
+            android:name=".chat.im.ContextMenu"
             android:screenOrientation="portrait"
             android:theme="@style/MyDialogStyle">
         </activity>
@@ -118,7 +118,7 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".chat.ShowVideoActivity"
+            android:name=".chat.video.ShowVideoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateAlwaysHidden">

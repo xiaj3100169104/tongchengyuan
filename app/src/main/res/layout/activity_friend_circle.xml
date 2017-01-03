@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:orientation="vertical">
+    android:background="@color/gray_light">
 
-    <include layout="@layout/comm_toolbar" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <include layout="@layout/comm_toolbar" />
 
         <in.srain.cube.views.ptr.PtrClassicFrameLayout
             android:id="@+id/ptrFrame"
@@ -28,9 +34,13 @@
                         android:id="@+id/recyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:nestedScrollingEnabled="false"/>
+                        android:nestedScrollingEnabled="false" />
 
                 </LinearLayout>
             </ScrollView>
         </in.srain.cube.views.ptr.PtrClassicFrameLayout>
-</LinearLayout>
+    </LinearLayout>
+
+    <include layout="@layout/layout_bottom_friend_circle_activity" />
+
+</RelativeLayout>

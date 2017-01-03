@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.juns.wechat.R;
 import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.bean.UserBean;
+import com.juns.wechat.chat.im.ChatActivity;
 import com.juns.wechat.dao.FriendDao;
 import com.juns.wechat.exception.UserNotFoundException;
 import com.juns.wechat.helper.CommonViewHelper;

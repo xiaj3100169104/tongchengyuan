@@ -1,4 +1,4 @@
-package com.juns.wechat.activity;
+package com.juns.wechat.chat.voice;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

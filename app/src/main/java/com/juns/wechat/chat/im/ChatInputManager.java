@@ -1,4 +1,4 @@
-package com.juns.wechat.helper;
+package com.juns.wechat.chat.im;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,20 +14,17 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.juns.wechat.R;
-import com.juns.wechat.activity.CallVoiceBaseActivity;
-import com.juns.wechat.activity.ChatActivity;
 import com.juns.wechat.activity.SendLocationActivity;
-import com.juns.wechat.chat.VoiceCallActivity;
 import com.juns.wechat.chat.adpter.ExpressionAdapter;
 import com.juns.wechat.chat.adpter.ExpressionPagerAdapter;
 import com.juns.wechat.chat.utils.SmileUtils;
+import com.juns.wechat.chat.voice.CallVoiceBaseActivity;
 import com.juns.wechat.chat.widght.ExpandGridView;
 import com.juns.wechat.chat.widght.PasteEditText;
 import com.juns.wechat.util.BitmapUtil;
@@ -38,7 +35,6 @@ import com.juns.wechat.util.ToastUtil;
 import com.juns.wechat.view.AudioRecordButton;
 import com.juns.wechat.xmpp.util.SendMessage;
 import com.style.album.AlbumActivity;
-import com.style.album.SelectLocalPictureActivity;
 import com.style.constant.FileDirectory;
 import com.style.constant.Skip;
 import com.style.utils.CommonUtil;

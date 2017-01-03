@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:divider="@drawable/divider_gray"
+    android:orientation="vertical"
+    android:showDividers="beginning|middle|end">
+
+    <RelativeLayout
+        android:id="@+id/layout_bottom_smile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/et_comment"
+            style="@style/text_black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/layout1"
+            android:maxLength="50"
+            android:paddingLeft="8dp"
+            android:singleLine="false" />
+
+        <LinearLayout
+            android:id="@+id/layout1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:paddingLeft="10dp"
+            android:paddingTop="5dp"
+            android:paddingRight="10dp"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/view_smile"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@drawable/sel_switch_emoji"
+                android:button="@null" />
+
+            <Button
+                android:id="@+id/bt_dis_dynamic"
+                style="@style/text_white"
+                android:layout_width="50dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/btn_register_bg"
+                android:text="@string/send" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_face"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff0f0f0"
+        android:orientation="vertical"
+        android:paddingBottom="5dip"
+        android:paddingTop="5dip"
+        android:visibility="gone">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/face_pager"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginLeft="5dip"
+            android:layout_marginRight="5dip"
+            android:background="#0000"
+            android:flipInterval="30"
+            android:persistentDrawingCache="animation" />
+
+        <com.style.view.CirclePageIndicator
+            android:id="@+id/indicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dip" />
+    </LinearLayout>
+</LinearLayout>

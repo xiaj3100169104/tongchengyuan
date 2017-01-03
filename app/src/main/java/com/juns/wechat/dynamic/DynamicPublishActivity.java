@@ -1,4 +1,4 @@
-package com.juns.wechat.activity;
+package com.juns.wechat.dynamic;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -13,8 +13,8 @@ import android.widget.EditText;
 import com.juns.wechat.R;
 import com.juns.wechat.bean.DynamicBean;
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.helper.SimpleExpressionhelper;
 import com.juns.wechat.manager.AccountManager;
+import com.juns.wechat.net.common.HttpAction;
 import com.juns.wechat.net.common.NetDataBeanCallback;
 import com.juns.wechat.util.PhotoUtil;
 import com.style.album.AlbumActivity;
@@ -24,7 +24,6 @@ import com.style.base.BaseToolbarBtnActivity;
 import com.style.constant.FileDirectory;
 import com.style.constant.Skip;
 import com.style.dialog.SelAvatarDialog;
-import com.juns.wechat.net.common.HttpAction;
 import com.style.rxAndroid.callback.RXOtherCallBack;
 import com.style.utils.BitmapUtil;
 import com.style.utils.CommonUtil;
@@ -45,7 +44,7 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
     @Bind(R.id.recyclerView)
     RecyclerView recyclerView;
 
-    private SimpleExpressionhelper facehelper;
+    private PublishDynamicHelper facehelper;
 
     private DynamicPublishImageAdapter adapter;
     private List<String> paths;
@@ -69,7 +68,7 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
 
         curUser = AccountManager.getInstance().getUser();
         setToolbarTitle("");
-        facehelper = new SimpleExpressionhelper(this, etContent);
+        facehelper = new PublishDynamicHelper(this, etContent);
         facehelper.onCreate();
         paths = null;
         paths = new ArrayList<>();

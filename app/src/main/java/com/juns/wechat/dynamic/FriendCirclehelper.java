@@ -1,9 +1,5 @@
-package com.juns.wechat.helper;
+package com.juns.wechat.dynamic;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -13,60 +9,38 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import com.juns.wechat.R;
-import com.juns.wechat.activity.CallVoiceBaseActivity;
-import com.juns.wechat.activity.ChatActivity;
-import com.juns.wechat.activity.DynamicPublishActivity;
-import com.juns.wechat.activity.SendLocationActivity;
 import com.juns.wechat.chat.adpter.ExpressionAdapter;
 import com.juns.wechat.chat.adpter.ExpressionPagerAdapter;
 import com.juns.wechat.chat.utils.SmileUtils;
 import com.juns.wechat.chat.widght.ExpandGridView;
-import com.juns.wechat.chat.widght.PasteEditText;
-import com.juns.wechat.util.BitmapUtil;
-import com.juns.wechat.util.LogUtil;
-import com.juns.wechat.util.PhotoUtil;
-import com.juns.wechat.util.ThreadPoolUtil;
-import com.juns.wechat.util.ToastUtil;
-import com.juns.wechat.view.AudioRecordButton;
-import com.juns.wechat.xmpp.util.SendMessage;
-import com.style.album.AlbumActivity;
-import com.style.constant.FileDirectory;
-import com.style.constant.Skip;
 import com.style.utils.CommonUtil;
 import com.style.view.CirclePageIndicator;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
-
 
 /**
- * Created by 王者 on 2016/8/7.
+ * Created by xj on 2016/8/7.
  */
-public class SimpleExpressionhelper {
+public class FriendCircleHelper {
     private static final String TAG = "SimpleExpressionhelper";
     private static final int EMOTICONS_COUNT = 59;
     private static final String EMOTION_NAME_DELETE = "f_emotion_del_normal";
+    Button btSend;
     EditText etContent;
     View layoutRoot;
     CheckBox viewSmile;
-    LinearLayout rlBottomSmile;
+    LinearLayout layoutBottomSmile;
     LinearLayout layoutFace;
     ViewPager facePager;
     CirclePageIndicator indicator;
@@ -80,13 +54,14 @@ public class SimpleExpressionhelper {
     private List<String> emoticonsFileNames;
 
 
-    public SimpleExpressionhelper(AppCompatActivity mActivity, EditText etContent) {
+    public FriendCircleHelper(AppCompatActivity mActivity) {
         this.mActivity = mActivity;
-        this.etContent = etContent;
         //不能是DecorView，DecorView不能监听layout变化
-        layoutRoot = mActivity.findViewById(R.id.ll_parent);//mActivity.getWindow().getDecorView();
-        rlBottomSmile = (LinearLayout) layoutRoot.findViewById(R.id.rl_bottom_smile);
+        layoutRoot = mActivity.findViewById(R.id.layout_root);//mActivity.getWindow().getDecorView();
+        layoutBottomSmile = (LinearLayout) layoutRoot.findViewById(R.id.layout_bottom_smile);
+        etContent = (EditText) layoutRoot.findViewById(R.id.et_comment);
         viewSmile = (CheckBox) layoutRoot.findViewById(R.id.view_smile);
+        btSend = (Button) layoutRoot.findViewById(R.id.bt_dis_dynamic);
         layoutFace = (LinearLayout) layoutRoot.findViewById(R.id.layout_face);
         facePager = (ViewPager) layoutRoot.findViewById(R.id.face_pager);
         indicator = (CirclePageIndicator) layoutRoot.findViewById(R.id.indicator);
@@ -103,7 +78,7 @@ public class SimpleExpressionhelper {
                 //现在认为只要控件将Activity向上推的高度超过了1/3屏幕高，就认为软键盘弹起
                 if (oldBottom != 0 && bottom != 0 && (oldBottom - bottom > keyHeight)) {
                     Log.e(TAG, "监听到软键盘弹起");
-                    rlBottomSmile.setVisibility(View.VISIBLE);
+                    layoutBottomSmile.setVisibility(View.VISIBLE);
                     viewSmile.setChecked(false);
                 } else if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > keyHeight)) {
                     Log.e(TAG, "监听到软件盘关闭");
@@ -112,9 +87,9 @@ public class SimpleExpressionhelper {
                         @Override
                         public void run() {
                             //如果表情面板是关闭的，操作栏也关闭
-                            if (layoutFace.getVisibility() == View.GONE){
+                            if (layoutFace.getVisibility() == View.GONE) {
                                 viewSmile.setChecked(false);
-                                rlBottomSmile.setVisibility(View.GONE);
+                                layoutBottomSmile.setVisibility(View.GONE);
                             }
                         }
                     }, 200);
@@ -126,7 +101,7 @@ public class SimpleExpressionhelper {
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
                     //隐藏输入法，打开表情面板
-                    CommonUtil.hiddenSoftInput(SimpleExpressionhelper.this.mActivity);
+                    CommonUtil.hiddenSoftInput(FriendCircleHelper.this.mActivity);
                     //延迟显示，先让输入法隐藏
                     mHandler.postDelayed(new Runnable() {
                         @Override
@@ -137,7 +112,7 @@ public class SimpleExpressionhelper {
                 } else {
                     //隐藏表情面板，打开输入法
                     layoutFace.setVisibility(View.GONE);
-                    CommonUtil.showSoftInput(SimpleExpressionhelper.this.mActivity, SimpleExpressionhelper.this.etContent);
+                    CommonUtil.showSoftInput(FriendCircleHelper.this.mActivity, FriendCircleHelper.this.etContent);
                 }
             }
         });
@@ -147,9 +122,24 @@ public class SimpleExpressionhelper {
             public boolean onTouch(View v, MotionEvent event) {
                 viewSmile.setChecked(false);//还原表情状态
                 layoutFace.setVisibility(View.GONE);
-                // 这句话说的意思告诉父View我自己的事件我自己处理
-                v.getParent().requestDisallowInterceptTouchEvent(true);
                 return false;
+            }
+        });
+        this.etContent.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable arg0) {
+                if (arg0.length() > 0)
+                    btSend.setEnabled(true);
+                else
+                    btSend.setEnabled(false);
             }
         });
     }

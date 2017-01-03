@@ -1,4 +1,4 @@
-package com.juns.wechat.chat;
+package com.juns.wechat.chat.video;
 
 import java.io.File;
 import java.util.HashMap;

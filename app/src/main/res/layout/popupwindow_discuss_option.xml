@@ -50,26 +50,5 @@
                 android:layout_marginLeft="5dp"
                 android:text="@string/comment" />
         </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_collection"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/iv_collection"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@mipmap/ic_support_normal" />
-
-            <TextView
-                style="@style/text_white_14sp"
-                android:layout_marginLeft="5dp"
-                android:text="@string/collection" />
-        </LinearLayout>
-
     </LinearLayout>
 </LinearLayout>

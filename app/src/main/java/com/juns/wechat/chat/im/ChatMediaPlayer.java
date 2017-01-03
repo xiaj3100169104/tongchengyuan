@@ -1,4 +1,4 @@
-package com.juns.wechat.helper;
+package com.juns.wechat.chat.im;
 
 import android.media.MediaPlayer;
 import android.os.Handler;

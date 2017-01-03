@@ -15,7 +15,7 @@ import android.os.Vibrator;
 
 import com.juns.wechat.App;
 import com.juns.wechat.R;
-import com.juns.wechat.activity.ChatActivity;
+import com.juns.wechat.chat.im.ChatActivity;
 import com.juns.wechat.util.LogUtil;
 import com.juns.wechat.util.SharedPreferencesUtil;
 import com.style.constant.Skip;

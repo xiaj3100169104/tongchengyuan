@@ -1,10 +1,11 @@
-package com.juns.wechat.adpter;
+package com.juns.wechat.chat.im;
 
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
 
+import com.juns.wechat.adpter.ListDataAdapter;
 import com.juns.wechat.bean.chat.viewmodel.MsgViewModel;
 import com.juns.wechat.config.MsgType;
 

@@ -9,7 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.juns.wechat.R;
-import com.juns.wechat.helper.ChatMediaPlayer;
+import com.juns.wechat.chat.im.ChatMediaPlayer;
 import com.juns.wechat.bean.MessageBean;
 import com.juns.wechat.bean.chat.VoiceMsg;
 import com.juns.wechat.common.ViewHolder;

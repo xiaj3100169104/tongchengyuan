@@ -22,6 +22,6 @@
 
 	</FrameLayout>
 	
-	  <include layout="@layout/layout_bottom"/>
+	  <include layout="@layout/layout_bottom_main_activity"/>
 	  
 </LinearLayout>

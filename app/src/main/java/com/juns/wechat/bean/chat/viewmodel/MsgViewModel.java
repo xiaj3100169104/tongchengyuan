@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import com.juns.wechat.activity.UserInfoActivity;
 import com.juns.wechat.bean.Flag;
 import com.juns.wechat.bean.MessageBean;
+import com.juns.wechat.chat.im.ChatAdapter;
 import com.juns.wechat.dao.MessageDao;
 import com.juns.wechat.util.ImageLoader;
 import com.style.constant.Skip;
@@ -111,7 +112,7 @@ public abstract class MsgViewModel implements Comparable<MsgViewModel> {
      * 返回该viewModel的类型，adapter根据类型来正确的展示
      *
      * @return
-     * @see com.juns.wechat.adpter.ChatAdapter#getItemViewType(int)
+     * @see ChatAdapter#getItemViewType(int)
      */
     public abstract int getType();
 

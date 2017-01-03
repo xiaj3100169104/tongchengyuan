@@ -59,6 +59,10 @@ public abstract class BaseActivity extends BaseRxActivity {
         initData();
     }
 
+    public Context getContext() {
+        return mContext;
+    }
+
     //自定义窗口属性
     protected void customWindowOptions(Window window) {
         //定义4.4以下窗口属性

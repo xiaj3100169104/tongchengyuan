@@ -6,13 +6,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.juns.wechat.R;
-import com.juns.wechat.adpter.DynamicAdapter;
 import com.juns.wechat.adpter.MyCollectAdapter;
 import com.style.base.BaseToolbarActivity;
 import com.style.view.DividerItemDecoration;

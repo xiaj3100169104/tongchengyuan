@@ -1,4 +1,4 @@
-package com.juns.wechat.chat.utils;
+package com.juns.wechat.chat.video;
 
 import android.content.res.Configuration;
 import android.graphics.ImageFormat;

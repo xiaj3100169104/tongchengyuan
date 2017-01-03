@@ -1,4 +1,4 @@
-package com.juns.wechat.adpter;
+package com.juns.wechat.dynamic;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-
 import com.juns.wechat.R;
 import com.juns.wechat.bean.DynamicBean;
 import com.juns.wechat.bean.UserBean;
@@ -21,8 +20,6 @@ import com.juns.wechat.helper.CommonViewHelper;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.util.ImageLoader;
 import com.style.base.BaseRecyclerViewAdapter;
-import com.style.manager.ImageLoadManager;
-import com.style.utils.DateUtil;
 import com.style.utils.MyDateUtil;
 import com.style.utils.StringUtil;
 
@@ -267,15 +264,6 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter {
                     }
                 }
             });
-            mainMenu.llCollection.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mDiscussListener != null) {
-                        mDiscussListener.OnClickCollection(pos, data);
-                        menuWindow.dismiss();
-                    }
-                }
-            });
         }
         int xoff = -dip2px(200);
         int yoff = -dip2px(25);
@@ -289,8 +277,6 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter {
         LinearLayout llSupport;
         @Bind(R.id.ll_comment)
         LinearLayout llComment;
-        @Bind(R.id.ll_collection)
-        LinearLayout llCollection;
 
         public MainMenuViewHolder(View itemView) {
             ButterKnife.bind(this, itemView);
@@ -301,8 +287,6 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter {
         void OnClickSupport(int position, Object data);
 
         void OnClickComment(int position, Object data);
-
-        void OnClickCollection(int position, Object data);
     }
 
     public void setOnClickDiscussListener(OnClickDiscussListener mDiscussListener) {

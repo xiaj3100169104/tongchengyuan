@@ -1,4 +1,4 @@
-package com.juns.wechat.activity;
+package com.juns.wechat.chat.im;
 
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +16,6 @@ import android.widget.ListView;
 
 import com.juns.wechat.Constants;
 import com.juns.wechat.R;
-import com.juns.wechat.adpter.ChatAdapter;
 import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.bean.MessageBean;
 import com.juns.wechat.bean.UserBean;
@@ -27,9 +26,6 @@ import com.juns.wechat.dao.DbDataEvent;
 import com.juns.wechat.dao.FriendDao;
 import com.juns.wechat.database.ChatTable;
 import com.juns.wechat.exception.UserNotFoundException;
-import com.juns.wechat.helper.ChatActivityHelper;
-import com.juns.wechat.helper.ChatInputManager;
-import com.juns.wechat.helper.ChatMediaPlayer;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.util.LogUtil;
 import com.style.base.BaseToolbarActivity;

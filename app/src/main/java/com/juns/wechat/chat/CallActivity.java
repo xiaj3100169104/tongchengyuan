@@ -174,7 +174,7 @@ public class CallActivity extends BaseActivity {
 		EMChatManager.getDbManager().saveMessage(message, false);*/
 	}
 
-	enum CallingState {
+	public enum CallingState {
 		CANCED, NORMAL, REFUESD, BEREFUESD, UNANSWERED, OFFLINE, NORESPONSE, BUSY
 	}
 }

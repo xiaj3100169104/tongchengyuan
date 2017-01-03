@@ -9,13 +9,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.juns.wechat.R;
-import com.juns.wechat.activity.CallVoiceBaseActivity;
-import com.juns.wechat.activity.ChatActivity;
-import com.juns.wechat.activity.FriendCircleActivity;
+import com.juns.wechat.chat.voice.CallVoiceBaseActivity;
+import com.juns.wechat.chat.im.ChatActivity;
+import com.juns.wechat.dynamic.FriendCircleActivity;
 import com.juns.wechat.activity.QRScanActivity;
 import com.style.base.BaseBusFragment;
-import com.style.constant.Skip;
-import com.uuzuche.lib_zxing.activity.CaptureActivity;
 
 import butterknife.Bind;
 import butterknife.OnClick;
