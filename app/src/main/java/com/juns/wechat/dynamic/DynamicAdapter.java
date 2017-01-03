@@ -65,22 +65,6 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter {
         List<String> images = StringUtil.getList(bean.getImages(), ",");
         dealImages(mContext, holder.glImages, images);
 
-        /*if (null != testdataList) {
-            holder.gvImage.setVisibility(View.VISIBLE);
-            DynamicImgAdapter adapterImages = new DynamicImgAdapter(mContext, testdataList);
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(mContext, 3);
-            gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-            holder.gvImage.setLayoutManager(gridLayoutManager);
-            holder.gvImage.setAdapter(adapterImages);
-            adapterImages.setOnItemClickListener(new OnItemClickListener() {
-                @Override
-                public void onItemClick(int position, Object data) {
-                    showToast("" + position);
-                }
-            });
-        } else {
-            holder.gvImage.setVisibility(View.GONE);
-        }*/
       /*  CommentAdapter adapter = new CommentAdapter(mContext, testdataList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
