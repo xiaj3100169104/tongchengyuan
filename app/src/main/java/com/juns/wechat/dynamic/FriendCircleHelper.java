@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -40,7 +41,7 @@ public class FriendCircleHelper {
     EditText etContent;
     View layoutRoot;
     CheckBox viewSmile;
-    LinearLayout layoutBottomSmile;
+    ViewGroup layoutBottomSmile;
     LinearLayout layoutFace;
     ViewPager facePager;
     CirclePageIndicator indicator;
@@ -58,7 +59,7 @@ public class FriendCircleHelper {
         this.mActivity = mActivity;
         //不能是DecorView，DecorView不能监听layout变化
         layoutRoot = mActivity.findViewById(R.id.layout_root);//mActivity.getWindow().getDecorView();
-        layoutBottomSmile = (LinearLayout) layoutRoot.findViewById(R.id.layout_bottom_smile);
+        layoutBottomSmile = (ViewGroup) layoutRoot.findViewById(R.id.layout_bottom_smile);
         etContent = (EditText) layoutRoot.findViewById(R.id.et_comment);
         viewSmile = (CheckBox) layoutRoot.findViewById(R.id.view_smile);
         btSend = (Button) layoutRoot.findViewById(R.id.bt_dis_dynamic);
