@@ -83,7 +83,7 @@
         <!-- 环信开始 -->
 
         <activity
-            android:name=".activity.ChatActivity"
+            android:name=".chat.im.ChatActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustResize">
         </activity>
@@ -184,9 +184,9 @@
         </activity>
         <activity android:name="com.style.album.AlbumActivity"/>
         <activity android:name="com.style.album.SelectLocalPictureActivity"/>
-        <activity android:name="com.juns.wechat.activity.CallVoiceBaseActivity"/>
-        <activity android:name="com.juns.wechat.activity.FriendCircleActivity"/>
-        <activity android:name="com.juns.wechat.activity.DynamicPublishActivity"/>
+        <activity android:name="com.juns.wechat.chat.voice.CallVoiceBaseActivity"/>
+        <activity android:name="com.juns.wechat.dynamic.FriendCircleActivity"/>
+        <activity android:name="com.juns.wechat.dynamic.DynamicPublishActivity"/>
         <activity android:name="com.juns.wechat.activity.MyCollectActivity"/>
         <activity android:name="com.juns.wechat.activity.AddNoteActivity"/>
         <activity android:name="com.juns.wechat.activity.MyQRCodeActivity"/>
