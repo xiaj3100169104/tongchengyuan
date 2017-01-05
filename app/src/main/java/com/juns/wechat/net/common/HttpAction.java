@@ -31,6 +31,7 @@ public class HttpAction {
     private static String URL_UPLOAD_AVATAR = URL_BASE + "/uploadAvatar";
 
     private static String URL_ADD_DYNAMIC = URL_BASE + "/addDynamic";
+    private static String URL_ADD_COMMENT_2_DYNAMIC = URL_BASE + "/addComment";
     private static String URL_GET_DYNAMICS_FRIEND_CIRCLE = URL_BASE + "/getDynamicsByPage";
 
     private static String userId;
@@ -155,7 +156,19 @@ public class HttpAction {
         }
         NetWorkManager.getInstance().post(params, callback);
     }
-
+    /**
+     * @param dynamicId  动态id
+     * @param content 内容
+     * @param callback
+     */
+    public static void addComment2Dynamic(int dynamicId, String content, NetDataBeanCallback callback) {
+        //initCommonParams();
+        TokenRequestParams params = new TokenRequestParams(URL_ADD_COMMENT_2_DYNAMIC);
+        params.addBodyParameter("dynamicId", String.valueOf(dynamicId));
+        params.addBodyParameter("type", "0");
+        params.addBodyParameter("content", content);
+        NetWorkManager.getInstance().post(params, callback);
+    }
     /**
      * @param action    0:刷新；1：加载更多
      * @param dynamicId 最新记录的id

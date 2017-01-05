@@ -140,9 +140,15 @@ public class CommonUtil {
     /*
      * 打开软键盘
      */
-    public static void showSoftInput(Context context, EditText editText) {
-        editText.requestFocus();
-        ((InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE)).showSoftInput(editText, 0);
+    public static boolean showSoftInput(Activity activity, EditText editText) {
+        boolean isFocus = editText.requestFocus();
+        Log.e(TAG, "isFocus==" + isFocus);
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+        boolean isShow = imm.showSoftInput(editText, 0);
+        Log.e(TAG, "isShow==" + isShow);
+        if (!isShow)
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_NOT_ALWAYS);
+        return isShow;
     }
 
     /*
@@ -150,16 +156,21 @@ public class CommonUtil {
      */
     public static void hiddenSoftInput(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (activity.getCurrentFocus() != null)
-            imm.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+        if (activity.getCurrentFocus() != null) {
+            boolean isHide = imm.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
+            Log.e(TAG, "isHide==" + isHide);
+        }
     }
+
     /*
      * 有输入框时隐藏软键盘
      */
     public static void hiddenSoftInput(Activity activity, EditText editText) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+        boolean isHide = imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+        Log.e(TAG, "isHide==" + isHide);
     }
+
     /*
      * 切换软键盘状态
      */

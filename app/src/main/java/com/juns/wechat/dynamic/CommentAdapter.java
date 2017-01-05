@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.juns.wechat.R;
+import com.juns.wechat.bean.CommentBean;
 import com.style.base.BaseRecyclerViewAdapter;
 
 import java.util.List;
@@ -38,9 +39,9 @@ public class CommentAdapter extends BaseRecyclerViewAdapter {
     @Override
     public void onBindItem(RecyclerView.ViewHolder viewHolder, int position, Object data) {
         final ViewHolder holder = (ViewHolder) viewHolder;
-        String s = (String) data;
-        String cNike = "小司机";
-        String content = "赶快上车啦，没时间解释啦，嘿嘿嘿嘿嘿嘿嘿嘿嘿嘿嘿嘿";
+        CommentBean commentBean = (CommentBean) data;
+        String cNike = commentBean.getUser().getShowName();
+        String content = commentBean.getContent();
         SpannableStringBuilder builder = addClickablePart(cNike, content);
         if (builder != null) {
             holder.tvComment.setText(builder, TextView.BufferType.SPANNABLE);

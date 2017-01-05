@@ -79,7 +79,7 @@ public class FriendCircleHelper {
                 //现在认为只要控件将Activity向上推的高度超过了1/3屏幕高，就认为软键盘弹起
                 if (oldBottom != 0 && bottom != 0 && (oldBottom - bottom > keyHeight)) {
                     Log.e(TAG, "监听到软键盘弹起");
-                    layoutBottomSmile.setVisibility(View.VISIBLE);
+                    showLayoutBottom();
                     viewSmile.setChecked(false);
                 } else if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > keyHeight)) {
                     Log.e(TAG, "监听到软件盘关闭");
@@ -90,7 +90,7 @@ public class FriendCircleHelper {
                             //如果表情面板是关闭的，操作栏也关闭
                             if (layoutFace.getVisibility() == View.GONE) {
                                 viewSmile.setChecked(false);
-                                layoutBottomSmile.setVisibility(View.GONE);
+                                //layoutBottomSmile.setVisibility(View.GONE);
                             }
                         }
                     }, 200);
@@ -102,18 +102,18 @@ public class FriendCircleHelper {
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
                     //隐藏输入法，打开表情面板
-                    CommonUtil.hiddenSoftInput(FriendCircleHelper.this.mActivity);
+                    hiddenSoftInput();
                     //延迟显示，先让输入法隐藏
                     mHandler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            layoutFace.setVisibility(View.VISIBLE);
+                            showLayoutFace();
                         }
                     }, 100);
                 } else {
                     //隐藏表情面板，打开输入法
-                    layoutFace.setVisibility(View.GONE);
-                    CommonUtil.showSoftInput(FriendCircleHelper.this.mActivity, FriendCircleHelper.this.etContent);
+                    hideLayoutFace();
+                    showSoftInput();
                 }
             }
         });
@@ -148,6 +148,55 @@ public class FriendCircleHelper {
     public void onCreate() {
         initFace();
 
+    }
+
+    public void resetEditText() {
+        etContent.setText("");
+    }
+
+    public void hideLayoutBottom() {
+        layoutBottomSmile.setVisibility(View.GONE);
+    }
+
+    public void showLayoutBottom() {
+        layoutBottomSmile.setVisibility(View.VISIBLE);
+    }
+
+    public void hideLayoutFace() {
+        layoutFace.setVisibility(View.GONE);
+    }
+
+    public void showLayoutFace() {
+        layoutFace.setVisibility(View.VISIBLE);
+    }
+
+    public void showEditLayout() {
+        if (layoutFace.getVisibility() == View.VISIBLE)
+            return;
+        hideLayoutFace();
+        showLayoutBottom();
+        showSoftInput();
+    }
+
+    public void hideAllLayout() {
+        hiddenSoftInput();
+        hideLayoutFace();
+        hideLayoutBottom();
+    }
+
+    public void sendComplete() {
+        resetEditText();
+        hideLayoutFace();
+        showLayoutBottom();
+        hiddenSoftInput();
+    }
+
+    public void hiddenSoftInput() {
+        CommonUtil.hiddenSoftInput(mActivity, etContent);
+    }
+
+    public void showSoftInput() {
+        CommonUtil.showSoftInput(mActivity, etContent);
     }
 
     private void initFace() {
@@ -243,4 +292,5 @@ public class FriendCircleHelper {
         });
         return view;
     }
+
 }

@@ -8,13 +8,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.TypeReference;
 import com.juns.wechat.R;
+import com.juns.wechat.bean.CommentBean;
 import com.juns.wechat.bean.DynamicBean;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.manager.AccountManager;
@@ -24,7 +25,6 @@ import com.juns.wechat.util.ImageLoader;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.style.base.BaseToolbarActivity;
 import com.style.constant.Skip;
-import com.style.utils.CommonUtil;
 import com.style.view.DividerItemDecoration;
 
 import java.util.ArrayList;
@@ -45,6 +45,8 @@ public class FriendCircleActivity extends BaseToolbarActivity {
     private static final int COMMENT = 0;
     private static final int REPLY = 1;
     private static final int REPLY_REPLY = 2;
+    @Bind(R.id.scrollView)
+    ScrollView scrollView;
 
     private int tag = COMMENT;
     @Bind(R.id.recyclerView)
@@ -63,6 +65,7 @@ public class FriendCircleActivity extends BaseToolbarActivity {
     private int action = ACTION_REFRESH;
     private UserBean curUser;
     private FriendCircleHelper facehelper;
+    private int curCommentDynamicPosition;
 
     @Override
     protected void onCreate(Bundle arg0) {
@@ -97,6 +100,7 @@ public class FriendCircleActivity extends BaseToolbarActivity {
 
         facehelper = new FriendCircleHelper(this);
         facehelper.onCreate();
+        facehelper.hideLayoutBottom();
 
         dataList = new ArrayList<>();
         adapter = new DynamicAdapter(this, dataList);
@@ -133,10 +137,11 @@ public class FriendCircleActivity extends BaseToolbarActivity {
 
             @Override
             public void OnClickComment(int position, Object data) {
-                tag = COMMENT;
+                logE(TAG, "OnClickComment==" + position);
                 resetEditText();
-                CommonUtil.showSoftInput(getContext(), facehelper.etContent);
-
+                facehelper.showEditLayout();
+                tag = COMMENT;
+                curCommentDynamicPosition = position;
             }
         });
         facehelper.btSend.setOnClickListener(new View.OnClickListener() {
@@ -144,12 +149,19 @@ public class FriendCircleActivity extends BaseToolbarActivity {
             public void onClick(View v) {
                 String content = facehelper.etContent.getText().toString();
                 if (tag == COMMENT) {
-                    //addComment2Dynamic(content);
+                    addComment2Dynamic(content);
                 } else if (tag == REPLY) {
                     //addReply2Comment(curCmtIndex, content);
                 } else if (tag == REPLY_REPLY) {
                     //addReply2Reply(curCmtIndex, curReplyIndex, content);
                 }
+            }
+        });
+        scrollView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                facehelper.hideAllLayout();
+                return false;
             }
         });
         //防止刚进去不显示头部
@@ -172,8 +184,33 @@ public class FriendCircleActivity extends BaseToolbarActivity {
         }, 1000);
     }
 
+    private void addComment2Dynamic(final String content) {
+        final DynamicBean dynamicBean = dataList.get(curCommentDynamicPosition);
+        HttpAction.addComment2Dynamic(dynamicBean.getDynamicId(), content, new NetDataBeanCallback() {
+            @Override
+            protected void onCodeSuccess(Object data) {
+                facehelper.sendComplete();
+                List<CommentBean> list = dynamicBean.getCommentList();
+                if (list == null)
+                    list = new ArrayList();
+                CommentBean commentBean = new CommentBean();
+                commentBean.setCommenterId(dynamicBean.getDynamicId());
+                commentBean.setUser(curUser);
+                commentBean.setContent(content);
+                list.add(commentBean);
+                dynamicBean.setCommentList(list);
+                adapter.notifyItemChanged(curCommentDynamicPosition);
+            }
+
+            @Override
+            protected void onCodeFailure(String msg) {
+                super.onCodeFailure(msg);
+            }
+        });
+    }
+
     private void resetEditText() {
-        facehelper.etContent.setText("");
+        facehelper.resetEditText();
     }
 
     private void getData() {

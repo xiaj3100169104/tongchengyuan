@@ -2,6 +2,7 @@ package com.juns.wechat.dynamic;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,6 +14,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.juns.wechat.R;
+import com.juns.wechat.bean.CommentBean;
 import com.juns.wechat.bean.DynamicBean;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.utils.SmileUtils;
@@ -32,7 +34,7 @@ import uk.viewpager.ImagePagerActivity;
 
 
 public class DynamicAdapter extends BaseRecyclerViewAdapter {
-    private PopupWindow menuWindow;
+    private CommentPopupWindow menuWindow;
     private OnClickDiscussListener mDiscussListener;
     private OnClickImageListener mImageListener;
 
@@ -59,23 +61,37 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter {
         holder.ivDiscuss.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                showMenuWindow(pos, bean, holder.itemView.getRootView(), v);
+                showMenuWindow(pos, bean, (ViewGroup) holder.itemView.getRootView(), v);
             }
         });
+        //图片数据处理
         List<String> images = StringUtil.getList(bean.getImages(), ",");
-        dealImages(mContext, holder.glImages, images);
+        holder.glImages.removeAllViews();
+        if (images != null && images.size() > 0) {
+            holder.glImages.setVisibility(View.VISIBLE);
+            dealImages(mContext, holder.glImages, images);
+        } else {
+            holder.glImages.setVisibility(View.GONE);
+        }
 
-      /*  CommentAdapter adapter = new CommentAdapter(mContext, testdataList);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        holder.recyclerView.setLayoutManager(linearLayoutManager);
-        holder.recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new OnItemClickListener() {
+        //评论数据处理
+        List<CommentBean> commentBeanList = bean.getCommentList();
+        if (commentBeanList != null && commentBeanList.size() > 0) {
+            holder.recyclerView.setVisibility(View.VISIBLE);
+            CommentAdapter adapter = new CommentAdapter(mContext, commentBeanList);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
+            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            holder.recyclerView.setLayoutManager(linearLayoutManager);
+            holder.recyclerView.setAdapter(adapter);
+        /*  adapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position, Object data) {
                 showToast("" + position);
             }
         });*/
+        } else {
+            holder.recyclerView.setVisibility(View.GONE);
+        }
         /*if (viewHolder instanceof Holder) {
             Holder holder = (Holder) viewHolder;
             User user = ud.getUser();
@@ -146,7 +162,6 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter {
     }
 
     private void dealImages(Context mContext, GridLayout glImages, final List<String> images) {
-        glImages.removeAllViews();
 
         int imageNum = 0;//pos % 9;
         if (images != null && images.size() > 0) {
@@ -222,49 +237,33 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter {
         mContext.startActivity(intent);
     }
 
-    private void showMenuWindow(final int pos, final Object data, View rootView, View v) {
+    private void showMenuWindow(final int pos, final Object data, ViewGroup rootView, View anchor) {
         if (menuWindow == null) {
-            View view = mInflater.inflate(R.layout.popupwindow_discuss_option, (ViewGroup) rootView, false);
-            menuWindow = new PopupWindow(view, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-            menuWindow.setBackgroundDrawable(mContext.getResources().getDrawable(
-                    R.drawable.divider_transparent));
+            menuWindow = new CommentPopupWindow(mContext, rootView, R.layout.popupwindow_discuss_option);
             menuWindow.setAnimationStyle(R.style.Animations_ExtendsFromLeft);
-            final MainMenuViewHolder mainMenu = new MainMenuViewHolder(view);
-            mainMenu.llSupport.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mDiscussListener != null) {
-                        mDiscussListener.OnClickSupport(pos, data);
-                        menuWindow.dismiss();
-                    }
-                }
-            });
-            mainMenu.llComment.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mDiscussListener != null) {
-                        mDiscussListener.OnClickComment(pos, data);
-                        menuWindow.dismiss();
-                    }
-                }
-            });
         }
+        //防止popupwindow还在内存中保持原来的位置监听器，都需重置监听器
+        menuWindow.llSupport.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mDiscussListener != null) {
+                    menuWindow.dismiss();
+                    mDiscussListener.OnClickSupport(pos, data);
+                }
+            }
+        });
+        menuWindow.llComment.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mDiscussListener != null) {
+                    menuWindow.dismiss();
+                    mDiscussListener.OnClickComment(pos, data);
+                }
+            }
+        });
         int xoff = -dip2px(200);
         int yoff = -dip2px(25);
-        menuWindow.showAsDropDown(v, xoff, yoff);
-    }
-
-    class MainMenuViewHolder {
-        @Bind(R.id.tv_support)
-        TextView tvSupport;
-        @Bind(R.id.ll_support)
-        LinearLayout llSupport;
-        @Bind(R.id.ll_comment)
-        LinearLayout llComment;
-
-        public MainMenuViewHolder(View itemView) {
-            ButterKnife.bind(this, itemView);
-        }
+        menuWindow.showAsDropDown(anchor, xoff, yoff);
     }
 
     public interface OnClickDiscussListener {

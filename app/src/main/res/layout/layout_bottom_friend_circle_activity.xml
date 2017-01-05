@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_alignParentBottom="true"
+    android:background="@color/white"
     android:divider="@drawable/divider_gray"
     android:orientation="vertical"
     android:showDividers="beginning|middle|end">
@@ -10,34 +11,26 @@
     <RelativeLayout
         android:id="@+id/layout_bottom_smile"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <EditText
-            android:id="@+id/et_comment"
-            style="@style/text_black"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/layout1"
-            android:maxLength="50"
-            android:paddingLeft="8dp"
-            android:singleLine="false" />
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp">
 
         <LinearLayout
             android:id="@+id/layout1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_alignBottom="@+id/et_comment"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
             android:paddingLeft="10dp"
-            android:paddingTop="5dp"
             android:paddingRight="10dp"
-            android:gravity="bottom"
-            android:orientation="horizontal">
+            android:paddingTop="5dp">
 
             <CheckBox
                 android:id="@+id/view_smile"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:background="@drawable/sel_switch_emoji"
                 android:button="@null" />
 
@@ -50,6 +43,19 @@
                 android:background="@drawable/btn_register_bg"
                 android:text="@string/send" />
         </LinearLayout>
+
+        <EditText
+            android:id="@+id/et_comment"
+            style="@style/text_black_15sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/layout1"
+            android:paddingLeft="8dp"
+            android:gravity="top"
+            android:paddingTop="5dp"
+            android:text=""
+            android:singleLine="false"
+            android:maxLines="3"/>
 
     </RelativeLayout>
 

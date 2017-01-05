@@ -89,4 +89,11 @@ public class CommentBean implements Serializable{
 		this.modifyDate = modifyDate;
 	}
 
+	public UserBean getUser() {
+		return user;
+	}
+
+	public void setUser(UserBean user) {
+		this.user = user;
+	}
 }
