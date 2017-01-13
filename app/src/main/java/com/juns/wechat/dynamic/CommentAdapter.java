@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.juns.wechat.R;
 import com.juns.wechat.bean.CommentBean;
+import com.juns.wechat.bean.UserBean;
 import com.style.base.BaseRecyclerViewAdapter;
 
 import java.util.List;
@@ -40,9 +41,14 @@ public class CommentAdapter extends BaseRecyclerViewAdapter {
     public void onBindItem(RecyclerView.ViewHolder viewHolder, int position, Object data) {
         final ViewHolder holder = (ViewHolder) viewHolder;
         CommentBean commentBean = (CommentBean) data;
-        String cNike = commentBean.getUser().getShowName();
+        UserBean user1 = commentBean.getCommentUser();
+        UserBean user2 = commentBean.getReplyUser();
         String content = commentBean.getContent();
-        SpannableStringBuilder builder = addClickablePart(cNike, content);
+        SpannableStringBuilder builder;
+        if (user2 == null)
+            builder = addClickablePart(user1.getShowName(), content);
+        else
+            builder = addClickablePart(user1.getShowName(), user2.getShowName(), content);
         if (builder != null) {
             holder.tvComment.setText(builder, TextView.BufferType.SPANNABLE);
         } else
@@ -99,6 +105,7 @@ public class CommentAdapter extends BaseRecyclerViewAdapter {
     static class ViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.tv_comment)
         TextView tvComment;
+
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);

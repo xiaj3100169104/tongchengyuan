@@ -26,9 +26,10 @@ public class CommentBean implements Serializable{
 	private Integer replyUserId;//被评论人用户id
 	private String subType;//  类型
 	private String content;// 评论内容
-    private Date createDate; //创建日期
+    private long createDate; //创建日期
     private BigInteger modifyDate;///修改信息日期
-	private UserBean user;//评论人或者点赞人
+	private UserBean commentUser;//评论人或者点赞人
+    private UserBean replyUser;//被评论人或者点赞人
 
     public CommentBean(){
 
@@ -82,11 +83,11 @@ public class CommentBean implements Serializable{
 		this.content = content;
 	}
 
-	public Date getCreateDate() {
+	public long getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(Date createDate) {
+	public void setCreateDate(long createDate) {
 		this.createDate = createDate;
 	}
 
@@ -98,11 +99,19 @@ public class CommentBean implements Serializable{
 		this.modifyDate = modifyDate;
 	}
 
-	public UserBean getUser() {
-		return user;
-	}
+    public UserBean getCommentUser() {
+        return commentUser;
+    }
 
-	public void setUser(UserBean user) {
-		this.user = user;
-	}
+    public void setCommentUser(UserBean commentUser) {
+        this.commentUser = commentUser;
+    }
+
+    public UserBean getReplyUser() {
+        return replyUser;
+    }
+
+    public void setReplyUser(UserBean replyUser) {
+        this.replyUser = replyUser;
+    }
 }

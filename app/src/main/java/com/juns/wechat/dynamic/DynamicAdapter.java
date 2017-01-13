@@ -87,7 +87,7 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter {
                 @Override
                 public void onItemClick(int position, Object data) {
                     logE(TAG, pos + "--" + position);
-                    //mDiscussListener.OnClickReply();
+                    mDiscussListener.OnClickReply(pos, position, data);
                 }
             });
         } else {

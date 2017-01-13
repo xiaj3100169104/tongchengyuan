@@ -65,7 +65,8 @@ public class FriendCircleActivity extends BaseToolbarActivity {
     private int action = ACTION_REFRESH;
     private UserBean curUser;
     private FriendCircleHelper facehelper;
-    private int curCommentDynamicPosition;
+    private int curDynamicPosition;
+    private int curCommentPosition;
 
     @Override
     protected void onCreate(Bundle arg0) {
@@ -141,23 +142,25 @@ public class FriendCircleActivity extends BaseToolbarActivity {
                 resetEditText();
                 facehelper.showEditLayout();
                 tag = COMMENT;
-                curCommentDynamicPosition = position;
+                curDynamicPosition = position;
             }
 
             @Override
             public void OnClickReply(int position, int subPosition, Object data) {
-                
+                logE(TAG, "OnClickReply==" + position + "--" + subPosition);
+                resetEditText();
+                facehelper.showEditLayout();
+                tag = REPLY;
+                curDynamicPosition = position;
+                curCommentPosition = subPosition;
             }
         });
         facehelper.btSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String content = facehelper.etContent.getText().toString();
-                if (tag == COMMENT) {
-                    addComment2Dynamic(content);
-                } else if (tag == REPLY) {
-                    //addReply2Comment(curCmtIndex, content);
-                }
+                addComment2Dynamic(content);
+
             }
         });
         scrollView.setOnTouchListener(new View.OnTouchListener() {
@@ -188,21 +191,27 @@ public class FriendCircleActivity extends BaseToolbarActivity {
     }
 
     private void addComment2Dynamic(final String content) {
-        final DynamicBean dynamicBean = dataList.get(curCommentDynamicPosition);
-        HttpAction.addComment2Dynamic(dynamicBean.getDynamicId(), content, new NetDataBeanCallback() {
+        final DynamicBean dynamicBean = dataList.get(curDynamicPosition);
+        int replyUserId = -1;//表示直接评论动态
+        if (tag == REPLY) {
+            replyUserId = dynamicBean.getCommentList().get(curCommentPosition).getCommentUser().getUserId();
+        }
+        HttpAction.addComment2Dynamic(dynamicBean.getDynamicId(), replyUserId, content, new NetDataBeanCallback<CommentBean>(CommentBean.class) {
             @Override
-            protected void onCodeSuccess(Object data) {
-                facehelper.sendComplete();
-                List<CommentBean> list = dynamicBean.getCommentList();
-                if (list == null)
-                    list = new ArrayList();
-                CommentBean commentBean = new CommentBean();
+            protected void onCodeSuccess(CommentBean data) {
+                if (data != null) {
+                    facehelper.sendComplete();
+                    List<CommentBean> list = dynamicBean.getCommentList();
+                    if (list == null)
+                        list = new ArrayList();
+                /*CommentBean commentBean = new CommentBean();
                 commentBean.setCommenterId(dynamicBean.getDynamicId());
                 commentBean.setUser(curUser);
-                commentBean.setContent(content);
-                list.add(commentBean);
-                dynamicBean.setCommentList(list);
-                adapter.notifyItemChanged(curCommentDynamicPosition);
+                commentBean.setContent(content);*/
+                    list.add(data);
+                    dynamicBean.setCommentList(list);
+                    adapter.notifyItemChanged(curDynamicPosition);
+                }
             }
 
             @Override
