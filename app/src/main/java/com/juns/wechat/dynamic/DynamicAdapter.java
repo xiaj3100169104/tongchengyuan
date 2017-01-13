@@ -83,12 +83,13 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter {
             linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             holder.recyclerView.setLayoutManager(linearLayoutManager);
             holder.recyclerView.setAdapter(adapter);
-        /*  adapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(int position, Object data) {
-                showToast("" + position);
-            }
-        });*/
+            adapter.setOnItemClickListener(new OnItemClickListener() {
+                @Override
+                public void onItemClick(int position, Object data) {
+                    logE(TAG, pos + "--" + position);
+                    //mDiscussListener.OnClickReply();
+                }
+            });
         } else {
             holder.recyclerView.setVisibility(View.GONE);
         }
@@ -270,6 +271,8 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter {
         void OnClickSupport(int position, Object data);
 
         void OnClickComment(int position, Object data);
+
+        void OnClickReply(int position, int subPosition, Object data);
     }
 
     public void setOnClickDiscussListener(OnClickDiscussListener mDiscussListener) {

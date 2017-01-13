@@ -131,7 +131,7 @@ public class FriendCircleActivity extends BaseToolbarActivity {
 
         adapter.setOnClickDiscussListener(new DynamicAdapter.OnClickDiscussListener() {
             @Override
-            public void OnClickSupport(int position, Object data) {
+            public void OnClickSupport(int dynamicPosition, Object data) {
 
             }
 
@@ -143,6 +143,11 @@ public class FriendCircleActivity extends BaseToolbarActivity {
                 tag = COMMENT;
                 curCommentDynamicPosition = position;
             }
+
+            @Override
+            public void OnClickReply(int position, int subPosition, Object data) {
+                
+            }
         });
         facehelper.btSend.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,8 +157,6 @@ public class FriendCircleActivity extends BaseToolbarActivity {
                     addComment2Dynamic(content);
                 } else if (tag == REPLY) {
                     //addReply2Comment(curCmtIndex, content);
-                } else if (tag == REPLY_REPLY) {
-                    //addReply2Reply(curCmtIndex, curReplyIndex, content);
                 }
             }
         });

@@ -23,7 +23,8 @@ public class CommentBean implements Serializable{
 	private Integer commentId;// 评论id
 	private Integer commenterId;// 评论人或者点赞人id
 	private Integer dynamicId;// 动态id
-    private String subType;//  类型
+	private Integer replyUserId;//被评论人用户id
+	private String subType;//  类型
 	private String content;// 评论内容
     private Date createDate; //创建日期
     private BigInteger modifyDate;///修改信息日期
@@ -55,6 +56,14 @@ public class CommentBean implements Serializable{
 
 	public void setDynamicId(Integer dynamicId) {
 		this.dynamicId = dynamicId;
+	}
+
+	public Integer getReplyUserId() {
+		return replyUserId;
+	}
+
+	public void setReplyUserId(Integer replyUserId) {
+		this.replyUserId = replyUserId;
 	}
 
 	public String getSubType() {

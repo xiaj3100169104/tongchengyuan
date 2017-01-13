@@ -1,5 +1,6 @@
 package com.juns.wechat.net.common;
 
+import com.juns.wechat.bean.CommentBean;
 import com.juns.wechat.config.ConfigUtil;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.util.LogUtil;
@@ -165,6 +166,21 @@ public class HttpAction {
         //initCommonParams();
         TokenRequestParams params = new TokenRequestParams(URL_ADD_COMMENT_2_DYNAMIC);
         params.addBodyParameter("dynamicId", String.valueOf(dynamicId));
+        params.addBodyParameter("type", CommentBean.SubType.COMMENT.toString());
+        params.addBodyParameter("content", content);
+        NetWorkManager.getInstance().post(params, callback);
+    }
+    /**
+     * @param dynamicId  动态id
+     * @replyCommentId  被回复的评论id
+     * @param content 内容
+     * @param callback
+     */
+    public static void addReply2Comment(int dynamicId, int replyCommentId, String content, NetDataBeanCallback callback) {
+        //initCommonParams();
+        TokenRequestParams params = new TokenRequestParams(URL_ADD_COMMENT_2_DYNAMIC);
+        params.addBodyParameter("dynamicId", String.valueOf(dynamicId));
+        params.addBodyParameter("replyCommentId", String.valueOf(replyCommentId));
         params.addBodyParameter("type", "0");
         params.addBodyParameter("content", content);
         NetWorkManager.getInstance().post(params, callback);
