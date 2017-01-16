@@ -12,6 +12,7 @@ public class DynamicBean implements Serializable{
 	private String images;// 图片
 	private String createDate; //创建日期
 	private BigInteger modifyDate;///修改信息日期
+	private String  publisherName;
 	private UserBean user;//发布者
 	private List<CommentBean> supportList; //点赞列表
 	private List<CommentBean> commentList;//评论列表
@@ -66,6 +67,14 @@ public class DynamicBean implements Serializable{
 
 	public void setModifyDate(BigInteger modifyDate) {
 		this.modifyDate = modifyDate;
+	}
+
+	public String getPublisherName() {
+		return publisherName;
+	}
+
+	public void setPublisherName(String publisherName) {
+		this.publisherName = publisherName;
 	}
 
 	public UserBean getUser() {

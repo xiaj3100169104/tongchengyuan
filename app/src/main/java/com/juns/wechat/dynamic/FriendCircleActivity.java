@@ -148,11 +148,14 @@ public class FriendCircleActivity extends BaseToolbarActivity {
             @Override
             public void OnClickReply(int position, int subPosition, Object data) {
                 logE(TAG, "OnClickReply==" + position + "--" + subPosition);
-                resetEditText();
-                facehelper.showEditLayout();
-                tag = REPLY;
-                curDynamicPosition = position;
-                curCommentPosition = subPosition;
+                //自己不能回复自己
+                if (dataList.get(position).getCommentList().get(curCommentPosition).getCommenterId() != curUser.getUserId()){
+                    resetEditText();
+                    facehelper.showEditLayout();
+                    tag = REPLY;
+                    curDynamicPosition = position;
+                    curCommentPosition = subPosition;
+                }
             }
         });
         facehelper.btSend.setOnClickListener(new View.OnClickListener() {
@@ -194,7 +197,7 @@ public class FriendCircleActivity extends BaseToolbarActivity {
         final DynamicBean dynamicBean = dataList.get(curDynamicPosition);
         int replyUserId = -1;//表示直接评论动态
         if (tag == REPLY) {
-            replyUserId = dynamicBean.getCommentList().get(curCommentPosition).getCommentUser().getUserId();
+            replyUserId = dynamicBean.getCommentList().get(curCommentPosition).getCommenterId();
         }
         HttpAction.addComment2Dynamic(dynamicBean.getDynamicId(), replyUserId, content, new NetDataBeanCallback<CommentBean>(CommentBean.class) {
             @Override

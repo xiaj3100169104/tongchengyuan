@@ -23,7 +23,7 @@ import java.util.Map;
 /**
  * Created by 王宗文 on 2016/6/20.
  */
-public class UserDao extends BaseDao<UserBean>{
+public class UserDao extends BaseDao<UserBean> {
     private static final String GET_LAST_MODIFY_DATE =
             "SELECT max(t.modifyDate) as lastModifyDate FROM ( " +
                     "SELECT t1.* FROM (select u.* from wcUser u, wcFriend r where " +
@@ -35,19 +35,24 @@ public class UserDao extends BaseDao<UserBean>{
 
     private static UserDao mInstance;
 
-    public static UserDao getInstance(){
-        if(mInstance == null){
+    public static UserDao getInstance() {
+        if (mInstance == null) {
             mInstance = new UserDao();
         }
         return mInstance;
     }
 
-    public UserBean findByName(String userName){
+    public UserBean findByName(String userName) {
         WhereBuilder whereBuilder = WhereBuilder.b(UserBean.USERNAME, "=", userName);
         return findByParams(whereBuilder);
     }
 
-    public long getLastModifyDate(int userId){
+    public UserBean findByUserId(int userId) {
+        WhereBuilder whereBuilder = WhereBuilder.b(UserBean.USER_ID, "=", userId);
+        return findByParams(whereBuilder);
+    }
+
+    public long getLastModifyDate(int userId) {
         long lastModifyDate = 0;
 
         SqlInfo sqlInfo = new SqlInfo(GET_LAST_MODIFY_DATE);
@@ -60,8 +65,8 @@ public class UserDao extends BaseDao<UserBean>{
 
         try {
             Cursor cursor = dbManager.execQuery(sqlInfo);
-            if(cursor != null && cursor.moveToNext()){
-               lastModifyDate =  cursor.getLong(cursor.getColumnIndex("lastModifyDate"));
+            if (cursor != null && cursor.moveToNext()) {
+                lastModifyDate = cursor.getLong(cursor.getColumnIndex("lastModifyDate"));
             }
             closeCursor(cursor);
         } catch (DbException e) {
