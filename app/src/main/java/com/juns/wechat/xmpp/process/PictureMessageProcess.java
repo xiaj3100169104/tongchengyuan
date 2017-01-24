@@ -2,8 +2,8 @@ package com.juns.wechat.xmpp.process;
 
 import android.content.Context;
 
-import com.juns.wechat.bean.MessageBean;
-import com.juns.wechat.bean.chat.PictureMsg;
+import com.juns.wechat.chat.bean.MessageBean;
+import com.juns.wechat.chat.bean.PictureMsg;
 import com.juns.wechat.xmpp.util.FileTransferManager;
 
 

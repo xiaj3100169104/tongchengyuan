@@ -105,11 +105,6 @@
             android:theme="@style/MyDialogStyle">
         </activity>
         <activity
-            android:name=".chat.im.ContextMenu"
-            android:screenOrientation="portrait"
-            android:theme="@style/MyDialogStyle">
-        </activity>
-        <activity
             android:name=".chat.ShowBigImage"
             android:screenOrientation="portrait">
         </activity>

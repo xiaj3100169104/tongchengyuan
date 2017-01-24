@@ -2,7 +2,7 @@ package com.juns.wechat.xmpp.process;
 
 import android.content.Context;
 
-import com.juns.wechat.bean.MessageBean;
+import com.juns.wechat.chat.bean.MessageBean;
 
 /*******************************************************
  * Created by 王者 on 2015/11/27

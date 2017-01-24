@@ -1,11 +1,7 @@
 package com.juns.wechat.chat.im;
 
-import com.juns.wechat.bean.MessageBean;
+import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.bean.chat.viewmodel.MsgViewModel;
-import com.juns.wechat.bean.chat.viewmodel.PictureMsgViewModel;
-import com.juns.wechat.bean.chat.viewmodel.TextMsgViewModel;
-import com.juns.wechat.bean.chat.viewmodel.VoiceMsgViewModel;
 import com.juns.wechat.config.MsgType;
 import com.juns.wechat.dao.DbDataEvent;
 import com.juns.wechat.dao.MessageDao;

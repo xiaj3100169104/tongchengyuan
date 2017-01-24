@@ -4,7 +4,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 
 import com.juns.wechat.bean.FriendBean;
-import com.juns.wechat.bean.MessageBean;
+import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.bean.UserBean;
 
 import org.xutils.DbManager;
@@ -13,9 +13,6 @@ import org.xutils.db.sqlite.SqlInfoBuilder;
 import org.xutils.db.table.TableEntity;
 import org.xutils.ex.DbException;
 import org.xutils.x;
-
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 /**
  * Created by 王宗文 on 2016/5/25

@@ -1,8 +1,6 @@
-package com.juns.wechat.bean;
+package com.juns.wechat.chat.bean;
 
-import android.database.Cursor;
-
-import com.juns.wechat.bean.chat.Msg;
+import com.juns.wechat.chat.bean.Msg;
 import com.juns.wechat.database.ChatTable;
 
 import org.json.JSONException;

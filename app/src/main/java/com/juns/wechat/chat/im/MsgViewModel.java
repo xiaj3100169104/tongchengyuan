@@ -1,4 +1,4 @@
-package com.juns.wechat.bean.chat.viewmodel;
+package com.juns.wechat.chat.im;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,10 +9,10 @@ import android.widget.ImageView;
 
 import com.juns.wechat.activity.UserInfoActivity;
 import com.juns.wechat.bean.Flag;
-import com.juns.wechat.bean.MessageBean;
-import com.juns.wechat.chat.im.ChatAdapter;
+import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.dao.MessageDao;
 import com.juns.wechat.util.ImageLoader;
+import com.juns.wechat.xmpp.util.SendMessage;
 import com.style.constant.Skip;
 
 /*******************************************************
@@ -129,15 +129,6 @@ public abstract class MsgViewModel implements Comparable<MsgViewModel> {
     public final void delete() {
         messageBean.setFlag(Flag.INVALID.value());
         messageDao.update(messageBean);
-    }
-
-    /**
-     * 点击用户头像的事件
-     */
-    protected void onUserPhotoClick(int userId) {
-        Intent intent = new Intent(mContext, UserInfoActivity.class);
-        intent.putExtra(Skip.KEY_USER_ID, userId);
-        mContext.startActivity(intent);
     }
 
 

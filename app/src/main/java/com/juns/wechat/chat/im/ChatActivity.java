@@ -3,7 +3,6 @@ package com.juns.wechat.chat.im;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -17,11 +16,9 @@ import android.widget.ListView;
 import com.juns.wechat.Constants;
 import com.juns.wechat.R;
 import com.juns.wechat.bean.FriendBean;
-import com.juns.wechat.bean.MessageBean;
+import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.bean.chat.viewmodel.MsgViewModel;
 import com.juns.wechat.chat.AlertDialog;
-import com.juns.wechat.chat.adpter.MessageAdapter;
 import com.juns.wechat.dao.DbDataEvent;
 import com.juns.wechat.dao.FriendDao;
 import com.juns.wechat.database.ChatTable;
@@ -44,8 +41,6 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 
 //聊天页面
 public class ChatActivity extends BaseToolbarActivity {
-
-
     public static final int RESULT_CODE_COPY = 1;
     public static final int RESULT_CODE_DELETE = 2;
     public static final int RESULT_CODE_FORWARD = 3;
@@ -65,17 +60,12 @@ public class ChatActivity extends BaseToolbarActivity {
     PtrClassicFrameLayout ptRefresh;
 
     private ClipboardManager clipboard;
-    private Drawable[] micImages;
     private int chatType;
 
-    //private VoiceRecorder voiceRecorder;
-    private MessageAdapter adapter;
     public File cameraFile;
-    static int resendPos;
 
     public String playMsgId;
 
-    //@Extra(name = ARG_USER_NAME)
     private int contactId;
     private String contactName;
 
@@ -414,7 +404,6 @@ public class ChatActivity extends BaseToolbarActivity {
 			message.addBody(body);
 			conversation.addMessage(message);*/
             //listView.setAdapter(adapter);
-            adapter.refresh();
             //listView.setSelection(listView.getCount() - 1);
             setResult(RESULT_OK);
         } catch (Exception e) {
@@ -444,7 +433,6 @@ public class ChatActivity extends BaseToolbarActivity {
 		message.setReceipt(toChatUsername);
 		conversation.addMessage(message);*/
         //listView.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
         //listView.setSelection(listView.getCount() - 1);
         setResult(RESULT_OK);
 
@@ -500,7 +488,6 @@ public class ChatActivity extends BaseToolbarActivity {
 		message.addBody(body);
 		conversation.addMessage(message);*/
         //listView.setAdapter(adapter);
-        adapter.refresh();
         //listView.setSelection(listView.getCount() - 1);
         setResult(RESULT_OK);
     }

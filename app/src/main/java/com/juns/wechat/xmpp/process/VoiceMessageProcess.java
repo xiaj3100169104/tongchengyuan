@@ -2,8 +2,8 @@ package com.juns.wechat.xmpp.process;
 
 import android.content.Context;
 
-import com.juns.wechat.bean.MessageBean;
-import com.juns.wechat.bean.chat.VoiceMsg;
+import com.juns.wechat.chat.bean.MessageBean;
+import com.juns.wechat.chat.bean.VoiceMsg;
 import com.juns.wechat.util.AudioManager;
 import com.juns.wechat.xmpp.util.MsgCode;
 

@@ -3,17 +3,14 @@ package com.juns.wechat.dao;
 import android.database.Cursor;
 
 import com.juns.wechat.bean.Flag;
-import com.juns.wechat.bean.MessageBean;
+import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.bean.chat.Msg;
+import com.juns.wechat.chat.bean.Msg;
 import com.juns.wechat.fragment.msg.MsgItem;
 import com.juns.wechat.config.MsgType;
-import com.juns.wechat.database.ChatTable;
 import com.juns.wechat.database.CursorUtil;
-import com.juns.wechat.database.IdGenerator;
 
 import org.xutils.common.util.KeyValue;
-import org.xutils.db.Selector;
 import org.xutils.db.sqlite.SqlInfo;
 import org.xutils.db.sqlite.WhereBuilder;
 import org.xutils.ex.DbException;

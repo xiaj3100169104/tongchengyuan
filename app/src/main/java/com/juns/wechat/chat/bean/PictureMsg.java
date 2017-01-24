@@ -1,4 +1,4 @@
-package com.juns.wechat.bean.chat;
+package com.juns.wechat.chat.bean;
 
 import org.json.JSONException;
 import org.json.JSONObject;
