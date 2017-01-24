@@ -1,17 +1,16 @@
 package com.juns.wechat.xmpp.util;
 
 
-import com.juns.wechat.bean.MessageBean;
-import com.juns.wechat.bean.chat.InviteMsg;
-import com.juns.wechat.bean.chat.PictureMsg;
-import com.juns.wechat.bean.chat.TextMsg;
-import com.juns.wechat.bean.chat.VoiceMsg;
+import com.juns.wechat.chat.bean.MessageBean;
+import com.juns.wechat.chat.bean.InviteMsg;
+import com.juns.wechat.chat.bean.PictureMsg;
+import com.juns.wechat.chat.bean.TextMsg;
+import com.juns.wechat.chat.bean.VoiceMsg;
 import com.juns.wechat.common.BASE64;
 import com.juns.wechat.config.MsgType;
 import com.juns.wechat.dao.MessageDao;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.util.ThreadPoolUtil;
-import com.juns.wechat.xmpp.XmppManager;
 import com.juns.wechat.xmpp.XmppManagerImpl;
 
 

@@ -1,8 +1,7 @@
 package com.juns.wechat.xmpp.util;
 
 
-import com.juns.wechat.bean.MessageBean;
-import com.juns.wechat.bean.chat.Msg;
+import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.config.ConfigUtil;
 import com.juns.wechat.xmpp.extensionelement.TimeElement;
 

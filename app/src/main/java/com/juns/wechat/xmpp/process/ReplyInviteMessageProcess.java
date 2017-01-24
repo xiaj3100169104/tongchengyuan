@@ -2,10 +2,10 @@ package com.juns.wechat.xmpp.process;
 
 import android.content.Context;
 
-import com.juns.wechat.bean.MessageBean;
+import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.bean.chat.InviteMsg;
-import com.juns.wechat.bean.chat.TextMsg;
+import com.juns.wechat.chat.bean.InviteMsg;
+import com.juns.wechat.chat.bean.TextMsg;
 import com.juns.wechat.config.MsgType;
 import com.juns.wechat.dao.MessageDao;
 import com.juns.wechat.dao.UserDao;

@@ -1,13 +1,8 @@
 package com.juns.wechat.xmpp;
 
-import com.juns.wechat.bean.MessageBean;
-import com.juns.wechat.bean.UserBean;
+import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.config.ConfigUtil;
-import com.juns.wechat.util.FileUtil;
-import com.juns.wechat.util.LogUtil;
 import com.juns.wechat.xmpp.bean.SearchResult;
-import com.juns.wechat.xmpp.event.XmppEvent;
-import com.juns.wechat.xmpp.iq.FileTransferIQ;
 import com.juns.wechat.xmpp.listener.RosterLoadedListenerImpl;
 import com.juns.wechat.xmpp.listener.XmppConnectionListener;
 import com.juns.wechat.xmpp.listener.XmppReceivePacketFilter;
@@ -15,42 +10,23 @@ import com.juns.wechat.xmpp.listener.XmppReceivePacketListener;
 
 import org.jivesoftware.smack.AbstractXMPPConnection;
 import org.jivesoftware.smack.ConnectionListener;
-import org.jivesoftware.smack.PacketCollector;
 import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.StanzaListener;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.filter.StanzaFilter;
-import org.jivesoftware.smack.filter.StanzaIdFilter;
-import org.jivesoftware.smack.packet.ExtensionElement;
-import org.jivesoftware.smack.packet.IQ;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Presence;
 import org.jivesoftware.smack.packet.Stanza;
-import org.jivesoftware.smack.packet.id.StanzaIdUtil;
 import org.jivesoftware.smack.roster.Roster;
 import org.jivesoftware.smack.roster.RosterEntry;
 import org.jivesoftware.smack.roster.RosterLoadedListener;
 
 import org.jivesoftware.smackx.iqregister.AccountManager;
-import org.jivesoftware.smackx.muc.MultiUserChat;
-import org.jivesoftware.smackx.muc.MultiUserChatManager;
-import org.jivesoftware.smackx.muc.RoomInfo;
 import org.jivesoftware.smackx.search.ReportedData;
 import org.jivesoftware.smackx.search.UserSearchManager;
 import org.jivesoftware.smackx.xdata.Form;;
-import org.simple.eventbus.EventBus;
 
-import java.io.ByteArrayInputStream;
-import java.io.DataInputStream;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.StringBufferInputStream;
-import java.io.StringReader;
-import java.net.Socket;
-import java.net.URLConnection;
-import java.nio.channels.NotYetConnectedException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;

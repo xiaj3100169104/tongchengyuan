@@ -1,16 +1,13 @@
 package com.juns.wechat.xmpp;
 
-import com.juns.wechat.bean.MessageBean;
+import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.xmpp.bean.SearchResult;
-import com.juns.wechat.xmpp.iq.FileTransferIQ;
 
 import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.packet.Stanza;
 import org.jivesoftware.smack.roster.RosterEntry;
-import org.jivesoftware.smackx.muc.MultiUserChat;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;

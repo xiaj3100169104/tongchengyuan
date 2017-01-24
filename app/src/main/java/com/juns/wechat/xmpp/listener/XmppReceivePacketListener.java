@@ -2,7 +2,7 @@ package com.juns.wechat.xmpp.listener;
 
 
 import com.juns.wechat.App;
-import com.juns.wechat.bean.MessageBean;
+import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.config.ConfigUtil;
 import com.juns.wechat.config.MsgType;
 import com.juns.wechat.dao.MessageDao;

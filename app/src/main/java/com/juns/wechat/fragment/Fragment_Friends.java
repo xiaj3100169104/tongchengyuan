@@ -17,7 +17,7 @@ import com.juns.wechat.activity.NewFriendsListActivity;
 import com.juns.wechat.activity.UserInfoActivity;
 import com.juns.wechat.adpter.ContactAdapter;
 import com.juns.wechat.bean.FriendBean;
-import com.juns.wechat.bean.MessageBean;
+import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.bean.UserBean;
 import com.style.base.BaseBusFragment;
 import com.juns.wechat.config.MsgType;
