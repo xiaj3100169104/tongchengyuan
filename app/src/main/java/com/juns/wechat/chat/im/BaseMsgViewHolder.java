@@ -64,7 +64,7 @@ public abstract class BaseMsgViewHolder extends RecyclerView.ViewHolder {
             sendingProgress = (ProgressBar) view.findViewById(R.id.pb_sending);
         }
         curUser = AccountManager.getInstance().getUser();
-        friendBean = FriendDao.getInstance().findByOwnerAndContactName(curUser.getUserId(), messageBean.);
+        friendBean = FriendDao.getInstance().findByOwnerAndContactName(curUser.getUserId(), messageBean.getOtherName());
         try {
             contactUser = friendBean.getContactUser();
         } catch (UserNotFoundException e) {

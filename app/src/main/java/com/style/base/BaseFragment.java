@@ -183,7 +183,7 @@ public abstract class BaseFragment extends Fragment {
         CommonUtil.setText(textView, getNotNullText(str));
     }
 
-    protected static String getNotNullText(String str) {
+    protected static CharSequence getNotNullText(String str) {
         return CommonUtil.getNotNullText(str);
     }
 

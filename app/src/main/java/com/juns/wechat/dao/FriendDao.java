@@ -3,6 +3,7 @@ package com.juns.wechat.dao;
 import android.database.Cursor;
 
 import com.juns.wechat.bean.FriendBean;
+import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.database.CursorUtil;
 import com.juns.wechat.database.FriendTable;
 import com.juns.wechat.database.IdGenerator;
@@ -64,7 +65,10 @@ public class FriendDao extends BaseDao<FriendBean>{
         whereBuilder.and(FriendBean.CONTACT_ID, "=", contactId);
         return findByParams(whereBuilder);
     }
-
+    public FriendBean findByOwnerAndContactName(int ownerId, String userName){
+        UserBean userBean = UserDao.getInstance().findByName(userName);
+        return findByOwnerAndContactName(ownerId, userBean.getUserId());
+    }
     public long getLastModifyDate(int userId){
         long lastModifyDate = 0;
 
