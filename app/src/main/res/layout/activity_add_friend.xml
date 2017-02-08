@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#ebebeb" >
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ebebeb">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
-        <include android:id="@+id/toolbar" layout="@layout/comm_toolbar" />
+        <include layout="@layout/comm_toolbar" />
 
         <RelativeLayout
             android:id="@+id/rl_search_container"
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:layout_marginTop="20dp"
-            android:background="#fff" >
+            android:background="#fff">
 
             <TextView
                 android:id="@+id/tv_search"
@@ -49,7 +49,7 @@
             android:layout_height="48dp"
             android:layout_marginBottom="10dp"
             android:gravity="center"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -70,7 +70,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#fff"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -80,7 +80,7 @@
                 android:paddingBottom="14dp"
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp"
-                android:paddingTop="14dp" >
+                android:paddingTop="14dp">
 
                 <ImageView
                     android:id="@+id/iv_leida"
@@ -129,7 +129,7 @@
                 android:paddingBottom="14dp"
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp"
-                android:paddingTop="14dp" >
+                android:paddingTop="14dp">
 
                 <ImageView
                     android:id="@+id/iv_jianqun"
@@ -159,6 +159,7 @@
                     android:textColor="#BBBBBB"
                     android:textSize="12sp" />
             </RelativeLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.1dp"
@@ -166,6 +167,7 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:background="#DBDBDB" />
+
             <RelativeLayout
 
                 android:layout_width="match_parent"
@@ -175,7 +177,7 @@
                 android:paddingBottom="14dp"
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp"
-                android:paddingTop="14dp" >
+                android:paddingTop="14dp">
 
                 <ImageView
                     android:id="@+id/iv_saoyisao"
@@ -205,6 +207,7 @@
                     android:textColor="#BBBBBB"
                     android:textSize="12sp" />
             </RelativeLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.1dp"
@@ -212,6 +215,7 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:background="#DBDBDB" />
+
             <RelativeLayout
 
                 android:layout_width="match_parent"
@@ -221,7 +225,7 @@
                 android:paddingBottom="14dp"
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp"
-                android:paddingTop="14dp" >
+                android:paddingTop="14dp">
 
                 <ImageView
                     android:id="@+id/iv_lianxiren"
@@ -251,6 +255,7 @@
                     android:textColor="#BBBBBB"
                     android:textSize="12sp" />
             </RelativeLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.1dp"
@@ -258,6 +263,7 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:background="#DBDBDB" />
+
             <RelativeLayout
 
                 android:layout_width="match_parent"
@@ -267,7 +273,7 @@
                 android:paddingBottom="14dp"
                 android:paddingLeft="12dp"
                 android:paddingRight="12dp"
-                android:paddingTop="14dp" >
+                android:paddingTop="14dp">
 
                 <ImageView
                     android:id="@+id/iv_ggh"
