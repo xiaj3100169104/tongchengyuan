@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.ClipboardManager;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -55,7 +57,7 @@ public class ChatActivity extends BaseToolbarActivity {
 
     private static final int SIZE = 10;
     @Bind(R.id.lvMessages)
-    ListView lvMessages;
+    RecyclerView lvMessages;
     @Bind(R.id.ptRefresh)
     PtrClassicFrameLayout ptRefresh;
 
@@ -78,7 +80,7 @@ public class ChatActivity extends BaseToolbarActivity {
     private UserBean contactUser;
     private boolean mFirstLoad = true; //是否第一次加载数据
 
-    private List<MsgViewModel> msgViewModels = new ArrayList<>();
+    private List<MessageBean> msgViewModels = new ArrayList<>();
     private Handler mHandler = new Handler();
 
     @Override
@@ -123,9 +125,12 @@ public class ChatActivity extends BaseToolbarActivity {
         chatInputManager.onCreate();
         chatActivityHelper = new ChatActivityHelper(this);
         chatActivityHelper.onCreate();
-        mAdapter = new ChatAdapter(this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        lvMessages.setLayoutManager(linearLayoutManager);
+        mAdapter = new ChatAdapter(this, msgViewModels);
         lvMessages.setAdapter(mAdapter);
-        mAdapter.setData(msgViewModels);
+
         chatActivityHelper.loadMessagesFromDb();
 
         ptRefresh.setMode(PtrFrameLayout.Mode.REFRESH);
@@ -205,10 +210,7 @@ public class ChatActivity extends BaseToolbarActivity {
         }
     }
 
-    public List<MsgViewModel> getMsgViewModels() {
-        if (msgViewModels == null) {
-            msgViewModels = new ArrayList<>();
-        }
+    public List<MessageBean> getMsgViewModels() {
         return msgViewModels;
     }
 
@@ -216,7 +218,7 @@ public class ChatActivity extends BaseToolbarActivity {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                lvMessages.setSelection(mAdapter.getCount() - 1);
+                lvMessages.smoothScrollToPosition(mAdapter.getItemCount());
             }
         });
     }
@@ -241,7 +243,7 @@ public class ChatActivity extends BaseToolbarActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         findViewById(R.id.ll_more_function_container).setVisibility(View.GONE);
-        lvMessages.setSelection(lvMessages.getCount());
+        lvMessages.smoothScrollToPosition(lvMessages.getChildCount());
         if (resultCode == RESULT_CODE_EXIT_GROUP) {
             setResult(RESULT_OK);
             finish();

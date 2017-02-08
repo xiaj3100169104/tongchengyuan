@@ -230,7 +230,7 @@ public abstract class BaseActivity extends BaseRxActivity {
         CommonUtil.setText(textView, getNotNullText(str));
     }
 
-    protected static String getNotNullText(String str) {
+    protected static CharSequence getNotNullText(String str) {
         return CommonUtil.getNotNullText(str);
     }
 

@@ -49,17 +49,14 @@ public class ChatActivityHelper {
     }
 
     public void loadMessagesFromDb() {
-        List<MessageBean> messageBeen = getMessagesByIndexAndSize();
-        if (messageBeen == null || messageBeen.isEmpty()) {
+        List<MessageBean> list = getMessagesByIndexAndSize();
+        if (list == null || list.isEmpty()) {
             notifyActivityDataSetChanged(false);
             return;
         }
+        mQueryIndex = mQueryIndex - list.size();
 
-        mQueryIndex = mQueryIndex - messageBeen.size();
-
-        List<MsgViewModel> msgViewModels = chatActivity.getMsgViewModels();
-        addEntityToViewModel(msgViewModels, messageBeen);
-
+        addEntityToViewModel(chatActivity.getMsgViewModels(), list);
         notifyActivityDataSetChanged(true);
     }
 
@@ -72,38 +69,18 @@ public class ChatActivityHelper {
      *
      * @param messageEntities
      */
-    private void addEntityToViewModel(List<MsgViewModel> msgViewModels, List<MessageBean> messageEntities) {
+    private void addEntityToViewModel(List<MessageBean> msgViewModels, List<MessageBean> messageEntities) {
         int size = messageEntities.size();
         for (int i = size - 1; i >= 0; i--) {
             MessageBean entity = messageEntities.get(i);
             addEntityToViewModel(msgViewModels, entity);
         }
-        Collections.sort(msgViewModels);  //要将消息重新排一次序
+        //Collections.sort(msgViewModels);  //要将消息重新排一次序
     }
 
-    private void addEntityToViewModel(List<MsgViewModel> msgViewModels, MessageBean entity) {
+    private void addEntityToViewModel(List<MessageBean> msgViewModels, MessageBean entity) {
         if (entity == null) return;
-        int type = entity.getType();
-        MsgViewModel viewModel = null;
-        UserBean contactUser = chatActivity.getContactUser();
-        switch (type) {
-            case MsgType.MSG_TYPE_TEXT:
-                viewModel = new TextMsgViewModel(chatActivity, entity);
-                break;
-            case MsgType.MSG_TYPE_PICTURE:
-                viewModel = new PictureMsgViewModel(chatActivity, entity);
-                break;
-            case MsgType.MSG_TYPE_VOICE:
-                viewModel = new VoiceMsgViewModel(chatActivity, entity);
-                break;
-            default:
-                break;
-        }
-        if (viewModel != null) {
-            viewModel.setInfo(account.getUserId(), account.getUserName(), account.getHeadUrl(), contactUser.getUserId(), contactUser.getUserName(), contactUser.getHeadUrl());
-            viewModel.markAsRead();
-            msgViewModels.add(viewModel);
-        }
+        msgViewModels.add(entity);
     }
 
     /**
@@ -111,10 +88,10 @@ public class ChatActivityHelper {
      *
      * @param entity
      */
-    public void processOneMessage(List<MsgViewModel> msgViewModels, MessageBean entity, int action) {
+    public void processOneMessage(List<MessageBean> msgViewModels, MessageBean entity, int action) {
         int position = -1;
         for (int i = 0; i < msgViewModels.size(); i++) {
-            MsgViewModel viewModel = msgViewModels.get(i);
+            MessageBean viewModel = msgViewModels.get(i);
             if (entity.getId() == viewModel.getId()) {
                 position = i;
                 break;
@@ -123,7 +100,7 @@ public class ChatActivityHelper {
         switch (action) {
             case DbDataEvent.SAVE:
                 addEntityToViewModel(msgViewModels, entity);
-                Collections.sort(msgViewModels);
+                //Collections.sort(msgViewModels);
                 chatActivity.refreshOneData(true);
                 break;
             case DbDataEvent.UPDATE:
@@ -131,14 +108,13 @@ public class ChatActivityHelper {
                     msgViewModels.remove(position);
                 }
                 addEntityToViewModel(msgViewModels, entity);
-                Collections.sort(msgViewModels);
+                //Collections.sort(msgViewModels);
                 chatActivity.refreshOneData(true);
                 break;
             default:
                 break;
         }
     }
-
 
     /**
      * 将未读消息状态置为已读状态

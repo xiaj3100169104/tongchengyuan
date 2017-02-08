@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -65,7 +66,7 @@ public class ChatInputManager implements View.OnClickListener {
     private LinearLayout llMoreFunctionContainer; //图片，相册等更多功能容器
     private LinearLayout viewPhoto; //图片
 
-    private ListView lvMessages;  //消息列表
+    private RecyclerView lvMessages;  //消息列表
     private List<String> emoticonsFileNames;
     //  private AnimationDrawable animationDrawable;
 
@@ -95,7 +96,7 @@ public class ChatInputManager implements View.OnClickListener {
         llMoreFunctionContainer = (LinearLayout) view.findViewById(R.id.ll_more_function_container);
         viewPhoto = (LinearLayout) view.findViewById(R.id.view_photo);
 
-        lvMessages = (ListView) view.findViewById(R.id.lvMessages);
+        lvMessages = (RecyclerView) view.findViewById(R.id.lvMessages);
         lvMessages.setOverScrollMode(View.OVER_SCROLL_NEVER);
     }
 

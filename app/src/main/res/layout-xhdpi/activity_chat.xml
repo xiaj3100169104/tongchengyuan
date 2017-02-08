@@ -23,7 +23,7 @@
             android:layout_height="match_parent"
             cube_ptr:ptr_duration_to_close_either="500">
 
-            <ListView
+            <android.support.v7.widget.RecyclerView
                 android:id="@+id/lvMessages"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
