@@ -17,13 +17,19 @@ import java.util.List;
 public class SearchResultActivity extends BaseToolbarActivity {
 
     private ListView lvSearchResultList;
-    //@Extra(name = ARG_SEARCH_RESULTS)
     private List<UserBean> searchResults;
     private SearchResultAdapter searchResultAdapter;
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        mLayoutResID = R.layout.activity_search_result;
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public void initData() {
-        searchResults = (List<UserBean>) getIntent().getParcelableExtra(Skip.KEY_SEARCH_RESULTS);
+        setToolbarTitle("搜索结果");
+        searchResults = (List<UserBean>) getIntent().getSerializableExtra(Skip.KEY_SEARCH_RESULTS);
 
         if(searchResults == null || searchResults.isEmpty()){
             throw new IllegalArgumentException("search results is null or empty!");
@@ -38,15 +44,10 @@ public class SearchResultActivity extends BaseToolbarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 UserBean userBean = searchResults.get(position);
                 Intent intent = new Intent(SearchResultActivity.this, UserInfoActivity.class);
-                intent.putExtra(Skip.KEY_USER_NAME, userBean.getUserName());
+                intent.putExtra(Skip.KEY_USER_ID, userBean.getUserId());
                 startActivity(intent);
             }
         });
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        mLayoutResID = R.layout.activity_search_result;
-        super.onCreate(savedInstanceState);
-    }
 }

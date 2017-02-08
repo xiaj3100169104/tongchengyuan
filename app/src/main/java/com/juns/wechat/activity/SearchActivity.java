@@ -20,6 +20,7 @@ import com.juns.wechat.util.LogUtil;
 import com.style.base.BaseActivity;
 import com.style.constant.Skip;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -113,9 +114,8 @@ public class SearchActivity extends BaseActivity {
 
     private void showSearchResult(List<UserBean> userBeans){
         if(userBeans != null && !userBeans.isEmpty()){
-            ArrayList<UserBean> data = (ArrayList<UserBean>) userBeans;
             Intent intent = new Intent(SearchActivity.this, SearchResultActivity.class);
-            intent.putExtra(Skip.KEY_SEARCH_RESULTS, data);
+            intent.putExtra(Skip.KEY_SEARCH_RESULTS, (Serializable) userBeans);
             startActivity(intent);
         }else {
             showToast("没有搜索到用户");

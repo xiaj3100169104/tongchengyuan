@@ -23,7 +23,8 @@
             android:background="#AA333333"
             android:orientation="horizontal"
             android:paddingBottom="15dp"
-            android:paddingTop="15dp">
+            android:paddingTop="15dp"
+            android:visibility="gone">
 
             <LinearLayout
                 android:id="@+id/linear1"
