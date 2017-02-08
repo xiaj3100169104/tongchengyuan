@@ -142,10 +142,10 @@ public class CommonUtil {
      */
     public static boolean showSoftInput(Activity activity, EditText editText) {
         boolean isFocus = editText.requestFocus();
-        Log.e(TAG, "isFocus==" + isFocus);
+        //Log.e(TAG, "isFocus==" + isFocus);
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         boolean isShow = imm.showSoftInput(editText, 0);
-        Log.e(TAG, "isShow==" + isShow);
+        //Log.e(TAG, "isShow==" + isShow);
         if (!isShow)
             imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_NOT_ALWAYS);
         return isShow;
@@ -158,7 +158,7 @@ public class CommonUtil {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         if (activity.getCurrentFocus() != null) {
             boolean isHide = imm.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
-            Log.e(TAG, "isHide==" + isHide);
+            //Log.e(TAG, "isHide==" + isHide);
         }
     }
 
@@ -168,7 +168,7 @@ public class CommonUtil {
     public static void hiddenSoftInput(Activity activity, EditText editText) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
         boolean isHide = imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
-        Log.e(TAG, "isHide==" + isHide);
+        //Log.e(TAG, "isHide==" + isHide);
     }
 
     /*
@@ -187,12 +187,12 @@ public class CommonUtil {
         }
     }
 
-    public static void setText(TextView textView, String str) {
+    public static void setText(TextView textView, CharSequence str) {
         if (textView != null)
             textView.setText(getNotNullText(str));
     }
 
-    public static String getNotNullText(String str) {
+    public static CharSequence getNotNullText(CharSequence str) {
         if (TextUtils.isEmpty(str))
             return "";
         return str;

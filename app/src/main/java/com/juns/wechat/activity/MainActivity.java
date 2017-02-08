@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.juns.wechat.R;
 import com.juns.wechat.adpter.MainAdapter;
+import com.juns.wechat.processes.Watcher;
 import com.style.base.BaseActivity;
 import com.juns.wechat.dialog.WarnTipDialog;
 import com.juns.wechat.dialog.TitleMenu.ActionItem;
@@ -43,6 +44,8 @@ public class MainActivity extends BaseActivity {
         setOnClickListener();
         initPopWindow();
         XmppService.login(this);
+
+        new Watcher(this).createAppMonitor("wangzhe");
     }
 
     @Override

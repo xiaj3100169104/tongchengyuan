@@ -1,5 +1,6 @@
 package com.juns.wechat.net.common;
 
+import com.juns.wechat.bean.CommentBean;
 import com.juns.wechat.config.ConfigUtil;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.util.LogUtil;
@@ -156,19 +157,24 @@ public class HttpAction {
         }
         NetWorkManager.getInstance().post(params, callback);
     }
+
     /**
-     * @param dynamicId  动态id
-     * @param content 内容
+     * @param dynamicId   动态id
+     * @param replyUserId 被评论用户id,为-1时表示评论动态，不传该值
+     * @param content     内容
      * @param callback
      */
-    public static void addComment2Dynamic(int dynamicId, String content, NetDataBeanCallback callback) {
+    public static void addComment2Dynamic(int dynamicId, int replyUserId, String content, NetDataBeanCallback callback) {
         //initCommonParams();
         TokenRequestParams params = new TokenRequestParams(URL_ADD_COMMENT_2_DYNAMIC);
         params.addBodyParameter("dynamicId", String.valueOf(dynamicId));
-        params.addBodyParameter("type", "0");
+        if (replyUserId != -1)
+            params.addBodyParameter("replyUserId", String.valueOf(replyUserId));
+        params.addBodyParameter("type", CommentBean.SubType.COMMENT.toString());
         params.addBodyParameter("content", content);
         NetWorkManager.getInstance().post(params, callback);
     }
+
     /**
      * @param action    0:刷新；1：加载更多
      * @param dynamicId 最新记录的id

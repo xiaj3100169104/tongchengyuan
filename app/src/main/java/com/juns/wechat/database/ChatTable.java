@@ -2,8 +2,7 @@ package com.juns.wechat.database;
 
 import android.database.sqlite.SQLiteDatabase;
 
-import com.juns.wechat.bean.FriendBean;
-import com.juns.wechat.bean.MessageBean;
+import com.juns.wechat.chat.bean.MessageBean;
 
 import org.xutils.ex.DbException;
 

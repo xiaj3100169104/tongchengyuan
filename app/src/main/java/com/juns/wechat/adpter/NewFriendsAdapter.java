@@ -12,9 +12,9 @@ import android.widget.TextView;
 
 import com.juns.wechat.R;
 import com.juns.wechat.activity.UserInfoActivity;
-import com.juns.wechat.bean.MessageBean;
+import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.bean.chat.InviteMsg;
+import com.juns.wechat.chat.bean.InviteMsg;
 import com.juns.wechat.common.ViewHolder;
 import com.juns.wechat.dao.MessageDao;
 import com.juns.wechat.dao.UserDao;

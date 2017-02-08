@@ -18,6 +18,7 @@ import com.juns.wechat.bean.CommentBean;
 import com.juns.wechat.bean.DynamicBean;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.utils.SmileUtils;
+import com.juns.wechat.dao.UserDao;
 import com.juns.wechat.helper.CommonViewHelper;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.util.ImageLoader;
@@ -26,7 +27,9 @@ import com.style.utils.MyDateUtil;
 import com.style.utils.StringUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -37,6 +40,7 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter {
     private CommentPopupWindow menuWindow;
     private OnClickDiscussListener mDiscussListener;
     private OnClickImageListener mImageListener;
+    private Map<Integer, UserBean> userMap = new HashMap<>();
 
     public DynamicAdapter(Context mContext, List list) {
         super(mContext, list);
@@ -52,7 +56,13 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter {
         final int pos = position;
         final ViewHolder holder = (ViewHolder) viewHolder;
         final DynamicBean bean = (DynamicBean) data;
-        UserBean user = AccountManager.getInstance().getUser();//bean.getUser();
+        UserBean user;
+        if (userMap.containsKey(bean.getPublisherId()))
+            user = userMap.get(bean.getPublisherId());
+        else {
+            user = UserDao.getInstance().findByUserId(bean.getPublisherId());
+            userMap.put(bean.getPublisherId(), user);
+        }
         CommonViewHelper.setUserViewInfo(user, holder.ivAvatar, holder.tvNike, null, null, false);
 
         holder.tvContent.setText(SmileUtils.getSmiledText(mContext, bean.getContent()));
@@ -83,12 +93,13 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter {
             linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             holder.recyclerView.setLayoutManager(linearLayoutManager);
             holder.recyclerView.setAdapter(adapter);
-        /*  adapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(int position, Object data) {
-                showToast("" + position);
-            }
-        });*/
+            adapter.setOnItemClickListener(new OnItemClickListener() {
+                @Override
+                public void onItemClick(int position, Object data) {
+                    logE(TAG, pos + "--" + position);
+                    mDiscussListener.OnClickReply(pos, position, data);
+                }
+            });
         } else {
             holder.recyclerView.setVisibility(View.GONE);
         }
@@ -270,6 +281,8 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter {
         void OnClickSupport(int position, Object data);
 
         void OnClickComment(int position, Object data);
+
+        void OnClickReply(int position, int subPosition, Object data);
     }
 
     public void setOnClickDiscussListener(OnClickDiscussListener mDiscussListener) {

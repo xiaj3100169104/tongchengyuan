@@ -5,6 +5,8 @@ import com.juns.wechat.util.ThreadPoolUtil;
 import com.juns.wechat.xmpp.bean.SearchResult;
 import com.juns.wechat.xmpp.listener.XmppManagerListener;
 
+import org.jivesoftware.smack.packet.Stanza;
+
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -26,6 +28,15 @@ public class XmppManagerUtil {
             @Override
             public void run() {
                 login(userName, passWord);
+            }
+        });
+    }
+
+    public static void sendPacket(final Stanza packet){
+        ThreadPoolUtil.execute(new Runnable() {
+            @Override
+            public void run() {
+                XMPP_MANAGER.sendPacket(packet);
             }
         });
     }

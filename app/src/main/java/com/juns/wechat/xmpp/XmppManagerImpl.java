@@ -1,6 +1,6 @@
 package com.juns.wechat.xmpp;
 
-import com.juns.wechat.bean.MessageBean;
+import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.config.ConfigUtil;
 import com.juns.wechat.xmpp.bean.SearchResult;
 import com.juns.wechat.xmpp.listener.RosterLoadedListenerImpl;
@@ -20,17 +20,16 @@ import org.jivesoftware.smack.packet.Stanza;
 import org.jivesoftware.smack.roster.Roster;
 import org.jivesoftware.smack.roster.RosterEntry;
 import org.jivesoftware.smack.roster.RosterLoadedListener;
+
 import org.jivesoftware.smackx.iqregister.AccountManager;
 import org.jivesoftware.smackx.search.ReportedData;
 import org.jivesoftware.smackx.search.UserSearchManager;
-import org.jivesoftware.smackx.xdata.Form;
+import org.jivesoftware.smackx.xdata.Form;;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-
-;
 
 /*******************************************************
  * Copyright (C) 2014-2015 Yunyun Network <yynetworks@yycube.com>

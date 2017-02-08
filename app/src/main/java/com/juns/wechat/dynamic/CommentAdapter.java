@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.juns.wechat.R;
 import com.juns.wechat.bean.CommentBean;
+import com.juns.wechat.bean.UserBean;
+import com.juns.wechat.chat.utils.SmileUtils;
 import com.style.base.BaseRecyclerViewAdapter;
 
 import java.util.List;
@@ -40,13 +42,21 @@ public class CommentAdapter extends BaseRecyclerViewAdapter {
     public void onBindItem(RecyclerView.ViewHolder viewHolder, int position, Object data) {
         final ViewHolder holder = (ViewHolder) viewHolder;
         CommentBean commentBean = (CommentBean) data;
-        String cNike = commentBean.getUser().getShowName();
-        String content = commentBean.getContent();
-        SpannableStringBuilder builder = addClickablePart(cNike, content);
+        String user1 = commentBean.getCommentUserName();
+        String user2 = commentBean.getReplyUserName();
+        CharSequence content = SmileUtils.getSmiledText(mContext, commentBean.getContent());
+        SpannableStringBuilder builder;
+        if (TextUtils.isEmpty(user2))
+            builder = addClickablePart(user1, content);
+        else
+            builder = addClickablePart(user1, user2, content);
         if (builder != null) {
+            holder.tvComment.setVisibility(View.VISIBLE);
             holder.tvComment.setText(builder, TextView.BufferType.SPANNABLE);
-        } else
+        } else {
+            holder.tvComment.setVisibility(View.GONE);
             holder.tvComment.setText("");
+        }
            /* adapter.setOnDefaultClickListener(new OnDefaultClickListener() {
                 @Override
                 public void onItemClick(int sub) {
@@ -57,7 +67,7 @@ public class CommentAdapter extends BaseRecyclerViewAdapter {
             });*/
     }
 
-    private SpannableStringBuilder addClickablePart(String cNike, String content) {
+    private SpannableStringBuilder addClickablePart(String cNike, CharSequence content) {
         if (TextUtils.isEmpty(cNike)) {
             return null;
         }
@@ -67,7 +77,7 @@ public class CommentAdapter extends BaseRecyclerViewAdapter {
         return ssb.append(content);
     }
 
-    private SpannableStringBuilder addClickablePart(String rNike, String cNike, String content) {
+    private SpannableStringBuilder addClickablePart(String rNike, String cNike, CharSequence content) {
         if (TextUtils.isEmpty(rNike) || TextUtils.isEmpty(cNike)) {
             return null;
         }
@@ -99,6 +109,7 @@ public class CommentAdapter extends BaseRecyclerViewAdapter {
     static class ViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.tv_comment)
         TextView tvComment;
+
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);

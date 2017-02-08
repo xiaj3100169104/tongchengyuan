@@ -2,12 +2,14 @@ package com.juns.wechat.xmpp.listener;
 
 
 import com.juns.wechat.App;
-import com.juns.wechat.bean.MessageBean;
+import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.config.ConfigUtil;
 import com.juns.wechat.config.MsgType;
 import com.juns.wechat.dao.MessageDao;
 import com.juns.wechat.util.LogUtil;
+import com.juns.wechat.xmpp.XmppManagerUtil;
 import com.juns.wechat.xmpp.extensionelement.TimeElement;
+import com.juns.wechat.xmpp.iq.MarkAsReadIQ;
 import com.juns.wechat.xmpp.process.IQRouter;
 import com.juns.wechat.xmpp.process.InviteMessageProcess;
 import com.juns.wechat.xmpp.process.MessageProcess;
@@ -24,6 +26,7 @@ import org.jivesoftware.smack.packet.IQ;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Presence;
 import org.jivesoftware.smack.packet.Stanza;
+import org.jivesoftware.smackx.delay.packet.DelayInformation;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -62,6 +65,7 @@ public class XmppReceivePacketListener implements StanzaListener {
         if(Message.Type.normal == message.getType()){
             updateExistMessage(message);
         }else if(Message.Type.chat == message.getType()){
+            ackToServer(message);
             handleChatMessageByType(message);
         }else if(Message.Type.error == message.getType()){ }
     }
@@ -89,6 +93,11 @@ public class XmppReceivePacketListener implements StanzaListener {
             MessageDao.getInstance().updateMessageState(message.getStanzaId(),
                     MessageBean.State.SEND_SUCCESS.value, timeElement.getTime());
         }
+    }
+
+    private void ackToServer(Message message){
+        MarkAsReadIQ markAsReadIQ = new MarkAsReadIQ(message.getStanzaId());
+        XmppManagerUtil.sendPacket(markAsReadIQ);
     }
 
     /**

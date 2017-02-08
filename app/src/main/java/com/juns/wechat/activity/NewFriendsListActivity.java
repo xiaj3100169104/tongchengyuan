@@ -8,7 +8,7 @@ import android.widget.ListView;
 
 import com.juns.wechat.R;
 import com.juns.wechat.adpter.NewFriendsAdapter;
-import com.juns.wechat.bean.MessageBean;
+import com.juns.wechat.chat.bean.MessageBean;
 import com.style.base.BaseToolbarActivity;
 import com.juns.wechat.dao.MessageDao;
 import com.juns.wechat.manager.AccountManager;

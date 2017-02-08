@@ -14,7 +14,7 @@ import com.juns.wechat.activity.MainActivity;
 import com.juns.wechat.R;
 import com.juns.wechat.chat.im.ChatActivity;
 import com.juns.wechat.adpter.ConversationAdapter;
-import com.juns.wechat.bean.MessageBean;
+import com.juns.wechat.chat.bean.MessageBean;
 import com.style.base.BaseBusFragment;
 import com.juns.wechat.dao.DbDataEvent;
 import com.juns.wechat.dao.MessageDao;
