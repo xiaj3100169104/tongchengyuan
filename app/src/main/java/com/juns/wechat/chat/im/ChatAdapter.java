@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 
 
 import com.juns.wechat.R;
-import com.juns.wechat.adpter.ListDataAdapter;
 import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.config.MsgType;
 import com.style.base.BaseRecyclerViewAdapter;
@@ -15,9 +14,7 @@ import com.style.base.BaseRecyclerViewAdapter;
 import java.util.List;
 
 /**
- * ****************************************************
- * Created by 王者 on 2015/6/18
- * *****************************************************
+ * xiajun
  */
 public class ChatAdapter extends BaseRecyclerViewAdapter {
     private static final int MSG_TYPE_TEXT_LEFT = 0;

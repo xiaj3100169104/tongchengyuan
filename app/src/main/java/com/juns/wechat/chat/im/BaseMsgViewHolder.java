@@ -25,6 +25,7 @@ import com.juns.wechat.dao.FriendDao;
 import com.juns.wechat.exception.UserNotFoundException;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.util.ImageLoader;
+import com.juns.wechat.util.ThreadPoolUtil;
 import com.juns.wechat.util.TimeUtil;
 import com.juns.wechat.xmpp.util.SendMessage;
 import com.style.constant.Skip;
@@ -63,13 +64,7 @@ public abstract class BaseMsgViewHolder extends RecyclerView.ViewHolder {
             ivSendState = (ImageView) view.findViewById(R.id.iv_send_failed);
             sendingProgress = (ProgressBar) view.findViewById(R.id.pb_sending);
         }
-        curUser = AccountManager.getInstance().getUser();
-        friendBean = FriendDao.getInstance().findByOwnerAndContactName(curUser.getUserId(), messageBean.getOtherName());
-        try {
-            contactUser = friendBean.getContactUser();
-        } catch (UserNotFoundException e) {
-            e.printStackTrace();
-        }
+
     }
 
     protected boolean isLeftLayout() {
@@ -78,6 +73,17 @@ public abstract class BaseMsgViewHolder extends RecyclerView.ViewHolder {
 
     public void setData(MessageBean data) {
         this.messageBean = data;
+        initUser();
+    }
+
+    private void initUser() {
+        curUser = AccountManager.getInstance().getUser();
+        friendBean = FriendDao.getInstance().findByOwnerAndContactName(curUser.getUserId(), messageBean.getOtherName());
+        try {
+            contactUser = friendBean.getContactUser();
+        } catch (UserNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     protected void updateCommonView(List list, final int position) {
@@ -117,6 +123,7 @@ public abstract class BaseMsgViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 Log.e(TAG, "avatar==" + position);
+                onUserPhotoClick();
             }
         });
         layoutContainer.setOnClickListener(new View.OnClickListener() {
@@ -160,7 +167,12 @@ public abstract class BaseMsgViewHolder extends RecyclerView.ViewHolder {
      * 重发该条消息
      */
     public final void reSend() {
-        SendMessage.sendMsgDirect(messageBean);
+        ThreadPoolUtil.execute(new Runnable() {
+            @Override
+            public void run() {
+                SendMessage.sendMsgDirect(messageBean);
+            }
+        });
     }
     /**
      * 点击用户头像的事件

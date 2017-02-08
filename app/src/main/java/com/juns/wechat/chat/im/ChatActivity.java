@@ -218,7 +218,7 @@ public class ChatActivity extends BaseToolbarActivity {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                lvMessages.smoothScrollToPosition(mAdapter.getItemCount() - 1);
+                lvMessages.smoothScrollToPosition(mAdapter.getItemCount());
             }
         });
     }
