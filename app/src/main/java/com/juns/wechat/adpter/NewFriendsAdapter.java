@@ -21,6 +21,7 @@ import com.juns.wechat.dao.UserDao;
 import com.juns.wechat.net.common.HttpAction;
 import com.juns.wechat.net.common.NetDataBeanCallback;
 import com.juns.wechat.util.ImageLoader;
+import com.juns.wechat.util.SyncDataUtil;
 import com.juns.wechat.xmpp.util.SendMessage;
 import com.style.constant.Skip;
 
@@ -117,8 +118,16 @@ public class NewFriendsAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, UserInfoActivity.class);
-                intent.putExtra(Skip.KEY_USER_NAME, userBean.getUserName());
+                intent.putExtra(Skip.KEY_USER_ID, userBean.getUserId());
                 context.startActivity(intent);
+            }
+        });
+
+        convertView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                MessageDao.getInstance().delete(messageBean.getId());
+                return true;
             }
         });
         return convertView;
@@ -126,8 +135,8 @@ public class NewFriendsAdapter extends BaseAdapter {
 
     private void addFriend(final MessageBean message) {
         final MessageBean messageBean = message;
-        //FriendRequest.addFriend(messageBean.getOtherName(), new MyAddFriendCallBack(messageBean));
-        HttpAction.addFriend(messageBean.getOtherName(), new NetDataBeanCallback() {
+        UserBean userBean = userDao.getInstance().findByName(messageBean.getOtherName());
+        HttpAction.addFriend(userBean.userId, new NetDataBeanCallback() {
             @Override
             protected void onCodeSuccess() {
                 InviteMsg inviteMsg = (InviteMsg) messageBean.getMsgObj();
@@ -137,6 +146,8 @@ public class NewFriendsAdapter extends BaseAdapter {
                 MessageDao.getInstance().update(messageBean);
                 notifyDataSetChanged();
                 sendMessageToOther(messageBean.getOtherName(), reply);
+
+                SyncDataUtil.syncData();
             }
 
             @Override
