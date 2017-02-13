@@ -75,7 +75,7 @@ public class ChatActivityHelper {
             MessageBean entity = messageEntities.get(i);
             addEntityToViewModel(msgViewModels, entity);
         }
-        //Collections.sort(msgViewModels);  //要将消息重新排一次序
+        Collections.sort(msgViewModels, new MessageBeanComparator());
     }
 
     private void addEntityToViewModel(List<MessageBean> msgViewModels, MessageBean entity) {
@@ -100,7 +100,7 @@ public class ChatActivityHelper {
         switch (action) {
             case DbDataEvent.SAVE:
                 addEntityToViewModel(msgViewModels, entity);
-                //Collections.sort(msgViewModels);
+                Collections.sort(msgViewModels, new MessageBeanComparator());
                 chatActivity.refreshOneData(true);
                 break;
             case DbDataEvent.UPDATE:
@@ -108,7 +108,7 @@ public class ChatActivityHelper {
                     msgViewModels.remove(position);
                 }
                 addEntityToViewModel(msgViewModels, entity);
-                //Collections.sort(msgViewModels);
+                Collections.sort(msgViewModels, new MessageBeanComparator());
                 chatActivity.refreshOneData(true);
                 break;
             default:

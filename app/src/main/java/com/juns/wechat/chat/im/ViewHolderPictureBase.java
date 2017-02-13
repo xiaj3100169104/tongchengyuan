@@ -26,7 +26,7 @@ public class ViewHolderPictureBase extends BaseMsgViewHolder {
     ViewHolderPictureBase(View view) {
         super(view);
         ivPicture = (ImageView) view.findViewById(R.id.ivPicture);
-        progressBar = (ProgressBar) view.findViewById(R.id.pb_sending);
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         tvPercent = (TextView) view.findViewById(R.id.percentage);
     }
 
@@ -43,6 +43,7 @@ public class ViewHolderPictureBase extends BaseMsgViewHolder {
             tvPercent.setVisibility(View.VISIBLE);
             tvPercent.setText(pictureMsg.progress + "%");
         }
+
     }
 
     private void loadPicture(ImageView imageView, String path) {

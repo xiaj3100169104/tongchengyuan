@@ -9,7 +9,6 @@ import com.juns.wechat.xmpp.process.IQRouter;
 import com.juns.wechat.xmpp.process.IQUserInfoProcessor;
 import com.juns.wechat.xmpp.provider.FileTransferProvider;
 import com.juns.wechat.xmpp.provider.TimeProvider;
-import com.juns.wechat.xmpp.provider.UserInfoProvider;
 
 import org.jivesoftware.smack.AbstractXMPPConnection;
 import org.jivesoftware.smack.ConnectionConfiguration;

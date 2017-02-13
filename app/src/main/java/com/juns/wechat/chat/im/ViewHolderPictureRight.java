@@ -21,12 +21,16 @@ public class ViewHolderPictureRight extends ViewHolderPictureBase {
     protected void updateView() {
         super.updateView();
         if (messageBean.getState() == MessageBean.State.SEND_FAILED.value) {
+            sendingProgress.setVisibility(View.GONE);
             tvPercent.setVisibility(View.GONE);
         } else if (messageBean.getState() == MessageBean.State.SEND_SUCCESS.value) {
+            sendingProgress.setVisibility(View.GONE);
             tvPercent.setVisibility(View.GONE);
         } else {
+            sendingProgress.setVisibility(View.VISIBLE);
             tvPercent.setVisibility(View.VISIBLE);
             tvPercent.setText(pictureMsg.progress + "%");
         }
+
     }
 }

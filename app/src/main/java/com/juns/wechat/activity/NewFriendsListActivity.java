@@ -23,31 +23,17 @@ public class NewFriendsListActivity extends BaseToolbarActivity {
     ListView lvNewFriends;
 
     @Override
-    public void initData() {
-        initControl();
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         mLayoutResID = R.layout.activity_listview;
         super.onCreate(savedInstanceState);
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.single_with_text, menu);
-        menu.getItem(0).setTitle(R.string.menu_add_friend);
-        return super.onCreateOptionsMenu(menu);
-    }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.item_text_only:
-                //goonNext();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
+    public void initData() {
+        setToolbarTitle("新的朋友");
+        initControl();
     }
+
     protected void initControl() {
         String myselfName = AccountManager.getInstance().getUserName();
         List<MessageBean> myReceivedInviteMessages =

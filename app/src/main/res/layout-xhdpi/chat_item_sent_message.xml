@@ -75,7 +75,7 @@
             android:visibility="invisible" />
 
         <ProgressBar
-            android:id="@+id/pb_sending"
+            android:id="@+id/progressBar"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:indeterminateDrawable="@drawable/small_prograssbar"

@@ -13,15 +13,16 @@ import com.style.base.BaseToolbarActivity;
 public class AddFriendActivity extends BaseToolbarActivity {
 
     @Override
-    public void initData() {
-        setListener();
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         mLayoutResID = R.layout.activity_add_friend;
         super.onCreate(savedInstanceState);
 
+    }
+
+    @Override
+    public void initData() {
+        setToolbarTitle("添加朋友");
+        setListener();
     }
 
     private void setListener(){

@@ -118,7 +118,7 @@ public class HttpAction {
         NetWorkManager.getInstance().post(params, callback);
     }
 
-    public static void addFriend(String contactName, NetDataBeanCallback callback) {
+    public static void addFriend(int contactName, NetDataBeanCallback callback) {
         TokenRequestParams params = new TokenRequestParams(URL_ADD_FRIEND);
         //params.addBodyParameter("token", token);
         params.addParameter("contactName", contactName);

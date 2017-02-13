@@ -41,7 +41,7 @@ public abstract class BaseMsgViewHolder extends RecyclerView.ViewHolder {
 
     protected ImageView viewAvatar;
     protected TextView tvDate;
-    protected RelativeLayout layoutContainer;
+    //protected RelativeLayout layoutContainer;
     protected ImageView ivSendState;
     protected ProgressBar sendingProgress;
 
@@ -59,10 +59,10 @@ public abstract class BaseMsgViewHolder extends RecyclerView.ViewHolder {
         super(view);
         tvDate = (TextView) view.findViewById(R.id.tv_date);
         viewAvatar = (ImageView) view.findViewById(R.id.iv_avatar);
-        layoutContainer = (RelativeLayout) view.findViewById(R.id.rl_content_container);
+        //layoutContainer = (RelativeLayout) view.findViewById(R.id.rl_content_container);
         if (!isLeftLayout()) {
             ivSendState = (ImageView) view.findViewById(R.id.iv_send_failed);
-            sendingProgress = (ProgressBar) view.findViewById(R.id.pb_sending);
+            sendingProgress = (ProgressBar) view.findViewById(R.id.progressBar);
         }
 
     }
@@ -118,7 +118,10 @@ public abstract class BaseMsgViewHolder extends RecyclerView.ViewHolder {
                 ivSendState.setVisibility(View.GONE);
                 sendingProgress.setVisibility(View.VISIBLE);
             }
+            sendingProgress.setVisibility(View.GONE);
+
         }
+
         viewAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -126,12 +129,12 @@ public abstract class BaseMsgViewHolder extends RecyclerView.ViewHolder {
                 onUserPhotoClick();
             }
         });
-        layoutContainer.setOnClickListener(new View.OnClickListener() {
+        /*layoutContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onClickLayoutContainer();
             }
-        });
+        });*/
     }
 
     protected void onClickLayoutContainer() {

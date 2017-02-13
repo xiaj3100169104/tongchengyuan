@@ -116,7 +116,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
                                 android:singleLine="true"
-                                android:text="@string/delete" />
+                                android:text="@string/delete"
+                                android:visibility="gone"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -151,7 +152,8 @@
                             android:maxLines="6"
                             android:paddingBottom="10dp"
                             android:text="1、2、3.。。。"
-                            android:textColor="@color/blue" />
+                            android:textColor="@color/blue"
+                            android:visibility="gone"/>
 
                         <android.support.v7.widget.RecyclerView
                             android:id="@+id/recyclerView"

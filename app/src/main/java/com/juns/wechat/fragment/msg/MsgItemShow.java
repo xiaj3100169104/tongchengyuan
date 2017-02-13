@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.juns.wechat.App;
+import com.juns.wechat.chat.utils.SmileUtils;
 import com.juns.wechat.dao.MessageDao;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.util.TimeUtil;
@@ -29,7 +31,7 @@ public abstract class MsgItemShow {
     public abstract void loadUrl(ImageView iv);
 
     public void showContent(TextView textView){
-        textView.setText(msgItem.content == null ? "" : msgItem.content);
+        textView.setText(SmileUtils.getSmiledText(App.getInstance(), msgItem.content));
     }
 
     public  void showUnreadMsgNumber(TextView textView){

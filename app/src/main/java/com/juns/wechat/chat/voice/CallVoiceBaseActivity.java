@@ -66,7 +66,7 @@ public class CallVoiceBaseActivity extends BaseActivity {
         broadCast = new CallReceiver();
         registerReceiver(broadCast, intentFilter);
 
-        SipClient.getInstance().makeAudioCall(toUserName);
+        //SipClient.getInstance().makeAudioCall(toUserName);
     }
 
     @Override
@@ -81,7 +81,7 @@ public class CallVoiceBaseActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        SipClient.getInstance().endCall();
+        //SipClient.getInstance().endCall();
         unregisterReceiver(broadCast);
     }
 
