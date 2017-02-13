@@ -64,9 +64,10 @@ public class FriendCircleActivity extends BaseToolbarActivity {
     private int page = 1;
     private int action = ACTION_REFRESH;
     private UserBean curUser;
-    private FriendCircleHelper facehelper;
+    private FriendCircleHelper faceHelper;
     private int curDynamicPosition;
     private int curCommentPosition;
+    private Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle arg0) {
@@ -99,9 +100,9 @@ public class FriendCircleActivity extends BaseToolbarActivity {
         ImageLoader.loadAvatar(ivAvatar, curUser.getHeadUrl());
         tvNick.setText(curUser.getShowName());
 
-        facehelper = new FriendCircleHelper(this);
-        facehelper.onCreate();
-        facehelper.hideLayoutBottom();
+        faceHelper = new FriendCircleHelper(this);
+        faceHelper.onCreate();
+        faceHelper.hideLayoutBottom();
 
         dataList = new ArrayList<>();
         adapter = new DynamicAdapter(this, dataList);
@@ -140,7 +141,7 @@ public class FriendCircleActivity extends BaseToolbarActivity {
             public void OnClickComment(int position, Object data) {
                 logE(TAG, "OnClickComment==" + position);
                 resetEditText();
-                facehelper.showEditLayout();
+                faceHelper.showEditLayout();
                 tag = COMMENT;
                 curDynamicPosition = position;
             }
@@ -151,17 +152,17 @@ public class FriendCircleActivity extends BaseToolbarActivity {
                 //自己不能回复自己
                 if (dataList.get(position).getCommentList().get(curCommentPosition).getCommenterId() != curUser.getUserId()){
                     resetEditText();
-                    facehelper.showEditLayout();
+                    faceHelper.showEditLayout();
                     tag = REPLY;
                     curDynamicPosition = position;
                     curCommentPosition = subPosition;
                 }
             }
         });
-        facehelper.btSend.setOnClickListener(new View.OnClickListener() {
+        faceHelper.btSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String content = facehelper.etContent.getText().toString();
+                String content = faceHelper.etContent.getText().toString();
                 addComment2Dynamic(content);
 
             }
@@ -169,13 +170,13 @@ public class FriendCircleActivity extends BaseToolbarActivity {
         scrollView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                facehelper.hideAllLayout();
+                faceHelper.hideAllLayout();
                 return false;
             }
         });
         //防止刚进去不显示头部
         if (cacheList != null) {
-            new Handler().postDelayed(new Runnable() {
+            handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     dataList.addAll(cacheList);
@@ -185,7 +186,7 @@ public class FriendCircleActivity extends BaseToolbarActivity {
         }
 
         //缓存加载完了再执行刷新
-        ptrFrame.postDelayed(new Runnable() {
+        handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 ptrFrame.autoRefresh(true);
@@ -203,7 +204,7 @@ public class FriendCircleActivity extends BaseToolbarActivity {
             @Override
             protected void onCodeSuccess(CommentBean data) {
                 if (data != null) {
-                    facehelper.sendComplete();
+                    faceHelper.sendComplete();
                     List<CommentBean> list = dynamicBean.getCommentList();
                     if (list == null)
                         list = new ArrayList();
@@ -225,7 +226,7 @@ public class FriendCircleActivity extends BaseToolbarActivity {
     }
 
     private void resetEditText() {
-        facehelper.resetEditText();
+        faceHelper.resetEditText();
     }
 
     private void getData() {
@@ -305,5 +306,12 @@ public class FriendCircleActivity extends BaseToolbarActivity {
                     break;
             }
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //  If null, all callbacks and messages will be removed.
+        handler.removeCallbacksAndMessages(null);
     }
 }

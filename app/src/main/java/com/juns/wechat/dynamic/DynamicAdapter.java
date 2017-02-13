@@ -87,6 +87,7 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter {
         //评论数据处理
         List<CommentBean> commentBeanList = bean.getCommentList();
         if (commentBeanList != null && commentBeanList.size() > 0) {
+            holder.layoutComment.setVisibility(View.VISIBLE);
             holder.recyclerView.setVisibility(View.VISIBLE);
             CommentAdapter adapter = new CommentAdapter(mContext, commentBeanList);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
@@ -101,6 +102,7 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter {
                 }
             });
         } else {
+            holder.layoutComment.setVisibility(View.GONE);
             holder.recyclerView.setVisibility(View.GONE);
         }
         /*if (viewHolder instanceof Holder) {
@@ -304,8 +306,8 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter {
         TextView tvNike;
         @Bind(R.id.tv_content)
         TextView tvContent;
-        /*@BindView(R.id.gv_image)
-        RecyclerView gvImage;*/
+        @Bind(R.id.layout_comment)
+        LinearLayout layoutComment;
         @Bind(R.id.tv_time)
         TextView tvTime;
         @Bind(R.id.tv_delete)

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -130,6 +131,7 @@ public class Fragment_Friends extends BaseBusFragment implements OnClickListener
     }
 
     private void setFriendData() {
+        Log.e(TAG, "setFriendData");
         List<FriendBean> list = friendDao.getMyFriends(accountId);
         if (null != list) {
             int size = list.size();

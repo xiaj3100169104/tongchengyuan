@@ -60,7 +60,7 @@ public class MainActivity extends BaseActivity {
         mainAdapter = new MainAdapter(getSupportFragmentManager());
         vpMainContent.setOffscreenPageLimit(4);
         vpMainContent.setAdapter(mainAdapter);
-        vpMainContent.setOnPageChangeListener(pageChangeListener);
+        vpMainContent.addOnPageChangeListener(pageChangeListener);
 
         txt_title = (TextView) findViewById(R.id.txt_title);
         img_right = (ImageView) findViewById(R.id.img_right);
