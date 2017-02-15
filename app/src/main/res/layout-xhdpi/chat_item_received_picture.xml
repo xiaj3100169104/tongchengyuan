@@ -6,35 +6,19 @@
     android:orientation="vertical"
     android:paddingTop="13dp" >
 
-    <TextView
-        android:id="@+id/tv_date"
-        style="@style/chat_text_date_style"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <include layout="@layout/chat_item_common_time"/>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_chat_activity" >
+        android:layout_marginTop="@dimen/margin_chat_activity"
+        android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/iv_avatar"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="@dimen/margin_chat_activity"
-            android:background="@drawable/default_avatar"
-            android:scaleType="fitXY" />
+        <include layout="@layout/chat_item_common_avatar_left"/>
 
         <RelativeLayout
-            android:id="@+id/row_recv_pic"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_userid"
-            android:layout_marginLeft="@dimen/margin_chat_activity"
-            android:layout_toRightOf="@id/iv_avatar"
-            android:layout_alignTop="@+id/iv_avatar"
-             >
+            android:id="@+id/layout_content_container"
+            style="@style/chat_item_from_content_container">
 
             <ImageView
                 android:id="@+id/ivPicture"
@@ -50,7 +34,7 @@
                 android:orientation="vertical" >
 
                 <ProgressBar
-                    android:id="@+id/progressBar"
+                    android:id="@+id/receive_progressBar"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
                     android:indeterminateDrawable="@drawable/small_prograssbar"
@@ -60,7 +44,7 @@
                     android:visibility="visible" />
 
                 <TextView
-                    android:id="@+id/percentage"
+                    android:id="@+id/receive_percentage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0%"
@@ -69,7 +53,6 @@
             </LinearLayout>
         </RelativeLayout>
 
-     
-    </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>

@@ -28,7 +28,7 @@ public class ViewHolderVoiceBase extends BaseMsgViewHolder {
 
     @Override
     protected void updateView() {
-        //super.updateView();
+        super.updateView();
         voiceMsg = (VoiceMsg) messageBean.getMsgObj();
         tvVoicePadding.setText(getPaddingByVoiceLength(voiceMsg.seconds));
         tvVoiceLength.setText(voiceMsg.seconds + "''");
@@ -46,7 +46,7 @@ public class ViewHolderVoiceBase extends BaseMsgViewHolder {
 
     @Override
     protected void onClickLayoutContainer() {
-        Log.e(TAG, "ViewHolderVoiceBase");
+        super.onClickLayoutContainer();
         ChatMediaPlayer chatMediaPlayer = ChatMediaPlayer.getInstance();
         if (chatMediaPlayer.isRunning()) {
             chatMediaPlayer.stopVoice();

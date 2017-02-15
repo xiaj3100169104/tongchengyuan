@@ -41,9 +41,10 @@ public abstract class BaseMsgViewHolder extends RecyclerView.ViewHolder {
 
     protected ImageView viewAvatar;
     protected TextView tvDate;
-    //protected RelativeLayout layoutContainer;
+    protected ViewGroup layoutContainer;
     protected ImageView ivSendState;
     protected ProgressBar sendingProgress;
+    protected TextView tvSendPercent;
 
     protected MessageBean messageBean;
     protected UserBean curUser;
@@ -52,17 +53,18 @@ public abstract class BaseMsgViewHolder extends RecyclerView.ViewHolder {
 
     protected Context context;
     private ViewGroup parent;
-
-    protected abstract void updateView();
+    private int position;
 
     public BaseMsgViewHolder(View view) {
         super(view);
         tvDate = (TextView) view.findViewById(R.id.tv_date);
         viewAvatar = (ImageView) view.findViewById(R.id.iv_avatar);
-        //layoutContainer = (RelativeLayout) view.findViewById(R.id.rl_content_container);
+        layoutContainer = (RelativeLayout) view.findViewById(R.id.layout_content_container);
         if (!isLeftLayout()) {
             ivSendState = (ImageView) view.findViewById(R.id.iv_send_failed);
-            sendingProgress = (ProgressBar) view.findViewById(R.id.progressBar);
+            sendingProgress = (ProgressBar) view.findViewById(R.id.sending_progress);
+            tvSendPercent = (TextView) view.findViewById(R.id.sending_percentage);
+
         }
 
     }
@@ -70,10 +72,21 @@ public abstract class BaseMsgViewHolder extends RecyclerView.ViewHolder {
     protected boolean isLeftLayout() {
         return true;
     }
+    public void setContext(Context mContext, ViewGroup parent) {
+        this.context = mContext;
+        this.parent = parent;
+    }
 
-    public void setData(MessageBean data) {
+    public void setData(MessageBean data, List list, final int position) {
         this.messageBean = data;
+        this.position = position;
         initUser();
+        if (isShowTime(list, position, messageBean)) {
+            tvDate.setVisibility(View.VISIBLE);
+            tvDate.setText(TimeUtil.getRecentTime(messageBean.getDate()));
+        } else {
+            tvDate.setVisibility(View.GONE);
+        }
     }
 
     private void initUser() {
@@ -86,42 +99,9 @@ public abstract class BaseMsgViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    protected void updateCommonView(List list, final int position) {
-        if (isShowTime(list, position, messageBean)) {
-            tvDate.setVisibility(View.VISIBLE);
-            tvDate.setText(TimeUtil.getRecentTime(messageBean.getDate()));
-        } else {
-            tvDate.setVisibility(View.GONE);
-        }
+    protected void updateView() {
+
         loadUrl();
-
-        viewAvatar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onUserPhotoClick();
-            }
-        });
-        if (messageBean.getDirection() == MessageBean.Direction.OUTGOING.value) {
-            if (messageBean.getState() == MessageBean.State.SEND_FAILED.value) {
-                ivSendState.setVisibility(View.VISIBLE);
-                sendingProgress.setVisibility(View.GONE);
-                ivSendState.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        reSend();
-                    }
-                });
-            } else if (messageBean.getState() == MessageBean.State.SEND_SUCCESS.value) {
-                ivSendState.setVisibility(View.GONE);
-                sendingProgress.setVisibility(View.GONE);
-            } else {
-                ivSendState.setVisibility(View.GONE);
-                sendingProgress.setVisibility(View.VISIBLE);
-            }
-            sendingProgress.setVisibility(View.GONE);
-
-        }
-
         viewAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,16 +109,29 @@ public abstract class BaseMsgViewHolder extends RecyclerView.ViewHolder {
                 onUserPhotoClick();
             }
         });
-        /*layoutContainer.setOnClickListener(new View.OnClickListener() {
+        layoutContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onClickLayoutContainer();
             }
-        });*/
+        });
+
+        if (messageBean.getDirection() == MessageBean.Direction.OUTGOING.value) {
+            tvSendPercent.setVisibility(View.GONE);//默认隐藏百分比
+
+            if (messageBean.getState() == MessageBean.State.SEND_FAILED.value) {
+                onSendSucceed();
+            } else if (messageBean.getState() == MessageBean.State.SEND_SUCCESS.value) {
+                onSendFailed();
+            } else {
+                onSendOtherStatus();
+            }
+        }
+
     }
 
     protected void onClickLayoutContainer() {
-
+        Log.e(TAG, "onClickLayoutContainer");
     }
 
     private final long MSG_TIME_INTERVAL = 120000L; //两分钟
@@ -188,8 +181,32 @@ public abstract class BaseMsgViewHolder extends RecyclerView.ViewHolder {
         intent.putExtra(Skip.KEY_USER_ID, userId);
         context.startActivity(intent);
     }
-    public void setContext(Context mContext, ViewGroup parent) {
-        this.context = mContext;
-        this.parent = parent;
+
+    /**
+     * 发送成功
+     */
+    protected void onSendSucceed() {
+        ivSendState.setVisibility(View.VISIBLE);
+        sendingProgress.setVisibility(View.GONE);
+        ivSendState.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                reSend();
+            }
+        });
+    }
+    /**
+     * 发送失败
+     */
+    protected void onSendFailed() {
+        ivSendState.setVisibility(View.GONE);
+        sendingProgress.setVisibility(View.GONE);
+    }
+    /**
+     * 其他发送状态
+     */
+    protected void onSendOtherStatus() {
+        ivSendState.setVisibility(View.GONE);
+        sendingProgress.setVisibility(View.VISIBLE);
     }
 }

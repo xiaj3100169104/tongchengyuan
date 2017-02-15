@@ -25,12 +25,12 @@ public class ViewHolderTextBase extends BaseMsgViewHolder {
 
     @Override
     protected void updateView() {
-        //super.updateView();
+        super.updateView();
         TextMsg textMsg1 = (TextMsg) messageBean.getMsgObj();
         CommonUtil.setText(viewContent, SmileUtils.getSmiledText(App.getInstance(), textMsg1.content));
     }
     @Override
     protected void onClickLayoutContainer(){
-        Log.e(TAG, "ViewHolderTextBase");
+        super.onClickLayoutContainer();
     }
 }

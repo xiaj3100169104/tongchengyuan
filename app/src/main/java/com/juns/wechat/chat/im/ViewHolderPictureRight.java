@@ -1,7 +1,11 @@
 package com.juns.wechat.chat.im;
 
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import com.juns.wechat.R;
 import com.juns.wechat.chat.bean.MessageBean;
 
 /**
@@ -9,8 +13,10 @@ import com.juns.wechat.chat.bean.MessageBean;
  */
 
 public class ViewHolderPictureRight extends ViewHolderPictureBase {
+
     ViewHolderPictureRight(View view) {
         super(view);
+
     }
 
     protected boolean isLeftLayout() {
@@ -20,17 +26,27 @@ public class ViewHolderPictureRight extends ViewHolderPictureBase {
     @Override
     protected void updateView() {
         super.updateView();
-        if (messageBean.getState() == MessageBean.State.SEND_FAILED.value) {
-            sendingProgress.setVisibility(View.GONE);
-            tvPercent.setVisibility(View.GONE);
-        } else if (messageBean.getState() == MessageBean.State.SEND_SUCCESS.value) {
-            sendingProgress.setVisibility(View.GONE);
-            tvPercent.setVisibility(View.GONE);
-        } else {
-            sendingProgress.setVisibility(View.VISIBLE);
-            tvPercent.setVisibility(View.VISIBLE);
-            tvPercent.setText(pictureMsg.progress + "%");
-        }
 
+    }
+
+    @Override
+    protected void onSendSucceed() {
+        super.onSendSucceed();
+        tvSendPercent.setVisibility(View.GONE);
+
+    }
+
+    @Override
+    protected void onSendFailed() {
+        super.onSendFailed();
+        tvSendPercent.setVisibility(View.GONE);
+
+    }
+
+    @Override
+    protected void onSendOtherStatus() {
+        super.onSendOtherStatus();
+        tvSendPercent.setVisibility(View.VISIBLE);
+        tvSendPercent.setText(pictureMsg.progress + "%");
     }
 }

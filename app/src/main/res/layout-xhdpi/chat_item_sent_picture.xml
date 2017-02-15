@@ -4,102 +4,39 @@
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:paddingTop="13dp" >
+    android:paddingTop="13dp">
 
-    <TextView
-        android:id="@+id/tv_date"
-        style="@style/chat_text_date_style"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <include layout="@layout/chat_item_common_time" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_chat_activity" >
+        android:layout_marginTop="@dimen/margin_chat_activity">
 
-        <ImageView
-            android:id="@+id/iv_avatar"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="@dimen/margin_chat_activity"
-            android:background="@drawable/default_avatar"
-            android:scaleType="fitXY"/>
+        <include layout="@layout/chat_item_common_avatar_right" />
 
         <RelativeLayout
-            android:id="@+id/rl_picture"
+            android:id="@+id/layout_content_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/iv_avatar"
             android:layout_marginRight="@dimen/margin_chat_activity"
-            android:layout_toLeftOf="@id/iv_avatar"
-            android:layout_alignTop="@+id/iv_avatar">
+            android:layout_toLeftOf="@id/iv_avatar">
 
             <ImageView
                 android:id="@+id/ivPicture"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
-        </RelativeLayout>	
-        <LinearLayout
-            android:id="@+id/ll_loading"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_toLeftOf="@id/rl_picture"
-            android:gravity="center"
-            android:orientation="vertical" >
+            android:layout_toLeftOf="@id/layout_content_container">
 
-            <ProgressBar
-                android:id="@+id/progressBar"
-                style="?android:attr/progressBarStyleSmall"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:indeterminateDrawable="@drawable/small_prograssbar"
-				android:indeterminateOnly="true"
-				android:indeterminateBehavior="repeat"
-                android:visibility="visible" />
+            <include layout="@layout/chat_item_common_send_status" />
 
-            <TextView
-                android:id="@+id/percentage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0%"
-                android:textColor="@android:color/black"
-                android:visibility="visible" />
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/iv_send_failed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/rl_picture"
-            android:clickable="true"
-            android:src="@drawable/msg_state_failed_resend"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/tv_ack"
-            style="@style/chat_text_name_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/rl_picture"
-            android:text="@string/text_ack_msg"
-            android:textSize="12sp"
-            android:visibility="invisible" />
-        
-        <TextView
-            android:id="@+id/tv_delivered"
-            style="@style/chat_text_name_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="@string/text_delivered_msg"
-            android:textSize="12sp"
-            android:layout_toLeftOf="@id/tv_chat_content"
-            android:visibility="invisible"
-            />
+        </RelativeLayout>
     </RelativeLayout>
 
 </LinearLayout>

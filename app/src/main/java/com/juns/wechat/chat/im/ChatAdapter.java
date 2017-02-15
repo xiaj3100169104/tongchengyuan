@@ -92,8 +92,7 @@ public class ChatAdapter extends BaseRecyclerViewAdapter {
     public void onBindItem(RecyclerView.ViewHolder viewHolder, int position, Object data) {
         MessageBean messageBean = (MessageBean) data;
         BaseMsgViewHolder baseMsgViewHolder = (BaseMsgViewHolder) viewHolder;
-        baseMsgViewHolder.setData(messageBean);
-        baseMsgViewHolder.updateCommonView(list, position);
+        baseMsgViewHolder.setData(messageBean, list, position);
         switch (getItemViewType(position)) {
             case MSG_TYPE_TEXT_LEFT:
                 ViewHolderTextLeft viewHolderTextLeft = (ViewHolderTextLeft) viewHolder;
