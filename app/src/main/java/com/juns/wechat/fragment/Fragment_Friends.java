@@ -10,17 +10,17 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.juns.wechat.activity.MainActivity;
 import com.juns.wechat.R;
+import com.juns.wechat.activity.MainActivity;
 import com.juns.wechat.activity.NewFriendsListActivity;
 import com.juns.wechat.activity.UserInfoActivity;
 import com.juns.wechat.adpter.ContactAdapter;
 import com.juns.wechat.bean.FriendBean;
-import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.bean.UserBean;
-import com.style.base.BaseBusFragment;
+import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.config.MsgType;
 import com.juns.wechat.dao.DbDataEvent;
 import com.juns.wechat.dao.FriendDao;
@@ -29,6 +29,7 @@ import com.juns.wechat.database.ChatTable;
 import com.juns.wechat.database.FriendTable;
 import com.juns.wechat.database.UserTable;
 import com.juns.wechat.manager.AccountManager;
+import com.style.base.BaseBusFragment;
 import com.style.base.BaseRecyclerViewAdapter;
 import com.style.constant.Skip;
 import com.style.utils.HanyuToPinyin;
@@ -43,10 +44,11 @@ import java.util.Comparator;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 
 //通讯录
 
-public class Fragment_Friends extends BaseBusFragment implements OnClickListener{
+public class Fragment_Friends extends BaseBusFragment implements OnClickListener {
     @Bind(R.id.tv_unread_invite_msg)
     TextView tvUnreadInviteMsg;
     @Bind(R.id.layout_new_friends)
@@ -61,6 +63,8 @@ public class Fragment_Friends extends BaseBusFragment implements OnClickListener
     RecyclerView recyclerView;
     @Bind(R.id.sideBar)
     SideBar sideBar;
+    @Bind(R.id.scrollView)
+    ScrollView scrollView;
     private FriendDao friendDao = FriendDao.getInstance();
     private List<FriendBean> dataList;
     private LinearLayoutManager layoutManager;
@@ -73,6 +77,7 @@ public class Fragment_Friends extends BaseBusFragment implements OnClickListener
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mLayoutResID = R.layout.fragment_friends;
+        ButterKnife.bind(this, super.onCreateView(inflater, container, savedInstanceState));
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
@@ -115,7 +120,6 @@ public class Fragment_Friends extends BaseBusFragment implements OnClickListener
 
         setUnreadInviteMsgData();
         setFriendData();
-
     }
 
     private void setUnreadInviteMsgData() {
@@ -145,7 +149,7 @@ public class Fragment_Friends extends BaseBusFragment implements OnClickListener
             dataList.addAll(list);
             adapter.notifyDataSetChanged();
         }
-
+        //scrollView.smoothScrollTo(0,0);
     }
 
     @Subscriber(tag = FriendTable.TABLE_NAME)
@@ -186,6 +190,12 @@ public class Fragment_Friends extends BaseBusFragment implements OnClickListener
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.unbind(this);
     }
 
     public class UploadPhoneComparator implements Comparator<FriendBean> {

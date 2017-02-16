@@ -3,6 +3,7 @@ package com.juns.wechat.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,6 +13,10 @@ import android.widget.TextView;
 
 import com.juns.wechat.R;
 import com.juns.wechat.adpter.MainAdapter;
+import com.juns.wechat.fragment.Fragment_Dicover;
+import com.juns.wechat.fragment.Fragment_Friends;
+import com.juns.wechat.fragment.Fragment_Profile;
+import com.juns.wechat.fragment.msg.Fragment_Msg;
 import com.juns.wechat.processes.Watcher;
 import com.style.base.BaseActivity;
 import com.juns.wechat.dialog.WarnTipDialog;
@@ -19,6 +24,9 @@ import com.juns.wechat.dialog.TitleMenu.ActionItem;
 import com.juns.wechat.dialog.TitleMenu.TitlePopup;
 import com.juns.wechat.dialog.TitleMenu.TitlePopup.OnItemOnClickListener;
 import com.juns.wechat.service.XmppService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends BaseActivity {
     private TextView txt_title;
@@ -56,13 +64,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initView() {
-        vpMainContent = (ViewPager) findViewById(R.id.vp_main_content);
-        mainAdapter = new MainAdapter(getSupportFragmentManager());
-        vpMainContent.setOffscreenPageLimit(4);
-        vpMainContent.setAdapter(mainAdapter);
-        vpMainContent.addOnPageChangeListener(pageChangeListener);
-
-        txt_title = (TextView) findViewById(R.id.txt_title);
+      txt_title = (TextView) findViewById(R.id.txt_title);
         img_right = (ImageView) findViewById(R.id.img_right);
         img_right.setVisibility(View.VISIBLE);
         img_right.setImageResource(R.drawable.icon_add);
@@ -82,6 +84,17 @@ public class MainActivity extends BaseActivity {
         textviews[1] = (TextView) findViewById(R.id.tv_contact_list);
         textviews[2] = (TextView) findViewById(R.id.tv_find);
         textviews[3] = (TextView) findViewById(R.id.tv_profile);
+
+        vpMainContent = (ViewPager) findViewById(R.id.vp_main_content);
+        List<Fragment> fragments = new ArrayList<>();
+        fragments.add(new Fragment_Msg());
+        fragments.add(new Fragment_Friends());
+        fragments.add(new Fragment_Dicover());
+        fragments.add(new Fragment_Profile());
+        mainAdapter = new MainAdapter(getSupportFragmentManager(), fragments);
+        vpMainContent.setOffscreenPageLimit(4);
+        vpMainContent.setAdapter(mainAdapter);
+        vpMainContent.addOnPageChangeListener(pageChangeListener);
 
         setSelectedIndex(0);
     }
