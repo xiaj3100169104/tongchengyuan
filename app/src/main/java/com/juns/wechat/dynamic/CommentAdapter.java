@@ -32,16 +32,14 @@ public class CommentAdapter extends BaseRecyclerViewAdapter {
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateItem(ViewGroup parent, int viewType) {
-        View v = mInflater.inflate(R.layout.adapter_comment, parent, false);
-        ViewHolder holder = new ViewHolder(v);
-        return holder;
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new ViewHolder(mInflater.inflate(R.layout.adapter_comment, parent, false));
     }
 
     @Override
-    public void onBindItem(RecyclerView.ViewHolder viewHolder, int position, Object data) {
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         final ViewHolder holder = (ViewHolder) viewHolder;
-        CommentBean commentBean = (CommentBean) data;
+        CommentBean commentBean = (CommentBean) getData(position);
         String user1 = commentBean.getCommentUserName();
         String user2 = commentBean.getReplyUserName();
         CharSequence content = SmileUtils.getSmiledText(mContext, commentBean.getContent());
@@ -57,6 +55,8 @@ public class CommentAdapter extends BaseRecyclerViewAdapter {
             holder.tvComment.setVisibility(View.GONE);
             holder.tvComment.setText("");
         }
+        super.setOnItemClickListener(holder, position);
+
            /* adapter.setOnDefaultClickListener(new OnDefaultClickListener() {
                 @Override
                 public void onItemClick(int sub) {

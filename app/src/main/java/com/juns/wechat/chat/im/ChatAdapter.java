@@ -58,7 +58,7 @@ public class ChatAdapter extends BaseRecyclerViewAdapter {
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateItem(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         BaseMsgViewHolder holder = null;
         switch (viewType) {
             case MSG_TYPE_TEXT_LEFT:
@@ -89,8 +89,8 @@ public class ChatAdapter extends BaseRecyclerViewAdapter {
     }
 
     @Override
-    public void onBindItem(RecyclerView.ViewHolder viewHolder, int position, Object data) {
-        MessageBean messageBean = (MessageBean) data;
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+        MessageBean messageBean = (MessageBean) getData(position);
         BaseMsgViewHolder baseMsgViewHolder = (BaseMsgViewHolder) viewHolder;
         baseMsgViewHolder.setData(messageBean, list, position);
         switch (getItemViewType(position)) {

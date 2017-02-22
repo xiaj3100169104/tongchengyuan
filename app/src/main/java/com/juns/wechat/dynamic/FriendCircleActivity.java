@@ -45,21 +45,15 @@ public class FriendCircleActivity extends BaseToolbarActivity {
     private static final int COMMENT = 0;
     private static final int REPLY = 1;
     private static final int REPLY_REPLY = 2;
-    @Bind(R.id.scrollView)
-    ScrollView scrollView;
 
     private int tag = COMMENT;
     @Bind(R.id.recyclerView)
     RecyclerView recyclerView;
     @Bind(R.id.ptrFrame)
     PtrClassicFrameLayout ptrFrame;
-    @Bind(R.id.tv_nick)
-    TextView tvNick;
-    @Bind(R.id.iv_avatar)
-    RoundedImageView ivAvatar;
 
-    private static List<DynamicBean> cacheList;
-    private List<DynamicBean> dataList;
+    private static List cacheList;
+    private List dataList;
     private DynamicAdapter adapter;
     private int page = 1;
     private int action = ACTION_REFRESH;
@@ -97,14 +91,13 @@ public class FriendCircleActivity extends BaseToolbarActivity {
 
         //Glide.with(this).load(R.drawable.pig).asGif().diskCacheStrategy(DiskCacheStrategy.SOURCE).into(ivAvatar);
         curUser = AccountManager.getInstance().getUser();
-        ImageLoader.loadAvatar(ivAvatar, curUser.getHeadUrl());
-        tvNick.setText(curUser.getShowName());
 
         faceHelper = new FriendCircleHelper(this);
         faceHelper.onCreate();
         faceHelper.hideLayoutBottom();
 
         dataList = new ArrayList<>();
+        dataList.add(curUser);
         adapter = new DynamicAdapter(this, dataList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -150,7 +143,8 @@ public class FriendCircleActivity extends BaseToolbarActivity {
             public void OnClickReply(int position, int subPosition, Object data) {
                 logE(TAG, "OnClickReply==" + position + "--" + subPosition);
                 //自己不能回复自己
-                if (dataList.get(position).getCommentList().get(curCommentPosition).getCommenterId() != curUser.getUserId()){
+                DynamicBean dynamicBean = (DynamicBean) dataList.get(position);
+                if (dynamicBean.getCommentList().get(curCommentPosition).getCommenterId() != curUser.getUserId()) {
                     resetEditText();
                     faceHelper.showEditLayout();
                     tag = REPLY;
@@ -167,35 +161,30 @@ public class FriendCircleActivity extends BaseToolbarActivity {
 
             }
         });
-        scrollView.setOnTouchListener(new View.OnTouchListener() {
+        recyclerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 faceHelper.hideAllLayout();
                 return false;
             }
         });
-        //防止刚进去不显示头部
+
         if (cacheList != null) {
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    dataList.addAll(cacheList);
-                    adapter.notifyDataSetChanged();
-                }
-            }, 500);
+            dataList.addAll(cacheList);
+            adapter.notifyDataSetChanged();
         }
 
-        //缓存加载完了再执行刷新
+        //先加载缓存，再延迟刷新
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 ptrFrame.autoRefresh(true);
             }
-        }, 1000);
+        }, 500);
     }
 
     private void addComment2Dynamic(final String content) {
-        final DynamicBean dynamicBean = dataList.get(curDynamicPosition);
+        final DynamicBean dynamicBean = (DynamicBean) dataList.get(curDynamicPosition);
         int replyUserId = -1;//表示直接评论动态
         if (tag == REPLY) {
             replyUserId = dynamicBean.getCommentList().get(curCommentPosition).getCommenterId();
@@ -232,8 +221,9 @@ public class FriendCircleActivity extends BaseToolbarActivity {
     private void getData() {
         int dynamicId = 0;
         if (action == ACTION_LOAD_MORE) {
-            if (dataList.size() > 0) {
-                dynamicId = dataList.get(dataList.size() - 1).getDynamicId();
+            if (dataList.size() > 1) {
+                DynamicBean dynamicBean = (DynamicBean) dataList.get(dataList.size() - 1);
+                dynamicId = dynamicBean.getDynamicId();
             }
         }
         HttpAction.getFriendCircleDynamic(action, dynamicId, 6, new NetDataBeanCallback<List<DynamicBean>>(new TypeReference<List<DynamicBean>>() {
@@ -244,6 +234,7 @@ public class FriendCircleActivity extends BaseToolbarActivity {
                 if (data != null && data.size() > 0) {
                     if (action == ACTION_REFRESH) {
                         dataList.clear();
+                        dataList.add(curUser);
                         setFirstPageCacheData(data);
                     }
                     dataList.addAll(data);
@@ -264,32 +255,6 @@ public class FriendCircleActivity extends BaseToolbarActivity {
             cacheList = new ArrayList<>();
         cacheList.clear();
         cacheList.addAll(data);
-    }
-
-    protected void updateData() {
-        ptrFrame.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                ptrFrame.refreshComplete();
-                /*if (page == 1) {
-                    List<String> list = new ArrayList<>();
-                    for (int i = 0; i < 10; i++) {
-                        list.add("item-----" + String.valueOf(i));
-                    }
-                    adapter.clearData();
-                    adapter.addData(list);
-                } else {
-                    List<String> list = new ArrayList<>();
-                    int size = adapter.getItemCount();
-                    int count = size + 10;
-                    for (int i = size; i < count; i++) {
-                        list.add("item-----" + String.valueOf(i));
-                    }
-                    adapter.addData(list);
-                }
-                page++;*/
-            }
-        }, 1000);
     }
 
     @Override

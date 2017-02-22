@@ -2,35 +2,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical">
+    android:background="@color/windows_color">
 
-
-    <ScrollView
-        android:id="@+id/scrollView"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/windows_color"
-            android:orientation="vertical">
-
-            <include layout="@layout/layout_head_friend" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
-        </LinearLayout>
-
-    </ScrollView>
+        android:layout_height="match_parent" />
 
     <com.style.view.SideBar
         android:id="@+id/sideBar"
         android:layout_width="31.0dip"
         android:layout_height="fill_parent"
         android:layout_alignParentRight="true"
-        android:elevation="8dp"/>
+        android:elevation="8dp" />
 </RelativeLayout>

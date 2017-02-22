@@ -26,15 +26,15 @@ public class MyCollectAdapter extends BaseRecyclerViewAdapter {
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateItem(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(mInflater.inflate(R.layout.adapter_my_collect, parent, false));
     }
 
     @Override
-    public void onBindItem(RecyclerView.ViewHolder viewHolder, int position, Object data) {
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         final int pos = position;
         final ViewHolder holder = (ViewHolder) viewHolder;
-        final String bean = (String) data;
+        final String bean = (String) getData(position);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

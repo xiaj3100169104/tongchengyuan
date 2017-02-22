@@ -25,17 +25,17 @@ public class DynamicPublishImageAdapter extends BaseRecyclerViewAdapter {
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateItem(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = mInflater.inflate(R.layout.adapter_publish_dynamic_picture, parent, false);
         ViewHolder holder = new ViewHolder(v);
         return holder;
     }
 
     @Override
-    public void onBindItem(RecyclerView.ViewHolder viewHolder, final int position, Object data) {
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, final int position) {
         final int index = position;
         ViewHolder holder = (ViewHolder) viewHolder;
-        String path = (String) data;
+        String path = (String) getData(position);
         if (position != getItemCount() - 1) {
             holder.ivDelete.setVisibility(View.VISIBLE);
             ImageLoadManager.loadNormalPicture(mContext, holder.ivActiveImages, path);
@@ -44,6 +44,8 @@ public class DynamicPublishImageAdapter extends BaseRecyclerViewAdapter {
             holder.ivDelete.setVisibility(View.GONE);
             holder.ivActiveImages.setImageResource(R.mipmap.ic_add_photo);
         }
+        super.setOnItemClickListener(holder, position);
+
         holder.ivDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

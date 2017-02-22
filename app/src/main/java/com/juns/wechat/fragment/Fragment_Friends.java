@@ -48,25 +48,15 @@ import butterknife.ButterKnife;
 
 //通讯录
 
-public class Fragment_Friends extends BaseBusFragment implements OnClickListener {
-    @Bind(R.id.tv_unread_invite_msg)
-    TextView tvUnreadInviteMsg;
-    @Bind(R.id.layout_new_friends)
-    RelativeLayout layoutNewFriends;
-    @Bind(R.id.layout_chat_room)
-    RelativeLayout layoutChatRoom;
-    @Bind(R.id.layout_label)
-    RelativeLayout layoutLabel;
-    @Bind(R.id.layout_public)
-    RelativeLayout layoutPublic;
+public class Fragment_Friends extends BaseBusFragment {
+
     @Bind(R.id.recyclerView)
     RecyclerView recyclerView;
     @Bind(R.id.sideBar)
     SideBar sideBar;
-    @Bind(R.id.scrollView)
-    ScrollView scrollView;
     private FriendDao friendDao = FriendDao.getInstance();
-    private List<FriendBean> dataList;
+    private int unReadCount = 2;
+    private List dataList;
     private LinearLayoutManager layoutManager;
 
     private ContactAdapter adapter;
@@ -77,21 +67,26 @@ public class Fragment_Friends extends BaseBusFragment implements OnClickListener
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mLayoutResID = R.layout.fragment_friends;
-        ButterKnife.bind(this, super.onCreateView(inflater, container, savedInstanceState));
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
     protected void initData() {
-        layoutNewFriends.setOnClickListener(this);
-        layoutChatRoom.setOnClickListener(this);
-        layoutPublic.setOnClickListener(this);
-        dataList = new ArrayList<>();
-        adapter = new ContactAdapter(getActivity(), dataList);
+
         layoutManager = new LinearLayoutManager(this.getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(this.getActivity()));
+        dataList = new ArrayList<>();
+        dataList.add(unReadCount);
+        adapter = new ContactAdapter(getActivity(), dataList);
         recyclerView.setAdapter(adapter);
+        adapter.setOnHeaderItemClickListener(new ContactAdapter.OnHeaderItemClickListener() {
+            @Override
+            public void onClickNewFriend() {
+                MessageDao.getInstance().markAsRead(account, MsgType.MSG_TYPE_SEND_INVITE);
+                startActivity(new Intent(getActivity(), NewFriendsListActivity.class));
+            }
+        });
         adapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position, Object data) {
@@ -124,13 +119,7 @@ public class Fragment_Friends extends BaseBusFragment implements OnClickListener
 
     private void setUnreadInviteMsgData() {
         int count = MessageDao.getInstance().getUnreadInviteMsgCount(account);
-        if (count > 0) {
-            tvUnreadInviteMsg.setVisibility(View.VISIBLE);
-            tvUnreadInviteMsg.setText(count + "");
-        } else {
-            tvUnreadInviteMsg.setVisibility(View.GONE);
-        }
-
+        adapter.notifyItemChanged(0);
         ((MainActivity) getActivity()).setUnreadMsgLabel(R.id.unread_contact_number, count);
     }
 
@@ -146,10 +135,10 @@ public class Fragment_Friends extends BaseBusFragment implements OnClickListener
             // 根据a-z进行排序源数据
             Collections.sort(list, new UploadPhoneComparator());
             dataList.clear();
+            dataList.add(unReadCount);
             dataList.addAll(list);
             adapter.notifyDataSetChanged();
         }
-        //scrollView.smoothScrollTo(0,0);
     }
 
     @Subscriber(tag = FriendTable.TABLE_NAME)
@@ -171,24 +160,6 @@ public class Fragment_Friends extends BaseBusFragment implements OnClickListener
             if (messageBean.getType() == MsgType.MSG_TYPE_SEND_INVITE) {
                 setUnreadInviteMsgData();
             }
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.layout_new_friends://
-                MessageDao.getInstance().markAsRead(account, MsgType.MSG_TYPE_SEND_INVITE);
-                startActivity(new Intent(getActivity(), NewFriendsListActivity.class));
-                break;
-            case R.id.layout_chat_room:// 群聊
-                //startActivity(new Intent(getActivity(), GroupListActivity.class));
-                break;
-            case R.id.layout_public:// 公众号
-                //startActivity(new Intent(getActivity(), PublishUserListActivity.class));
-                break;
-            default:
-                break;
         }
     }
 

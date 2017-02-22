@@ -29,19 +29,21 @@ public class ConversationAdapter extends BaseRecyclerViewAdapter {
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateItem(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(mInflater.inflate(R.layout.layout_item_msg, parent, false));
     }
 
     @Override
-    public void onBindItem(RecyclerView.ViewHolder viewHolder, int position, Object data) {
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         ViewHolder holder = (ViewHolder) viewHolder;
-        MsgItemShow msgItemShow = (MsgItemShow) data;
+        MsgItemShow msgItemShow = (MsgItemShow) getData(position);
         msgItemShow.loadUrl(holder.ivAvatar);
         msgItemShow.showUnreadMsgNumber(holder.tvUnreadMsgNumber);
         msgItemShow.showTitle(holder.tvTitle);
         msgItemShow.showContent(holder.tvContent);
         msgItemShow.showTime(holder.tvTime);
+        super.setOnItemClickListener(holder, position);
+
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
