@@ -14,6 +14,7 @@ import com.juns.wechat.R;
 import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.util.ImageLoader;
 import com.style.base.BaseRecyclerViewAdapter;
+import com.style.view.CustomNotifyView;
 
 import java.util.List;
 
@@ -50,7 +51,7 @@ public class ContactAdapter extends BaseRecyclerViewAdapter implements SectionIn
             int count = (int) getData(0);
             if (count > 0) {
                 headerViewHolder.tvUnreadInviteMsg.setVisibility(View.VISIBLE);
-                headerViewHolder.tvUnreadInviteMsg.setText(count + "");
+                headerViewHolder.tvUnreadInviteMsg.setNotifyCount(count);
             } else {
                 headerViewHolder.tvUnreadInviteMsg.setVisibility(View.GONE);
             }
@@ -125,8 +126,8 @@ public class ContactAdapter extends BaseRecyclerViewAdapter implements SectionIn
     }
 
     static class HeaderViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.tv_unread_invite_msg)
-        TextView tvUnreadInviteMsg;
+        @Bind(R.id.view_notify_msg)
+        CustomNotifyView tvUnreadInviteMsg;
         @Bind(R.id.layout_new_friends)
         RelativeLayout layoutNewFriends;
         @Bind(R.id.layout_chat_room)

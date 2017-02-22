@@ -22,4 +22,16 @@
         <!-- View background -->
         <attr name="android:background" />
     </declare-styleable>
+
+    <attr name="notifyBackgroundColor" format="color" />
+    <attr name="notifyText" format="string" />
+    <attr name="notifyTextColor" format="color" />
+    <attr name="notifyTextSize" format="dimension" />
+
+    <declare-styleable name="CustomNotifyView">
+        <attr name="notifyBackgroundColor" />
+        <attr name="notifyText" />
+        <attr name="notifyTextColor" />
+        <attr name="notifyTextSize" />
+    </declare-styleable>
 </resources>

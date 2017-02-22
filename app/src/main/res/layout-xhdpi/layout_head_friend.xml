@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:divider="@drawable/divider_common"
     android:dividerPadding="@dimen/activity_horizontal_margin"
     android:orientation="vertical"
@@ -33,19 +34,15 @@
             android:textColor="#353535"
             android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/tv_unread_invite_msg"
+        <com.style.view.CustomNotifyView
+            android:id="@+id/view_notify_msg"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="30dp"
-            android:background="@drawable/unread_count_bg"
-            android:gravity="center"
-            android:text="1"
-            android:textColor="#ffffff"
-            android:textSize="12sp"
-            android:visibility="gone" />
+            custom:notifyText="2" />
+
     </RelativeLayout>
 
     <RelativeLayout
