@@ -13,8 +13,8 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListView;
 
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.juns.wechat.Constants;
 import com.juns.wechat.R;
 import com.juns.wechat.bean.FriendBean;
@@ -37,9 +37,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import in.srain.cube.views.ptr.PtrClassicFrameLayout;
-import in.srain.cube.views.ptr.PtrDefaultHandler;
-import in.srain.cube.views.ptr.PtrFrameLayout;
 
 //聊天页面
 public class ChatActivity extends BaseToolbarActivity {
@@ -56,10 +53,8 @@ public class ChatActivity extends BaseToolbarActivity {
     public static final String COPY_IMAGE = "EASEMOBIMG";
 
     private static final int SIZE = 10;
-    @Bind(R.id.lvMessages)
-    RecyclerView lvMessages;
-    @Bind(R.id.ptRefresh)
-    PtrClassicFrameLayout ptRefresh;
+    @Bind(R.id.recyclerView)
+    XRecyclerView recyclerView;
 
     private ClipboardManager clipboard;
     private int chatType;
@@ -88,6 +83,7 @@ public class ChatActivity extends BaseToolbarActivity {
         mLayoutResID = R.layout.activity_chat;
         super.onCreate(savedInstanceState);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.chat_right_menu, menu);
@@ -127,29 +123,28 @@ public class ChatActivity extends BaseToolbarActivity {
         chatActivityHelper.onCreate();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        lvMessages.setLayoutManager(linearLayoutManager);
+        recyclerView.setLayoutManager(linearLayoutManager);
         mAdapter = new ChatAdapter(this, msgViewModels);
-        lvMessages.setAdapter(mAdapter);
+        recyclerView.setAdapter(mAdapter);
 
         chatActivityHelper.loadMessagesFromDb();
+        recyclerView.setLoadingMoreEnabled(false);
 
-        ptRefresh.setMode(PtrFrameLayout.Mode.REFRESH);
-        ptRefresh.setLastUpdateTimeKey(contactUser.getUserName());
-        ptRefresh.setPtrHandler(new PtrDefaultHandler() {
+        recyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
+
             @Override
-            public void onRefreshBegin(PtrFrameLayout frame) {
+            public void onRefresh() {
                 int queryIndex = chatActivityHelper.getQueryIndex();
                 if (queryIndex < 0) {
-                    mHandler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            ptRefresh.refreshComplete();
-                        }
-                    });
-
+                    recyclerView.stopAll();
                 } else {
                     chatActivityHelper.loadMessagesFromDb();
                 }
+            }
+
+            @Override
+            public void onLoadMore() {
+
             }
         });
 
@@ -162,15 +157,11 @@ public class ChatActivity extends BaseToolbarActivity {
 
         // 判断单聊还是群聊
         chatType = getIntent().getIntExtra(Constants.TYPE, CHATTYPE_SINGLE);
-        ;
-        //img_right.setVisibility(View.VISIBLE);
         if (chatType == CHATTYPE_SINGLE) { // 单聊
 
         } else {
             // 群聊
             findViewById(R.id.view_location_video).setVisibility(View.GONE);
-            ;
-            //img_right.setImage;Resource(R.drawable.icon_groupinfo);
         }
 
         String forward_msg_id = getIntent().getStringExtra("forward_msg_id");
@@ -192,7 +183,7 @@ public class ChatActivity extends BaseToolbarActivity {
      * {@link ChatActivityHelper#loadMessagesFromDb()}方法完成之后调用
      */
     public void loadDataComplete(boolean hasNewData) {
-        ptRefresh.refreshComplete();
+        recyclerView.stopAll();
         if (hasNewData) {
             mAdapter.notifyDataSetChanged();  //ChatActivityHelper已经更新数据源
         }
@@ -218,7 +209,7 @@ public class ChatActivity extends BaseToolbarActivity {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                lvMessages.smoothScrollToPosition(mAdapter.getItemCount());
+                recyclerView.smoothScrollToPosition(mAdapter.getItemCount());
             }
         });
     }
@@ -243,14 +234,14 @@ public class ChatActivity extends BaseToolbarActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         findViewById(R.id.ll_more_function_container).setVisibility(View.GONE);
-        lvMessages.smoothScrollToPosition(lvMessages.getChildCount());
+        recyclerView.smoothScrollToPosition(recyclerView.getChildCount());
         if (resultCode == RESULT_CODE_EXIT_GROUP) {
             setResult(RESULT_OK);
             finish();
             return;
         }
         /*if (requestCode == REQUEST_CODE_CONTEXT_MENU) {
-			switch (resultCode) {
+            switch (resultCode) {
 			case RESULT_CODE_COPY: // 复制消息
 				EMMessage copyMsg = ((EMMessage) adapter.getItem(data
 						.getIntExtra("position", -1)));
@@ -350,8 +341,7 @@ public class ChatActivity extends BaseToolbarActivity {
 
                     sendLocationMsg(latitude, longitude, "", locationAddress);
                 } else {
-                    String st = getResources().getString(
-                            R.string.unable_to_get_loaction);
+                    String st = getResources().getString(R.string.unable_to_get_loaction);
 
                 }
                 // 重发消息
@@ -394,8 +384,8 @@ public class ChatActivity extends BaseToolbarActivity {
             return;
         }
         try {
-		/*	EMMessage message = EMMessage
-					.createSendMessage(EMMessage.Type.VIDEO);
+        /*	EMMessage message = EMMessage
+                    .createSendMessage(EMMessage.Type.VIDEO);
 			// 如果是群聊，设置chattype,默认是单聊
 			if (chatType == CHATTYPE_GROUP)
 				message.setChatType(ChatType.GroupChat);
@@ -541,7 +531,6 @@ public class ChatActivity extends BaseToolbarActivity {
         String username = intent.getStringExtra("userId");
 
     }
-
 
 
 }

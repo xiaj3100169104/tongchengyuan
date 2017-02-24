@@ -56,7 +56,7 @@ public class Fragment_Friends extends BaseBusFragment {
     SideBar sideBar;
     private FriendDao friendDao = FriendDao.getInstance();
     private int unReadCount = 2;
-    private List dataList;
+    private List<FriendBean> dataList;
     private LinearLayoutManager layoutManager;
 
     private ContactAdapter adapter;
@@ -77,9 +77,9 @@ public class Fragment_Friends extends BaseBusFragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(this.getActivity()));
         dataList = new ArrayList<>();
-        dataList.add(unReadCount);
         adapter = new ContactAdapter(getActivity(), dataList);
         recyclerView.setAdapter(adapter);
+        adapter.setUnReadCount(unReadCount);
         adapter.setOnHeaderItemClickListener(new ContactAdapter.OnHeaderItemClickListener() {
             @Override
             public void onClickNewFriend() {
@@ -87,12 +87,11 @@ public class Fragment_Friends extends BaseBusFragment {
                 startActivity(new Intent(getActivity(), NewFriendsListActivity.class));
             }
         });
-        adapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener<FriendBean>() {
             @Override
-            public void onItemClick(int position, Object data) {
-                FriendBean rosterBean = (FriendBean) data;
+            public void onItemClick(int position, FriendBean data) {
                 Intent intent = new Intent(getActivity(), UserInfoActivity.class);
-                intent.putExtra(Skip.KEY_USER_ID, rosterBean.getContactId());
+                intent.putExtra(Skip.KEY_USER_ID, data.getContactId());
 
                 getActivity().startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.push_left_in,
@@ -108,7 +107,7 @@ public class Fragment_Friends extends BaseBusFragment {
                 // 该字母首次出现的位置
                 int position = adapter.getPositionForSection(s.charAt(0));
                 if (position != -1) {
-                    layoutManager.smoothScrollToPosition(recyclerView, null, position);
+                    layoutManager.smoothScrollToPosition(recyclerView, null, position + 1);
                 }
             }
         });
@@ -135,7 +134,6 @@ public class Fragment_Friends extends BaseBusFragment {
             // 根据a-z进行排序源数据
             Collections.sort(list, new UploadPhoneComparator());
             dataList.clear();
-            dataList.add(unReadCount);
             dataList.addAll(list);
             adapter.notifyDataSetChanged();
         }

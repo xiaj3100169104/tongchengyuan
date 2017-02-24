@@ -5,15 +5,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ScrollView;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.TypeReference;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.juns.wechat.R;
 import com.juns.wechat.bean.CommentBean;
 import com.juns.wechat.bean.DynamicBean;
@@ -31,9 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import in.srain.cube.views.ptr.PtrClassicFrameLayout;
-import in.srain.cube.views.ptr.PtrDefaultHandler2;
-import in.srain.cube.views.ptr.PtrFrameLayout;
+import butterknife.ButterKnife;
 
 
 /**
@@ -48,12 +47,10 @@ public class FriendCircleActivity extends BaseToolbarActivity {
 
     private int tag = COMMENT;
     @Bind(R.id.recyclerView)
-    RecyclerView recyclerView;
-    @Bind(R.id.ptrFrame)
-    PtrClassicFrameLayout ptrFrame;
+    XRecyclerView recyclerView;
 
     private static List cacheList;
-    private List dataList;
+    private List<DynamicBean> dataList;
     private DynamicAdapter adapter;
     private int page = 1;
     private int action = ACTION_REFRESH;
@@ -97,27 +94,30 @@ public class FriendCircleActivity extends BaseToolbarActivity {
         faceHelper.hideLayoutBottom();
 
         dataList = new ArrayList<>();
-        dataList.add(curUser);
         adapter = new DynamicAdapter(this, dataList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(this));
+
+        View header =   LayoutInflater.from(this).inflate(R.layout.header_friend_circle, (ViewGroup) recyclerView.getParent(),false);
+        recyclerView.addHeaderView(header);
+        HeaderViewHolder headerViewHolder = new HeaderViewHolder(header);
+        ImageLoader.loadAvatar(headerViewHolder.ivAvatar, curUser.getHeadUrl());
+        headerViewHolder.tvNick.setText(curUser.getShowName());
+
         recyclerView.setAdapter(adapter);
-        ptrFrame.setMode(PtrFrameLayout.Mode.BOTH);//可改变模式
-        ptrFrame.setPtrHandler(new PtrDefaultHandler2() {
+        recyclerView.setLoadingMoreEnabled(false);
+        recyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
 
             @Override
-            public void onLoadMoreBegin(PtrFrameLayout frame) {
-                //updateData();
+            public void onLoadMore() {
                 action = ACTION_LOAD_MORE;
                 getData();
             }
 
             @Override
-            public void onRefreshBegin(PtrFrameLayout frame) {
-                //page = 1;
-                //updateData();
+            public void onRefresh() {
                 action = ACTION_REFRESH;
                 getData();
             }
@@ -170,6 +170,7 @@ public class FriendCircleActivity extends BaseToolbarActivity {
         });
 
         if (cacheList != null) {
+            recyclerView.setLoadingMoreEnabled(true);
             dataList.addAll(cacheList);
             adapter.notifyDataSetChanged();
         }
@@ -178,13 +179,13 @@ public class FriendCircleActivity extends BaseToolbarActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                ptrFrame.autoRefresh(true);
+                getData();
             }
         }, 500);
     }
 
     private void addComment2Dynamic(final String content) {
-        final DynamicBean dynamicBean = (DynamicBean) dataList.get(curDynamicPosition);
+        final DynamicBean dynamicBean = dataList.get(curDynamicPosition);
         int replyUserId = -1;//表示直接评论动态
         if (tag == REPLY) {
             replyUserId = dynamicBean.getCommentList().get(curCommentPosition).getCommenterId();
@@ -222,7 +223,7 @@ public class FriendCircleActivity extends BaseToolbarActivity {
         int dynamicId = 0;
         if (action == ACTION_LOAD_MORE) {
             if (dataList.size() > 1) {
-                DynamicBean dynamicBean = (DynamicBean) dataList.get(dataList.size() - 1);
+                DynamicBean dynamicBean = dataList.get(dataList.size() - 1);
                 dynamicId = dynamicBean.getDynamicId();
             }
         }
@@ -230,11 +231,12 @@ public class FriendCircleActivity extends BaseToolbarActivity {
         }) {
             @Override
             protected void onCodeSuccess(List<DynamicBean> data) {
-                ptrFrame.refreshComplete();
+                recyclerView.stopAll();
                 if (data != null && data.size() > 0) {
+                    recyclerView.setLoadingMoreEnabled(true);
+
                     if (action == ACTION_REFRESH) {
                         dataList.clear();
-                        dataList.add(curUser);
                         setFirstPageCacheData(data);
                     }
                     dataList.addAll(data);
@@ -244,7 +246,7 @@ public class FriendCircleActivity extends BaseToolbarActivity {
 
             @Override
             protected void onCodeFailure(String msg) {
-                ptrFrame.refreshComplete();
+                recyclerView.stopAll();
                 showToast(msg);
             }
         });
@@ -278,5 +280,15 @@ public class FriendCircleActivity extends BaseToolbarActivity {
         super.onDestroy();
         //  If null, all callbacks and messages will be removed.
         handler.removeCallbacksAndMessages(null);
+    }
+    static class HeaderViewHolder {
+        @Bind(R.id.tv_nick)
+        TextView tvNick;
+        @Bind(R.id.iv_avatar)
+        RoundedImageView ivAvatar;
+
+        public HeaderViewHolder(View itemView) {
+            ButterKnife.bind(this, itemView);
+        }
     }
 }

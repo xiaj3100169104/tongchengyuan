@@ -73,12 +73,12 @@ dependencies {
     compile 'com.makeramen:roundedimageview:2.3.0'
     //compile 'me.zhanghai.android.materialprogressbar:library:1.3.0'
     compile project(':MaterialProgressBar')
+    compile project(':xrecyclerview')
 
     // add AndroidEventBus dependency
     compile 'org.simple:androideventbus:1.0.5.1'
     compile 'org.xutils:xutils:3.3.36'
     compile 'com.google.code.gson:gson:2.3.1'
-    compile 'in.srain.cube:ptr-load-more:1.0.6'
     compile name: 'SMSSDK-2.1.1', ext: 'aar'
     compile name: 'SMSSDKGUI-2.1.1', ext: 'aar'
     //二维码库

@@ -37,45 +37,28 @@ import butterknife.ButterKnife;
 import uk.viewpager.ImagePagerActivity;
 
 
-public class DynamicAdapter extends BaseRecyclerViewAdapter {
-    public static final int TYPE_HEADER = 0;
-    public static final int TYPE_NORMAL = 1;
-    private OnHeaderItemClickListener mHeaderListener;
+public class DynamicAdapter extends BaseRecyclerViewAdapter<DynamicBean> {
 
     private CommentPopupWindow menuWindow;
     private OnClickDiscussListener mDiscussListener;
     private OnClickImageListener mImageListener;
     private Map<Integer, UserBean> userMap = new HashMap<>();
 
-    public DynamicAdapter(Context mContext, List list) {
+    public DynamicAdapter(Context mContext, List<DynamicBean> list) {
         super(mContext, list);
     }
 
     @Override
-    public int getItemViewType(int position) {
-        if (position == 0)
-            return TYPE_HEADER;
-        return TYPE_NORMAL;
-    }
-
-    @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == TYPE_HEADER)
-            return new HeaderViewHolder(mInflater.inflate(R.layout.header_friend_circle, parent, false));
-        return new ViewHolder(mInflater.inflate(R.layout.adapter_dynamic, parent, false));
+      return new ViewHolder(mInflater.inflate(R.layout.adapter_dynamic, parent, false));
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        if (getItemViewType(position) == TYPE_HEADER) {
-            HeaderViewHolder headerViewHolder = (HeaderViewHolder) viewHolder;
-            UserBean headerUser = (UserBean) getData(position);
-            ImageLoader.loadAvatar(headerViewHolder.ivAvatar, headerUser.getHeadUrl());
-            headerViewHolder.tvNick.setText(headerUser.getShowName());
-        } else {
+
             final int pos = position;
             final ViewHolder holder = (ViewHolder) viewHolder;
-            final DynamicBean bean = (DynamicBean) getData(position);
+            final DynamicBean bean = getData(position);
             UserBean user;
             if (userMap.containsKey(bean.getPublisherId()))
                 user = userMap.get(bean.getPublisherId());
@@ -192,7 +175,6 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter {
                 }
             });
         }*/
-        }
     }
 
     private void dealImages(Context mContext, GridLayout glImages, final List<String> images) {
@@ -298,27 +280,6 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter {
         int xoff = -dip2px(200);
         int yoff = -dip2px(25);
         menuWindow.showAsDropDown(anchor, xoff, yoff);
-    }
-
-    static class HeaderViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.tv_nick)
-        TextView tvNick;
-        @Bind(R.id.iv_avatar)
-        RoundedImageView ivAvatar;
-
-        public HeaderViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
-    }
-
-    public void setOnHeaderItemClickListener(OnHeaderItemClickListener mListener) {
-        if (mListener != null)
-            this.mHeaderListener = mListener;
-    }
-
-    public interface OnHeaderItemClickListener {
-        void onClickNewFriend();
     }
 
     public interface OnClickDiscussListener {

@@ -13,18 +13,11 @@
 
         <include layout="@layout/comm_toolbar" />
 
-        <in.srain.cube.views.ptr.PtrClassicFrameLayout
-            android:id="@+id/ptrFrame"
+        <com.jcodecraeer.xrecyclerview.XRecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"/>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:nestedScrollingEnabled="false" />
-
-        </in.srain.cube.views.ptr.PtrClassicFrameLayout>
     </LinearLayout>
 
     <include layout="@layout/layout_bottom_friend_circle_activity" />
