@@ -66,7 +66,7 @@ public class ChatInputManager implements View.OnClickListener {
     private LinearLayout llMoreFunctionContainer; //图片，相册等更多功能容器
     private LinearLayout viewPhoto; //图片
 
-    private RecyclerView lvMessages;  //消息列表
+    private RecyclerView recyclerView;  //消息列表
     private List<String> emoticonsFileNames;
     //  private AnimationDrawable animationDrawable;
 
@@ -96,8 +96,8 @@ public class ChatInputManager implements View.OnClickListener {
         llMoreFunctionContainer = (LinearLayout) view.findViewById(R.id.ll_more_function_container);
         viewPhoto = (LinearLayout) view.findViewById(R.id.view_photo);
 
-        lvMessages = (RecyclerView) view.findViewById(R.id.lvMessages);
-        lvMessages.setOverScrollMode(View.OVER_SCROLL_NEVER);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        recyclerView.setOverScrollMode(View.OVER_SCROLL_NEVER);
     }
 
     public void onCreate() {
@@ -180,7 +180,7 @@ public class ChatInputManager implements View.OnClickListener {
             }
         });
 
-        lvMessages.setOnTouchListener(new View.OnTouchListener() {
+        recyclerView.setOnTouchListener(new View.OnTouchListener() {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
