@@ -9,9 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
-import android.widget.TextView;
 
 import com.juns.wechat.R;
 import com.juns.wechat.activity.MainActivity;
@@ -92,10 +89,7 @@ public class Fragment_Friends extends BaseBusFragment {
             public void onItemClick(int position, FriendBean data) {
                 Intent intent = new Intent(getActivity(), UserInfoActivity.class);
                 intent.putExtra(Skip.KEY_USER_ID, data.getContactId());
-
-                getActivity().startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.push_left_in,
-                        R.anim.push_left_out);
+                getContext().startActivity(intent);
 
             }
         });

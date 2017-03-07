@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/windows_color">
 
     <android.support.v7.widget.RecyclerView
@@ -12,7 +12,7 @@
     <com.style.view.SideBar
         android:id="@+id/sideBar"
         android:layout_width="31.0dip"
-        android:layout_height="fill_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:elevation="8dp" />
 </RelativeLayout>

@@ -7,14 +7,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.ClipboardManager;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.github.jdsjlzx.interfaces.OnRefreshListener;
+import com.github.jdsjlzx.recyclerview.LRecyclerView;
+import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
+import com.github.jdsjlzx.recyclerview.ProgressStyle;
 import com.juns.wechat.Constants;
 import com.juns.wechat.R;
 import com.juns.wechat.bean.FriendBean;
@@ -53,8 +55,8 @@ public class ChatActivity extends BaseToolbarActivity {
     public static final String COPY_IMAGE = "EASEMOBIMG";
 
     private static final int SIZE = 10;
-    @Bind(R.id.recyclerView)
-    XRecyclerView recyclerView;
+    @Bind(R.id.list)
+    LRecyclerView mRecyclerView;
 
     private ClipboardManager clipboard;
     private int chatType;
@@ -67,15 +69,16 @@ public class ChatActivity extends BaseToolbarActivity {
     private String contactName;
 
     private ChatInputManager chatInputManager;
-    private ChatAdapter mAdapter;
     private ChatActivityHelper chatActivityHelper;
+    private ChatAdapter mDataAdapter;
+    private LRecyclerViewAdapter mLRecyclerViewAdapter = null;
 
     private UserBean account = AccountManager.getInstance().getUser();
     private FriendBean friendBean;
     private UserBean contactUser;
     private boolean mFirstLoad = true; //是否第一次加载数据
 
-    private List<MessageBean> msgViewModels = new ArrayList<>();
+    private List<MessageBean> msgViewModels;
     private Handler mHandler = new Handler();
 
     @Override
@@ -121,22 +124,27 @@ public class ChatActivity extends BaseToolbarActivity {
         chatInputManager.onCreate();
         chatActivityHelper = new ChatActivityHelper(this);
         chatActivityHelper.onCreate();
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        mAdapter = new ChatAdapter(this, msgViewModels);
-        recyclerView.setAdapter(mAdapter);
 
-        chatActivityHelper.loadMessagesFromDb();
-        recyclerView.setLoadingMoreEnabled(false);
+        msgViewModels = new ArrayList<>();
+        mDataAdapter = new ChatAdapter(this, msgViewModels);
+        mLRecyclerViewAdapter = new LRecyclerViewAdapter(mDataAdapter);
+        mRecyclerView.setAdapter(mLRecyclerViewAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        recyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
+        mRecyclerView.setLoadMoreEnabled(false);
+        mRecyclerView.setRefreshProgressStyle(ProgressStyle.BallPulse);
+        mRecyclerView.setArrowImageView(R.drawable.ic_pulltorefresh_arrow);
+        //mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallPulse);
+        //设置头部加载颜色
+        mRecyclerView.setHeaderViewColor(R.color.white ,android.R.color.white, R.color.colorAccent);
+
+        mRecyclerView.setOnRefreshListener(new OnRefreshListener() {
 
             @Override
             public void onRefresh() {
                 int queryIndex = chatActivityHelper.getQueryIndex();
                 if (queryIndex < 0) {
-                    recyclerView.stopAll();
+                    mRecyclerView.refreshComplete(5);
                 } else {
                     chatActivityHelper.loadMessagesFromDb();
                 }
@@ -149,6 +157,8 @@ public class ChatActivity extends BaseToolbarActivity {
         });
 
         setUpView();
+        chatActivityHelper.loadMessagesFromDb();
+
     }
 
     private void setUpView() {
@@ -183,9 +193,9 @@ public class ChatActivity extends BaseToolbarActivity {
      * {@link ChatActivityHelper#loadMessagesFromDb()}方法完成之后调用
      */
     public void loadDataComplete(boolean hasNewData) {
-        recyclerView.stopAll();
+        mRecyclerView.refreshComplete(5);
         if (hasNewData) {
-            mAdapter.notifyDataSetChanged();  //ChatActivityHelper已经更新数据源
+            mDataAdapter.notifyDataSetChanged();  //ChatActivityHelper已经更新数据源
         }
         //第一次加载数据，listView要滚动到底部，下拉刷新加载出来的数据，不用滚动到底部
         if (mFirstLoad) {
@@ -195,7 +205,7 @@ public class ChatActivity extends BaseToolbarActivity {
     }
 
     public void refreshOneData(boolean scrollListView) {
-        mAdapter.notifyDataSetChanged();
+        mDataAdapter.notifyDataSetChanged();
         if (scrollListView) {
             scrollListViewToBottom();
         }
@@ -209,7 +219,7 @@ public class ChatActivity extends BaseToolbarActivity {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                recyclerView.smoothScrollToPosition(mAdapter.getItemCount());
+                mRecyclerView.smoothScrollToPosition(mDataAdapter.getItemCount());
             }
         });
     }
@@ -234,7 +244,7 @@ public class ChatActivity extends BaseToolbarActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         findViewById(R.id.ll_more_function_container).setVisibility(View.GONE);
-        recyclerView.smoothScrollToPosition(recyclerView.getChildCount());
+        mRecyclerView.smoothScrollToPosition(mRecyclerView.getChildCount());
         if (resultCode == RESULT_CODE_EXIT_GROUP) {
             setResult(RESULT_OK);
             finish();

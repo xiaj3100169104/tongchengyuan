@@ -14,7 +14,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.TypeReference;
-import com.jcodecraeer.xrecyclerview.XRecyclerView;
+import com.github.jdsjlzx.interfaces.OnRefreshListener;
+import com.github.jdsjlzx.recyclerview.LRecyclerView;
+import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
+import com.github.jdsjlzx.recyclerview.ProgressStyle;
 import com.juns.wechat.R;
 import com.juns.wechat.bean.CommentBean;
 import com.juns.wechat.bean.DynamicBean;
@@ -46,12 +49,14 @@ public class FriendCircleActivity extends BaseToolbarActivity {
     private static final int REPLY_REPLY = 2;
 
     private int tag = COMMENT;
-    @Bind(R.id.recyclerView)
-    XRecyclerView recyclerView;
+    @Bind(R.id.list)
+    LRecyclerView mRecyclerView;
 
     private static List cacheList;
     private List<DynamicBean> dataList;
-    private DynamicAdapter adapter;
+    private DynamicAdapter mDataAdapter;
+    private LRecyclerViewAdapter mLRecyclerViewAdapter = null;
+
     private int page = 1;
     private int action = ACTION_REFRESH;
     private UserBean curUser;
@@ -94,27 +99,31 @@ public class FriendCircleActivity extends BaseToolbarActivity {
         faceHelper.hideLayoutBottom();
 
         dataList = new ArrayList<>();
-        adapter = new DynamicAdapter(this, dataList);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.addItemDecoration(new DividerItemDecoration(this));
-
-        View header =   LayoutInflater.from(this).inflate(R.layout.header_friend_circle, (ViewGroup) recyclerView.getParent(),false);
-        recyclerView.addHeaderView(header);
+        mDataAdapter = new DynamicAdapter(this, dataList);
+        mLRecyclerViewAdapter = new LRecyclerViewAdapter(mDataAdapter);
+        mRecyclerView.setAdapter(mLRecyclerViewAdapter);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(this));
+        View header = LayoutInflater.from(this).inflate(R.layout.header_friend_circle, (ViewGroup) mRecyclerView.getParent(), false);
+        mLRecyclerViewAdapter.addHeaderView(header);
         HeaderViewHolder headerViewHolder = new HeaderViewHolder(header);
         ImageLoader.loadAvatar(headerViewHolder.ivAvatar, curUser.getHeadUrl());
         headerViewHolder.tvNick.setText(curUser.getShowName());
 
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLoadingMoreEnabled(false);
-        recyclerView.setLoadingListener(new XRecyclerView.LoadingListener() {
-
-            @Override
-            public void onLoadMore() {
-                action = ACTION_LOAD_MORE;
-                getData();
-            }
+        //禁用下拉刷新功能
+        mRecyclerView.setPullRefreshEnabled(true);
+        //禁用自动加载更多功能
+        mRecyclerView.setLoadMoreEnabled(true);
+        mRecyclerView.setRefreshProgressStyle(ProgressStyle.BallPulse);
+        mRecyclerView.setArrowImageView(R.drawable.ic_pulltorefresh_arrow);
+        mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallPulse);
+        //设置头部加载颜色
+        mRecyclerView.setHeaderViewColor(R.color.white, android.R.color.white, R.color.black);
+        //设置底部加载颜色
+        mRecyclerView.setFooterViewColor(R.color.gray, android.R.color.darker_gray, R.color.white);
+        //设置底部加载文字提示
+        mRecyclerView.setFooterViewHint("拼命加载中", "已经全部为你呈现了", "网络不给力啊，点击再试一次吧");
+        mRecyclerView.setOnRefreshListener(new OnRefreshListener() {
 
             @Override
             public void onRefresh() {
@@ -122,9 +131,15 @@ public class FriendCircleActivity extends BaseToolbarActivity {
                 getData();
             }
 
+            @Override
+            public void onLoadMore() {
+                action = ACTION_LOAD_MORE;
+                getData();
+            }
+
         });
 
-        adapter.setOnClickDiscussListener(new DynamicAdapter.OnClickDiscussListener() {
+        mDataAdapter.setOnClickDiscussListener(new DynamicAdapter.OnClickDiscussListener() {
             @Override
             public void OnClickSupport(int dynamicPosition, Object data) {
 
@@ -161,7 +176,7 @@ public class FriendCircleActivity extends BaseToolbarActivity {
 
             }
         });
-        recyclerView.setOnTouchListener(new View.OnTouchListener() {
+        mRecyclerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 faceHelper.hideAllLayout();
@@ -170,9 +185,9 @@ public class FriendCircleActivity extends BaseToolbarActivity {
         });
 
         if (cacheList != null) {
-            recyclerView.setLoadingMoreEnabled(true);
+            mRecyclerView.setLoadMoreEnabled(true);
             dataList.addAll(cacheList);
-            adapter.notifyDataSetChanged();
+            mDataAdapter.notifyDataSetChanged();
         }
 
         //先加载缓存，再延迟刷新
@@ -204,7 +219,7 @@ public class FriendCircleActivity extends BaseToolbarActivity {
                 commentBean.setContent(content);*/
                     list.add(data);
                     dynamicBean.setCommentList(list);
-                    adapter.notifyItemChanged(curDynamicPosition);
+                    mDataAdapter.notifyItemChanged(curDynamicPosition);
                 }
             }
 
@@ -231,22 +246,26 @@ public class FriendCircleActivity extends BaseToolbarActivity {
         }) {
             @Override
             protected void onCodeSuccess(List<DynamicBean> data) {
-                recyclerView.stopAll();
+                mRecyclerView.refreshComplete(5);
+
                 if (data != null && data.size() > 0) {
-                    recyclerView.setLoadingMoreEnabled(true);
+                    mRecyclerView.setLoadMoreEnabled(true);
 
                     if (action == ACTION_REFRESH) {
                         dataList.clear();
                         setFirstPageCacheData(data);
                     }
                     dataList.addAll(data);
+                    mDataAdapter.notifyDataSetChanged();
+                } else {
+                    //the end
+                    mRecyclerView.setNoMore(true);
                 }
-                adapter.notifyDataSetChanged();
             }
 
             @Override
             protected void onCodeFailure(String msg) {
-                recyclerView.stopAll();
+                mRecyclerView.refreshComplete(5);
                 showToast(msg);
             }
         });
@@ -268,7 +287,7 @@ public class FriendCircleActivity extends BaseToolbarActivity {
                     if (data != null) {
                         DynamicBean bean = (DynamicBean) data.getSerializableExtra("sendDynamic");
                         dataList.add(0, bean);
-                        adapter.notifyDataSetChanged();
+                        mDataAdapter.notifyDataSetChanged();
                     }
                     break;
             }
@@ -281,6 +300,7 @@ public class FriendCircleActivity extends BaseToolbarActivity {
         //  If null, all callbacks and messages will be removed.
         handler.removeCallbacksAndMessages(null);
     }
+
     static class HeaderViewHolder {
         @Bind(R.id.tv_nick)
         TextView tvNick;

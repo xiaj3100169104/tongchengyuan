@@ -13,8 +13,8 @@
 
         <include layout="@layout/comm_toolbar" />
 
-        <com.jcodecraeer.xrecyclerview.XRecyclerView
-            android:id="@+id/recyclerView"
+        <com.github.jdsjlzx.recyclerview.LRecyclerView
+            android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 

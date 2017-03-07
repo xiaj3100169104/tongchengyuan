@@ -17,8 +17,8 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <com.jcodecraeer.xrecyclerview.XRecyclerView
-            android:id="@+id/recyclerView"
+        <com.github.jdsjlzx.recyclerview.LRecyclerView
+            android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:cacheColorHint="#00000000"
