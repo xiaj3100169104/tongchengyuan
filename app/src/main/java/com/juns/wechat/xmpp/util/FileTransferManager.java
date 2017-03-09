@@ -86,6 +86,8 @@ public class FileTransferManager {
 
     public void downloadFile(String fileName, int fileSize,  ProgressListener listener){
         LogUtil.i("fileName: " + fileName);
+        File dir = new File(PhotoUtil.PHOTO_PATH);
+        dir.mkdirs();
         File file = new File(PhotoUtil.PHOTO_PATH, fileName);
         if(file.exists()){  //由于文件名都是唯一的，说明这张图片是由同一个手机上发出并在本手机上接收。
             listener.transferFinished(true);
@@ -121,7 +123,7 @@ public class FileTransferManager {
             }
             byte[] buffer = new byte[1024];
             int wrote = 0;
-            int len = 0;
+            int len;
             while ((len = socketIn.read(buffer)) != -1){
                 fileOut.write(buffer, 0, len);
                 wrote += len;

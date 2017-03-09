@@ -25,8 +25,9 @@ public class ViewHolderTextBase extends BaseMsgViewHolder {
 
     @Override
     protected void updateView() {
-        super.updateView();
+        //先得到bean，在进行其他操作
         TextMsg textMsg1 = (TextMsg) messageBean.getMsgObj();
+        super.updateView();
         CommonUtil.setText(viewContent, SmileUtils.getSmiledText(App.getInstance(), textMsg1.content));
     }
     @Override

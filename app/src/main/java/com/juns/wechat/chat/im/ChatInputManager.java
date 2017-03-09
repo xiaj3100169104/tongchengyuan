@@ -20,6 +20,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.juns.wechat.R;
 import com.juns.wechat.activity.SendLocationActivity;
 import com.juns.wechat.chat.adpter.ExpressionAdapter;
@@ -66,7 +67,7 @@ public class ChatInputManager implements View.OnClickListener {
     private LinearLayout llMoreFunctionContainer; //图片，相册等更多功能容器
     private LinearLayout viewPhoto; //图片
 
-    private RecyclerView recyclerView;  //消息列表
+    private LRecyclerView recyclerView;  //消息列表
     private List<String> emoticonsFileNames;
     //  private AnimationDrawable animationDrawable;
 
@@ -96,7 +97,7 @@ public class ChatInputManager implements View.OnClickListener {
         llMoreFunctionContainer = (LinearLayout) view.findViewById(R.id.ll_more_function_container);
         viewPhoto = (LinearLayout) view.findViewById(R.id.view_photo);
 
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerView);
+        recyclerView = (LRecyclerView) view.findViewById(R.id.list);
         recyclerView.setOverScrollMode(View.OVER_SCROLL_NEVER);
     }
 

@@ -23,8 +23,9 @@ public class ViewHolderPictureBase extends BaseMsgViewHolder {
 
     @Override
     protected void updateView() {
-        super.updateView();
+        //先得到bean，在进行其他操作
         pictureMsg = (PictureMsg) messageBean.getMsgObj();
+        super.updateView();
         loadPicture(ivPicture, PhotoUtil.PHOTO_PATH + "/" + pictureMsg.imgName);
 
     }

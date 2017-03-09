@@ -28,8 +28,9 @@ public class ViewHolderVoiceBase extends BaseMsgViewHolder {
 
     @Override
     protected void updateView() {
-        super.updateView();
+        //先得到bean，在进行其他操作
         voiceMsg = (VoiceMsg) messageBean.getMsgObj();
+        super.updateView();
         tvVoicePadding.setText(getPaddingByVoiceLength(voiceMsg.seconds));
         tvVoiceLength.setText(voiceMsg.seconds + "''");
     }
