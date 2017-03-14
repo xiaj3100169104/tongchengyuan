@@ -8,8 +8,8 @@ public class MsgType {
     public final static int MSG_TYPE_VOICE   = MSG_TYPE_TEXT+1; //语音
     public final static int MSG_TYPE_PICTURE = MSG_TYPE_VOICE+1;//图片
     public final static int MSG_TYPE_FILE    = MSG_TYPE_PICTURE +1;//文件
-    public final static int MSG_TYPE_VIDEO = MSG_TYPE_FILE+1;     //视频
-    public final static int MSG_TYPE_INFO    = MSG_TYPE_VIDEO +1;     //资讯类消息
+    public final static int MSG_TYPE_OFFLINE_VIDEO = MSG_TYPE_FILE+1;     //视频
+    public final static int MSG_TYPE_INFO    = MSG_TYPE_OFFLINE_VIDEO +1;     //资讯类消息
     public final static int MSG_TYPE_NAME_CARD   = MSG_TYPE_INFO+1;     //名片类
     public final static int MSG_TYPE_LOCATION    = MSG_TYPE_NAME_CARD+1;     //地理位置
     public final static int MSG_TYPE_PAY       = MSG_TYPE_LOCATION+1;     //支付

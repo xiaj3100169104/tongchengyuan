@@ -31,6 +31,9 @@ public abstract class Msg {
             case MsgType.MSG_TYPE_VOICE:
                 msg = gson.fromJson(json, VoiceMsg.class);
                 break;
+            case MsgType.MSG_TYPE_OFFLINE_VIDEO:
+                msg = gson.fromJson(json, OfflineVideoMsg.class);
+                break;
             case MsgType.MSG_TYPE_SEND_INVITE:
             case MsgType.MSG_TYPE_REPLY_INVITE:
                 msg = gson.fromJson(json, InviteMsg.class);
