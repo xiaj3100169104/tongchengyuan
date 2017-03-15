@@ -23,5 +23,6 @@ public class MsgType {
 
     public static final String MSG_TYPE_VOICE_DESC = "[语音]";
     public static final String MSG_TYPE_PICTURE_DESC = "[图片]";
+    public static final String MSG_TYPE_OFFLINE_VIDEO_DESC = "[视频]";
 
 }

@@ -387,30 +387,7 @@ public class ChatActivity extends BaseToolbarActivity {
     /**
      * 发送视频消息
      */
-    private void sendVideo(final String filePath, final String thumbPath,
-                           final int length) {
-        final File videoFile = new File(filePath);
-        if (!videoFile.exists()) {
-            return;
-        }
-        try {
-        /*	EMMessage message = EMMessage
-                    .createSendMessage(EMMessage.Type.VIDEO);
-			// 如果是群聊，设置chattype,默认是单聊
-			if (chatType == CHATTYPE_GROUP)
-				message.setChatType(ChatType.GroupChat);
-			String to = toChatUsername;
-			message.setReceipt(to);
-			VideoMessageBody body = new VideoMessageBody(videoFile, thumbPath,
-					length, videoFile.length());
-			message.addBody(body);
-			conversation.addMessage(message);*/
-            //listView.setAdapter(adapter);
-            //listView.setSelection(listView.getCount() - 1);
-            setResult(RESULT_OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private void sendOfflineVideo(String filePath) {
 
     }
 

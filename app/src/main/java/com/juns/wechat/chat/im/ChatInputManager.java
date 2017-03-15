@@ -346,7 +346,17 @@ public class ChatInputManager implements View.OnClickListener {
         }
 
     }
-
+    public void sendOfflineVideo(final String otherUserName, final String filePath) {
+        if (filePath == null || filePath.isEmpty()) {
+            throw new NullPointerException("filePaths should not be empty");
+        }
+         ThreadPoolUtil.execute(new Runnable() {
+                @Override
+                public void run() {
+                   SendMessage.sendOfflineVideoMsg(otherUserName, new File(filePath));
+                }
+            });
+    }
     private void sendLocation() {
         Intent intent = new Intent(mChatActivity, SendLocationActivity.class);
         mChatActivity.startActivity(intent);

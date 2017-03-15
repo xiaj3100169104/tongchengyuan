@@ -3,6 +3,7 @@ package com.juns.wechat.xmpp.util;
 
 import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.chat.bean.InviteMsg;
+import com.juns.wechat.chat.bean.OfflineVideoMsg;
 import com.juns.wechat.chat.bean.PictureMsg;
 import com.juns.wechat.chat.bean.TextMsg;
 import com.juns.wechat.chat.bean.VoiceMsg;
@@ -107,7 +108,55 @@ public class SendMessage {
             }
         });
     }
+    public static void sendOfflineVideoMsg(final String otherName, final File file){
+        ThreadPoolUtil.execute(new Runnable() {
+            @Override
+            public void run() {
+                if(file == null || !file.exists()) return;
 
+                String fileName = file.getName();
+                final OfflineVideoMsg pictureMsg = new OfflineVideoMsg();
+                pictureMsg.fileName = fileName;
+                pictureMsg.progress = 0;
+                pictureMsg.size = (int) file.length();
+
+                final MessageBean messageBean = new MessageBean();
+                messageBean.setMsg(pictureMsg.toJson());
+                messageBean.setOtherName(otherName);
+                messageBean.setType(MsgType.MSG_TYPE_OFFLINE_VIDEO);
+                messageBean.setTypeDesc(MsgType.MSG_TYPE_OFFLINE_VIDEO_DESC);
+                completeMessageEntityInfo(messageBean);
+                addMessageToDB(messageBean);
+
+                if(!XmppManagerImpl.getInstance().login()){
+                    updateMessageState(messageBean.getPacketId(), MessageBean.State.SEND_FAILED.value);
+                    return;
+                }
+
+                FileTransferManager fileTransferManager = new FileTransferManager();
+
+                fileTransferManager.sendFile(file, otherName, new FileTransferManager.ProgressListener() {
+                    @Override
+                    public void progressUpdated(int progress) {
+                        pictureMsg.progress = progress;
+                        messageBean.setMsg(pictureMsg.toJson());
+                        WhereBuilder whereBuilder = WhereBuilder.b(MessageBean.PACKET_ID, "=", messageBean.getPacketId());
+                        KeyValue keyValue = new KeyValue(MessageBean.MSG, messageBean.getMsg());
+                        messageDao.update(whereBuilder, keyValue);
+                    }
+
+                    @Override
+                    public void transferFinished(boolean success) {
+                        if(success){
+                            sendMsgDirect(messageBean);
+                        }else {
+                            updateMessageState(messageBean.getPacketId(), MessageBean.State.SEND_FAILED.value);
+                        }
+                    }
+                });
+            }
+        });
+    }
     public static void sendVoiceMsg(final String otherName, final int seconds, final String filePath){
         ThreadPoolUtil.execute(new Runnable() {
             @Override
