@@ -132,19 +132,19 @@ public abstract class BaseActivity extends BaseRxActivity {
         dismissProgressDialog();
     }
 
-    protected void skip(Class<?> cls) {
+    public void skip(Class<?> cls) {
         startActivity(new Intent(mContext, cls));
     }
 
-    protected void skipForResult(Class<?> cls, int requestCode) {
+    public void skipForResult(Class<?> cls, int requestCode) {
         startActivityForResult(new Intent(mContext, cls), requestCode);
     }
 
-    protected void showToast(int resId) {
+    public void showToast(int resId) {
         showToast(getString(resId));
     }
 
-    protected void showToast(String prompt) {
+    public void showToast(String prompt) {
         if (isVisibleToUser) {
             ToastUtil.showToast(prompt, Toast.LENGTH_SHORT);
         }

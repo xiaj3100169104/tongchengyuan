@@ -42,5 +42,9 @@ public class ViewHolderPictureRight extends ViewHolderPictureBase {
         super.onSendOtherStatus();
         tvSendPercent.setVisibility(View.VISIBLE);
         tvSendPercent.setText(pictureMsg.progress + "%");
+        if (pictureMsg.progress == 100){
+            tvSendPercent.setVisibility(View.GONE);
+            sendingProgress.setVisibility(View.GONE);
+        }
     }
 }

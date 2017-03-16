@@ -43,12 +43,12 @@ public class App extends Application {
         //Thread.setDefaultUncaughtExceptionHandler(new CustomExceptionHandler());
 		ZXingLibrary.initDisplayOpinion(this);
         AccountManager.getInstance().init(mContext);
-        // 设置拍摄视频缓存路径
+        /*// 设置拍摄视频缓存路径
 		VCamera.setVideoCachePath(FileConfig.DIR_CACHE);
 		// 开启log输出,ffmpeg输出到logcat
 		VCamera.setDebugMode(true);
 		// 初始化拍摄SDK，必须
-		VCamera.initialize(this);
+		VCamera.initialize(this);*/
     }
 
 

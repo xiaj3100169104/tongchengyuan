@@ -207,11 +207,12 @@ public class ChatInputManager implements View.OnClickListener {
         });
 
         mChatActivity.findViewById(R.id.view_camera).setOnClickListener(this);
-        mChatActivity.findViewById(R.id.view_file).setOnClickListener(this);
-        mChatActivity.findViewById(R.id.view_video).setOnClickListener(this);
         mChatActivity.findViewById(R.id.view_photo).setOnClickListener(this);
+        mChatActivity.findViewById(R.id.view_video_record).setOnClickListener(this);
         mChatActivity.findViewById(R.id.view_location).setOnClickListener(this);
         mChatActivity.findViewById(R.id.view_audio).setOnClickListener(this);
+        mChatActivity.findViewById(R.id.view_file).setOnClickListener(this);
+        mChatActivity.findViewById(R.id.view_video_call).setOnClickListener(this);
     }
 
     public void onDestroy() {
@@ -230,7 +231,8 @@ public class ChatInputManager implements View.OnClickListener {
                 takeCamera();         // 点击照相图标
                 break;
             case R.id.view_video_record:
-                recordVideo();       //录制视频
+                mChatActivity.showToast("待开发中");
+                //recordVideo();       //录制视频
                 break;
             case R.id.view_location:
                 sendLocation();       //发送位置
@@ -241,7 +243,7 @@ public class ChatInputManager implements View.OnClickListener {
             case R.id.view_audio:
                 makeAudioCall(); //语音通话
                 break;
-            case R.id.view_video:
+            case R.id.view_video_call:
                 // 视频通话
                 break;
             case R.id.btn_set_mode_keyboard:
