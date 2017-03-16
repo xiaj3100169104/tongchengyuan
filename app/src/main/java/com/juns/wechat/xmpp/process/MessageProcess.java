@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.text.TextUtils;
 
 import com.juns.wechat.chat.bean.MessageBean;
-import com.juns.wechat.chat.im.ChatActivity;
+import com.juns.wechat.chat.ui.ChatActivity;
 import com.juns.wechat.dao.MessageDao;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.util.LogUtil;

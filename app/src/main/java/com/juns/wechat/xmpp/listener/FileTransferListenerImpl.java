@@ -1,6 +1,6 @@
 package com.juns.wechat.xmpp.listener;
 
-import com.juns.wechat.util.PhotoUtil;
+import com.style.constant.FileConfig;
 
 import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smackx.filetransfer.FileTransferListener;
@@ -18,7 +18,7 @@ public class FileTransferListenerImpl implements FileTransferListener {
     public void fileTransferRequest(FileTransferRequest request) {
         IncomingFileTransfer fileTransfer = request.accept();
         try {
-            fileTransfer.recieveFile(new File(PhotoUtil.PHOTO_PATH, fileTransfer.getFileName()));
+            fileTransfer.recieveFile(new File(FileConfig.DIR_IMAGE, fileTransfer.getFileName()));
         } catch (SmackException e) {
             e.printStackTrace();
         } catch (IOException e) {

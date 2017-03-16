@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingTop="13dp" >
+
+    <include layout="@layout/chat_item_common_time"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_chat_activity"
+        android:orientation="horizontal">
+
+        <include layout="@layout/chat_item_common_avatar_left"/>
+
+        <RelativeLayout
+            android:id="@+id/layout_content_container"
+            style="@style/chat_item_from_content_container">
+
+            <ImageView
+                android:id="@+id/ivPicture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/empty_photo"/>
+
+            <LinearLayout
+                android:id="@+id/ll_loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <ProgressBar
+                    android:id="@+id/receive_progressBar"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:indeterminateDrawable="@drawable/small_prograssbar"
+				    android:indeterminateOnly="true"
+			    	android:layout_gravity="center"
+				    android:indeterminateBehavior="repeat"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/receive_percentage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0%"
+                    android:textColor="@android:color/white"
+                    android:visibility="visible" />
+            </LinearLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

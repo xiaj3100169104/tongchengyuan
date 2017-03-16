@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.juns.wechat.R;
-import com.juns.wechat.chat.im.ChatMediaPlayer;
+import com.juns.wechat.chat.ui.ChatMediaPlayer;
 import com.juns.wechat.util.AudioManager;
 
 

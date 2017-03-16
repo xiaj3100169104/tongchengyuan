@@ -9,7 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import com.juns.wechat.R;
 import com.style.base.BaseToolbarActivity;
 import com.style.base.BaseRecyclerViewAdapter;
-import com.style.constant.FileDirectory;
+import com.style.constant.FileConfig;
 import com.style.constant.Skip;
 import com.style.dialog.SelAvatarDialog;
 import com.style.utils.CommonUtil;
@@ -124,7 +124,7 @@ public class SelectLocalPictureActivity extends BaseToolbarActivity {
                 dialog.setOnItemClickListener(new SelAvatarDialog.OnItemClickListener() {
                     @Override
                     public void OnClickCamera() {
-                        photoFile = CommonUtil.takePhoto(SelectLocalPictureActivity.this, FileDirectory.DIR_IMAGE, String.valueOf(System.currentTimeMillis()) + ".jpg");
+                        photoFile = CommonUtil.takePhoto(SelectLocalPictureActivity.this, FileConfig.DIR_IMAGE, String.valueOf(System.currentTimeMillis()) + ".jpg");
 
                     }
 

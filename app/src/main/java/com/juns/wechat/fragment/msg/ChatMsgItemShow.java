@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.juns.wechat.chat.im.ChatActivity;
+import com.juns.wechat.chat.ui.ChatActivity;
 import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.dao.FriendDao;

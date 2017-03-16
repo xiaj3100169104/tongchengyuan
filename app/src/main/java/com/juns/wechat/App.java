@@ -7,17 +7,9 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 
-import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.Application;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.os.Process;
 import android.text.TextUtils;
@@ -25,7 +17,9 @@ import android.text.TextUtils;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.juns.wechat.manager.AccountManager;
+import com.style.constant.FileConfig;
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
+import com.yixia.camera.VCamera;
 
 import org.xutils.x;
 
@@ -42,13 +36,19 @@ public class App extends Application {
 
         x.Ext.init(this);
         x.Ext.setDebug(BuildConfig.DEBUG); // 开启debug会影响性能
+		//短信发送
         SMSSDK.initSDK(this, Constants.MOB_SDK_KEY, Constants.MOB_SDK_SECRET);
         // 百度MAP sdk initialize
         SDKInitializer.initialize(this);
         //Thread.setDefaultUncaughtExceptionHandler(new CustomExceptionHandler());
 		ZXingLibrary.initDisplayOpinion(this);
         AccountManager.getInstance().init(mContext);
-
+        // 设置拍摄视频缓存路径
+		VCamera.setVideoCachePath(FileConfig.DIR_CACHE);
+		// 开启log输出,ffmpeg输出到logcat
+		VCamera.setDebugMode(true);
+		// 初始化拍摄SDK，必须
+		VCamera.initialize(this);
     }
 
 

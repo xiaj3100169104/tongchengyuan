@@ -23,6 +23,7 @@ public class Skip {
     public static final int CODE_COPY_AND_PASTE = 0x000006;
     public static final int CODE_SELECT_FILE = 0x000007;
     public static final int CODE_PUBLISH_DYNAMIC = 0x000008;
+    public static final int CODE_RECORD_VIDEO = 0x000009;
 
     /**
      * 界面跳转传值key

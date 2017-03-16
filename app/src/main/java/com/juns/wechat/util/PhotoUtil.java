@@ -9,6 +9,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 
 import com.juns.wechat.activity.CropImageActivity;
+import com.style.constant.FileConfig;
 
 import org.jivesoftware.smack.packet.id.StanzaIdUtil;
 
@@ -21,10 +22,9 @@ import java.io.IOException;
  * Created by 王者 on 2016/7/16.
  */
 public class PhotoUtil {
-    public static final String PHOTO_PATH = Environment.getExternalStorageDirectory().getPath() + "/wechat/img";
 
     static {
-        File file = new File(PHOTO_PATH);
+        File file = new File(FileConfig.DIR_IMAGE);
         if(!file.exists()){
             file.mkdirs();
         }
@@ -58,14 +58,6 @@ public class PhotoUtil {
         activity.startActivityForResult(intent, requestCode);
     }
 
-    /**
-     * 生成唯一文件名且防止被其他软件扫描到该文件
-     * @return
-     */
-    public static String getUniqueImgName(){
-        return StanzaIdUtil.newStanzaId() + ".image";
-    }
-
     public static void saveBitmap(Bitmap bitmap, String filePath) {
         File f = new File(filePath);
         if (f.exists()) {
@@ -84,7 +76,7 @@ public class PhotoUtil {
     }
 
     public static File getFile(String imgName){
-        File file = new File(PHOTO_PATH, imgName);
+        File file = new File(FileConfig.DIR_IMAGE, imgName);
         return file;
     }
 }

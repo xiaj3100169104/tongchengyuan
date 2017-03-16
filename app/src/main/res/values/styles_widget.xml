@@ -46,4 +46,7 @@
         <item name="android:focusable">true</item>
         <item name="android:maxWidth">240dp</item>
     </style>
+
+    <style name="Widget.GifMoviewView" parent="@android:style/Widget"></style>
+
 </resources>

@@ -4,12 +4,9 @@ import com.juns.wechat.config.ConfigUtil;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.util.FileUtil;
 import com.juns.wechat.util.LogUtil;
-import com.juns.wechat.util.PhotoUtil;
-import com.juns.wechat.xmpp.XmppConnUtil;
 import com.juns.wechat.xmpp.XmppExceptionHandler;
-import com.juns.wechat.xmpp.iq.FileTransferIQ;
 
-import org.jivesoftware.smack.AbstractXMPPConnection;
+import com.style.constant.FileConfig;
 
 import java.io.DataInputStream;
 import java.io.File;
@@ -84,11 +81,11 @@ public class FileTransferManager {
         listener.transferFinished(false);
     }
 
-    public void downloadFile(String fileName, int fileSize,  ProgressListener listener){
+    public void downloadFile(String fileDir, String fileName, int fileSize,  ProgressListener listener){
         LogUtil.i("fileName: " + fileName);
-        File dir = new File(PhotoUtil.PHOTO_PATH);
+        File dir = new File(FileConfig.DIR_CACHE);
         dir.mkdirs();
-        File file = new File(PhotoUtil.PHOTO_PATH, fileName);
+        File file = new File(fileDir, fileName);
         if(file.exists()){  //由于文件名都是唯一的，说明这张图片是由同一个手机上发出并在本手机上接收。
             listener.transferFinished(true);
             return;

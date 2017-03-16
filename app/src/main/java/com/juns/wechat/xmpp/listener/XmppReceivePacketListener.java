@@ -13,6 +13,7 @@ import com.juns.wechat.xmpp.iq.MarkAsReadIQ;
 import com.juns.wechat.xmpp.process.IQRouter;
 import com.juns.wechat.xmpp.process.InviteMessageProcess;
 import com.juns.wechat.xmpp.process.MessageProcess;
+import com.juns.wechat.xmpp.process.OfflineVideoMessageProcess;
 import com.juns.wechat.xmpp.process.PictureMessageProcess;
 import com.juns.wechat.xmpp.process.ReplyInviteMessageProcess;
 import com.juns.wechat.xmpp.process.TextMessageProcess;
@@ -120,6 +121,9 @@ public class XmppReceivePacketListener implements StanzaListener {
                         break;
                     case MsgType.MSG_TYPE_PICTURE:
                         messageProcess = new PictureMessageProcess(App.getInstance());
+                        break;
+                    case MsgType.MSG_TYPE_OFFLINE_VIDEO:
+                        messageProcess = new OfflineVideoMessageProcess(App.getInstance());
                         break;
                     case MsgType.MSG_TYPE_SEND_INVITE:
                         messageProcess = new InviteMessageProcess(App.getInstance());

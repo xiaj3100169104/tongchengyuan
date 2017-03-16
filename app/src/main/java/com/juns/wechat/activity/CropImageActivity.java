@@ -15,6 +15,7 @@ import com.juns.wechat.net.common.NetDataBeanCallback;
 import com.juns.wechat.util.PhotoUtil;
 import com.juns.wechat.view.ClipImageLayout;
 import com.style.base.BaseToolbarActivity;
+import com.style.constant.FileConfig;
 
 import org.jivesoftware.smack.packet.id.StanzaIdUtil;
 
@@ -53,13 +54,13 @@ public class CropImageActivity extends BaseToolbarActivity {
     public void saveInfo(View v) {
         Bitmap croppedBitmap = clipImageLayout.clip();
         imageName = StanzaIdUtil.newStanzaId() + ".image";
-        PhotoUtil.saveBitmap(croppedBitmap, PhotoUtil.PHOTO_PATH + "/" + imageName);
+        PhotoUtil.saveBitmap(croppedBitmap, FileConfig.DIR_IMAGE + "/" + imageName);
 
         updateAvatarInServer(imageName);
     }
 
     private void updateAvatarInServer(String imageName) {
-        String filePath = PhotoUtil.PHOTO_PATH + "/" + imageName;
+        String filePath = FileConfig.DIR_IMAGE + "/" + imageName;
         //UploadFileRequest.uploadAvatar(filePath, callBack);
         HttpAction.uploadAvatar(filePath, new NetDataBeanCallback<UserBean>(UserBean.class) {
             @Override

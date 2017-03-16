@@ -21,7 +21,7 @@ import com.style.album.AlbumActivity;
 import com.style.album.DynamicPublishImageAdapter;
 import com.style.base.BaseRecyclerViewAdapter;
 import com.style.base.BaseToolbarBtnActivity;
-import com.style.constant.FileDirectory;
+import com.style.constant.FileConfig;
 import com.style.constant.Skip;
 import com.style.dialog.SelAvatarDialog;
 import com.style.rxAndroid.callback.RXOtherCallBack;
@@ -242,10 +242,10 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
                     logE("degree", degree + "");
                     Bitmap bitmap0 = BitmapUtil.revitionImageSize(path, 960, 540, 1280);
                     Bitmap bitmap = PictureUtils.rotaingBitmap(bitmap0, degree);
-                    String name = PhotoUtil.getUniqueImgName();
+                    String name = FileConfig.getUniqueFileName();
                     logE(TAG, "唯一缓存文件名==" + name);
-                    BitmapUtil.saveBitmap(FileDirectory.DIR_CACHE, name, bitmap, 30, true);
-                    String newPath = FileDirectory.DIR_CACHE + "/" + name;
+                    BitmapUtil.saveBitmap(FileConfig.DIR_CACHE, name, bitmap, 30, true);
+                    String newPath = FileConfig.DIR_CACHE + "/" + name;
                     File file = new File(newPath);
                     if (file.exists())
                         files[i] = file;
@@ -263,7 +263,7 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
                 dialog.setOnItemClickListener(new SelAvatarDialog.OnItemClickListener() {
                     @Override
                     public void OnClickCamera() {
-                        photoFile = CommonUtil.takePhoto(DynamicPublishActivity.this, FileDirectory.DIR_IMAGE, String.valueOf(System.currentTimeMillis()) + ".jpg");
+                        photoFile = CommonUtil.takePhoto(DynamicPublishActivity.this, FileConfig.DIR_IMAGE, String.valueOf(System.currentTimeMillis()) + ".jpg");
 
                     }
 

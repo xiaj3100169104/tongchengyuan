@@ -5,6 +5,7 @@ import android.content.Context;
 import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.chat.bean.PictureMsg;
 import com.juns.wechat.xmpp.util.FileTransferManager;
+import com.style.constant.FileConfig;
 
 
 /*******************************************************
@@ -24,7 +25,7 @@ public class PictureMessageProcess extends MessageProcess {
     public void processMessage(MessageBean messageBean) {
         PictureMsg pictureMsg = (PictureMsg) messageBean.getMsgObj();
         FileTransferManager fileTransferManager = new FileTransferManager();
-        fileTransferManager.downloadFile(pictureMsg.imgName, pictureMsg.size, new MyProgressListener(messageBean));
+        fileTransferManager.downloadFile(FileConfig.DIR_CACHE, pictureMsg.imgName, pictureMsg.size, new MyProgressListener(messageBean));
     }
 
     class MyProgressListener implements FileTransferManager.ProgressListener{

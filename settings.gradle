@@ -1,3 +1,4 @@
 include ':app'
 include ':MaterialProgressBar'
 include ':LRecyclerview_library'
+include ':vitamioRecorderLibrary'

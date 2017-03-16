@@ -8,8 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
-import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.juns.wechat.R;
@@ -20,7 +18,7 @@ import com.style.album.AlbumActivity;
 import com.style.album.DynamicPublishImageAdapter;
 import com.style.base.BaseRecyclerViewAdapter;
 import com.style.base.BaseToolbarBtnActivity;
-import com.style.constant.FileDirectory;
+import com.style.constant.FileConfig;
 import com.style.constant.Skip;
 import com.style.dialog.SelAvatarDialog;
 import com.style.rxAndroid.callback.RXOtherCallBack;
@@ -234,8 +232,8 @@ public class AddNoteActivity extends BaseToolbarBtnActivity {
                         Bitmap bitmap0 = BitmapUtil.revitionImageSize(path, 960, 540, 1280);
                         Bitmap bitmap = PictureUtils.rotaingBitmap(bitmap0, degree);
                         String name = String.valueOf(System.currentTimeMillis()) + ".imageCache";
-                        BitmapUtil.saveBitmap(FileDirectory.DIR_CACHE, name, bitmap, 30, true);
-                        String newPath = FileDirectory.DIR_CACHE + "/" + name;
+                        BitmapUtil.saveBitmap(FileConfig.DIR_CACHE, name, bitmap, 30, true);
+                        String newPath = FileConfig.DIR_CACHE + "/" + name;
                         File file = new File(newPath);
                         if (file.exists())
                             files[i] = file;
@@ -256,7 +254,7 @@ public class AddNoteActivity extends BaseToolbarBtnActivity {
                 dialog.setOnItemClickListener(new SelAvatarDialog.OnItemClickListener() {
                     @Override
                     public void OnClickCamera() {
-                        photoFile = CommonUtil.takePhoto(AddNoteActivity.this, FileDirectory.DIR_IMAGE, String.valueOf(System.currentTimeMillis()) + ".jpg");
+                        photoFile = CommonUtil.takePhoto(AddNoteActivity.this, FileConfig.DIR_IMAGE, String.valueOf(System.currentTimeMillis()) + ".jpg");
 
                     }
 

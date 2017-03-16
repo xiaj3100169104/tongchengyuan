@@ -1,46 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.juns.wechat">
+    package="com.juns.wechat">
 
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
     <!-- 环信开始 -->
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.GET_TASKS"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
-    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
-    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS"/>
-    <uses-permission android:name="android.permission.BROADCAST_STICKY"/>
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.BROADCAST_STICKY" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <!-- 环信结束 -->
     <!-- Push service 运行需要的权限 -->
-    <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER"/>
-    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION"/>
-    <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_DOWNLOAD_MANAGER" />
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <!-- sip所需要的权限 -->
     <uses-permission android:name="android.permission.USE_SIP" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-feature android:name="android.hardware.sip.voip" android:required="true" />
-    <uses-feature android:name="android.hardware.wifi" android:required="true" />
-    <uses-feature android:name="android.hardware.microphone" android:required="true" />
+
+    <uses-feature
+        android:name="android.hardware.sip.voip"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.wifi"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.microphone"
+        android:required="true" />
 
     <application
         android:name=".App"
@@ -54,140 +61,92 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.MainActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name=".activity.LoginActivity"
-            android:launchMode="singleTop">
-        </activity>
-        <activity android:name=".activity.RegisterActivity">
-        </activity>
-        <activity android:name=".activity.UserInfoActivity">
-        </activity>
-        <activity
-            android:name=".activity.NewFriendsListActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name=".activity.SettingActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <service android:name=".view.UpdateService"/>
-
-        <!-- 环信开始 -->
-
-        <activity
-            android:name=".chat.im.ChatActivity"
+        <activity android:name=".activity.MainActivity"/>
+        <activity android:name=".activity.LoginActivity"
+            android:launchMode="singleTop"/>
+        <activity android:name=".activity.RegisterActivity"/>
+        <activity android:name=".activity.UserInfoActivity"/>
+        <activity android:name=".activity.NewFriendsListActivity"/>
+        <activity android:name=".activity.SettingActivity"/>
+        <activity android:name=".chat.ui.ChatActivity"
             android:launchMode="singleTop"
-            android:windowSoftInputMode="adjustResize">
-        </activity>
-        <activity
-            android:name=".chat.voice.VoiceCallActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name=".chat.video.VideoCallActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name=".chat.BaiduMapActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name=".chat.AlertDialog"
-            android:screenOrientation="portrait"
-            android:theme="@style/MyDialogStyle">
-        </activity>
-        <activity
-            android:name=".chat.ShowBigImage"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name=".chat.ShowNormalFileActivity"
-            android:screenOrientation="portrait">
-        </activity>
+            android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".chat.voice.VoiceCallActivity"/>
+        <activity android:name=".chat.video.VideoCallActivity"/>
+        <activity android:name=".chat.BaiduMapActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".chat.AlertDialog"
+            android:theme="@style/MyDialogStyle"/>
+        <activity android:name=".chat.ShowBigImage"/>
+        <activity android:name=".chat.ShowNormalFileActivity"/>
         <activity
             android:name=".chat.video.ShowVideoActivity"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="stateAlwaysHidden">
-        </activity>
-        <activity
-            android:name=".activity.AddFriendActivity"/>
+            android:windowSoftInputMode="stateAlwaysHidden"/>
+        <activity android:name=".activity.AddFriendActivity" />
         <activity
             android:name=".activity.SearchActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".activity.SearchResultActivity"/>
+        <activity android:name=".activity.MyProfileActivity"/>
+        <activity android:name=".activity.ModifyNameActivity"/>
+        <activity android:name=".activity.CropImageActivity"/>
+        <activity android:name=".activity.SendInviteMessageActivity"/>
+        <activity android:name=".activity.AddFriendFinalActivity"/>
+        <activity android:name=".activity.SendLocationActivity"/>
+        <activity android:name="com.style.album.AlbumActivity"/>
+        <activity android:name="com.style.album.SelectLocalPictureActivity" />
+        <activity android:name="com.juns.wechat.chat.voice.CallVoiceBaseActivity" />
+        <activity android:name="com.juns.wechat.dynamic.FriendCircleActivity" />
+        <activity android:name="com.juns.wechat.dynamic.DynamicPublishActivity" />
+        <activity android:name="com.juns.wechat.activity.MyCollectActivity" />
+        <activity android:name="com.juns.wechat.activity.AddNoteActivity" />
+        <activity android:name="com.juns.wechat.activity.MyQRCodeActivity" />
+        <activity android:name="com.juns.wechat.activity.QRScanActivity" />
+        <!-- 图片浏览 -->
+        <activity android:name="uk.viewpager.ImagePagerActivity" />
+        <activity android:name="com.juns.wechat.chat.offlineVideo.RecordActivity" />
+
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|adjustResize"/>
+            android:windowSoftInputMode="stateHidden|adjustResize" />
+
+        <service android:name=".view.UpdateService" />
 
         <!-- 百度地图所需的service -->
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote"/>
+            android:process=":remote" />
         <!-- umeng appkey，可忽略 -->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="53912a3156240b01a7075ed1">
-        </meta-data>
+            android:value="53912a3156240b01a7075ed1"></meta-data>
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="3ecea51f560650b1ed8a4b99808f52e8"/>
+            android:value="3ecea51f560650b1ed8a4b99808f52e8" />
 
         <receiver android:name=".receiver.WeChatBroadCastReceiver">
             <intent-filter>
-                <action android:name="android.intent.action.CONFIGURATION_CHANGED"/>
-                <action android:name="android.intent.action.BOOT_COMPLETED"/>
-                <action android:name="android.intent.action.USER_PRESENT"/>
+                <action android:name="android.intent.action.CONFIGURATION_CHANGED" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
             </intent-filter>
         </receiver>
 
         <service
             android:name=".service.XmppService"
-            android:exported="true"/>
+            android:exported="true" />
 
-        <activity
-            android:name=".activity.SearchResultActivity">
-        </activity>
-        <activity
-            android:name=".activity.MyProfileActivity">
-        </activity>
-        <activity
-            android:name=".activity.ModifyNameActivity">
-        </activity>
-        <activity
-            android:name=".activity.CropImageActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name=".activity.SendInviteMessageActivity">
-        </activity>
-        <activity
-            android:name=".activity.AddFriendFinalActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".activity.SendLocationActivity">
-        </activity>
-        <activity android:name="com.style.album.AlbumActivity"/>
-        <activity android:name="com.style.album.SelectLocalPictureActivity"/>
-        <activity android:name="com.juns.wechat.chat.voice.CallVoiceBaseActivity"/>
-        <activity android:name="com.juns.wechat.dynamic.FriendCircleActivity"/>
-        <activity android:name="com.juns.wechat.dynamic.DynamicPublishActivity"/>
-        <activity android:name="com.juns.wechat.activity.MyCollectActivity"/>
-        <activity android:name="com.juns.wechat.activity.AddNoteActivity"/>
-        <activity android:name="com.juns.wechat.activity.MyQRCodeActivity"/>
-        <activity android:name="com.juns.wechat.activity.QRScanActivity"/>
-        <!-- 图片浏览 -->
-        <activity android:name="uk.viewpager.ImagePagerActivity"/>
     </application>
+
 
 </manifest>

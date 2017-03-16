@@ -21,7 +21,6 @@ import org.xutils.x;
  */
 public class ImageLoader {
     private static final String TAG = "ImageLoader";
-    private static final String LOCAL_PATH = PhotoUtil.PHOTO_PATH;
     private static final String REMOTE_PATH = ConfigUtil.REAL_SERVER + "/upload/";
     private static LruCache<String, Bitmap> bitmapCache;
 

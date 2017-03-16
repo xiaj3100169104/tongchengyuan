@@ -58,7 +58,27 @@
 				android:text="@string/attach_take_pic"
 				android:textColor="@color/black1" />
 		</LinearLayout>
-	
+		<LinearLayout
+			android:id="@+id/view_video_record"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:gravity="center"
+			android:orientation="vertical">
+			<ImageView
+				android:layout_margin="5dp"
+				android:layout_width="60.0dip"
+				android:layout_height="60.0dip"
+				android:contentDescription="@string/app_name"
+				android:src="@drawable/chat_tool_camera" />
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:gravity="center"
+				android:textSize="12sp"
+				android:text="@string/attach_video_record"
+				android:textColor="@color/black1" />
+		</LinearLayout>
 		<LinearLayout
 		    android:id="@+id/view_location"
 			android:layout_width="0dp"
@@ -150,6 +170,27 @@
 				android:gravity="center"
 				android:textSize="12sp"
 				android:text="@string/attach_video_call"
+				android:textColor="@color/black1" />
+		</LinearLayout>
+		<LinearLayout
+			android:id="@+id/view_collection"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:gravity="center"
+			android:orientation="vertical">
+			<ImageView
+				android:layout_margin="5dp"
+				android:layout_width="60.0dip"
+				android:layout_height="60.0dip"
+				android:contentDescription="@string/app_name"
+				android:src="@drawable/chat_tool_video" />
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:gravity="center"
+				android:textSize="12sp"
+				android:text="@string/attach_collection"
 				android:textColor="@color/black1" />
 		</LinearLayout>
 	</LinearLayout>

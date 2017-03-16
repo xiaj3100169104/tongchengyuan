@@ -10,7 +10,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.EditText;
 
-import com.juns.wechat.chat.im.ChatActivity;
+import com.juns.wechat.chat.ui.ChatActivity;
 import com.style.constant.Skip;
 
 /**
