@@ -53,7 +53,7 @@ public class MainActivity extends BaseActivity {
         initPopWindow();
         XmppService.login(this);
 
-        new Watcher(this).createAppMonitor("wangzhe");
+       // new Watcher(this).createAppMonitor("wangzhe");
     }
 
     @Override
