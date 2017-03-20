@@ -18,7 +18,7 @@
         <RelativeLayout
             android:id="@+id/layout_content_container"
             style="@style/chat_item_from_content_container"
-        >
+            android:layout_toRightOf="@id/iv_avatar">
 
             <ImageView
                 android:id="@+id/iv_voice"
