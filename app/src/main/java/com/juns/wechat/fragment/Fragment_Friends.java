@@ -52,7 +52,7 @@ public class Fragment_Friends extends BaseBusFragment {
     @Bind(R.id.sideBar)
     SideBar sideBar;
     private FriendDao friendDao = FriendDao.getInstance();
-    private int unReadCount = 2;
+    private int unReadCount = 0;
     private List<FriendBean> dataList;
     private LinearLayoutManager layoutManager;
 
@@ -112,7 +112,9 @@ public class Fragment_Friends extends BaseBusFragment {
 
     private void setUnreadInviteMsgData() {
         int count = MessageDao.getInstance().getUnreadInviteMsgCount(account);
+        unReadCount = count;
         adapter.notifyItemChanged(0);
+        adapter.setUnReadCount(unReadCount);
         ((MainActivity) getActivity()).setUnreadMsgLabel(R.id.unread_contact_number, count);
     }
 
