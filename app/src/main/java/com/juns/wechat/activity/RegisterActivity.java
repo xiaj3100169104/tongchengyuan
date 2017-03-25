@@ -15,7 +15,7 @@ import com.juns.wechat.R;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.manager.AccountManager;
 
-import com.juns.wechat.net.common.HttpAction;
+import com.juns.wechat.net.common.HttpActionImpl;
 import com.juns.wechat.net.common.NetDataBeanCallback;
 import com.juns.wechat.net.response.LoginBean;
 import com.juns.wechat.net.response.RegisterBean;
@@ -184,7 +184,7 @@ public class RegisterActivity extends BaseToolbarActivity implements OnClickList
 			return;
 		}
         //UserRequest.register(name, pwd, registerCallBack);
-		HttpAction.register(name, pwd, new NetDataBeanCallback<RegisterBean>(RegisterBean.class) {
+		HttpActionImpl.getInstance().register(TAG, name, pwd, new NetDataBeanCallback<RegisterBean>(RegisterBean.class) {
 			@Override
 			protected void onCodeSuccess() {
 				//dismissProgressDialog();
@@ -210,7 +210,7 @@ public class RegisterActivity extends BaseToolbarActivity implements OnClickList
 	}
 
     private void login(){
-		HttpAction.login(userName, passWord, new NetDataBeanCallback<LoginBean>(LoginBean.class) {
+		HttpActionImpl.getInstance().login(TAG, userName, passWord, new NetDataBeanCallback<LoginBean>(LoginBean.class) {
 			@Override
 			protected void onCodeSuccess(LoginBean data) {
 				dismissProgressDialog();

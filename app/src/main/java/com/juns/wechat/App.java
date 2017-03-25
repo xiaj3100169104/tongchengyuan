@@ -17,6 +17,7 @@ import android.text.TextUtils;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.juns.wechat.manager.AccountManager;
+import com.juns.wechat.net.common.HttpActionImpl;
 import com.style.constant.FileConfig;
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 import com.yixia.camera.VCamera;
@@ -43,6 +44,7 @@ public class App extends Application {
         //Thread.setDefaultUncaughtExceptionHandler(new CustomExceptionHandler());
 		ZXingLibrary.initDisplayOpinion(this);
         AccountManager.getInstance().init(mContext);
+		HttpActionImpl.getInstance().init();
         /*// 设置拍摄视频缓存路径
 		VCamera.setVideoCachePath(FileConfig.DIR_CACHE);
 		// 开启log输出,ffmpeg输出到logcat

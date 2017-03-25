@@ -3,32 +3,25 @@ package com.juns.wechat.net.common;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.juns.wechat.R;
+
 import com.juns.wechat.util.ToastUtil;
 
-import org.xutils.common.Callback;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
-public class NetStringCallback implements Callback.CommonCallback<String> {
+public class NetStringCallback implements Callback<String> {
     protected String TAG = "NetStringCallback";
 
-    @Override
-    public void onSuccess(String result) {
-        Log.e(TAG, "result==" + result);
+    public void onResponse(Call<String> call, Response<String> response) {
+        Log.e(TAG, "response.body==" + response.body());
     }
 
-    @Override
-    public void onError(Throwable ex, boolean isOnCallback) {
-        ToastUtil.showToast(R.string.toast_network_error, Toast.LENGTH_SHORT);
+        @Override
+        public void onFailure(Call<String> call, Throwable t) {
+        ToastUtil.showToast("请求 错误", Toast.LENGTH_SHORT);
     }
 
-    @Override
-    public void onCancelled(CancelledException cex) {
 
-    }
-
-    @Override
-    public void onFinished() {
-
-    }
 }

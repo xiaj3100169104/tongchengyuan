@@ -10,7 +10,7 @@ import com.juns.wechat.R;
 import com.juns.wechat.annotation.Extra;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.net.common.HttpAction;
+import com.juns.wechat.net.common.HttpActionImpl;
 import com.juns.wechat.net.common.NetDataBeanCallback;
 import com.juns.wechat.util.PhotoUtil;
 import com.juns.wechat.view.ClipImageLayout;
@@ -62,7 +62,7 @@ public class CropImageActivity extends BaseToolbarActivity {
     private void updateAvatarInServer(String imageName) {
         String filePath = FileConfig.DIR_IMAGE + "/" + imageName;
         //UploadFileRequest.uploadAvatar(filePath, callBack);
-        HttpAction.uploadAvatar(filePath, new NetDataBeanCallback<UserBean>(UserBean.class) {
+        HttpActionImpl.getInstance().uploadAvatar(TAG, filePath, new NetDataBeanCallback<UserBean>(UserBean.class) {
             @Override
             protected void onCodeSuccess(UserBean data) {
                 dismissProgressDialog();

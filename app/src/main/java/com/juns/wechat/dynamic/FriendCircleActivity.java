@@ -23,7 +23,7 @@ import com.juns.wechat.bean.CommentBean;
 import com.juns.wechat.bean.DynamicBean;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.net.common.HttpAction;
+import com.juns.wechat.net.common.HttpActionImpl;
 import com.juns.wechat.net.common.NetDataBeanCallback;
 import com.juns.wechat.util.ImageLoader;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -205,7 +205,7 @@ public class FriendCircleActivity extends BaseToolbarActivity {
         if (tag == REPLY) {
             replyUserId = dynamicBean.getCommentList().get(curCommentPosition).getCommenterId();
         }
-        HttpAction.addComment2Dynamic(dynamicBean.getDynamicId(), replyUserId, content, new NetDataBeanCallback<CommentBean>(CommentBean.class) {
+        HttpActionImpl.getInstance().addComment2Dynamic(TAG, dynamicBean.getDynamicId(), replyUserId, content, new NetDataBeanCallback<CommentBean>(CommentBean.class) {
             @Override
             protected void onCodeSuccess(CommentBean data) {
                 if (data != null) {
@@ -242,7 +242,7 @@ public class FriendCircleActivity extends BaseToolbarActivity {
                 dynamicId = dynamicBean.getDynamicId();
             }
         }
-        HttpAction.getFriendCircleDynamic(action, dynamicId, 6, new NetDataBeanCallback<List<DynamicBean>>(new TypeReference<List<DynamicBean>>() {
+        HttpActionImpl.getInstance().getFriendCircleDynamic(TAG, action, dynamicId, 6, new NetDataBeanCallback<List<DynamicBean>>(new TypeReference<List<DynamicBean>>() {
         }) {
             @Override
             protected void onCodeSuccess(List<DynamicBean> data) {

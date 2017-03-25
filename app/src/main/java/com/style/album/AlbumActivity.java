@@ -18,7 +18,8 @@ import android.widget.TextView;
 import com.juns.wechat.R;
 import com.style.base.BaseRecyclerViewAdapter;
 import com.style.base.BaseToolbarActivity;
-import com.style.rxAndroid.callback.RXOtherCallBack;
+import com.style.rxAndroid.RXTaskManager;
+import com.style.rxAndroid.callback.RXTaskCallBack;
 import com.style.view.DividerItemDecoration;
 
 import java.util.ArrayList;
@@ -178,30 +179,29 @@ public class AlbumActivity extends BaseToolbarActivity {
 
     private void getData() {
         showProgressDialog();
-        runTask(new RXOtherCallBack() {
+        RXTaskManager.getInstance().runTask(TAG, new RXTaskCallBack<List<PicBucket>>() {
             @Override
-            public Object doInBackground() {
+            public List<PicBucket> doInBackground() {
                 Log.e(AlbumActivity.this.TAG, "doInBackground");
                 List<PicBucket> list = LocalImagesHelper.getPicBuckets(AlbumActivity.this);
                 return list;
             }
 
             @Override
-            public void OnSuccess(Object object) {
+            public void onSuccess(List<PicBucket> object) {
                 Log.e(AlbumActivity.this.TAG, "OnSuccess");
                 dismissProgressDialog();
                 if (object != null) {
-                    List<PicBucket> list = (List<PicBucket>) object;
-                    initStatus(list, paths);
-                    buckets.addAll(list);
+                    initStatus(object, paths);
+                    buckets.addAll(object);
                     folderAdapter.notifyDataSetChanged();
                     changeData(buckets.get(0));
                 }
             }
 
             @Override
-            public void OnFailed(String message) {
-                super.OnFailed(message);
+            public void onFailed(String message) {
+                super.onFailed(message);
             }
         });
     }

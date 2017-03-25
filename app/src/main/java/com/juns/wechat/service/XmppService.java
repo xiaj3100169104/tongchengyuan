@@ -10,7 +10,7 @@ import android.text.TextUtils;
 
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.net.common.HttpAction;
+import com.juns.wechat.net.common.HttpActionImpl;
 import com.juns.wechat.net.common.NetDataBeanCallback;
 import com.juns.wechat.net.response.TokenBean;
 import com.juns.wechat.util.SipClient;
@@ -84,7 +84,7 @@ public class XmppService extends Service {
            init();
         }else {
             //TokenRequest.refreshToken(callBack);
-            HttpAction.refreshToken(new NetDataBeanCallback<TokenBean>(TokenBean.class) {
+            HttpActionImpl.getInstance().refreshToken("refreshToken", new NetDataBeanCallback<TokenBean>(TokenBean.class) {
                 @Override
                 protected void onCodeSuccess(TokenBean data) {
                     AccountManager.getInstance().setToken(data.token);

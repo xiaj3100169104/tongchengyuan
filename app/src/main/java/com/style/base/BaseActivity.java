@@ -22,13 +22,14 @@ import com.juns.wechat.util.ToastUtil;
 import com.style.manager.LogManager;
 import com.style.manager.ToastManager;
 import com.style.dialog.MaterialProgressDialog;
-import com.style.rxAndroid.BaseRxActivity;
+import com.style.rxAndroid.RXTaskManager;
 import com.style.utils.CommonUtil;
 
 import butterknife.ButterKnife;
 
 
-public abstract class BaseActivity extends BaseRxActivity {
+public abstract class BaseActivity extends AppCompatActivity {
+    protected String TAG = getClass().getSimpleName();
     private Context mContext;
     public LayoutInflater mInflater;
     protected Integer mLayoutResID;
@@ -130,6 +131,7 @@ public abstract class BaseActivity extends BaseRxActivity {
         super.onDestroy();
         ButterKnife.unbind(this);
         dismissProgressDialog();
+        RXTaskManager.getInstance().removeTask(TAG);
     }
 
     public void skip(Class<?> cls) {

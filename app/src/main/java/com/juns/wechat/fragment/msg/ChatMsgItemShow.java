@@ -9,7 +9,7 @@ import com.juns.wechat.chat.ui.ChatActivity;
 import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.dao.FriendDao;
-import com.juns.wechat.net.common.HttpAction;
+import com.juns.wechat.net.common.HttpActionImpl;
 import com.juns.wechat.net.common.NetDataBeanCallback;
 import com.juns.wechat.util.ImageLoader;
 import com.style.constant.Skip;
@@ -31,7 +31,7 @@ public class ChatMsgItemShow extends MsgItemShow {
         if(friendBean != null){
             textView.setText(friendBean.getShowName());
         }else {  //陌生人
-            HttpAction.queryUserData(msgItem.userId, new NetDataBeanCallback<UserBean>(UserBean.class) {
+            HttpActionImpl.getInstance().queryUserData("queryUserData", msgItem.userId, new NetDataBeanCallback<UserBean>(UserBean.class) {
                 @Override
                 protected void onCodeSuccess(UserBean data) {
                     if (data != null) {
@@ -61,7 +61,7 @@ public class ChatMsgItemShow extends MsgItemShow {
             if(stranger != null){
                 ImageLoader.loadAvatar(iv, stranger.getHeadUrl());
             }else {
-                HttpAction.queryUserData(msgItem.userId, new NetDataBeanCallback<UserBean>(UserBean.class) {
+                HttpActionImpl.getInstance().queryUserData("loadUrl", msgItem.userId, new NetDataBeanCallback<UserBean>(UserBean.class) {
                     @Override
                     protected void onCodeSuccess(UserBean data) {
                         if (data != null) {

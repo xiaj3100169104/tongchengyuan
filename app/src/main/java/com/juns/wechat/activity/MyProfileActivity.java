@@ -16,7 +16,7 @@ import com.juns.wechat.dialog.SelectPhotoDialog;
 import com.juns.wechat.dialog.SelectSexDialog;
 import com.juns.wechat.helper.CommonViewHelper;
 import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.net.common.HttpAction;
+import com.juns.wechat.net.common.HttpActionImpl;
 import com.juns.wechat.net.common.NetDataBeanCallback;
 import com.juns.wechat.util.PhotoUtil;
 import com.style.base.BaseToolbarActivity;
@@ -154,7 +154,7 @@ public class MyProfileActivity extends BaseToolbarActivity {
     }
 
     private void modifySexToServer(String sex) {
-        HttpAction.updateUser(UserBean.SEX, sex, new NetDataBeanCallback<UserBean>(UserBean.class) {
+        HttpActionImpl.getInstance().updateUser(TAG, UserBean.SEX, sex, new NetDataBeanCallback<UserBean>(UserBean.class) {
             @Override
             protected void onCodeSuccess(UserBean data) {
                 dismissProgressDialog();

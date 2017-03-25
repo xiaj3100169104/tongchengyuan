@@ -7,7 +7,7 @@ import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.dao.FriendDao;
 import com.juns.wechat.dao.UserDao;
 import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.net.common.HttpAction;
+import com.juns.wechat.net.common.HttpActionImpl;
 import com.juns.wechat.net.common.NetDataBeanCallback;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public class SyncDataUtil {
 
     private static void syncFriendData() {
         long lastModifyDate = FriendDao.getInstance().getLastModifyDate(AccountManager.getInstance().getUserId());
-        HttpAction.syncFriendData(lastModifyDate, new NetDataBeanCallback<List<FriendBean>>(new TypeReference<List<FriendBean>>() {
+        HttpActionImpl.getInstance().syncFriendData("syncFriendData", lastModifyDate, new NetDataBeanCallback<List<FriendBean>>(new TypeReference<List<FriendBean>>() {
         }) {
             @Override
             protected void onCodeSuccess(List<FriendBean> data) {
@@ -44,7 +44,7 @@ public class SyncDataUtil {
     private static void syncUserData() {
         Integer[] userIds = FriendDao.getInstance().getNotExistUsersInFriend(AccountManager.getInstance().getUser().getUserId());
         long lastModifyDate = UserDao.getInstance().getLastModifyDate(AccountManager.getInstance().getUserId());
-        HttpAction.syncUserData(userIds, lastModifyDate, new NetDataBeanCallback<List<UserBean>>(new TypeReference<List<UserBean>>() {
+        HttpActionImpl.getInstance().syncUserData("sync", userIds, lastModifyDate, new NetDataBeanCallback<List<UserBean>>(new TypeReference<List<UserBean>>() {
         }) {
             @Override
             protected void onCodeSuccess(List<UserBean> data) {

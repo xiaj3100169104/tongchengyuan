@@ -18,7 +18,7 @@ import com.juns.wechat.dao.FriendDao;
 import com.juns.wechat.exception.UserNotFoundException;
 import com.juns.wechat.helper.CommonViewHelper;
 import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.net.common.HttpAction;
+import com.juns.wechat.net.common.HttpActionImpl;
 import com.juns.wechat.net.common.NetDataBeanCallback;
 import com.style.base.BaseToolbarActivity;
 import com.style.constant.Skip;
@@ -83,7 +83,7 @@ public class UserInfoActivity extends BaseToolbarActivity implements OnClickList
 
         friendBean = FriendDao.getInstance().findByOwnerAndContactName(curUser.getUserId(), userId);
         if (friendBean == null) {  //不是好友关系
-            HttpAction.queryUserData(userId, new NetDataBeanCallback<UserBean>(UserBean.class) {
+            HttpActionImpl.getInstance().queryUserData(TAG, userId, new NetDataBeanCallback<UserBean>(UserBean.class) {
                 @Override
                 protected void onCodeSuccess(UserBean data) {
                     if (data != null) {

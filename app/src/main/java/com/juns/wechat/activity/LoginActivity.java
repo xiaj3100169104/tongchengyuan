@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.juns.wechat.R;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.net.common.HttpAction;
+import com.juns.wechat.net.common.HttpActionImpl;
 import com.juns.wechat.net.common.NetDataBeanCallback;
 import com.juns.wechat.net.response.LoginBean;
 import com.style.base.BaseToolbarActivity;
@@ -121,7 +121,7 @@ public class LoginActivity extends BaseToolbarActivity implements OnClickListene
         }
         showProgressDialog("正在登录。。。");
         //UserRequest.login(userName, password, loginCallBack);
-        HttpAction.login(userName, password, new NetDataBeanCallback<LoginBean>(LoginBean.class) {
+        HttpActionImpl.getInstance().login(TAG, userName, password, new NetDataBeanCallback<LoginBean>(LoginBean.class) {
             @Override
             protected void onCodeSuccess(LoginBean data) {
                 dismissProgressDialog();

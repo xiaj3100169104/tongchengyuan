@@ -15,5 +15,5 @@ public class LogManager {
 		if (bothNotNull(tag, msg)) {
 			Log.e(tag, msg);
 		}
-	};
+	}
 }

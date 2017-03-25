@@ -21,7 +21,8 @@ import com.style.base.BaseToolbarBtnActivity;
 import com.style.constant.FileConfig;
 import com.style.constant.Skip;
 import com.style.dialog.SelAvatarDialog;
-import com.style.rxAndroid.callback.RXOtherCallBack;
+import com.style.rxAndroid.RXTaskManager;
+import com.style.rxAndroid.callback.RXTaskCallBack;
 import com.style.utils.BitmapUtil;
 import com.style.utils.CommonUtil;
 import com.style.utils.PictureUtils;
@@ -161,21 +162,20 @@ public class AddNoteActivity extends BaseToolbarBtnActivity {
             }
         });*/
         showProgressDialog();
-        runTask(new RXOtherCallBack() {
+        RXTaskManager.getInstance().runTask(TAG, new RXTaskCallBack<File[]>() {
             @Override
-            public Object doInBackground() {
+            public File[] doInBackground() {
                 return dealPicture();
             }
 
             @Override
-            public void OnSuccess(Object object) {
+            public void onSuccess(File[] object) {
                 dismissProgressDialog();
-                File[] files = (File[]) object;
-                logE(TAG, "文件个数==" + files.length);
+                logE(TAG, "文件个数==" + object.length);
             }
 
             @Override
-            public void OnFailed(String message) {
+            public void onFailed(String message) {
                 dismissProgressDialog();
             }
         });

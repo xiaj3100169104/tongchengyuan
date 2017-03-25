@@ -14,14 +14,13 @@ import android.widget.TextView;
 import com.alibaba.fastjson.TypeReference;
 import com.juns.wechat.R;
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.net.common.HttpAction;
+import com.juns.wechat.net.common.HttpActionImpl;
 import com.juns.wechat.net.common.NetDataBeanCallback;
 import com.juns.wechat.util.LogUtil;
 import com.style.base.BaseActivity;
 import com.style.constant.Skip;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -96,7 +95,7 @@ public class SearchActivity extends BaseActivity {
 
         LogUtil.i("start search");
 
-        HttpAction.searchUser(search, new NetDataBeanCallback<List<UserBean>>(new TypeReference<List<UserBean>>() {
+        HttpActionImpl.getInstance().searchUser(TAG, search, new NetDataBeanCallback<List<UserBean>>(new TypeReference<List<UserBean>>() {
         }) {
             @Override
             protected void onCodeSuccess(List<UserBean> data) {

@@ -9,10 +9,11 @@ import com.juns.wechat.R;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.util.ToastUtil;
 
-import org.xutils.common.Callback;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-
-public class NetDataBeanCallback<T> implements Callback.CommonCallback<String> {
+public class NetDataBeanCallback<T> implements Callback<String> {
     protected String TAG = "NetDataBeanCallback";
     protected Class<T> clazz;
     protected TypeReference<T> type;
@@ -30,12 +31,12 @@ public class NetDataBeanCallback<T> implements Callback.CommonCallback<String> {
     }
 
     @Override
-    public void onSuccess(String result) {
-        Log.e(TAG, "result==" + result);
-        NetDataBean response = JSON.parseObject(result, NetDataBean.class);
-        int code = response.code;
-        String jsonData = response.data;
-        String msg = response.msg;
+    public void onResponse(Call<String> call, Response<String> response) {
+        Log.e(TAG, "response.body==" + response.body());
+        NetDataBean netDataBean = JSON.parseObject(response.body(), NetDataBean.class);
+        int code = netDataBean.code;
+        String jsonData = netDataBean.data;
+        String msg = netDataBean.msg;
 
         T data = null;
         if (this.clazz != null)
@@ -60,9 +61,10 @@ public class NetDataBeanCallback<T> implements Callback.CommonCallback<String> {
     }
 
     @Override
-    public void onError(Throwable ex, boolean isOnCallback) {
-        ToastUtil.showToast(R.string.toast_network_error, Toast.LENGTH_SHORT);
-        onCodeFailure("网络错误，请检查网络设置");
+    public void onFailure(Call<String> call, Throwable t) {
+        t.printStackTrace();
+        ToastUtil.showToast("请求错误", Toast.LENGTH_SHORT);
+        onCodeFailure("请求错误");
     }
     protected void onCodeSuccess() {
 
@@ -89,13 +91,4 @@ public class NetDataBeanCallback<T> implements Callback.CommonCallback<String> {
         AccountManager.getInstance().logOut();
     }
 
-    @Override
-    public void onCancelled(CancelledException cex) {
-
-    }
-
-    @Override
-    public void onFinished() {
-
-    }
 }

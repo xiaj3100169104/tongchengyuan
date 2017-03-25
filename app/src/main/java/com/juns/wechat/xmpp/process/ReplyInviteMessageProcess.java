@@ -9,7 +9,7 @@ import com.juns.wechat.chat.bean.TextMsg;
 import com.juns.wechat.config.MsgType;
 import com.juns.wechat.dao.MessageDao;
 import com.juns.wechat.dao.UserDao;
-import com.juns.wechat.net.common.HttpAction;
+import com.juns.wechat.net.common.HttpActionImpl;
 import com.juns.wechat.net.common.NetDataBeanCallback;
 
 import org.jivesoftware.smack.packet.id.StanzaIdUtil;
@@ -30,7 +30,7 @@ public class ReplyInviteMessageProcess extends MessageProcess {
     public void processMessage(final MessageBean messageBean) {
         inviteMsg = (InviteMsg) messageBean.getMsgObj();
         if(inviteMsg.reply != InviteMsg.Reply.ACCEPT.value) return;  //非法状态
-        HttpAction.queryUserData(messageBean.getOtherName(), new NetDataBeanCallback<UserBean>(UserBean.class) {
+        HttpActionImpl.getInstance().queryPhone("process", messageBean.getOtherName(), new NetDataBeanCallback<UserBean>(UserBean.class) {
             @Override
             protected void onCodeSuccess(UserBean data) {
                 if (data != null) {

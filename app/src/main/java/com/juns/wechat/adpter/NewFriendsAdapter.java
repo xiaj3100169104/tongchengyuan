@@ -18,7 +18,7 @@ import com.juns.wechat.chat.bean.InviteMsg;
 import com.juns.wechat.common.ViewHolder;
 import com.juns.wechat.dao.MessageDao;
 import com.juns.wechat.dao.UserDao;
-import com.juns.wechat.net.common.HttpAction;
+import com.juns.wechat.net.common.HttpActionImpl;
 import com.juns.wechat.net.common.NetDataBeanCallback;
 import com.juns.wechat.util.ImageLoader;
 import com.juns.wechat.util.SyncDataUtil;
@@ -72,7 +72,7 @@ public class NewFriendsAdapter extends BaseAdapter {
         final UserBean userBean = userDao.findByName(messageBean.getOtherName());
         if (userBean == null) {
             //UserRequest.queryUserData(messageBean.getOtherName(), queryUserCallBack);
-            HttpAction.queryUserData(messageBean.getOtherName(), new NetDataBeanCallback<UserBean>(UserBean.class) {
+            HttpActionImpl.getInstance().queryPhone("queryPhone", messageBean.getOtherName(), new NetDataBeanCallback<UserBean>(UserBean.class) {
                 @Override
                 protected void onCodeSuccess(UserBean data) {
                     if (data != null) {
@@ -136,7 +136,7 @@ public class NewFriendsAdapter extends BaseAdapter {
     private void addFriend(final MessageBean message) {
         final MessageBean messageBean = message;
         UserBean userBean = userDao.getInstance().findByName(messageBean.getOtherName());
-        HttpAction.addFriend(userBean.userId, new NetDataBeanCallback() {
+        HttpActionImpl.getInstance().addFriend("addFriend", userBean.userId, new NetDataBeanCallback() {
             @Override
             protected void onCodeSuccess() {
                 InviteMsg inviteMsg = (InviteMsg) messageBean.getMsgObj();

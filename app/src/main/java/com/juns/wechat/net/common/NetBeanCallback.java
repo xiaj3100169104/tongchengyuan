@@ -1,11 +1,15 @@
 package com.juns.wechat.net.common;
 
+import android.util.Log;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.juns.wechat.R;
 import com.juns.wechat.util.ToastUtil;
+
+import retrofit2.Call;
+import retrofit2.Response;
 
 
 public class NetBeanCallback<T> extends NetStringCallback {
@@ -26,19 +30,20 @@ public class NetBeanCallback<T> extends NetStringCallback {
     }
 
     @Override
-    public void onSuccess(String result) {
-        super.onSuccess(result);
+    public void onResponse(Call<String> call, Response<String> response) {
+        String body = response.body();
+        Log.e(TAG, "response.body==" + body);
         T data = null;
         if (this.clazz != null)
-            data = JSON.parseObject(result, this.clazz);
+            data = JSON.parseObject(body, this.clazz);
         if (this.type != null)
-            data = JSON.parseObject(result, this.type);
+            data = JSON.parseObject(body, this.type);
 
         onResultSuccess(data);
     }
 
     @Override
-    public void onError(Throwable ex, boolean isOnCallback) {
+    public void onFailure(Call<String> call, Throwable t) {
         ToastUtil.showToast(R.string.toast_network_error, Toast.LENGTH_SHORT);
         onFailure("网络错误，请检查网络设置");
     }
@@ -48,16 +53,6 @@ public class NetBeanCallback<T> extends NetStringCallback {
     }
 
     protected void onFailure(String msg) {
-
-    }
-
-    @Override
-    public void onCancelled(CancelledException cex) {
-
-    }
-
-    @Override
-    public void onFinished() {
 
     }
 }

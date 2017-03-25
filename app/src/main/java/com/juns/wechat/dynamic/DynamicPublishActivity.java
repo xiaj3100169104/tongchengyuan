@@ -14,9 +14,8 @@ import com.juns.wechat.R;
 import com.juns.wechat.bean.DynamicBean;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.net.common.HttpAction;
+import com.juns.wechat.net.common.HttpActionImpl;
 import com.juns.wechat.net.common.NetDataBeanCallback;
-import com.juns.wechat.util.PhotoUtil;
 import com.style.album.AlbumActivity;
 import com.style.album.DynamicPublishImageAdapter;
 import com.style.base.BaseRecyclerViewAdapter;
@@ -24,7 +23,8 @@ import com.style.base.BaseToolbarBtnActivity;
 import com.style.constant.FileConfig;
 import com.style.constant.Skip;
 import com.style.dialog.SelAvatarDialog;
-import com.style.rxAndroid.callback.RXOtherCallBack;
+import com.style.rxAndroid.RXTaskManager;
+import com.style.rxAndroid.callback.RXTaskCallBack;
 import com.style.utils.BitmapUtil;
 import com.style.utils.CommonUtil;
 import com.style.utils.PictureUtils;
@@ -153,14 +153,14 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
 
     private void addUserDynamic() {
         showProgressDialog();
-        runTask(new RXOtherCallBack() {
+        RXTaskManager.getInstance().runTask(TAG, new RXTaskCallBack<File[]>() {
             @Override
-            public Object doInBackground() {
+            public File[] doInBackground() {
                 return dealPicture();
             }
 
             @Override
-            public void OnSuccess(Object object) {
+            public void onSuccess(File[] object) {
                 //dismissProgressDialog();
                 File[] files = (File[]) object;
                 if (files != null)
@@ -169,7 +169,7 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
             }
 
             @Override
-            public void OnFailed(String message) {
+            public void onFailed(String message) {
                 dismissProgressDialog();
             }
         });
@@ -177,7 +177,7 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
 
     private void startSend(File[] files) {
         String content = etContent.getText().toString();
-        HttpAction.addDynamic(content, files, new NetDataBeanCallback<DynamicBean>(DynamicBean.class) {
+        HttpActionImpl.getInstance().addDynamic(TAG, content, files, new NetDataBeanCallback<DynamicBean>(DynamicBean.class) {
             @Override
             protected void onCodeSuccess(DynamicBean data) {
                 dismissProgressDialog();
