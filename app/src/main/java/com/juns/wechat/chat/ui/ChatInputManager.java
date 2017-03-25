@@ -231,7 +231,7 @@ public class ChatInputManager implements View.OnClickListener {
                 takeCamera();         // 点击照相图标
                 break;
             case R.id.view_video_record:
-                mChatActivity.showToast("待开发中");
+                mChatActivity.showToast("正在努力开发中");
                 //recordVideo();       //录制视频
                 break;
             case R.id.view_location:

@@ -58,6 +58,7 @@ public class XmppConnUtil {
                 .setResource(RESOURCE).setDebuggerEnabled(true)
                 .setSendPresence(false).build();
         xmppConnection = new XMPPTCPConnection(configuration);
+
         /** 自动向服务器发送ping pong 消息，保持socket连接*/
         ServerPingWithAlarmManager.getInstanceFor(xmppConnection).setEnabled(true);
         DeliveryReceiptManager.getInstanceFor(xmppConnection).autoAddDeliveryReceiptRequests();
