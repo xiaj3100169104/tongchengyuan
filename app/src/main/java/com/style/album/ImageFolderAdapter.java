@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.juns.wechat.R;
 import com.style.base.BaseRecyclerViewAdapter;
-import com.style.manager.ImageLoadManager;
+import com.style.manager.ImageLoader;
 
 import java.util.List;
 
@@ -43,7 +43,7 @@ public class ImageFolderAdapter extends BaseRecyclerViewAdapter {
             }
         }
         String path = item.getImages().get(0).getImagePath();
-        ImageLoadManager.loadNormalPicture(mContext, holder.image, path);
+        ImageLoader.loadPicture(mContext, holder.image, path);
         setText(holder.tvName, item.getBucketName());
         setText(holder.tvCount, " (" + num + "/" + item.getImages().size() + ")");
         super.setOnItemClickListener(holder, position);

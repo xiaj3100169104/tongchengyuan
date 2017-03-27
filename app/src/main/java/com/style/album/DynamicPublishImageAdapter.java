@@ -8,7 +8,7 @@ import android.widget.ImageView;
 
 import com.juns.wechat.R;
 import com.style.base.BaseRecyclerViewAdapter;
-import com.style.manager.ImageLoadManager;
+import com.style.manager.ImageLoader;
 
 import java.util.List;
 
@@ -38,7 +38,7 @@ public class DynamicPublishImageAdapter extends BaseRecyclerViewAdapter {
         String path = (String) getData(position);
         if (position != getItemCount() - 1) {
             holder.ivDelete.setVisibility(View.VISIBLE);
-            ImageLoadManager.loadNormalPicture(mContext, holder.ivActiveImages, path);
+            ImageLoader.loadPicture(mContext, holder.ivActiveImages, path);
 
         } else {
             holder.ivDelete.setVisibility(View.GONE);

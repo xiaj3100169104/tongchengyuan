@@ -11,8 +11,8 @@ import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.dao.FriendDao;
 import com.juns.wechat.net.common.HttpActionImpl;
 import com.juns.wechat.net.common.NetDataBeanCallback;
-import com.juns.wechat.util.ImageLoader;
 import com.style.constant.Skip;
+import com.style.manager.ImageLoader;
 
 /**
  * Created by 王者 on 2016/8/9.
@@ -59,14 +59,14 @@ public class ChatMsgItemShow extends MsgItemShow {
     public void loadUrl(final ImageView iv) {
         if(friendBean == null){
             if(stranger != null){
-                ImageLoader.loadAvatar(iv, stranger.getHeadUrl());
+                ImageLoader.loadAvatar(mContext, iv, stranger.getHeadUrl());
             }else {
                 HttpActionImpl.getInstance().queryUserData("loadUrl", msgItem.userId, new NetDataBeanCallback<UserBean>(UserBean.class) {
                     @Override
                     protected void onCodeSuccess(UserBean data) {
                         if (data != null) {
                             stranger = data;
-                            ImageLoader.loadAvatar(iv, stranger.getHeadUrl());
+                            ImageLoader.loadAvatar(mContext, iv, stranger.getHeadUrl());
                         }
                     }
 
@@ -77,7 +77,7 @@ public class ChatMsgItemShow extends MsgItemShow {
                 });
             }
         }else {
-            ImageLoader.loadAvatar(iv, friendBean.getHeadUrl());
+            ImageLoader.loadAvatar(mContext, iv, friendBean.getHeadUrl());
         }
 
     }

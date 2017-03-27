@@ -29,8 +29,8 @@ public interface HttpActionService {
     @POST("login") @FormUrlEncoded
     Call<String> login(@Field("userName")  String userName, @Field("passWord") String password);
 
-    @POST("newToken")
-    Call<String> refreshToken();
+    @POST("newToken") @FormUrlEncoded
+    Call<String> refreshToken(@Field("token")  String oldToken);
 
     @POST("updateUser") @FormUrlEncoded
     Call<String> updateUser(@FieldMap Map<String, Object> map);

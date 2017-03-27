@@ -8,7 +8,7 @@ import android.widget.ImageView;
 
 import com.juns.wechat.R;
 import com.style.base.BaseRecyclerViewAdapter;
-import com.style.manager.ImageLoadManager;
+import com.style.manager.ImageLoader;
 
 import java.util.List;
 
@@ -33,7 +33,7 @@ public class ImageItemAdapter extends BaseRecyclerViewAdapter {
         final ViewHolder holder = (ViewHolder) viewHolder;
         ImageItem item = (ImageItem) getData(position);
         String path = item.getImagePath();
-        ImageLoadManager.loadNormalPicture(mContext, ((ViewHolder) viewHolder).image, path);
+        ImageLoader.loadPicture(mContext, ((ViewHolder) viewHolder).image, path);
 
         if (item.isSelected()) {
             holder.isselected.setVisibility(View.VISIBLE);

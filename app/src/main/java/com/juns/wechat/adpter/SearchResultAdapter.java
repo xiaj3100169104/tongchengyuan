@@ -10,7 +10,8 @@ import android.widget.TextView;
 
 import com.juns.wechat.R;
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.util.ImageLoader;
+import com.style.manager.ImageLoader;
+
 import java.util.List;
 
 /**
@@ -60,7 +61,7 @@ public class SearchResultAdapter extends BaseAdapter {
         }
         UserBean userBean = searchResults.get(position);
         viewHolder.tvName.setText(userBean.getUserName());
-        ImageLoader.loadAvatar(viewHolder.ivIcon, userBean.getHeadUrl());
+        ImageLoader.loadAvatar(context, viewHolder.ivIcon, userBean.getHeadUrl());
         viewHolder.tvDesc.setText(userBean.getSignature() == null ? "" : userBean.getSignature());
         return convertView;
     }

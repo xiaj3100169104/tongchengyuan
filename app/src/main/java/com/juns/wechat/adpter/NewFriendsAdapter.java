@@ -20,10 +20,10 @@ import com.juns.wechat.dao.MessageDao;
 import com.juns.wechat.dao.UserDao;
 import com.juns.wechat.net.common.HttpActionImpl;
 import com.juns.wechat.net.common.NetDataBeanCallback;
-import com.juns.wechat.util.ImageLoader;
 import com.juns.wechat.util.SyncDataUtil;
 import com.juns.wechat.xmpp.util.SendMessage;
 import com.style.constant.Skip;
+import com.style.manager.ImageLoader;
 
 import java.util.List;
 
@@ -88,7 +88,7 @@ public class NewFriendsAdapter extends BaseAdapter {
             });
             return convertView;
         } else {
-            ImageLoader.loadAvatar(ivAvatar, userBean.getHeadUrl());
+            ImageLoader.loadAvatar(context, ivAvatar, userBean.getHeadUrl());
             txt_name.setText(userBean.getShowName());
         }
 
@@ -147,7 +147,7 @@ public class NewFriendsAdapter extends BaseAdapter {
                 notifyDataSetChanged();
                 sendMessageToOther(messageBean.getOtherName(), reply);
 
-                SyncDataUtil.syncData();
+                SyncDataUtil.getInstance().syncData();
             }
 
             @Override

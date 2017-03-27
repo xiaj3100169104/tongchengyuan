@@ -17,11 +17,25 @@ import java.util.List;
  */
 public class SyncDataUtil {
 
-    public static void syncData() {
-        syncFriendData();
+    private static SyncDataUtil mInstance;
+    private Callback callback;
+
+    public static SyncDataUtil getInstance() {
+        if (mInstance == null) {
+            mInstance = new SyncDataUtil();
+        }
+        return mInstance;
+    }
+    public void syncData() {
+        syncFriendData("");
     }
 
-    private static void syncFriendData() {
+    public void syncData(String tag, Callback callback) {
+        this.callback = callback;
+        syncFriendData(tag);
+    }
+
+    private void syncFriendData(final String tag) {
         long lastModifyDate = FriendDao.getInstance().getLastModifyDate(AccountManager.getInstance().getUserId());
         HttpActionImpl.getInstance().syncFriendData("syncFriendData", lastModifyDate, new NetDataBeanCallback<List<FriendBean>>(new TypeReference<List<FriendBean>>() {
         }) {
@@ -31,20 +45,23 @@ public class SyncDataUtil {
                 if (friendBeen != null && !friendBeen.isEmpty()) {
                     FriendDao.getInstance().replace(friendBeen);
                 }
-                syncUserData();
+                syncUserData(tag);
             }
 
             @Override
             protected void onCodeFailure(String msg) {
-
+                if (callback != null) {
+                    callback.onFailure();
+                    callback = null;
+                }
             }
         });
     }
 
-    private static void syncUserData() {
+    private void syncUserData(String tag) {
         Integer[] userIds = FriendDao.getInstance().getNotExistUsersInFriend(AccountManager.getInstance().getUser().getUserId());
         long lastModifyDate = UserDao.getInstance().getLastModifyDate(AccountManager.getInstance().getUserId());
-        HttpActionImpl.getInstance().syncUserData("sync", userIds, lastModifyDate, new NetDataBeanCallback<List<UserBean>>(new TypeReference<List<UserBean>>() {
+        HttpActionImpl.getInstance().syncUserData("syncUserData", userIds, lastModifyDate, new NetDataBeanCallback<List<UserBean>>(new TypeReference<List<UserBean>>() {
         }) {
             @Override
             protected void onCodeSuccess(List<UserBean> data) {
@@ -52,13 +69,26 @@ public class SyncDataUtil {
                 if (userBeen != null && !userBeen.isEmpty()) {
                     UserDao.getInstance().replace(userBeen);
                 }
+                if (callback != null) {
+                    callback.onSuccess();
+                    callback = null;
+                }
             }
 
             @Override
             protected void onCodeFailure(String msg) {
-
+                if (callback != null) {
+                    callback.onFailure();
+                    callback = null;
+                }
             }
         });
     }
 
+    public interface Callback {
+
+        void onSuccess();
+
+        void onFailure();
+    }
 }

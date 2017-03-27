@@ -8,9 +8,9 @@ import android.widget.ImageView;
 import com.juns.wechat.R;
 import com.juns.wechat.chat.bean.OfflineVideoMsg;
 import com.juns.wechat.chat.offlineVideo.PlayVideoActivity;
-import com.juns.wechat.util.ImageLoader;
 
 import com.style.constant.FileConfig;
+import com.style.manager.ImageLoader;
 
 /**
  * Created by xiajun on 2017/1/20.

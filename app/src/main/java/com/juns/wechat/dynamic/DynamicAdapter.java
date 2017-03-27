@@ -21,9 +21,9 @@ import com.juns.wechat.chat.utils.SmileUtils;
 import com.juns.wechat.dao.UserDao;
 import com.juns.wechat.helper.CommonViewHelper;
 import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.util.ImageLoader;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.style.base.BaseRecyclerViewAdapter;
+import com.style.manager.ImageLoader;
 import com.style.utils.MyDateUtil;
 import com.style.utils.StringUtil;
 
@@ -200,7 +200,7 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter<DynamicBean> {
                 image.setLayoutParams(params);
                 image.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 //image.setImageResource(R.mipmap.empty_photo);
-                ImageLoader.loadPicture(image, images.get(0));
+                ImageLoader.loadPicture(mContext, image, images.get(0));
                 glImages.addView(image, params);
                 image.setOnClickListener(new OnClickListener() {
                     @Override
@@ -232,7 +232,7 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter<DynamicBean> {
                     image.setLayoutParams(params);
                     image.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     //image.setImageResource(R.mipmap.empty_photo);
-                    ImageLoader.loadPicture(image, images.get(i));
+                    ImageLoader.loadPicture(mContext, image, images.get(i));
                     glImages.addView(image, params);
                     image.setOnClickListener(new OnClickListener() {
                         @Override

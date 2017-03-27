@@ -7,10 +7,10 @@ import android.widget.ProgressBar;
 
 import com.juns.wechat.R;
 import com.juns.wechat.config.ConfigUtil;
-import com.juns.wechat.util.ImageLoader;
 import com.juns.wechat.util.LogUtil;
 import com.style.base.BaseToolbarActivity;
 import com.style.constant.Skip;
+import com.style.manager.ImageLoader;
 
 import org.xutils.common.Callback;
 
@@ -41,8 +41,8 @@ public class ShowBigImage extends BaseToolbarActivity {
         imgName = getIntent().getStringExtra(Skip.KEY_IMG_NAME);
         String url = ConfigUtil.REAL_SERVER + "/upload/"+imgName;
         //Glide.with(this).load(url).into(photoView);
-
-        ImageLoader.loadBigAvatar(photoView, imgName, new Callback.CommonCallback<Drawable>() {
+        ImageLoader.loadAvatar(this, photoView, imgName);
+       /* ImageLoader.loadAvatar(photoView, imgName, new Callback.CommonCallback<Drawable>() {
             @Override
             public void onSuccess(Drawable result) {
                 LogUtil.i("success!");
@@ -64,7 +64,7 @@ public class ShowBigImage extends BaseToolbarActivity {
             public void onFinished() {
 
             }
-        });
+        });*/
 
     }
 }

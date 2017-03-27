@@ -23,11 +23,11 @@ import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.dao.FriendDao;
 import com.juns.wechat.exception.UserNotFoundException;
 import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.util.ImageLoader;
 import com.juns.wechat.util.ThreadPoolUtil;
 import com.juns.wechat.util.TimeUtil;
 import com.juns.wechat.xmpp.util.SendMessage;
 import com.style.constant.Skip;
+import com.style.manager.ImageLoader;
 
 import java.util.List;
 
@@ -155,7 +155,7 @@ public abstract class BaseMsgViewHolder extends RecyclerView.ViewHolder {
         String url = curUser.getHeadUrl();
         if (isLeftLayout())
             url = contactUser.getHeadUrl();
-        ImageLoader.loadAvatar(viewAvatar, url);
+        ImageLoader.loadAvatar(context, viewAvatar, url);
     }
     /**
      * 重发该条消息

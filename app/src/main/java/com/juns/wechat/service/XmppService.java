@@ -27,6 +27,8 @@ import com.juns.wechat.xmpp.XmppManagerUtil;
  * Created by 王宗文 on 2015/11/20
  *******************************************************/
 public class XmppService extends Service {
+    public static final String TAG = "XmppService";
+
     private static final long REFRESH_TIME = 6 * 60 * 60 * 1000;
 
     /**
@@ -83,8 +85,7 @@ public class XmppService extends Service {
         if(AccountManager.getInstance().getTokenRefreshTime() + REFRESH_TIME > System.currentTimeMillis()){
            init();
         }else {
-            //TokenRequest.refreshToken(callBack);
-            HttpActionImpl.getInstance().refreshToken("refreshToken", new NetDataBeanCallback<TokenBean>(TokenBean.class) {
+            HttpActionImpl.getInstance().refreshToken(TAG, new NetDataBeanCallback<TokenBean>(TokenBean.class) {
                 @Override
                 protected void onCodeSuccess(TokenBean data) {
                     AccountManager.getInstance().setToken(data.token);
@@ -99,9 +100,9 @@ public class XmppService extends Service {
         }
     }
 
-    private void  init(){
+    private void init(){
         XmppManagerUtil.asyncLogin(userManager.getUserName(), userManager.getUserPassWord());
-        SyncDataUtil.syncData();
+        SyncDataUtil.getInstance().syncData();
         initSipSession();
     }
 

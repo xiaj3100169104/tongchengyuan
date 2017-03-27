@@ -13,7 +13,6 @@ import com.juns.wechat.R;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.helper.CommonViewHelper;
 import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.util.ImageLoader;
 import com.style.base.BaseToolbarActivity;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
 

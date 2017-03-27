@@ -76,7 +76,8 @@ public class HttpActionImpl {
     }
 
     public void refreshToken(String tag, NetDataBeanCallback callback) {
-        Call<String> call = service.refreshToken();
+        TokenRequestParams params = new TokenRequestParams();
+        Call<String> call = service.refreshToken(params.token);
         runTask(tag, call, callback);
     }
 
@@ -100,11 +101,18 @@ public class HttpActionImpl {
         runTask(tag, call, callback);
     }
 
-
     public void searchUser(String tag, String search, NetDataBeanCallback callback) {
         TokenRequestParams params = new TokenRequestParams();
         params.addParameter("search", search);
         Call<String> call = service.searchUser(params.map);
+        runTask(tag, call, callback);
+    }
+
+    public void syncFriendData(String tag, long lastModifyDate, NetDataBeanCallback callback) {
+        TokenRequestParams params = new TokenRequestParams();
+        //params.addBodyParameter("token", token);
+        params.addParameter("modifyDate", lastModifyDate);
+        Call<String> call = service.syncFriendData(params.map);
         runTask(tag, call, callback);
     }
 
@@ -140,14 +148,6 @@ public class HttpActionImpl {
             params.addParameter("userNames[]", userName);
         }
         Call<String> call = service.getUsersByNames(params.map);
-        runTask(tag, call, callback);
-    }
-
-    public void syncFriendData(String tag, long lastModifyDate, NetDataBeanCallback callback) {
-        TokenRequestParams params = new TokenRequestParams();
-        //params.addBodyParameter("token", token);
-        params.addParameter("modifyDate", lastModifyDate);
-        Call<String> call = service.syncFriendData(params.map);
         runTask(tag, call, callback);
     }
 

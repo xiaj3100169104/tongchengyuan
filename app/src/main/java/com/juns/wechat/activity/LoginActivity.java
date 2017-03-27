@@ -20,6 +20,7 @@ import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.common.HttpActionImpl;
 import com.juns.wechat.net.common.NetDataBeanCallback;
 import com.juns.wechat.net.response.LoginBean;
+import com.juns.wechat.util.SyncDataUtil;
 import com.style.base.BaseToolbarActivity;
 import com.style.utils.CommonUtil;
 
@@ -128,8 +129,20 @@ public class LoginActivity extends BaseToolbarActivity implements OnClickListene
                 AccountManager.getInstance().setUser(data.userBean);
                 AccountManager.getInstance().setToken(data.token);
                 AccountManager.getInstance().setUserPassWord(password);
-                skip(MainActivity.class);
-                finish();
+                showProgressDialog("正在同步数据");
+                SyncDataUtil.getInstance().syncData(TAG, new SyncDataUtil.Callback() {
+                    @Override
+                    public void onSuccess() {
+                        skip(MainActivity.class);
+                        finish();
+                    }
+
+                    @Override
+                    public void onFailure() {
+                        dismissProgressDialog();
+                        showToast("数据同步错误");
+                    }
+                });
             }
 
             @Override

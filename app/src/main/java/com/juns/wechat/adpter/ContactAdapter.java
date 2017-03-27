@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 import com.juns.wechat.R;
 import com.juns.wechat.bean.FriendBean;
-import com.juns.wechat.util.ImageLoader;
 import com.style.base.BaseRecyclerViewAdapter;
+import com.style.manager.ImageLoader;
 import com.style.view.CustomNotifyView;
 
 import java.util.List;
@@ -92,7 +92,7 @@ public class ContactAdapter extends BaseRecyclerViewAdapter<FriendBean> implemen
                 holder.tvCatalog.setVisibility(View.GONE);
             }
 
-            ImageLoader.loadAvatar(holder.ivAvatar, friendBean.getHeadUrl());
+            ImageLoader.loadAvatar(mContext, holder.ivAvatar, friendBean.getHeadUrl());
             holder.tvNick.setText(friendBean.getShowName());
             super.setOnItemClickListener(holder, position);
         }

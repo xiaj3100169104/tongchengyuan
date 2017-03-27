@@ -10,14 +10,11 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.juns.wechat.R;
-import com.juns.wechat.config.ConfigUtil;
-import com.juns.wechat.util.ImageLoader;
 import com.juns.wechat.util.LogUtil;
-import com.style.manager.ImageLoadManager;
+import com.style.manager.ImageLoader;
 
 import org.xutils.common.Callback;
 
-import uk.co.senab.photoview.PhotoView;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class ImageDetailFragment extends Fragment {
@@ -44,8 +41,8 @@ public class ImageDetailFragment extends Fragment {
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		//ImageLoadManager.loadBigPicture(getActivity(), mImageView, ConfigUtil.REAL_SERVER + "/upload/"+mImageUrl);
-		ImageLoader.loadBigPicture(mImageView, mImageUrl, new Callback.CommonCallback<Drawable>() {
+		ImageLoader.loadBigPicture(getActivity(), mImageView, mImageUrl);
+		/*ImageLoader.loadBigPicture(mImageView, mImageUrl, new Callback.CommonCallback<Drawable>() {
 			@Override
 			public void onSuccess(Drawable result) {
 				LogUtil.i("success!");
@@ -67,6 +64,6 @@ public class ImageDetailFragment extends Fragment {
 			public void onFinished() {
 
 			}
-		});
+		});*/
 	}
 }

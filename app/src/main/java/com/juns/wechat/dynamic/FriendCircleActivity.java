@@ -25,10 +25,10 @@ import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.common.HttpActionImpl;
 import com.juns.wechat.net.common.NetDataBeanCallback;
-import com.juns.wechat.util.ImageLoader;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.style.base.BaseToolbarActivity;
 import com.style.constant.Skip;
+import com.style.manager.ImageLoader;
 import com.style.view.DividerItemDecoration;
 
 import java.util.ArrayList;
@@ -107,7 +107,7 @@ public class FriendCircleActivity extends BaseToolbarActivity {
         View header = LayoutInflater.from(this).inflate(R.layout.header_friend_circle, (ViewGroup) mRecyclerView.getParent(), false);
         mLRecyclerViewAdapter.addHeaderView(header);
         HeaderViewHolder headerViewHolder = new HeaderViewHolder(header);
-        ImageLoader.loadAvatar(headerViewHolder.ivAvatar, curUser.getHeadUrl());
+        ImageLoader.loadAvatar(this, headerViewHolder.ivAvatar, curUser.getHeadUrl());
         headerViewHolder.tvNick.setText(curUser.getShowName());
 
         //禁用下拉刷新功能

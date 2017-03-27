@@ -1,69 +1,49 @@
-package com.juns.wechat.util;
+package com.style.manager;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.juns.wechat.App;
 import com.juns.wechat.R;
 import com.juns.wechat.config.ConfigUtil;
+import com.juns.wechat.util.BitmapUtil;
+import com.juns.wechat.util.DisplayUtil;
 
 import org.xutils.cache.LruCache;
-import org.xutils.common.Callback;
-import org.xutils.image.ImageOptions;
-import org.xutils.x;
 
-/**
- * Created by 王宗文 on 2016/7/16.
- */
 public class ImageLoader {
     private static final String TAG = "ImageLoader";
+
     private static final String REMOTE_PATH = ConfigUtil.REAL_SERVER + "/upload/";
+
+    private static CharSequence getUrl(String url) {
+        Log.e(TAG, REMOTE_PATH + url);
+        return REMOTE_PATH + url;
+    }
+    public static void loadAvatar(Context context, ImageView imageView, String url) {
+        if (!TextUtils.isEmpty(getUrl(url)))
+        Glide.with(context).load(url).error(R.drawable.default_avatar).into(imageView);
+    }
+
+    public static void loadPicture(Context context, ImageView imageView, String url) {
+        if (!TextUtils.isEmpty(getUrl(url)))
+        Glide.with(context).load(url).placeholder(R.mipmap.empty_photo).error(R.mipmap.image_fail).into(imageView);
+    }
+
+    public static void loadBigPicture(Context context, ImageView imageView, String url) {
+        if (!TextUtils.isEmpty(getUrl(url)))
+        Glide.with(context).load(url).error(R.mipmap.image_fail).into(imageView);
+    }
+
     private static LruCache<String, Bitmap> bitmapCache;
 
     private static int maxWidth = DisplayUtil.dip2px(App.getInstance(), 130);
     private static int minWidth = DisplayUtil.dip2px(App.getInstance(), 80);
-
-    private static final ImageOptions OPTIONS_AVATAR = new ImageOptions.Builder()
-            .setFailureDrawableId(R.drawable.default_avatar)
-            .setLoadingDrawableId(R.drawable.default_avatar)
-            .build();
-    private static final ImageOptions OPTIONS_PICTURE = new ImageOptions.Builder()
-            .setFailureDrawableId(R.mipmap.image_fail)
-            .setLoadingDrawableId(R.mipmap.empty_photo)
-            .build();
-
-    public static void loadAvatar(ImageView imageView, String fileName) {
-        if (TextUtils.isEmpty(fileName)) {
-            imageView.setImageResource(R.drawable.default_avatar);
-        } else {
-            x.image().bind(imageView, REMOTE_PATH + fileName, OPTIONS_AVATAR);
-        }
-    }
-
-    public static void loadPicture(ImageView imageView, String fileName) {
-        if (!TextUtils.isEmpty(fileName)) {
-            String url = REMOTE_PATH + fileName;
-            Log.e(TAG, url);
-            x.image().bind(imageView, url, OPTIONS_PICTURE);
-        }
-    }
-
-    public static void loadBigPicture(ImageView imageView, String fileName, Callback.CommonCallback<Drawable> callback) {
-        if (!TextUtils.isEmpty(fileName))
-            x.image().bind(imageView, REMOTE_PATH + fileName, OPTIONS_PICTURE, callback);
-    }
-
-    public static void loadBigAvatar(ImageView imageView, String fileName, Callback.CommonCallback<Drawable> callback) {
-        if (TextUtils.isEmpty(fileName)) {
-            imageView.setImageResource(R.drawable.default_avatar);
-        } else {
-            x.image().bind(imageView, REMOTE_PATH + fileName, OPTIONS_AVATAR, callback);
-        }
-    }
 
     public static void loadTriangleImage(ImageView imageView, String filePath, int direction) {
         if (bitmapCache == null) {
