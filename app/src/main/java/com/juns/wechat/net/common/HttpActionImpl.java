@@ -82,24 +82,21 @@ public class HttpActionImpl {
 
     public void updateUser(String tag, String field, String value, NetDataBeanCallback callback) {
         TokenRequestParams params = new TokenRequestParams();
-        //构建body
-        RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
-                .addFormDataPart("token", params.token)
-                .addFormDataPart("field", field)
-                .addFormDataPart("value", value)
-                .build();
-        Call<String> call = service.updateUser(requestBody);
+        params.addParameter("field", field);
+        params.addParameter("value", value);
+        Call<String> call = service.updateUser(params.map);
         runTask(tag, call, callback);
     }
 
     public void uploadAvatar(String tag, String filePath, NetDataBeanCallback callback) {
         TokenRequestParams params = new TokenRequestParams();
         File file = new File(filePath);
-        RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
+        MultipartBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
                 .addFormDataPart("token", params.token)
                 .addFormDataPart("avatar", file.getName(), RequestBody.create(MediaType.parse("image/*"), file))
                 .build();
-        Call<String> call = service.updateUser(requestBody);
+        Call<String> call = service.uploadAvatar(requestBody);
         runTask(tag, call, callback);
     }
 

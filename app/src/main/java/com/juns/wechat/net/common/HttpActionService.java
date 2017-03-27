@@ -32,8 +32,11 @@ public interface HttpActionService {
     @POST("newToken")
     Call<String> refreshToken();
 
-    @POST("updateUser")
-    Call<String> updateUser(@Body RequestBody requestBody);
+    @POST("updateUser") @FormUrlEncoded
+    Call<String> updateUser(@FieldMap Map<String, Object> map);
+
+    @POST("uploadAvatar")
+    Call<String> uploadAvatar(@Body MultipartBody requestBody);
 
     @POST("searchUser") @FormUrlEncoded
     Call<String> searchUser(@FieldMap Map<String, Object> map);

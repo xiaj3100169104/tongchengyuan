@@ -116,27 +116,26 @@ public class MyProfileActivity extends BaseToolbarActivity {
     public void modifySex() {
         final String sex = curUser.getSex();
         final int position = UserBean.Sex.isMan(sex) ? 0 : 1;
-        if (selectSexDialog == null) {
+        if (selectSexDialog == null)
             selectSexDialog = new SelectSexDialog(this);
-            selectSexDialog.setOnItemClickListener(new SelectSexDialog.OnItemClickListener() {
-                @Override
-                public void onClickMan(View v) {
-                    if (position == 1)
-                        modifySexToServer(UserBean.Sex.MAN.value);
-                    else
-                        selectSexDialog.dismiss();
-                }
-
-                @Override
-                public void onClickWoman(View v) {
-                    if (position == 0)
-                        modifySexToServer(UserBean.Sex.WOMAN.value);
-                    else
-                        selectSexDialog.dismiss();
-                }
-            });
-        }
         selectSexDialog.show();
+        selectSexDialog.setOnItemClickListener(new SelectSexDialog.OnItemClickListener() {
+            @Override
+            public void onClickMan(View v) {
+                if (position == 1)
+                    modifySexToServer(UserBean.Sex.MAN.value);
+                else
+                    selectSexDialog.dismiss();
+            }
+
+            @Override
+            public void onClickWoman(View v) {
+                if (position == 0)
+                    modifySexToServer(UserBean.Sex.WOMAN.value);
+                else
+                    selectSexDialog.dismiss();
+            }
+        });
     }
 
     @Subscriber(tag = UserTable.TABLE_NAME)
@@ -158,6 +157,7 @@ public class MyProfileActivity extends BaseToolbarActivity {
             @Override
             protected void onCodeSuccess(UserBean data) {
                 dismissProgressDialog();
+                selectSexDialog.dismiss();
                 AccountManager.getInstance().setUser(data);
                 finish();
             }
