@@ -7,7 +7,6 @@ import android.provider.MediaStore;
 import android.view.View;
 
 import com.juns.wechat.R;
-import com.juns.wechat.annotation.Extra;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.common.HttpActionImpl;
@@ -28,13 +27,13 @@ public class CropImageActivity extends BaseToolbarActivity {
 
     @Bind(R.id.clipImageLayout)
     ClipImageLayout clipImageLayout;
-    @Extra(name = "uri")
     private Uri uri;
 
     private String imageName;
 
     @Override
     public void initData() {
+        uri = getIntent().getExtras().getParcelable("uri");
         try {
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
             clipImageLayout.setCropImage(bitmap);

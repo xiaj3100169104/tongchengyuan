@@ -2,12 +2,6 @@ package com.juns.wechat.net.common;
 
 import com.juns.wechat.bean.CommentBean;
 import com.juns.wechat.config.ConfigUtil;
-import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.net.response.LoginBean;
-
-import org.xutils.common.util.KeyValue;
-import org.xutils.http.RequestParams;
-import org.xutils.http.body.MultipartBody;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -15,12 +9,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.POST;
 
 /**
  * Created by xiajun on 2016/12/22.
@@ -39,11 +33,13 @@ public class HttpActionImpl {
         }
         return mInstance;
     }
-    public void init(){
+
+    public void init() {
         Retrofit retrofit = new Retrofit.Builder().baseUrl(URL_BASE)
                 .addConverterFactory(ScalarsConverterFactory.create()).build();
         service = retrofit.create(HttpActionService.class);
     }
+
     public void addTask(String tag, Call subscription) {
         List<Call> mSubscriptions = mTaskMap.get(tag);
         if (mSubscriptions == null) {
@@ -63,6 +59,7 @@ public class HttpActionImpl {
             }
         }
     }
+
     public void runTask(String tag, Call call, NetDataBeanCallback callback) {
         call.enqueue(callback);
         addTask(tag, call);
@@ -83,13 +80,29 @@ public class HttpActionImpl {
         runTask(tag, call, callback);
     }
 
-    public void updateUser(String tag, String field, Object value, NetDataBeanCallback callback) {
+    public void updateUser(String tag, String field, String value, NetDataBeanCallback callback) {
         TokenRequestParams params = new TokenRequestParams();
-        params.addParameter("field", field);
-        params.addParameter("value", value);
-        Call<String> call = service.updateUser(params.map);
+        //构建body
+        RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                .addFormDataPart("token", params.token)
+                .addFormDataPart("field", field)
+                .addFormDataPart("value", value)
+                .build();
+        Call<String> call = service.updateUser(requestBody);
         runTask(tag, call, callback);
     }
+
+    public void uploadAvatar(String tag, String filePath, NetDataBeanCallback callback) {
+        TokenRequestParams params = new TokenRequestParams();
+        File file = new File(filePath);
+        RequestBody requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                .addFormDataPart("token", params.token)
+                .addFormDataPart("avatar", file.getName(), RequestBody.create(MediaType.parse("image/*"), file))
+                .build();
+        Call<String> call = service.updateUser(requestBody);
+        runTask(tag, call, callback);
+    }
+
 
     public void searchUser(String tag, String search, NetDataBeanCallback callback) {
         TokenRequestParams params = new TokenRequestParams();
@@ -148,17 +161,6 @@ public class HttpActionImpl {
         runTask(tag, call, callback);
     }
 
-    public void uploadAvatar(String tag, String filePath, NetDataBeanCallback callback) {
-        TokenRequestParams params = new TokenRequestParams();
-        List<KeyValue> multipartParams = new ArrayList<>();
-        multipartParams.add(new KeyValue("avatar", new File(filePath)));
-        MultipartBody multipartBody = new MultipartBody(multipartParams, null);
-        // FileBody fileBody = new FileBody(file, "multipart/form-data");
-        //params.setRequestBody(multipartBody);
-        Call<String> call = service.updateUser(params.map);
-        runTask(tag, call, callback);
-    }
-
     /**
      * @param content  动态内容
      * @param fileList 图片列表
@@ -166,17 +168,16 @@ public class HttpActionImpl {
      */
     public void addDynamic(String tag, String content, File[] fileList, NetDataBeanCallback callback) {
         TokenRequestParams params = new TokenRequestParams();
-        params.addParameter("content", content);
+        MultipartBody.Builder requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
+                .addFormDataPart("token", params.token);
+        requestBody.addFormDataPart("content", content);
         if (fileList != null && fileList.length > 0) {
-            List<KeyValue> list = new ArrayList<>();
             for (int i = 0; i < fileList.length; i++) {
                 File file = fileList[i];
-                list.add(new KeyValue("avatar" + i, file));
+                requestBody.addFormDataPart("avatar" + i, file.getName(), RequestBody.create(MediaType.parse("image/*"), file));
             }
-            MultipartBody multipartBody = new MultipartBody(list, null);
-            //params.setRequestBody(multipartBody);
         }
-        Call<String> call = service.addDynamic(params.map);
+        Call<String> call = service.addDynamic(requestBody.build());
         runTask(tag, call, callback);
     }
 

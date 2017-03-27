@@ -11,11 +11,12 @@ import java.util.Map;
  *带token的请求对象，token里面包含了userId
  */
 public class TokenRequestParams {
+    public String token;
     public Map<String, Object> map;
 
     public TokenRequestParams() {
         map = new HashMap<>();
-        String token = AccountManager.getInstance().getToken();
+        token = AccountManager.getInstance().getToken();
         map.put("token", token);
     }
 
