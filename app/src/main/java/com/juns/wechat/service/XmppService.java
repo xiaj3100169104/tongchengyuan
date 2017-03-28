@@ -10,13 +10,13 @@ import android.text.TextUtils;
 
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.net.common.HttpActionImpl;
-import com.juns.wechat.net.common.NetDataBeanCallback;
+import com.juns.wechat.net.request.HttpActionImpl;
+import com.style.net.core.NetDataBeanCallback;
 import com.juns.wechat.net.response.TokenBean;
 import com.juns.wechat.util.SipClient;
 import com.juns.wechat.util.SyncDataUtil;
-import com.juns.wechat.xmpp.XmppManagerImpl;
-import com.juns.wechat.xmpp.XmppManagerUtil;
+import com.juns.wechat.chat.xmpp.XmppManagerImpl;
+import com.juns.wechat.chat.xmpp.XmppManagerUtil;
 
 
 /*******************************************************

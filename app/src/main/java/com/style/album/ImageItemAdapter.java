@@ -33,7 +33,7 @@ public class ImageItemAdapter extends BaseRecyclerViewAdapter {
         final ViewHolder holder = (ViewHolder) viewHolder;
         ImageItem item = (ImageItem) getData(position);
         String path = item.getImagePath();
-        ImageLoader.loadPicture(mContext, ((ViewHolder) viewHolder).image, path);
+        ImageLoader.loadPictureByUrl(mContext, ((ViewHolder) viewHolder).image, path);
 
         if (item.isSelected()) {
             holder.isselected.setVisibility(View.VISIBLE);

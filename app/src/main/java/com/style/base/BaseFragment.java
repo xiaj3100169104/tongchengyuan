@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.juns.wechat.R;
 import com.style.dialog.MaterialProgressDialog;
+import com.style.manager.LogManager;
 import com.style.manager.ToastManager;
 import com.style.utils.CommonUtil;
 
@@ -131,6 +132,11 @@ public abstract class BaseFragment extends Fragment {
                 pd.dismiss();
         }
     }
+
+    public void logE(String tag, String msg) {
+        LogManager.logE(tag, msg);
+    }
+
     protected void showGiveUpEditDialog(final OnGiveUpEditDialogListener listener) {
         if (dlgPrompt == null) {
             AlertDialog.Builder builder = new AlertDialog.Builder(mContext);

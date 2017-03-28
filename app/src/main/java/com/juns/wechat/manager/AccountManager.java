@@ -7,9 +7,9 @@ import com.juns.wechat.App;
 import com.juns.wechat.Constants;
 import com.juns.wechat.activity.MainActivity;
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.dao.UserDao;
+import com.juns.wechat.database.dao.UserDao;
 import com.juns.wechat.util.SharedPreferencesUtil;
-import com.juns.wechat.xmpp.XmppManagerImpl;
+import com.juns.wechat.chat.xmpp.XmppManagerImpl;
 
 import org.xutils.db.sqlite.WhereBuilder;
 

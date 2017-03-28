@@ -65,7 +65,7 @@
             <TextView
                 style="@style/text_black_16sp"
                 android:layout_centerVertical="true"
-                android:text="微信号" />
+                android:text="趣号" />
 
             <TextView
                 android:id="@+id/tvUserName"

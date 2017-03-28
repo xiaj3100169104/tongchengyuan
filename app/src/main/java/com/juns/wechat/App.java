@@ -17,10 +17,8 @@ import android.text.TextUtils;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.net.common.HttpActionImpl;
-import com.style.constant.FileConfig;
+import com.juns.wechat.net.request.HttpActionImpl;
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
-import com.yixia.camera.VCamera;
 
 import org.xutils.x;
 

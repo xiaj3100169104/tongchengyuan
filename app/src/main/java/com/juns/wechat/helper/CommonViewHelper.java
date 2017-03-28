@@ -22,7 +22,7 @@ public class CommonViewHelper {
             if (tvAccount != null) {
                 String str = user.getUserName();
                 if (isAccountPre)
-                    str = "微信号：" + str;
+                    str = "趣号：" + str;
                 tvAccount.setText(str);
             }
             if (ivSex != null) {

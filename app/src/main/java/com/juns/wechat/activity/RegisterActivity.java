@@ -15,8 +15,8 @@ import com.juns.wechat.R;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.manager.AccountManager;
 
-import com.juns.wechat.net.common.HttpActionImpl;
-import com.juns.wechat.net.common.NetDataBeanCallback;
+import com.juns.wechat.net.request.HttpActionImpl;
+import com.style.net.core.NetDataBeanCallback;
 import com.juns.wechat.net.response.LoginBean;
 import com.juns.wechat.net.response.RegisterBean;
 import com.juns.wechat.util.NetWorkUtil;

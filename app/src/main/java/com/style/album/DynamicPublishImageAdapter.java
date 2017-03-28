@@ -38,7 +38,7 @@ public class DynamicPublishImageAdapter extends BaseRecyclerViewAdapter {
         String path = (String) getData(position);
         if (position != getItemCount() - 1) {
             holder.ivDelete.setVisibility(View.VISIBLE);
-            ImageLoader.loadPicture(mContext, holder.ivActiveImages, path);
+            ImageLoader.loadPictureByUrl(mContext, holder.ivActiveImages, path);
 
         } else {
             holder.ivDelete.setVisibility(View.GONE);

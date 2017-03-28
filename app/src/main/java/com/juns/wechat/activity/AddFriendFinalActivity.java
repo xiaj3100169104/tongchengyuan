@@ -8,7 +8,7 @@ import android.widget.EditText;
 
 import com.juns.wechat.R;
 import com.style.base.BaseToolbarActivity;
-import com.juns.wechat.xmpp.util.SendMessage;
+import com.juns.wechat.chat.xmpp.util.SendMessage;
 import com.style.constant.Skip;
 
 import butterknife.Bind;

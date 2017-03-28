@@ -2,8 +2,8 @@ package com.juns.wechat.chat.ui;
 
 import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.dao.DbDataEvent;
-import com.juns.wechat.dao.MessageDao;
+import com.juns.wechat.database.dao.DbDataEvent;
+import com.juns.wechat.database.dao.MessageDao;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.util.ThreadPoolUtil;
 

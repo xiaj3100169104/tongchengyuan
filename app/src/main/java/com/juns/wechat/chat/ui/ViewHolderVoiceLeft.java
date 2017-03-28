@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.juns.wechat.R;
-import com.juns.wechat.dao.MessageDao;
+import com.juns.wechat.database.dao.MessageDao;
 
 /**
  * Created by xiajun on 2017/1/20.

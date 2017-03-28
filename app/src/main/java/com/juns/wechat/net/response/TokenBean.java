@@ -1,7 +1,5 @@
 package com.juns.wechat.net.response;
 
-import com.juns.wechat.bean.UserBean;
-
 import java.io.Serializable;
 
 public class TokenBean implements Serializable {

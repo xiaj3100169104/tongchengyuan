@@ -9,7 +9,7 @@ import android.net.NetworkInfo;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.service.XmppService;
 import com.juns.wechat.util.LogUtil;
-import com.juns.wechat.xmpp.XmppConnUtil;
+import com.juns.wechat.chat.xmpp.XmppConnUtil;
 
 /*******************************************************
  * Copyright (C) 2014-2015 Yunyun Network <yynetworks@yycube.com>

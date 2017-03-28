@@ -2,15 +2,13 @@ package com.juns.wechat.activity;
 
 
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.juns.wechat.R;
 import com.juns.wechat.adpter.NewFriendsAdapter;
 import com.juns.wechat.chat.bean.MessageBean;
 import com.style.base.BaseToolbarActivity;
-import com.juns.wechat.dao.MessageDao;
+import com.juns.wechat.database.dao.MessageDao;
 import com.juns.wechat.manager.AccountManager;
 
 import java.util.List;

@@ -22,9 +22,8 @@ import com.juns.wechat.R;
 import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.chat.AlertDialog;
-import com.juns.wechat.dao.DbDataEvent;
-import com.juns.wechat.dao.FriendDao;
+import com.juns.wechat.database.dao.DbDataEvent;
+import com.juns.wechat.database.dao.FriendDao;
 import com.juns.wechat.database.ChatTable;
 import com.juns.wechat.exception.UserNotFoundException;
 import com.juns.wechat.manager.AccountManager;
@@ -430,12 +429,8 @@ public class ChatActivity extends BaseToolbarActivity {
      * @param view
      */
     public void emptyHistory(View view) {
-        String st5 = getResources().getString(
-                R.string.Whether_to_empty_all_chats);
-        startActivityForResult(
-                new Intent(this, AlertDialog.class)
-                        .putExtra("titleIsCancel", true).putExtra("msg", st5)
-                        .putExtra("cancel", true), Skip.CODE_EMPTY_HISTORY);
+        String st5 = getResources().getString(R.string.Whether_to_empty_all_chats);
+
     }
 
     /**

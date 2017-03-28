@@ -1,10 +1,6 @@
 package com.juns.wechat.net.response;
 
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.net.JsonResponseParser;
-
-import org.xutils.http.annotation.HttpResponse;
-
 import java.io.Serializable;
 
 public class LoginBean implements Serializable {

@@ -8,62 +8,100 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.juns.wechat.R;
-import com.juns.wechat.util.LogUtil;
+import com.juns.wechat.config.ConfigUtil;
+import com.style.base.BaseFragment;
+import com.style.constant.FileConfig;
 import com.style.manager.ImageLoader;
+import com.style.net.image.ImageCallback;
+import com.style.net.image.ImageManager;
+import com.style.utils.FileUtil;
 
-import org.xutils.common.Callback;
-
+import butterknife.Bind;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
-public class ImageDetailFragment extends Fragment {
-	private String mImageUrl;
-	private ImageView mImageView;
-	private ProgressBar progressBar;
-	private PhotoViewAttacher attacher;
+public class ImageDetailFragment extends BaseFragment {
+	@Bind(R.id.image)
+	ImageView image;
+	@Bind(R.id.progressbar)
+	ProgressBar progressBar;
+	@Bind(R.id.tv_percent)
+	TextView tvPercent;
+	private String imgName;
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		mLayoutResID = R.layout.fragment_dynamic_image_detail;
+		return super.onCreateView(inflater, container, savedInstanceState);
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		mImageUrl = getArguments() != null ? getArguments().getString("url") : null;
+		imgName = getArguments() != null ? getArguments().getString("url") : null;
 
-	}
-
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		final View v = inflater.inflate(R.layout.fragment_dynamic_image_detail, container, false);
-		mImageView = (ImageView) v.findViewById(R.id.image);
-		progressBar = (ProgressBar) v.findViewById(R.id.loading);
-		return v;
 	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		ImageLoader.loadBigPicture(getActivity(), mImageView, mImageUrl);
-		/*ImageLoader.loadBigPicture(mImageView, mImageUrl, new Callback.CommonCallback<Drawable>() {
-			@Override
-			public void onSuccess(Drawable result) {
-				LogUtil.i("success!");
-				attacher = new PhotoViewAttacher(mImageView);
-				attacher.update();
-			}
+	}
 
-			@Override
-			public void onError(Throwable ex, boolean isOnCallback) {
+	@Override
+	protected void initData() {
+        String dir = FileConfig.DIR_CACHE;
+        if (FileUtil.isExist(dir, imgName)) {
+            fileExist(dir + "/" + imgName);
+            return;
+        }
+        String url = ConfigUtil.BASE_UPLOAD_URL + imgName;
+        ImageManager.getInstance().down(TAG, url, dir, imgName, new ImageCallback() {
+            @Override
+            public void complete(String dir, String fileName) {
+                super.complete(dir, fileName);
+                fileExist(dir + "/" + fileName);
+            }
 
-			}
+            @Override
+            public void start(int fileSize) {
+                super.start(fileSize);
+                progressBar.setVisibility(View.VISIBLE);
+                tvPercent.setVisibility(View.VISIBLE);
+                progressBar.setMax(100);
+            }
 
-			@Override
-			public void onCancelled(CancelledException cex) {
+            @Override
+            public void inProgress(int fileSize, int progress, int percent) {
+                super.inProgress(fileSize, progress, percent);
+                progressBar.setProgress(percent);
+                tvPercent.setText(percent + "%");
+            }
 
-			}
+            @Override
+            public void failed(String error) {
+                super.failed(error);
+                progressBar.setVisibility(View.GONE);
+                tvPercent.setVisibility(View.GONE);
+                showToast(error);
+            }
+        });
 
-			@Override
-			public void onFinished() {
+    }
 
-			}
-		});*/
+    private void fileExist(String path) {
+        progressBar.setVisibility(View.GONE);
+        tvPercent.setVisibility(View.GONE);
+        logE(TAG, path);
+        ImageLoader.loadBigPicture(getContext(), image, path);
+       /* PhotoViewAttacher attacher = new PhotoViewAttacher(image);
+        attacher.update();*/
+
+	}
+
+	@Override
+	protected void onLazyLoad() {
+
 	}
 }

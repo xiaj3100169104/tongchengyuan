@@ -16,28 +16,28 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
 public class FileUtil {
-	public static File create(String dirPath, String fileName) {
-		File dir = new File(dirPath);
-		return createFile(dir, fileName);
-	}
+    public static File create(String dirPath, String fileName) {
+        File dir = new File(dirPath);
+        return createFile(dir, fileName);
+    }
 
-	public static File create(File dir, String fileName) {
-		return createFile(dir, fileName);
-	}
+    public static File create(File dir, String fileName) {
+        return createFile(dir, fileName);
+    }
 
-	private static File createFile(File dir, String fileName) {
-		boolean isMkdirs = true;
-		if (!dir.exists()) {
-			isMkdirs = dir.mkdirs();
-		}
-		if (isMkdirs) {
-			File file = new File(dir, fileName);
-			return file;
-		} else {
-			ToastManager.showToastOnApplication("文件夹创建失败");
-			return null;
-		}
-	}
+    private static File createFile(File dir, String fileName) {
+        boolean isMkdirs = true;
+        if (!dir.exists()) {
+            isMkdirs = dir.mkdirs();
+        }
+        if (isMkdirs) {
+            File file = new File(dir, fileName);
+            return file;
+        } else {
+            ToastManager.showToastOnApplication("文件夹创建失败");
+            return null;
+        }
+    }
 
     public static void delete(String dir, String name) {
         delete(dir + "/" + name);
@@ -47,128 +47,132 @@ public class FileUtil {
         delete(new File(path));
     }
 
-	public static void delete(File file) {
-		if (file.isFile()) {
-			deleteFileSafely(file);// file.delete();
-		}
-		if (file.isDirectory()) {
-			for (File childFile : file.listFiles()) {
-				delete(childFile); // 递规的方式删除文件夹
-			}
-			deleteFileSafely(file);// file.delete();// 删除目录本身
-		}
-	}
+    public static void delete(File file) {
+        if (file.isFile()) {
+            deleteFileSafely(file);// file.delete();
+        }
+        if (file.isDirectory()) {
+            for (File childFile : file.listFiles()) {
+                delete(childFile); // 递规的方式删除文件夹
+            }
+            deleteFileSafely(file);// file.delete();// 删除目录本身
+        }
+    }
 
-	/**
-	 * 安全删除文件.
-	 * 
-	 * @param file
-	 * @return
-	 */
-	public static boolean deleteFileSafely(File file) {
-		if (file != null) {
-			String tmpPath = file.getParent() + File.separator + System.currentTimeMillis();
-			File tmp = new File(tmpPath);
-			file.renameTo(tmp);
-			return tmp.delete();
-		}
-		return false;
-	}
+    /**
+     * 安全删除文件.
+     *
+     * @param file
+     * @return
+     */
+    public static boolean deleteFileSafely(File file) {
+        if (file != null) {
+            String tmpPath = file.getParent() + File.separator + System.currentTimeMillis();
+            File tmp = new File(tmpPath);
+            file.renameTo(tmp);
+            return tmp.delete();
+        }
+        return false;
+    }
 
-	public static boolean copyfile(File fromFile, File toFile, Boolean rewrite) {
-		if (!fromFile.exists()) {
-			return false;
-		}
-		if (!fromFile.isFile()) {
-			return false;
-		}
-		if (!fromFile.canRead()) {
-			return false;
-		}
-		if (!toFile.getParentFile().exists()) {
-			toFile.getParentFile().mkdirs();
-		}
-		if (toFile.exists() && rewrite) {
-			toFile.delete();
-		}
-		// 当文件不存时，canWrite一直返回的都是false
-		// if (!toFile.canWrite()) {
-		// MessageDialog.openError(new Shell(),"错误信息","不能够写将要复制的目标文件" +
-		// toFile.getPath());
-		// Toast.makeText(this,"不能够写将要复制的目标文件", Toast.LENGTH_SHORT);
-		// return ;
-		// }
-		try {
-			FileInputStream fosfrom = new FileInputStream(fromFile);
-			FileOutputStream fosto = new FileOutputStream(toFile);
-			byte bt[] = new byte[1024];
-			int c;
-			while ((c = fosfrom.read(bt)) > 0) {
-				fosto.write(bt, 0, c); // 将内容写到新文件当中
-			}
-			fosfrom.close();
-			fosto.close();
-			return true;
-		} catch (Exception ex) {
-			Log.e("readfile", ex.getMessage());
-			return false;
-		}
-	}
+    public static boolean copyfile(File fromFile, File toFile, Boolean rewrite) {
+        if (!fromFile.exists()) {
+            return false;
+        }
+        if (!fromFile.isFile()) {
+            return false;
+        }
+        if (!fromFile.canRead()) {
+            return false;
+        }
+        if (!toFile.getParentFile().exists()) {
+            toFile.getParentFile().mkdirs();
+        }
+        if (toFile.exists() && rewrite) {
+            toFile.delete();
+        }
+        // 当文件不存时，canWrite一直返回的都是false
+        // if (!toFile.canWrite()) {
+        // MessageDialog.openError(new Shell(),"错误信息","不能够写将要复制的目标文件" +
+        // toFile.getPath());
+        // Toast.makeText(this,"不能够写将要复制的目标文件", Toast.LENGTH_SHORT);
+        // return ;
+        // }
+        try {
+            FileInputStream fosfrom = new FileInputStream(fromFile);
+            FileOutputStream fosto = new FileOutputStream(toFile);
+            byte bt[] = new byte[1024];
+            int c;
+            while ((c = fosfrom.read(bt)) > 0) {
+                fosto.write(bt, 0, c); // 将内容写到新文件当中
+            }
+            fosfrom.close();
+            fosto.close();
+            return true;
+        } catch (Exception ex) {
+            Log.e("readfile", ex.getMessage());
+            return false;
+        }
+    }
 
-	public static String getRealFilePath(final Context context, final Uri uri) {
-		if (null == uri)
-			return null;
-		final String scheme = uri.getScheme();
-		String data = null;
-		if (scheme == null)
-			data = uri.getPath();
-		else if (ContentResolver.SCHEME_FILE.equals(scheme)) {
-			data = uri.getPath();
-		} else if (ContentResolver.SCHEME_CONTENT.equals(scheme)) {
-			Cursor cursor = context.getContentResolver().query(uri, new String[] { ImageColumns.DATA }, null, null,
-					null);
-			if (null != cursor) {
-				if (cursor.moveToFirst()) {
-					int index = cursor.getColumnIndex(ImageColumns.DATA);
-					if (index > -1) {
-						data = cursor.getString(index);
-					}
-				}
-				cursor.close();
-			}
-		}
-		return data;
-	}
+    public static String getRealFilePath(final Context context, final Uri uri) {
+        if (null == uri)
+            return null;
+        final String scheme = uri.getScheme();
+        String data = null;
+        if (scheme == null)
+            data = uri.getPath();
+        else if (ContentResolver.SCHEME_FILE.equals(scheme)) {
+            data = uri.getPath();
+        } else if (ContentResolver.SCHEME_CONTENT.equals(scheme)) {
+            Cursor cursor = context.getContentResolver().query(uri, new String[]{ImageColumns.DATA}, null, null,
+                    null);
+            if (null != cursor) {
+                if (cursor.moveToFirst()) {
+                    int index = cursor.getColumnIndex(ImageColumns.DATA);
+                    if (index > -1) {
+                        data = cursor.getString(index);
+                    }
+                }
+                cursor.close();
+            }
+        }
+        return data;
+    }
 
-	public static File UriToFile(Context context, Uri uri) {
-		String res = UriToRealFilePath(context, uri);
-		File file = new File(res);
-		return file;
-	}
+    public static File UriToFile(Context context, Uri uri) {
+        String res = UriToRealFilePath(context, uri);
+        File file = new File(res);
+        return file;
+    }
 
-	public static String UriToRealFilePath(Context context, Uri uri) {
-		String res = null;
-		String[] proj = { MediaStore.Images.Media.DATA };
-		Cursor cursor = context.getContentResolver().query(uri, proj, null, null, null);
-		if (cursor.moveToFirst()) {
-			int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-			res = cursor.getString(column_index);
-		}
-		cursor.close();
-		Log.e("uritopath", res);
-		return res;
-	}
+    public static String UriToRealFilePath(Context context, Uri uri) {
+        String res = null;
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = context.getContentResolver().query(uri, proj, null, null, null);
+        if (cursor.moveToFirst()) {
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            res = cursor.getString(column_index);
+        }
+        cursor.close();
+        Log.e("uritopath", res);
+        return res;
+    }
 
-	public static Uri FileToUri(String dirStr, String name) {
-		File dir = new File(dirStr);
-		if (!dir.exists()) {
-			dir.mkdirs();
-		}
-		// 原图
-		File file = new File(dir, name);
-		Uri imageUri = Uri.fromFile(file);
-		return imageUri;
-	}
+    public static Uri FileToUri(String dirStr, String name) {
+        File dir = new File(dirStr);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        // 原图
+        File file = new File(dir, name);
+        Uri imageUri = Uri.fromFile(file);
+        return imageUri;
+    }
+
+    public static boolean isExist(String dir, String fileName) {
+        return isExist(dir + File.separator + fileName);
+    }
 
     public static boolean isExist(String path) {
         File file = new File(path);

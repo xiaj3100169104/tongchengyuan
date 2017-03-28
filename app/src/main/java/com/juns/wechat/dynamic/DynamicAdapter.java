@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.juns.wechat.R;
@@ -18,10 +17,8 @@ import com.juns.wechat.bean.CommentBean;
 import com.juns.wechat.bean.DynamicBean;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.utils.SmileUtils;
-import com.juns.wechat.dao.UserDao;
+import com.juns.wechat.database.dao.UserDao;
 import com.juns.wechat.helper.CommonViewHelper;
-import com.juns.wechat.manager.AccountManager;
-import com.makeramen.roundedimageview.RoundedImageView;
 import com.style.base.BaseRecyclerViewAdapter;
 import com.style.manager.ImageLoader;
 import com.style.utils.MyDateUtil;
@@ -200,7 +197,7 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter<DynamicBean> {
                 image.setLayoutParams(params);
                 image.setScaleType(ImageView.ScaleType.CENTER_CROP);
                 //image.setImageResource(R.mipmap.empty_photo);
-                ImageLoader.loadPicture(mContext, image, images.get(0));
+                ImageLoader.loadPictureByName(mContext, image, images.get(0));
                 glImages.addView(image, params);
                 image.setOnClickListener(new OnClickListener() {
                     @Override
@@ -232,7 +229,7 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter<DynamicBean> {
                     image.setLayoutParams(params);
                     image.setScaleType(ImageView.ScaleType.CENTER_CROP);
                     //image.setImageResource(R.mipmap.empty_photo);
-                    ImageLoader.loadPicture(mContext, image, images.get(i));
+                    ImageLoader.loadPictureByName(mContext, image, images.get(i));
                     glImages.addView(image, params);
                     image.setOnClickListener(new OnClickListener() {
                         @Override

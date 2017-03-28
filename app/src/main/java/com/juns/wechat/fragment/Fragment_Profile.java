@@ -14,7 +14,7 @@ import com.juns.wechat.activity.MyCollectActivity;
 import com.juns.wechat.activity.MyProfileActivity;
 import com.juns.wechat.activity.SettingActivity;
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.dao.DbDataEvent;
+import com.juns.wechat.database.dao.DbDataEvent;
 import com.juns.wechat.database.UserTable;
 import com.juns.wechat.helper.CommonViewHelper;
 import com.juns.wechat.manager.AccountManager;
@@ -25,7 +25,6 @@ import org.simple.eventbus.Subscriber;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 //我
 public class Fragment_Profile extends BaseBusFragment implements OnClickListener {

@@ -8,9 +8,9 @@ import android.widget.TextView;
 import com.juns.wechat.chat.ui.ChatActivity;
 import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.dao.FriendDao;
-import com.juns.wechat.net.common.HttpActionImpl;
-import com.juns.wechat.net.common.NetDataBeanCallback;
+import com.juns.wechat.database.dao.FriendDao;
+import com.juns.wechat.net.request.HttpActionImpl;
+import com.style.net.core.NetDataBeanCallback;
 import com.style.constant.Skip;
 import com.style.manager.ImageLoader;
 

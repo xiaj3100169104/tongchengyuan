@@ -14,12 +14,12 @@ import com.juns.wechat.R;
 import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.ui.ChatActivity;
-import com.juns.wechat.dao.FriendDao;
+import com.juns.wechat.database.dao.FriendDao;
 import com.juns.wechat.exception.UserNotFoundException;
 import com.juns.wechat.helper.CommonViewHelper;
 import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.net.common.HttpActionImpl;
-import com.juns.wechat.net.common.NetDataBeanCallback;
+import com.juns.wechat.net.request.HttpActionImpl;
+import com.style.net.core.NetDataBeanCallback;
 import com.style.base.BaseToolbarActivity;
 import com.style.constant.Skip;
 

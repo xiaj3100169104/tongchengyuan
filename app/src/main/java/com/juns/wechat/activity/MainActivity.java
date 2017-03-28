@@ -150,7 +150,7 @@ public class MainActivity extends BaseActivity {
         switch (index) {
             case 0:
                 img_right.setVisibility(View.VISIBLE);
-                txt_title.setText(R.string.app_name);
+                txt_title.setText(R.string.chat);
                 img_right.setImageResource(R.drawable.icon_add);
                 break;
             case 1:

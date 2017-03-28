@@ -43,7 +43,7 @@ public class ImageFolderAdapter extends BaseRecyclerViewAdapter {
             }
         }
         String path = item.getImages().get(0).getImagePath();
-        ImageLoader.loadPicture(mContext, holder.image, path);
+        ImageLoader.loadPictureByUrl(mContext, holder.image, path);
         setText(holder.tvName, item.getBucketName());
         setText(holder.tvCount, " (" + num + "/" + item.getImages().size() + ")");
         super.setOnItemClickListener(holder, position);

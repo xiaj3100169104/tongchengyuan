@@ -14,13 +14,24 @@
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:contentDescription="@string/app_name"
-            android:src="@mipmap/empty_photo" />
+            android:scaleType="fitCenter"/>
 
         <ProgressBar
-            android:id="@+id/loading"
+            android:id="@+id/progressbar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true"
+            android:visibility="visible"
+            android:indeterminate="true"/>
+
+        <TextView
+            android:id="@+id/tv_percent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="gone" />
+            android:layout_centerInParent="true"
+            android:text="0%"
+            android:textSize="17sp"
+            android:textColor="#fff"
+            android:visibility="visible"/>
     </RelativeLayout>
 </FrameLayout>

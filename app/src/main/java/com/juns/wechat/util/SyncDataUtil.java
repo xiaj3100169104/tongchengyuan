@@ -4,11 +4,11 @@ package com.juns.wechat.util;
 import com.alibaba.fastjson.TypeReference;
 import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.dao.FriendDao;
-import com.juns.wechat.dao.UserDao;
+import com.juns.wechat.database.dao.FriendDao;
+import com.juns.wechat.database.dao.UserDao;
 import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.net.common.HttpActionImpl;
-import com.juns.wechat.net.common.NetDataBeanCallback;
+import com.juns.wechat.net.request.HttpActionImpl;
+import com.style.net.core.NetDataBeanCallback;
 
 import java.util.List;
 

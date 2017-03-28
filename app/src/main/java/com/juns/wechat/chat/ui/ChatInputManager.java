@@ -34,7 +34,7 @@ import com.juns.wechat.util.PhotoUtil;
 import com.juns.wechat.util.ThreadPoolUtil;
 import com.juns.wechat.util.ToastUtil;
 import com.juns.wechat.view.AudioRecordButton;
-import com.juns.wechat.xmpp.util.SendMessage;
+import com.juns.wechat.chat.xmpp.util.SendMessage;
 import com.style.album.AlbumActivity;
 import com.style.constant.FileConfig;
 import com.style.constant.Skip;
@@ -316,7 +316,7 @@ public class ChatInputManager implements View.OnClickListener {
      *
      * @param filePaths
      */
-    public void sendPicture(final String otherUserName, ArrayList<String> filePaths) {
+    public void sendPicture(final String otherUserName, final ArrayList<String> filePaths) {
         if (filePaths == null || filePaths.isEmpty()) {
             throw new NullPointerException("filePaths should not be empty");
         }
@@ -336,11 +336,12 @@ public class ChatInputManager implements View.OnClickListener {
                         return;
                     }
                     String fileName = FileConfig.getUniqueFileName();
-                    PhotoUtil.saveBitmap(compressedBitmap, FileConfig.DIR_CACHE + "/" + fileName);
+                    String filePath = FileConfig.DIR_CACHE + "/" + fileName;
+                    PhotoUtil.saveBitmap(compressedBitmap, filePath);
                     int width = compressedBitmap.getWidth();
                     int height = compressedBitmap.getHeight();
                     compressedBitmap.recycle();
-                    SendMessage.sendPictureMsg(otherUserName, new File(FileConfig.DIR_CACHE, fileName), width, height);
+                    SendMessage.sendPictureMsg(otherUserName, new File(filePath), width, height);
                 }
             });
         }

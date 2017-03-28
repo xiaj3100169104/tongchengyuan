@@ -72,6 +72,7 @@
         <activity android:name=".activity.UserInfoActivity"/>
         <activity android:name=".activity.NewFriendsListActivity"/>
         <activity android:name=".activity.SettingActivity"/>
+        <activity android:name=".activity.AboutProductActivity"/>
         <activity android:name=".chat.ui.ChatActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustResize"/>
@@ -79,8 +80,6 @@
         <activity android:name=".chat.video.VideoCallActivity"/>
         <activity android:name=".chat.BaiduMapActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".chat.AlertDialog"
-            android:theme="@style/MyDialogStyle"/>
         <activity android:name=".chat.ShowBigImage"/>
         <activity android:name=".chat.ShowNormalFileActivity"/>
         <activity
@@ -97,7 +96,6 @@
         <activity android:name=".activity.MyProfileActivity"/>
         <activity android:name=".activity.ModifyNameActivity"/>
         <activity android:name=".activity.CropImageActivity"/>
-        <activity android:name=".activity.SendInviteMessageActivity"/>
         <activity android:name=".activity.AddFriendFinalActivity"/>
         <activity android:name=".activity.SendLocationActivity"/>
         <activity android:name="com.style.album.AlbumActivity"/>

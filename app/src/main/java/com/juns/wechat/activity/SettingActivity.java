@@ -27,28 +27,27 @@ public class SettingActivity extends BaseToolbarActivity implements OnClickListe
 	}
 
 	private void setOnListener() {
-		findViewById(R.id.btnexit).setOnClickListener(this);
 		findViewById(R.id.txt_msgtip).setOnClickListener(this);
 		findViewById(R.id.txt_usersafe).setOnClickListener(this);
 		findViewById(R.id.txt_yinsi).setOnClickListener(this);
 		findViewById(R.id.txt_tongyong).setOnClickListener(this);
 		findViewById(R.id.txt_about).setOnClickListener(this);
+		findViewById(R.id.btn_exit).setOnClickListener(this);
+
 	}
 
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
-	/*	case R.id.txt_about:
-			CommonUtil.startActivity(SettingActivity.this, WebViewActivity.class,
-					new BasicNameValuePair(Constants.Title, "关于微信"),
-					new BasicNameValuePair(Constants.URL,
-							"https://github.com/motianhuo/wechat"));
-			break;*/
+		case R.id.txt_about:
+			skip(AboutProductActivity.class);
+			break;
 
-		case R.id.btnexit:
+		case R.id.btn_exit:
             AccountManager.getInstance().logOut();
             finish();
 			break;
+
 		default:
 			break;
 		}

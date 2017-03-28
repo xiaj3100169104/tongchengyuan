@@ -9,8 +9,8 @@ import android.view.View;
 import com.juns.wechat.R;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.net.common.HttpActionImpl;
-import com.juns.wechat.net.common.NetDataBeanCallback;
+import com.juns.wechat.net.request.HttpActionImpl;
+import com.style.net.core.NetDataBeanCallback;
 import com.juns.wechat.util.PhotoUtil;
 import com.juns.wechat.view.ClipImageLayout;
 import com.style.base.BaseToolbarActivity;
@@ -29,7 +29,7 @@ public class CropImageActivity extends BaseToolbarActivity {
     ClipImageLayout clipImageLayout;
     private Uri uri;
 
-    private String imageName;
+    private String fileName;
 
     @Override
     public void initData() {
@@ -52,15 +52,13 @@ public class CropImageActivity extends BaseToolbarActivity {
     @OnClick(R.id.view_toolbar_right)
     public void saveInfo(View v) {
         Bitmap croppedBitmap = clipImageLayout.clip();
-        imageName = StanzaIdUtil.newStanzaId() + ".image";
-        PhotoUtil.saveBitmap(croppedBitmap, FileConfig.DIR_IMAGE + "/" + imageName);
-
-        updateAvatarInServer(imageName);
+        fileName = StanzaIdUtil.newStanzaId() + ".image";
+        String filePath = FileConfig.DIR_CACHE + "/" + fileName;
+        PhotoUtil.saveBitmap(croppedBitmap, filePath);
+        updateAvatarInServer(filePath);
     }
 
-    private void updateAvatarInServer(String imageName) {
-        String filePath = FileConfig.DIR_IMAGE + "/" + imageName;
-        //UploadFileRequest.uploadAvatar(filePath, callBack);
+    private void updateAvatarInServer(String filePath) {
         HttpActionImpl.getInstance().uploadAvatar(TAG, filePath, new NetDataBeanCallback<UserBean>(UserBean.class) {
             @Override
             protected void onCodeSuccess(UserBean data) {

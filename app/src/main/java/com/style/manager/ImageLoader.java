@@ -19,24 +19,30 @@ import org.xutils.cache.LruCache;
 public class ImageLoader {
     private static final String TAG = "ImageLoader";
 
-    private static final String REMOTE_PATH = ConfigUtil.REAL_SERVER + "/upload/";
+    private static final String REMOTE_PATH = ConfigUtil.BASE_UPLOAD_URL;
 
-    private static CharSequence getUrl(String url) {
-        Log.e(TAG, REMOTE_PATH + url);
-        return REMOTE_PATH + url;
-    }
-    public static void loadAvatar(Context context, ImageView imageView, String url) {
-        if (!TextUtils.isEmpty(getUrl(url)))
-        Glide.with(context).load(url).error(R.drawable.default_avatar).into(imageView);
+    private static CharSequence getUrl(String fileName) {
+        Log.e(TAG, REMOTE_PATH + fileName);
+        return REMOTE_PATH + fileName;
     }
 
-    public static void loadPicture(Context context, ImageView imageView, String url) {
-        if (!TextUtils.isEmpty(getUrl(url)))
-        Glide.with(context).load(url).placeholder(R.mipmap.empty_photo).error(R.mipmap.image_fail).into(imageView);
+    public static void loadAvatar(Context context, ImageView imageView, String fileName) {
+        if (!TextUtils.isEmpty(fileName))
+        Glide.with(context).load(getUrl(fileName)).error(R.drawable.default_avatar).into(imageView);
+    }
+
+    public static void loadPictureByName(Context context, ImageView imageView, String fileName) {
+        if (!TextUtils.isEmpty(fileName))
+        Glide.with(context).load(getUrl(fileName)).placeholder(R.mipmap.empty_photo).error(R.mipmap.image_fail).into(imageView);
+    }
+
+    public static void loadPictureByUrl(Context context, ImageView imageView, String url) {
+        if (!TextUtils.isEmpty(url))
+            Glide.with(context).load(url).placeholder(R.mipmap.empty_photo).error(R.mipmap.image_fail).into(imageView);
     }
 
     public static void loadBigPicture(Context context, ImageView imageView, String url) {
-        if (!TextUtils.isEmpty(getUrl(url)))
+        if (!TextUtils.isEmpty(url))
         Glide.with(context).load(url).error(R.mipmap.image_fail).into(imageView);
     }
 

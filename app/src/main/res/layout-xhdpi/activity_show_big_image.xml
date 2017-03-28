@@ -14,16 +14,26 @@
             android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/default_avatar"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true"
+            android:scaleType="fitCenter"/>
 
         <ProgressBar
-            android:id="@+id/pb_load_local"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:id="@+id/progressbar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_centerInParent="true"
-            android:visibility="gone" />
-
+            android:visibility="visible"
+            android:indeterminate="true"/>
+        
+        <TextView
+            android:id="@+id/tv_percent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="0%"
+            android:textSize="17sp"
+            android:textColor="#fff"
+            android:visibility="visible"/>
     </RelativeLayout>
 
 </LinearLayout>

@@ -1,14 +1,13 @@
 package com.juns.wechat.fragment.msg;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.juns.wechat.App;
 import com.juns.wechat.chat.utils.SmileUtils;
-import com.juns.wechat.dao.MessageDao;
+import com.juns.wechat.database.dao.MessageDao;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.util.TimeUtil;
 
