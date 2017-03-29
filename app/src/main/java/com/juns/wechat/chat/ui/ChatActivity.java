@@ -22,14 +22,17 @@ import com.juns.wechat.R;
 import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.bean.UserBean;
+import com.juns.wechat.chat.xmpp.util.SendMessage;
 import com.juns.wechat.database.dao.DbDataEvent;
 import com.juns.wechat.database.dao.FriendDao;
 import com.juns.wechat.database.ChatTable;
 import com.juns.wechat.exception.UserNotFoundException;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.util.LogUtil;
+import com.juns.wechat.util.ThreadPoolUtil;
 import com.style.base.BaseToolbarActivity;
 import com.style.constant.Skip;
+import com.style.dialog.PromptDialog;
 
 import org.simple.eventbus.Subscriber;
 
@@ -57,16 +60,6 @@ public class ChatActivity extends BaseToolbarActivity {
     @Bind(R.id.list)
     LRecyclerView mRecyclerView;
 
-    private ClipboardManager clipboard;
-    private int chatType;
-
-    public File cameraFile;
-
-    public String playMsgId;
-
-    private int contactId;
-    private String contactName;
-
     private ChatInputManager chatInputManager;
     private ChatActivityHelper chatActivityHelper;
     private ChatAdapter mDataAdapter;
@@ -76,9 +69,17 @@ public class ChatActivity extends BaseToolbarActivity {
     private FriendBean friendBean;
     private UserBean contactUser;
     private boolean mFirstLoad = true; //是否第一次加载数据
-
     private List<MessageBean> msgViewModels;
     private Handler mHandler = new Handler();
+
+    private ClipboardManager clipboard;
+    private int chatType;
+    public File cameraFile;
+    public String playMsgId;
+    private int contactId;
+    private String contactName;
+
+    private PromptDialog reSendDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,9 +103,13 @@ public class ChatActivity extends BaseToolbarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
-     * initData
-     */
+    @Override
+    protected void onNewIntent(Intent intent) {
+        // 点击notification bar进入聊天页面，保证只有一个聊天页面
+        String username = intent.getStringExtra(Skip.KEY_USER_ID);
+
+    }
+
     public void initData() {
         contactId = getIntent().getIntExtra(Skip.KEY_USER_ID, 0);
         friendBean = FriendDao.getInstance().findByOwnerAndContactName(account.getUserId(), contactId);
@@ -295,7 +300,7 @@ public class ChatActivity extends BaseToolbarActivity {
                     sendPicture(selectedPhotos);
                     break;
                 case Skip.CODE_RECORD_VIDEO:
-                    if (data!=null){
+                    if (data != null) {
                         String path = data.getStringExtra("path");
                         sendOfflineVideo(path);
                     }
@@ -393,7 +398,7 @@ public class ChatActivity extends BaseToolbarActivity {
             filePath = uri.getPath();
         }
         File file = new File(filePath);
-		/*if (file == null || !file.exists()) {
+        /*if (file == null || !file.exists()) {
 			String st7 = getResources().getString(R.string.File_does_not_exist);
 			Toast.makeText(getApplicationContext(), st7, 0).show();
 			return;
@@ -433,26 +438,6 @@ public class ChatActivity extends BaseToolbarActivity {
 
     }
 
-    /**
-     * 点击进入群组详情
-     *
-     * @param view
-     */
-    public void toGroupDetails(View view) {
-        // startActivityForResult(
-        // (new Intent(this, GroupDeatilActivity.class).putExtra(
-        // "groupId", toChatUsername)), REQUEST_CODE_GROUP_DETAIL);
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        chatInputManager.onDestroy();
-
-    }
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -460,11 +445,30 @@ public class ChatActivity extends BaseToolbarActivity {
     }
 
     @Override
-    protected void onNewIntent(Intent intent) {
-        // 点击notification bar进入聊天页面，保证只有一个聊天页面
-        String username = intent.getStringExtra("userId");
-
+    protected void onDestroy() {
+        super.onDestroy();
+        chatInputManager.onDestroy();
+        chatActivityHelper.onDestroy();
     }
 
+    public void reSend(final MessageBean messageBean) {
+        reSendDialog = new PromptDialog(getContext());
+        reSendDialog.setMessage("确定要重发这条消息？");
+        reSendDialog.setListener(new PromptDialog.OnPromptListener() {
+            @Override
+            public void onPositiveButton() {
+                ThreadPoolUtil.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        SendMessage.sendMsgDirect(messageBean);
+                    }
+                });
+            }
 
+            @Override
+            public void onNegativeButton() {
+
+            }
+        });
+    }
 }

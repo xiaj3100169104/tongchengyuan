@@ -18,7 +18,7 @@ import com.juns.wechat.database.dao.DbDataEvent;
 import com.juns.wechat.database.UserTable;
 import com.juns.wechat.helper.CommonViewHelper;
 import com.juns.wechat.manager.AccountManager;
-import com.style.base.BaseBusFragment;
+import com.style.base.BaseFragment;
 
 import org.simple.eventbus.Subscriber;
 
@@ -27,7 +27,7 @@ import java.util.List;
 import butterknife.Bind;
 
 //我
-public class Fragment_Profile extends BaseBusFragment implements OnClickListener {
+public class Fragment_Profile extends BaseFragment implements OnClickListener {
     @Bind(R.id.ivAvatar)
     ImageView ivAvatar;
     @Bind(R.id.tvNickName)

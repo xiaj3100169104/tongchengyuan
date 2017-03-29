@@ -25,7 +25,6 @@ public class ImageDownloadTask extends Thread {
     private static final int DOWN_COMPLETE = 4;
 
     private static final String TAG = ImageDownloadTask.class.getSimpleName();
-    private Object tag;//界面标志
     private ImageCallback fileDownCallback;
     private boolean canCallback = true;//是否需要执行回调,默认true
 
@@ -65,8 +64,7 @@ public class ImageDownloadTask extends Thread {
         }
     };
 
-    public ImageDownloadTask(Object tag, String downloadUrl, String dir, String fileName, ImageCallback fileDownCallback) {
-        this.tag = tag;
+    public ImageDownloadTask(String downloadUrl, String dir, String fileName, ImageCallback fileDownCallback) {
         this.downloadUrl = downloadUrl;
         this.dir = dir;
         this.fileName = fileName;

@@ -9,7 +9,7 @@ import java.util.Map;
 public class ImageManager {
     protected String TAG = getClass().getSimpleName();
 
-    private Map<Object, ImageDownloadTask> taskMap = new HashMap<>();
+    private Map<String, ImageDownloadTask> taskMap = new HashMap<>();
     private static ImageManager instance;
 
     public synchronized static ImageManager getInstance() {
@@ -19,23 +19,24 @@ public class ImageManager {
         return instance;
     }
 
-    public void down(Object tag, String url, String dir, String fileName, ImageCallback callback) {
-        ImageDownloadTask task = taskMap.get(tag);
+    //注意tag唯一
+    public void down(String url, String dir, String fileName, ImageCallback callback) {
+        ImageDownloadTask task = taskMap.get(url);
         if (task == null) {
-            task = new ImageDownloadTask(tag, url, dir, fileName, callback);
+            task = new ImageDownloadTask(url, dir, fileName, callback);
             task.start();
-            taskMap.put(tag, task);
+            taskMap.put(url, task);
         }
         task.setCallback(callback);
         task.setCanCallback(true);
     }
 
-    public void cancelCallback(Object tag) {
+    public void cancelCallback(String tag) {
         ImageDownloadTask task = taskMap.get(tag);
         if (task != null)
             task.setCanCallback(false);
     }
-    public void removeTask(Object tag) {
+    public void removeTask(String tag) {
         taskMap.remove(tag);
     }
 }

@@ -31,6 +31,7 @@ public class ShowBigImage extends BaseToolbarActivity {
     @Bind(R.id.tv_percent)
     TextView tvPercent;
     private String imgName;
+    private String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +50,8 @@ public class ShowBigImage extends BaseToolbarActivity {
             fileExist(dir + "/" + imgName);
             return;
         }
-        String url = ConfigUtil.BASE_UPLOAD_URL + imgName;
-        ImageManager.getInstance().down(TAG, url, dir, imgName, new ImageCallback() {
+        url = ConfigUtil.BASE_UPLOAD_URL + imgName;
+        ImageManager.getInstance().down(url, dir, imgName, new ImageCallback() {
             @Override
             public void complete(String dir, String fileName) {
                 super.complete(dir, fileName);
@@ -90,5 +91,10 @@ public class ShowBigImage extends BaseToolbarActivity {
         ImageLoader.loadBigPicture(this, image, path);
        /* PhotoViewAttacher attacher = new PhotoViewAttacher(image);
         attacher.update();*/
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ImageManager.getInstance().cancelCallback(url);
     }
 }

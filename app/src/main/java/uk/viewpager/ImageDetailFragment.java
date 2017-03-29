@@ -2,7 +2,6 @@ package uk.viewpager;
 
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,23 +29,16 @@ public class ImageDetailFragment extends BaseFragment {
 	@Bind(R.id.tv_percent)
 	TextView tvPercent;
 	private String imgName;
+    private String url;
+
+    public ImageDetailFragment(String imgName) {
+        this.imgName = imgName;
+    }
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		mLayoutResID = R.layout.fragment_dynamic_image_detail;
 		return super.onCreateView(inflater, container, savedInstanceState);
-	}
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		imgName = getArguments() != null ? getArguments().getString("url") : null;
-
-	}
-
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
 	}
 
 	@Override
@@ -56,8 +48,8 @@ public class ImageDetailFragment extends BaseFragment {
             fileExist(dir + "/" + imgName);
             return;
         }
-        String url = ConfigUtil.BASE_UPLOAD_URL + imgName;
-        ImageManager.getInstance().down(TAG, url, dir, imgName, new ImageCallback() {
+        url = ConfigUtil.BASE_UPLOAD_URL + imgName;
+        ImageManager.getInstance().down(url, dir, imgName, new ImageCallback() {
             @Override
             public void complete(String dir, String fileName) {
                 super.complete(dir, fileName);
@@ -100,8 +92,9 @@ public class ImageDetailFragment extends BaseFragment {
 
 	}
 
-	@Override
-	protected void onLazyLoad() {
-
-	}
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ImageManager.getInstance().cancelCallback(url);
+    }
 }

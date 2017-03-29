@@ -157,7 +157,7 @@ public class RegisterActivity extends BaseToolbarActivity implements OnClickList
 			return;
 		}
 
-        getLoadingDialog("正在注册...  ").show();
+        showProgressDialog("正在注册...  ");
 
         validCodeResult = 0;
         SMSSDK.submitVerificationCode("86", userName, verifyCode);
@@ -170,7 +170,7 @@ public class RegisterActivity extends BaseToolbarActivity implements OnClickList
         }
          if(validCodeResult == VALID_CODE_FAILED){
            showToast("验证码错误！");
-           getLoadingDialog("正在注册...").dismiss();
+           dismissProgressDialog();
            return;
         }
 
@@ -180,10 +180,8 @@ public class RegisterActivity extends BaseToolbarActivity implements OnClickList
     private void register(String name, String pwd){
 		if(!NetWorkUtil.isNetworkAvailable()){
 			showToast(R.string.toast_network_unavailable);
-			getLoadingDialog("正在注册...").dismiss();
 			return;
 		}
-        //UserRequest.register(name, pwd, registerCallBack);
 		HttpActionImpl.getInstance().register(TAG, name, pwd, new NetDataBeanCallback<RegisterBean>(RegisterBean.class) {
 			@Override
 			protected void onCodeSuccess() {
@@ -193,16 +191,14 @@ public class RegisterActivity extends BaseToolbarActivity implements OnClickList
 
 			@Override
 			protected void onCodeFailure(int code,RegisterBean data) {
-				getLoadingDialog("正在注册...").dismiss();
+				dismissProgressDialog();
 				if(code == 1){  //参数错误
-					getLoadingDialog("正在注册...").dismiss();
 					if(data.errField.equalsIgnoreCase(UserBean.USERNAME)){
 						showToast("用户名不合法");
 					}else if(data.errField.equalsIgnoreCase(UserBean.PASSWORD)){
 						showToast("密码长度不能小于6位");
 					}
 				}else if(code == 2){
-					getLoadingDialog("正在注册...").dismiss();
 					showToast("该用户已注册，可以直接登录");
 				}
 			}

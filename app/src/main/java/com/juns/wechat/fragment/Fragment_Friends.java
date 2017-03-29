@@ -25,7 +25,7 @@ import com.juns.wechat.database.ChatTable;
 import com.juns.wechat.database.FriendTable;
 import com.juns.wechat.database.UserTable;
 import com.juns.wechat.manager.AccountManager;
-import com.style.base.BaseBusFragment;
+import com.style.base.BaseFragment;
 import com.style.base.BaseRecyclerViewAdapter;
 import com.style.constant.Skip;
 import com.style.utils.HanyuToPinyin;
@@ -44,7 +44,7 @@ import butterknife.ButterKnife;
 
 //通讯录
 
-public class Fragment_Friends extends BaseBusFragment {
+public class Fragment_Friends extends BaseFragment {
 
     @Bind(R.id.recyclerView)
     RecyclerView recyclerView;

@@ -34,10 +34,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     public LayoutInflater mInflater;
     protected Integer mLayoutResID;
     protected View mContentView;
-    private FlippingLoadingDialog mLoadingDialog;
     protected boolean isVisibleToUser = false;
     private MaterialProgressDialog progressDialog;
-    private AlertDialog dlgPrompt;
 
     protected abstract void initData();
 
@@ -102,15 +100,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        onBackFinish();
-    }
-
-    protected void onBackFinish() {
-        finish();
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
         isVisibleToUser = true;
@@ -121,9 +110,15 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onPause();
         CommonUtil.hiddenSoftInput(this);
         isVisibleToUser = false;
-        if (mLoadingDialog != null && mLoadingDialog.isShowing()) {
-            mLoadingDialog.dismiss();
-        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        onBackFinish();
+    }
+
+    protected void onBackFinish() {
+        finish();
     }
 
     @Override
@@ -160,15 +155,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         ToastManager.showToastLong(mContext, msgId);
     }
 
-    public FlippingLoadingDialog getLoadingDialog(String msg) {
-        if (mLoadingDialog == null)
-            mLoadingDialog = new FlippingLoadingDialog(this, msg);
-        else {
-            mLoadingDialog.setText(msg);
-        }
-        return mLoadingDialog;
-    }
-
     public void showProgressDialog() {
         showProgressDialog("");
     }
@@ -179,7 +165,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void showProgressDialog(String msg) {
         if (progressDialog == null)
-            progressDialog = new MaterialProgressDialog(mContext, R.style.Dialog_NoTitle);
+            progressDialog = new MaterialProgressDialog(mContext);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setMessage(msg);
         progressDialog.show();
@@ -193,34 +179,6 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void logE(String tag, String msg) {
         LogManager.logE(tag, msg);
-    }
-
-    protected void showGiveUpEditDialog(final com.style.base.BaseActivity.OnGiveUpEditDialogListener listener) {
-        if (dlgPrompt == null) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("放弃编辑");
-            builder.setMessage("确定要放弃此次编辑吗？");
-            builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    listener.onPositiveButton();
-                }
-            });
-            builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    listener.onNegativeButton();
-                }
-            });
-            dlgPrompt = builder.create();
-        }
-        dlgPrompt.show();
-    }
-
-    public interface OnGiveUpEditDialogListener {
-        void onPositiveButton();
-
-        void onNegativeButton();
     }
 
     protected void setText(TextView textView, int strId) {

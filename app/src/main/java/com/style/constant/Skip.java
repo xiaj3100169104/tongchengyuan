@@ -28,10 +28,10 @@ public class Skip {
     /**
      * 界面跳转传值key
      */
-    public static final String KEY_USER_ID = "user_id";
-    public static final String KEY_USER_NAME = "user_name";
-    public static final String KEY_SEARCH_RESULTS = "search_results";
-    public static final String KEY_IMG_NAME = "img_name";
+    public static final String KEY_USER_ID = "userId";
+    public static final String KEY_USER_NAME = "userName";
+    public static final String KEY_SEARCH_RESULTS = "searchResults";
+    public static final String KEY_IMG_NAME = "imgName";
     public static final String KEY_ACCOUNT = "account";
     public static final String KEY_PASSWORD = "password";
     public static final String KEY_USER = "user";

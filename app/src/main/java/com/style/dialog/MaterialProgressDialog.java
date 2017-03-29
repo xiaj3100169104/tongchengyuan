@@ -13,7 +13,7 @@ import com.juns.wechat.R;
 public class MaterialProgressDialog extends Dialog {
 
     public MaterialProgressDialog(Context context) {
-        super(context);
+        this(context, R.style.Dialog_NoTitle);
         init();
     }
 

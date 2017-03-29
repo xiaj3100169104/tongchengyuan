@@ -15,6 +15,7 @@ import com.juns.wechat.bean.DynamicBean;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.request.HttpActionImpl;
+import com.style.dialog.PromptDialog;
 import com.style.net.core.NetDataBeanCallback;
 import com.style.album.AlbumActivity;
 import com.style.album.DynamicPublishImageAdapter;
@@ -54,6 +55,7 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
     private SelAvatarDialog dialog;
 
     private UserBean curUser;
+    PromptDialog promptDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,18 +127,30 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
         openDeletePromptDialog();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (promptDialog != null)
+            promptDialog.dismiss();
+    }
+
     private void openDeletePromptDialog() {
-        showGiveUpEditDialog(new OnGiveUpEditDialogListener() {
-            @Override
-            public void onPositiveButton() {
-                finish();
-            }
+        if (promptDialog == null) {
+            promptDialog = new PromptDialog(getContext());
+            promptDialog.setMessage("确定要放弃此次编辑吗？");
+            promptDialog.setListener(new PromptDialog.OnPromptListener() {
+                @Override
+                public void onPositiveButton() {
+                    finish();
+                }
 
-            @Override
-            public void onNegativeButton() {
+                @Override
+                public void onNegativeButton() {
 
-            }
-        });
+                }
+            });
+        }
+        promptDialog.show();
     }
 
     private void setHaveDynamic() {

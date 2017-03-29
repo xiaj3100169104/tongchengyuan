@@ -27,6 +27,7 @@ import com.juns.wechat.util.ThreadPoolUtil;
 import com.juns.wechat.util.TimeUtil;
 import com.juns.wechat.chat.xmpp.util.SendMessage;
 import com.style.constant.Skip;
+import com.style.dialog.PromptDialog;
 import com.style.manager.ImageLoader;
 
 import java.util.List;
@@ -161,12 +162,8 @@ public abstract class BaseMsgViewHolder extends RecyclerView.ViewHolder {
      * 重发该条消息
      */
     public final void reSend() {
-        ThreadPoolUtil.execute(new Runnable() {
-            @Override
-            public void run() {
-                SendMessage.sendMsgDirect(messageBean);
-            }
-        });
+        ChatActivity chatActivity = (ChatActivity) context;
+        chatActivity.reSend(messageBean);
     }
     /**
      * 点击用户头像的事件
