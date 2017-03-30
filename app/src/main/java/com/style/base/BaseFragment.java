@@ -146,12 +146,4 @@ public abstract class BaseFragment extends Fragment {
     protected static CharSequence getNotNullText(String str) {
         return CommonUtil.getNotNullText(str);
     }
-
-    protected int dip2px(float dpValue) {
-        return CommonUtil.dip2px(mContext, dpValue);
-    }
-
-    protected int px2dip(float pxValue) {
-        return CommonUtil.px2dip(mContext, pxValue);
-    }
 }

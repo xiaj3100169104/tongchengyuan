@@ -189,7 +189,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         CommonUtil.setText(textView, getNotNullText(str));
     }
 
-    protected static CharSequence getNotNullText(String str) {
+    protected CharSequence getNotNullText(String str) {
         return CommonUtil.getNotNullText(str);
     }
 
