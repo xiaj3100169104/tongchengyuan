@@ -81,21 +81,20 @@ public class FileTransferManager {
         listener.transferFinished(false);
     }
 
-    public void downloadFile(String fileDir, String fileName, int fileSize,  ProgressListener listener){
-        LogUtil.i("fileName: " + fileName);
-        File dir = new File(FileConfig.DIR_CACHE);
-        dir.mkdirs();
-        File file = new File(fileDir, fileName);
-        if(file.exists()){  //由于文件名都是唯一的，说明这张图片是由同一个手机上发出并在本手机上接收。
+    public void downloadFile(String path, int fileSize,  ProgressListener listener){
+        File f = new File(path);
+        if(f.exists()){  //由于文件名都是唯一的，说明这张图片是由同一个手机上发出并在本手机上接收。
             listener.transferFinished(true);
             return;
         }
-
+        if (!f.getParentFile().exists())
+            f.mkdirs();
         try {
             Socket socket = new Socket(ConfigUtil.getXmppServer(), PORT);
             OutputStream out = socket.getOutputStream();
             out.write((byte) 5);  //version
             out.write(ACTION_READ);
+            String fileName = f.getName();
             out.write(fileName.length());
             out.write(fileName.getBytes());
             out.flush();
@@ -113,7 +112,7 @@ public class FileTransferManager {
                 return;
             }
 
-            OutputStream fileOut = FileUtil.getOutputStream(file);
+            OutputStream fileOut = FileUtil.getOutputStream(f);
             if(fileOut == null){
                 listener.transferFinished(false);
                 return;

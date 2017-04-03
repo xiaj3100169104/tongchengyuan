@@ -20,7 +20,7 @@ public class FileConfig {
     /**
      * app文件存储根目录
      */
-    public static final String DIR_APP = Environment.getExternalStorageDirectory() + "/wechat";
+    public static final String DIR_APP = Environment.getExternalStorageDirectory() + "/aaaaWechat";
     /**
      * 图片存储目录
      */

@@ -1,0 +1,15 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.style.lib.media.video"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <application
+        android:allowBackup="true"
+        android:theme="@style/AppTheme" >
+        <activity android:name=".PlayVideoActivity" />
+        <activity android:name=".VideoRecordOldActivity"></activity>
+        <activity android:name="com.style.lib.media.camera2video.CameraActivity"></activity>
+
+    </application>
+
+</manifest>

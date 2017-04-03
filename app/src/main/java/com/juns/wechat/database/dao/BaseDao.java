@@ -80,7 +80,6 @@ public abstract class BaseDao<T> implements IDao<T> {
             e.printStackTrace();
         }
     }
-    ;
 
     @Override
     public void save(List<T> list) {

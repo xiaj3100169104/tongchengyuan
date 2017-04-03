@@ -23,7 +23,7 @@ public class ViewHolderPictureRight extends ViewHolderPictureBase {
 
     }
 
-    @Override
+   /* @Override
     protected void onSendSucceed() {
         super.onSendSucceed();
         tvSendPercent.setVisibility(View.GONE);
@@ -35,16 +35,15 @@ public class ViewHolderPictureRight extends ViewHolderPictureBase {
         super.onSendFailed();
         tvSendPercent.setVisibility(View.GONE);
 
-    }
+    }*/
 
     @Override
-    protected void onSendOtherStatus() {
-        super.onSendOtherStatus();
+    protected void onSending() {
+        super.onSending();
         tvSendPercent.setVisibility(View.VISIBLE);
         tvSendPercent.setText(pictureMsg.progress + "%");
         if (pictureMsg.progress == 100){
-            tvSendPercent.setVisibility(View.GONE);
-            sendingProgress.setVisibility(View.GONE);
+            super.onSendSucceed();
         }
     }
 }

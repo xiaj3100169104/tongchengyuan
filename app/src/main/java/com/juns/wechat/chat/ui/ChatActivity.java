@@ -301,8 +301,8 @@ public class ChatActivity extends BaseToolbarActivity {
                     break;
                 case Skip.CODE_RECORD_VIDEO:
                     if (data != null) {
-                        String path = data.getStringExtra("path");
-                        sendOfflineVideo(path);
+                        String videoPath = data.getStringExtra("videoPath");
+                        sendOfflineVideo(videoPath);
                     }
                     break;
                 case Skip.CODE_SELECT_FILE:// 发送选择的文件
@@ -467,8 +467,9 @@ public class ChatActivity extends BaseToolbarActivity {
 
             @Override
             public void onNegativeButton() {
-
+                reSendDialog.dismiss();
             }
         });
+        reSendDialog.show();
     }
 }

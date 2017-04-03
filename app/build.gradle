@@ -63,7 +63,7 @@ dependencies {
     //compile 'me.zhanghai.android.materialprogressbar:library:1.3.0'
     compile project(':MaterialProgressBar')
     compile project(':LRecyclerview_library')
-    compile project(':vitamioRecorderLibrary')
+    compile project(':LibVideoRecord')
 
     // add AndroidEventBus dependency
     compile 'org.simple:androideventbus:1.0.5.1'

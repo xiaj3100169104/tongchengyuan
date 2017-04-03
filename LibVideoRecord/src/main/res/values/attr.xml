@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="horizontalProgressColor" format="color" />
+    <attr name="horizontalProgress" format="integer" />
+
+    <declare-styleable name="HorizontalProgressBar">
+        <attr name="horizontalProgressColor" />
+        <attr name="horizontalProgress" />
+    </declare-styleable>
+
+</resources>

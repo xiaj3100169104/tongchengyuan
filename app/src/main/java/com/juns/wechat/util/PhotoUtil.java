@@ -23,13 +23,6 @@ import java.io.IOException;
  */
 public class PhotoUtil {
 
-    static {
-        File file = new File(FileConfig.DIR_IMAGE);
-        if(!file.exists()){
-            file.mkdirs();
-        }
-    }
-
     public static void takePhoto(Activity activity, int requestCode, String outputImgName){
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // 指定调用相机拍照后照片的储存路径

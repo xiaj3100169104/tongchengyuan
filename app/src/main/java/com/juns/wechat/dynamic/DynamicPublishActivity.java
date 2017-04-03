@@ -31,6 +31,7 @@ import com.style.utils.CommonUtil;
 import com.style.utils.PictureUtils;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -257,9 +258,13 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
                     Bitmap bitmap0 = BitmapUtil.revitionImageSize(path, 960, 540, 1280);
                     Bitmap bitmap = PictureUtils.rotaingBitmap(bitmap0, degree);
                     String name = FileConfig.getUniqueFileName();
-                    logE(TAG, "唯一缓存文件名==" + name);
-                    BitmapUtil.saveBitmap(FileConfig.DIR_CACHE, name, bitmap, 30, true);
                     String newPath = FileConfig.DIR_CACHE + "/" + name;
+                    logE(TAG, "path==" + newPath);
+                    try {
+                        BitmapUtil.saveBitmap(newPath, bitmap, 30);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     File file = new File(newPath);
                     if (file.exists())
                         files[i] = file;

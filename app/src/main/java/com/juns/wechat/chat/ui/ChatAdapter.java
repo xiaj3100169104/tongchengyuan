@@ -88,10 +88,10 @@ public class ChatAdapter extends BaseRecyclerViewAdapter {
                 holder = new ViewHolderVoiceRight(getView(R.layout.chat_item_sent_voice, parent));
                 break;
             case MSG_TYPE_OFFLINE_VIDEO_LEFT:
-                holder = new ViewHolderVoiceLeft(getView(R.layout.chat_item_received_video, parent));
+                holder = new ViewHolderOfflineVideoLeft(getView(R.layout.chat_item_received_video, parent));
                 break;
             case MSG_TYPE_OFFLINE_VIDEO_RIGHT:
-                holder = new ViewHolderVoiceRight(getView(R.layout.chat_item_sent_video, parent));
+                holder = new ViewHolderOfflineVideoRight(getView(R.layout.chat_item_sent_video, parent));
                 break;
         }
         holder.setContext(mContext, parent);

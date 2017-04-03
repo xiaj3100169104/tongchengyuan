@@ -24,23 +24,12 @@ public class ViewHolderOfflineVideoRight extends ViewHolderOfflineVideoBase {
     }
 
     @Override
-    protected void onSendSucceed() {
-        super.onSendSucceed();
-        tvSendPercent.setVisibility(View.GONE);
-
-    }
-
-    @Override
-    protected void onSendFailed() {
-        super.onSendFailed();
-        tvSendPercent.setVisibility(View.GONE);
-
-    }
-
-    @Override
-    protected void onSendOtherStatus() {
-        super.onSendOtherStatus();
+    protected void onSending() {
+        super.onSending();
         tvSendPercent.setVisibility(View.VISIBLE);
         tvSendPercent.setText(videoMsg.progress + "%");
+        if (videoMsg.progress == 100){
+            super.onSendSucceed();
+        }
     }
 }

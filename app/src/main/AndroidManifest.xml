@@ -82,11 +82,6 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".chat.ShowBigImage"/>
         <activity android:name=".chat.ShowNormalFileActivity"/>
-        <activity
-            android:name=".chat.video.ShowVideoActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"
-            android:windowSoftInputMode="stateAlwaysHidden"/>
         <activity android:name=".activity.AddFriendActivity" />
         <activity
             android:name=".activity.SearchActivity"
@@ -109,7 +104,6 @@
         <activity android:name="com.juns.wechat.activity.QRScanActivity" />
         <!-- 图片浏览 -->
         <activity android:name="uk.viewpager.ImagePagerActivity" />
-        <activity android:name="com.juns.wechat.chat.offlineVideo.RecordActivity" />
 
         <activity
             android:name="com.mob.tools.MobUIShell"

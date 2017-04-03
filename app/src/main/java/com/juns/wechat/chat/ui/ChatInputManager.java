@@ -23,7 +23,6 @@ import com.juns.wechat.R;
 import com.juns.wechat.activity.SendLocationActivity;
 import com.juns.wechat.chat.adpter.ExpressionAdapter;
 import com.juns.wechat.chat.adpter.ExpressionPagerAdapter;
-import com.juns.wechat.chat.offlineVideo.RecordActivity;
 import com.juns.wechat.chat.utils.SmileUtils;
 import com.juns.wechat.chat.voice.CallVoiceBaseActivity;
 import com.juns.wechat.chat.widght.ExpandGridView;
@@ -38,9 +37,11 @@ import com.juns.wechat.chat.xmpp.util.SendMessage;
 import com.style.album.AlbumActivity;
 import com.style.constant.FileConfig;
 import com.style.constant.Skip;
+import com.style.lib.media.camera2video.CameraActivity;
 import com.style.utils.CommonUtil;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -231,7 +232,7 @@ public class ChatInputManager implements View.OnClickListener {
                 takeCamera();         // 点击照相图标
                 break;
             case R.id.view_video_record:
-                mChatActivity.showToast("正在努力开发中");
+                //mChatActivity.showToast("正在努力开发中");
                 recordVideo();       //录制视频
                 break;
             case R.id.view_location:
@@ -294,7 +295,7 @@ public class ChatInputManager implements View.OnClickListener {
     }
 
     private void recordVideo() {
-        mChatActivity.startActivityForResult(new Intent(mChatActivity, RecordActivity.class), Skip.CODE_RECORD_VIDEO);
+        mChatActivity.startActivityForResult(new Intent(mChatActivity, CameraActivity.class), Skip.CODE_RECORD_VIDEO);
     }
     /***
      * 发送语音消息
@@ -337,7 +338,11 @@ public class ChatInputManager implements View.OnClickListener {
                     }
                     String fileName = FileConfig.getUniqueFileName();
                     String filePath = FileConfig.DIR_CACHE + "/" + fileName;
-                    PhotoUtil.saveBitmap(compressedBitmap, filePath);
+                    try {
+                        com.style.utils.BitmapUtil.saveBitmap(filePath, compressedBitmap, 100);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     int width = compressedBitmap.getWidth();
                     int height = compressedBitmap.getHeight();
                     compressedBitmap.recycle();

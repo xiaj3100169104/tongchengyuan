@@ -115,13 +115,13 @@ public class SendMessage {
                 if(file == null || !file.exists()) return;
 
                 String fileName = file.getName();
-                final OfflineVideoMsg pictureMsg = new OfflineVideoMsg();
-                pictureMsg.fileName = fileName;
-                pictureMsg.progress = 0;
-                pictureMsg.size = (int) file.length();
+                final OfflineVideoMsg contentMsg = new OfflineVideoMsg();
+                contentMsg.fileName = fileName;
+                contentMsg.progress = 0;
+                contentMsg.size = (int) file.length();
 
                 final MessageBean messageBean = new MessageBean();
-                messageBean.setMsg(pictureMsg.toJson());
+                messageBean.setMsg(contentMsg.toJson());
                 messageBean.setOtherName(otherName);
                 messageBean.setType(MsgType.MSG_TYPE_OFFLINE_VIDEO);
                 messageBean.setTypeDesc(MsgType.MSG_TYPE_OFFLINE_VIDEO_DESC);
@@ -138,8 +138,8 @@ public class SendMessage {
                 fileTransferManager.sendFile(file, otherName, new FileTransferManager.ProgressListener() {
                     @Override
                     public void progressUpdated(int progress) {
-                        pictureMsg.progress = progress;
-                        messageBean.setMsg(pictureMsg.toJson());
+                        contentMsg.progress = progress;
+                        messageBean.setMsg(contentMsg.toJson());
                         WhereBuilder whereBuilder = WhereBuilder.b(MessageBean.PACKET_ID, "=", messageBean.getPacketId());
                         KeyValue keyValue = new KeyValue(MessageBean.MSG, messageBean.getMsg());
                         messageDao.update(whereBuilder, keyValue);
@@ -226,16 +226,6 @@ public class SendMessage {
 
     }
 
-    public static void completeMessageEntityInfo(MessageBean message){
-        String myselfName = AccountManager.getInstance().getUserName();
-        message.setMyselfName(myselfName);
-        String packetId = StanzaIdUtil.newStanzaId();
-        message.setPacketId(packetId);
-        message.setDate(new Date());
-        message.setState(MessageBean.State.NEW.value);
-        message.setDirection(MessageBean.Direction.OUTGOING.value);
-    }
-
     /**
      * 发送消息分两步：1.将消息发出去
      * 2.将消息存入本地数据库
@@ -247,11 +237,14 @@ public class SendMessage {
         sendMsgDirect(message);
     }
 
-    public static void sendMsgDirect(MessageBean message){
-        boolean send = XmppManagerImpl.getInstance().sendMessage(message);
-        if(!send){  //如果未成功发送,
-            updateMessageState(message.getPacketId(), MessageBean.State.SEND_FAILED.value);
-        }
+    public static void completeMessageEntityInfo(MessageBean message){
+        String myselfName = AccountManager.getInstance().getUserName();
+        message.setMyselfName(myselfName);
+        String packetId = StanzaIdUtil.newStanzaId();
+        message.setPacketId(packetId);
+        message.setDate(new Date());
+        message.setState(MessageBean.State.NEW.value);
+        message.setDirection(MessageBean.Direction.OUTGOING.value);
     }
 
     /**
@@ -259,7 +252,14 @@ public class SendMessage {
      * @return
      */
     private static void addMessageToDB(MessageBean messageBean){
-       messageDao.save(messageBean);
+        messageDao.save(messageBean);
+    }
+
+    public static void sendMsgDirect(MessageBean message) {
+        boolean send = XmppManagerImpl.getInstance().sendMessage(message);
+        if (!send) {  //如果未成功发送,
+            updateMessageState(message.getPacketId(), MessageBean.State.SEND_FAILED.value);
+        }
     }
 
     /**

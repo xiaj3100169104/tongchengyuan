@@ -57,8 +57,9 @@ public class XmppReceivePacketListener implements StanzaListener {
     }
 
     /**
-     * 处理消息，Type为normal:发送向服务器发送一条消息时，服务器的回执消息，表明消息已收到
-     * Type为chat,别人发给我的聊天消息，Type为error，消息未发送成功
+     * 处理消息，Type为normal:向服务器发送一条消息时，服务器的回执消息，表明消息已收到
+     * Type为chat,别人发给我的聊天消息，
+     * Type为error，消息未发送成功
      * @param message
      */
     private void handleMessage(Message message) {

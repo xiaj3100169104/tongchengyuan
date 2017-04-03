@@ -126,7 +126,7 @@ public class BitmapUtil {
             options.inPreferredConfig = null; /* 设置让解码器以最佳方式解码 */
             options.inJustDecodeBounds = false;// 是否只读取边界
             options.inDither = false; /* 不进行图片抖动处理 */
-		/* 下面两个字段需要组合使用 */
+        /* 下面两个字段需要组合使用 */
             options.inPurgeable = true;
             options.inInputShareable = true;
             bitmap = BitmapFactory.decodeStream(in, null, options);
@@ -175,52 +175,28 @@ public class BitmapUtil {
     }
 
     /**
-     * saveBitmap
-     *
-     * @param @param filename---完整的路径格式-包含目录以及文件名
-     * @param @param bitmap
-     * @param @param isDelete --是否只留一张
+     * @param path    --文件路径
+     * @param bitmap
+     * @param quality 图片质量：30 表示压缩70%; 100表示压缩率为0
      * @return void
      * @throws
      */
-    public static void saveBitmap(String dirpath, String filename, Bitmap bitmap, int quality, boolean isDelete) {
-        File dir = new File(dirpath);
-        if (!dir.exists()) {
-            dir.mkdirs();
+    public static void saveBitmap(String path, Bitmap bitmap, int quality) throws IOException {
+        FileOutputStream out;
+        File f = new File(path);
+        if (f.exists()) {
+            f.delete();
         }
-        File file = new File(dirpath, filename);
-        // 若存在即删除-默认只保留一张
-        if (isDelete) {
-            if (file.exists()) {
-                file.delete();
-            }
+        if (!f.getParentFile().exists()) {
+            f.getParentFile().mkdirs();
         }
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        out = new FileOutputStream(f);//JPEG:以什么格式压缩
+        if (bitmap.compress(Bitmap.CompressFormat.JPEG, quality, out)) {
+            out.flush();
         }
-        FileOutputStream out = null;
-        try {
-            out = new FileOutputStream(file);
-            if (bitmap.compress(Bitmap.CompressFormat.JPEG, quality, out)) {
-                out.flush();
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (out != null) {
-                try {
-                    out.close();
-                    recycle(bitmap);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+        if (out != null) {
+            out.close();
+            recycle(bitmap);
         }
     }
 

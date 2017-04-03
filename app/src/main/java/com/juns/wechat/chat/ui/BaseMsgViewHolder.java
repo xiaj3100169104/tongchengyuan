@@ -41,7 +41,7 @@ public abstract class BaseMsgViewHolder extends RecyclerView.ViewHolder {
     protected ImageView viewAvatar;
     protected TextView tvDate;
     protected ViewGroup layoutContainer;
-    protected ImageView ivSendState;
+    protected ImageView ivSendFailed;
     protected ProgressBar sendingProgress;
     protected TextView tvSendPercent;
 
@@ -60,7 +60,7 @@ public abstract class BaseMsgViewHolder extends RecyclerView.ViewHolder {
         viewAvatar = (ImageView) view.findViewById(R.id.iv_avatar);
         layoutContainer = (RelativeLayout) view.findViewById(R.id.layout_content_container);
         if (!isLeftLayout()) {
-            ivSendState = (ImageView) view.findViewById(R.id.iv_send_failed);
+            ivSendFailed = (ImageView) view.findViewById(R.id.iv_send_failed);
             sendingProgress = (ProgressBar) view.findViewById(R.id.sending_progress);
             tvSendPercent = (TextView) view.findViewById(R.id.sending_percentage);
 
@@ -99,8 +99,7 @@ public abstract class BaseMsgViewHolder extends RecyclerView.ViewHolder {
     }
 
     protected void updateView() {
-
-        loadUrl();
+        loadAvatar();
         viewAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,15 +114,14 @@ public abstract class BaseMsgViewHolder extends RecyclerView.ViewHolder {
             }
         });
 
-        if (messageBean.getDirection() == MessageBean.Direction.OUTGOING.value) {
-            tvSendPercent.setVisibility(View.GONE);//默认隐藏百分比
-
+        if (!isLeftLayout()) {
+            tvSendPercent.setVisibility(View.GONE);//默认隐藏百分比,文件消息才需要显示
             if (messageBean.getState() == MessageBean.State.SEND_FAILED.value) {
-                onSendSucceed();
-            } else if (messageBean.getState() == MessageBean.State.SEND_SUCCESS.value) {
                 onSendFailed();
+            } else if (messageBean.getState() == MessageBean.State.SEND_SUCCESS.value) {
+                onSendSucceed();
             } else {
-                onSendOtherStatus();
+                onSending();
             }
         }
 
@@ -152,19 +150,13 @@ public abstract class BaseMsgViewHolder extends RecyclerView.ViewHolder {
         return mMsgTime - mPrevMsgTime > MSG_TIME_INTERVAL;
     }
 
-    public void loadUrl() {
+    public void loadAvatar() {
         String url = curUser.getHeadUrl();
         if (isLeftLayout())
             url = contactUser.getHeadUrl();
         ImageLoader.loadAvatar(context, viewAvatar, url);
     }
-    /**
-     * 重发该条消息
-     */
-    public final void reSend() {
-        ChatActivity chatActivity = (ChatActivity) context;
-        chatActivity.reSend(messageBean);
-    }
+
     /**
      * 点击用户头像的事件
      */
@@ -177,31 +169,34 @@ public abstract class BaseMsgViewHolder extends RecyclerView.ViewHolder {
         context.startActivity(intent);
     }
 
-    /**
-     * 发送成功
-     */
+    protected void onSending() {
+        ivSendFailed.setVisibility(View.GONE);
+        sendingProgress.setVisibility(View.VISIBLE);
+    }
+
     protected void onSendSucceed() {
-        ivSendState.setVisibility(View.VISIBLE);
+        ivSendFailed.setVisibility(View.GONE);
         sendingProgress.setVisibility(View.GONE);
-        ivSendState.setOnClickListener(new View.OnClickListener() {
+        tvSendPercent.setVisibility(View.GONE);
+    }
+
+    protected void onSendFailed() {
+        ivSendFailed.setVisibility(View.VISIBLE);
+        sendingProgress.setVisibility(View.GONE);
+        tvSendPercent.setVisibility(View.GONE);
+        ivSendFailed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 reSend();
             }
         });
     }
+
     /**
-     * 发送失败
+     * 重发该条消息
      */
-    protected void onSendFailed() {
-        ivSendState.setVisibility(View.GONE);
-        sendingProgress.setVisibility(View.GONE);
-    }
-    /**
-     * 其他发送状态
-     */
-    protected void onSendOtherStatus() {
-        ivSendState.setVisibility(View.GONE);
-        sendingProgress.setVisibility(View.VISIBLE);
+    public final void reSend() {
+        ChatActivity chatActivity = (ChatActivity) context;
+        chatActivity.reSend(messageBean);
     }
 }
