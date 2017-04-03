@@ -281,7 +281,6 @@ public class RecordActivity extends Activity implements MediaRecorderBase.OnErro
                         }
                         break;
                     case MotionEvent.ACTION_UP:
-
                         //停止录制
                         stopAll();
                         if (isCancelRecoder) {
