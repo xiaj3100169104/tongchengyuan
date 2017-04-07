@@ -24,7 +24,7 @@ import org.jivesoftware.smack.roster.RosterLoadedListener;
 import org.jivesoftware.smackx.iqregister.AccountManager;
 import org.jivesoftware.smackx.search.ReportedData;
 import org.jivesoftware.smackx.search.UserSearchManager;
-import org.jivesoftware.smackx.xdata.Form;;
+import org.jivesoftware.smackx.xdata.Form;
 
 import java.io.IOException;
 import java.util.ArrayList;

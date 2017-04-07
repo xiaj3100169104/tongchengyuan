@@ -28,7 +28,7 @@ public class ImageLoader {
 
     public static void loadAvatar(Context context, ImageView imageView, String fileName) {
         if (!TextUtils.isEmpty(fileName))
-        Glide.with(context).load(getUrl(fileName)).error(R.drawable.default_avatar).into(imageView);
+        Glide.with(context).load(getUrl(fileName)).placeholder(R.drawable.default_avatar).error(R.drawable.default_avatar).into(imageView);
     }
 
     public static void loadPictureByName(Context context, ImageView imageView, String fileName) {

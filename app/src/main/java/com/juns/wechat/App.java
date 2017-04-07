@@ -37,9 +37,9 @@ public class App extends Application {
         x.Ext.setDebug(BuildConfig.DEBUG); // 开启debug会影响性能
 		//短信发送
         SMSSDK.initSDK(this, Constants.MOB_SDK_KEY, Constants.MOB_SDK_SECRET);
-        // 百度MAP sdk initialize
+        // 百度MAP sdk initinitializeialize
         SDKInitializer.initialize(this);
-        //Thread.setDefaultUncaughtExceptionHandler(new CustomExceptionHandler());
+        Thread.setDefaultUncaughtExceptionHandler(new CustomExceptionHandler());
 		ZXingLibrary.initDisplayOpinion(this);
         AccountManager.getInstance().init(mContext);
 		HttpActionImpl.getInstance().init();
@@ -88,7 +88,7 @@ public class App extends Application {
                     e.printStackTrace();
                 }
             }
-            Process.killProcess(Process.myPid());//会导致log消失
+            //Process.killProcess(Process.myPid());//会导致log消失
         }
     }
 

@@ -3,6 +3,7 @@ package com.juns.wechat.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Process;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.juns.wechat.fragment.Fragment_Friends;
 import com.juns.wechat.fragment.Fragment_Profile;
 import com.juns.wechat.fragment.msg.Fragment_Msg;
 import com.juns.wechat.processes.Watcher;
+import com.juns.wechat.util.LogUtil;
 import com.style.base.BaseActivity;
 import com.juns.wechat.dialog.WarnTipDialog;
 import com.juns.wechat.dialog.TitleMenu.ActionItem;
@@ -53,11 +55,14 @@ public class MainActivity extends BaseActivity {
         initPopWindow();
         XmppService.login(this);
 
-       // new Watcher(this).createAppMonitor("wangzhe");
+        int userId = Process.myUid();
+
+       new Watcher(this).createAppMonitor(userId + "");
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        LogUtil.i("i am restarted!");
         mLayoutResID = R.layout.activity_main;
         super.onCreate(savedInstanceState);
 
