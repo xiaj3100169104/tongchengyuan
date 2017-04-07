@@ -17,6 +17,7 @@
 package com.style.lib.media.camera2video;
 
 import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -39,6 +40,7 @@ import android.hardware.camera2.CameraMetadata;
 import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.MediaRecorder;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -58,8 +60,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.style.lib.media.video.R;
-import com.style.view.HorizontalProgressBar;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -71,6 +71,7 @@ import java.util.UUID;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
+@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 public class Camera2VideoFragment extends Fragment
         implements  FragmentCompat.OnRequestPermissionsResultCallback {
     public static final String FILE_DIR = Environment.getExternalStorageDirectory() + "/aaaaWechat/cache";

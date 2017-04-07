@@ -11,7 +11,6 @@ android {
         versionCode Integer.parseInt(project.VERSION_CODE)
         versionName project.VERSION_NAME
         multiDexEnabled true
-
         externalNativeBuild {
             cmake {
                 cppFlags ""

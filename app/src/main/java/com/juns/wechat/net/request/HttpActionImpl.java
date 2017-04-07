@@ -9,6 +9,7 @@ import java.io.File;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Retrofit;
@@ -84,6 +85,7 @@ public class HttpActionImpl {
                 .addFormDataPart("token", params.token)
                 .addFormDataPart("avatar", file.getName(), RequestBody.create(MediaType.parse("image/*"), file))
                 .build();
+
         Call<String> call = service.uploadAvatar(requestBody);
         runTask(tag, call, callback);
     }
