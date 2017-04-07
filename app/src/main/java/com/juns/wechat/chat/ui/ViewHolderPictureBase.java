@@ -3,6 +3,7 @@ package com.juns.wechat.chat.ui;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.juns.wechat.R;
 import com.juns.wechat.chat.bean.MessageBean;
@@ -12,6 +13,7 @@ import com.juns.wechat.database.dao.MessageDao;
 import com.juns.wechat.util.ThreadPoolUtil;
 import com.style.constant.FileConfig;
 import com.style.manager.ImageLoader;
+import com.style.utils.CommonUtil;
 
 import java.io.File;
 
@@ -34,7 +36,20 @@ public class ViewHolderPictureBase extends BaseMsgViewHolder {
         //先得到bean，在进行其他操作
         pictureMsg = (PictureMsg) messageBean.getMsgObj();
         super.updateView();
-        Log.e(TAG, "progress==" + pictureMsg.progress);
+        float width = pictureMsg.width;
+        float height = pictureMsg.height;
+        float scale = height / width;
+        if (scale >= 1) {             //高大于宽
+            width = CommonUtil.dip2px(context, 80);
+            height = width * scale;
+        } else {
+            width = CommonUtil.dip2px(context, 160);
+            height = width * scale;
+        }
+        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) ivPicture.getLayoutParams();
+        params.width = (int) width;
+        params.height = (int) height;
+
         this.path = FileConfig.DIR_CACHE + "/" + pictureMsg.imgName;
         File f = new File(path);
         if (f.exists())
@@ -59,34 +74,5 @@ public class ViewHolderPictureBase extends BaseMsgViewHolder {
 
     }
 
-    class MyProgressListener implements FileTransferManager.ProgressListener {
-        private MessageBean messageBean;
-        private int progress = 0;
-
-        public MyProgressListener(MessageBean messageBean) {
-            this.messageBean = messageBean;
-        }
-
-        @Override
-        public void progressUpdated(int progress) {
-            this.progress = progress;
-            if (progress % 10 == 0)//不要更新太频繁
-                updateMessage(progress);
-        }
-
-        @Override
-        public void transferFinished(boolean success) {
-            if (success) {
-                progress = 100;
-            }
-            updateMessage(progress);
-        }
-
-        private void updateMessage(int progress) {
-            pictureMsg.progress = progress;
-            messageBean.setMsg(pictureMsg.toJson());
-            MessageDao.getInstance().update(messageBean);
-        }
-    }
 }
 

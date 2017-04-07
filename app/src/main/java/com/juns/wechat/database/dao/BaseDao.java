@@ -176,13 +176,13 @@ public abstract class BaseDao<T> implements IDao<T> {
         return false;
     }
 
-    protected final void postDataChangedEvent(int action, T data){
+    public final void postDataChangedEvent(int action, T data){
         List<T> list = new ArrayList<>();
         list.add(data);
         postDataChangedEvent(action, list);
     }
 
-    protected final void postDataChangedEvent(int action, List<T> datas){
+    public final void postDataChangedEvent(int action, List<T> datas){
         DbDataEvent<T> dbDataEvent = new DbDataEvent();
         dbDataEvent.action = action;
         dbDataEvent.data = datas;

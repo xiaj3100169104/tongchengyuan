@@ -8,7 +8,7 @@
 
     <include layout="@layout/chat_item_common_time"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_chat_activity"
@@ -18,12 +18,18 @@
 
         <RelativeLayout
             android:id="@+id/layout_content_container"
-            style="@style/chat_item_from_content_container">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/iv_avatar"
+            android:layout_marginRight="@dimen/margin_chat_activity"
+            android:layout_toRightOf="@id/iv_avatar">
 
             <ImageView
                 android:id="@+id/ivPicture"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_width="70dp"
+                android:layout_height="100dp"
+                android:src="@mipmap/empty_photo"
+                android:scaleType="centerCrop"/>
 
             <LinearLayout
                 android:id="@+id/ll_loading"
@@ -53,6 +59,6 @@
             </LinearLayout>
         </RelativeLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </LinearLayout>

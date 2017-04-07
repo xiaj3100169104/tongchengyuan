@@ -1,5 +1,6 @@
 package com.juns.wechat.chat.ui;
 
+import android.util.Log;
 import android.view.View;
 
 /**
@@ -41,6 +42,7 @@ public class ViewHolderPictureRight extends ViewHolderPictureBase {
     protected void onSending() {
         super.onSending();
         tvSendPercent.setVisibility(View.VISIBLE);
+        Log.e(TAG, "onSending progress==" + pictureMsg.progress);
         tvSendPercent.setText(pictureMsg.progress + "%");
         if (pictureMsg.progress == 100){
             super.onSendSucceed();
