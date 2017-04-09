@@ -76,10 +76,13 @@ public class ViewHolderOfflineVideoBase extends BaseMsgViewHolder {
         }
 
         @Override
-        public void transferFinished(boolean success) {
-            if (success) {
-                progress = 100;
-            }
+        public void onFailed() {
+
+        }
+
+        @Override
+        public void transferFinished() {
+            progress = 100;
             updateMessage(progress);
             //loadPreview();
         }

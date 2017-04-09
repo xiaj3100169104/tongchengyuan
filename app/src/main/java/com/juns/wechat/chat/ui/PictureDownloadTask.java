@@ -12,12 +12,12 @@ import com.style.constant.FileConfig;
  */
 
 public class PictureDownloadTask implements Runnable {
-    private final String url;
+    private final String path;
     private final int fileSize;
     private final MessageBean messageBean;
 
-    public PictureDownloadTask(String url, int fileSize, MessageBean messageBean) {
-        this.url = url;
+    public PictureDownloadTask(String path, int fileSize, MessageBean messageBean) {
+        this.path = path;
         this.fileSize = fileSize;
         this.messageBean = messageBean;
 
@@ -26,7 +26,7 @@ public class PictureDownloadTask implements Runnable {
     @Override
     public void run() {
         FileTransferManager fileTransferManager = new FileTransferManager();
-        fileTransferManager.downloadFile(url, fileSize, new MyProgressListener(messageBean));
+        fileTransferManager.downloadFile(path, fileSize, new MyProgressListener(messageBean));
     }
 
 
@@ -46,10 +46,13 @@ public class PictureDownloadTask implements Runnable {
         }
 
         @Override
-        public void transferFinished(boolean success) {
-            if (success) {
-                progress = 100;
-            }
+        public void onFailed() {
+
+        }
+
+        @Override
+        public void transferFinished() {
+            progress = 100;
             updateMessage(progress);
         }
 

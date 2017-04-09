@@ -43,12 +43,15 @@ public class PictureMessageProcess extends MessageProcess {
         }
 
         @Override
-        public void transferFinished(boolean success) {
-            if (success) {
-                progress = 100;
-            }
+        public void transferFinished() {
+            progress = 100;
             saveMessage(progress);
             noticeShow(messageBean);
+        }
+
+        @Override
+        public void onFailed() {
+
         }
 
         private void saveMessage(int progress) {

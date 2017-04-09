@@ -1,16 +1,11 @@
 package com.juns.wechat.chat.ui;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.juns.wechat.R;
-import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.chat.bean.PictureMsg;
-import com.juns.wechat.chat.xmpp.util.FileTransferManager;
-import com.juns.wechat.database.dao.MessageDao;
-import com.juns.wechat.util.ThreadPoolUtil;
 import com.style.constant.FileConfig;
 import com.style.manager.ImageLoader;
 import com.style.utils.CommonUtil;
@@ -55,12 +50,8 @@ public class ViewHolderPictureBase extends BaseMsgViewHolder {
         if (f.exists())
             ImageLoader.loadTriangleImage(ivPicture, path, isLeftLayout() ? 0 : 1);
         else
-            ThreadPoolUtil.execute(new Runnable() {
-                @Override
-                public void run() {
-                    loadPicture();
-                }
-            });
+            loadPicture();
+
     }
 
     @Override
@@ -69,9 +60,8 @@ public class ViewHolderPictureBase extends BaseMsgViewHolder {
     }
 
     private void loadPicture() {
-        FileTransferManager fileTransferManager = new FileTransferManager();
-        fileTransferManager.downloadFile(FileConfig.DIR_CACHE + "/" + pictureMsg.imgName, pictureMsg.size, new MyProgressListener(messageBean));
-
+        
+        PictureMsgLoader.getInstance().down(FileConfig.DIR_CACHE + "/" + pictureMsg.imgName, pictureMsg.size, messageBean);
     }
 
 }

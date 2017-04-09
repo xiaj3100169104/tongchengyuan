@@ -71,20 +71,19 @@ public class FileTransferManager {
             socket.close();
             String result = new String(data).trim();
             if("success".equals(result)){
-                listener.transferFinished(true);
-                return;
+                listener.transferFinished();
             }
 
         } catch (IOException e) {
             XmppExceptionHandler.handleIOException(e);
+            listener.onFailed();
         }
-        listener.transferFinished(false);
     }
 
     public void downloadFile(String path, int fileSize,  ProgressListener listener){
         File f = new File(path);
         if(f.exists()){  //由于文件名都是唯一的，说明这张图片是由同一个手机上发出并在本手机上接收。
-            listener.transferFinished(true);
+            listener.transferFinished();
             return;
         }
         if (!f.getParentFile().exists())
@@ -108,13 +107,13 @@ public class FileTransferManager {
             String result = new String(data).trim();
             LogUtil.i("result: " + result);
             if(!"success".equals(result)){
-                listener.transferFinished(false);
+                listener.onFailed();
                 return;
             }
 
             OutputStream fileOut = FileUtil.getOutputStream(f);
             if(fileOut == null){
-                listener.transferFinished(false);
+                listener.onFailed();
                 return;
             }
             byte[] buffer = new byte[1024];
@@ -127,10 +126,10 @@ public class FileTransferManager {
             }
             fileOut.close();
             socket.close();
-            listener.transferFinished(true);
+            listener.transferFinished();
         } catch (IOException e) {
             e.printStackTrace();
-            listener.transferFinished(false);
+            listener.onFailed();
         }
     }
 
@@ -144,6 +143,7 @@ public class FileTransferManager {
 
     public interface ProgressListener {
         void progressUpdated(int progress);
-        void transferFinished(boolean success);
+        void transferFinished();
+        void onFailed();
     }
 }

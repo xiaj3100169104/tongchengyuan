@@ -24,12 +24,12 @@ public class PictureMsgLoader {
     }
 
     //注意tag唯一
-    public void down(String url, int fileSize,  MessageBean messageBean) {
-        PictureDownloadTask task = taskMap.get(url);
+    public void down(String path, int fileSize,  MessageBean messageBean) {
+        PictureDownloadTask task = taskMap.get(path);
         if (task == null) {
-            task = new PictureDownloadTask(url, fileSize, messageBean);
+            task = new PictureDownloadTask(path, fileSize, messageBean);
             ThreadPoolUtil.execute(task);
-            taskMap.put(url, task);
+            taskMap.put(path, task);
         }
     }
 
