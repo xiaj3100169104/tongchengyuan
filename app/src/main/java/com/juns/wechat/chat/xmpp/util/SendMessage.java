@@ -111,7 +111,7 @@ public class SendMessage {
         });
     }
 
-    public static void sendOfflineVideoMsg(final String otherName, final File file) {
+    public static void sendOfflineVideoMsg(final String otherName, final File file, final int width, final int height) {
         ThreadPoolUtil.execute(new Runnable() {
             @Override
             public void run() {
@@ -121,6 +121,8 @@ public class SendMessage {
                 final OfflineVideoMsg contentMsg = new OfflineVideoMsg();
                 contentMsg.fileName = fileName;
                 contentMsg.progress = 0;
+                contentMsg.width = width;
+                contentMsg.height = height;
                 contentMsg.size = (int) file.length();
 
                 final MessageBean messageBean = new MessageBean();

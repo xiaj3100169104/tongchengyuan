@@ -23,33 +23,17 @@ public class PlayVideoActivity extends AppCompatActivity {
 
         requestWindowFeature(Window.FEATURE_NO_TITLE);//没有标题
         setContentView(R.layout.activity_play_video);
-
         path = getIntent().getStringExtra("path");
-
-
         videoView = (VideoView) findViewById(R.id.videoview);
-
         textExist = (TextView) findViewById(R.id.tv_exist);
-
         container = findViewById(R.id.rl_container);
-
         container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-
-        playVideo();
-    }
-
-
-    private void playVideo() {
-
-
         videoView.setVideoPath(path);
-        // 开始播放
-        videoView.start();
 
         videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
@@ -66,5 +50,30 @@ public class PlayVideoActivity extends AppCompatActivity {
                 return false;
             }
         });
+        playVideo();
+    }
+
+    private void playVideo() {
+        // 开始播放
+        videoView.start();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+       videoView.resume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        videoView.pause();
+        videoView.suspend();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        videoView.stopPlayback();
     }
 }

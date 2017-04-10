@@ -1,5 +1,6 @@
 package com.juns.wechat.chat.ui;
 
+import android.util.Log;
 import android.view.View;
 
 /**
@@ -27,9 +28,18 @@ public class ViewHolderOfflineVideoRight extends ViewHolderOfflineVideoBase {
     protected void onSending() {
         super.onSending();
         tvSendPercent.setVisibility(View.VISIBLE);
+        Log.e(TAG, "onSending progress==" + videoMsg.progress);
         tvSendPercent.setText(videoMsg.progress + "%");
         if (videoMsg.progress == 100){
             super.onSendSucceed();
         }
     }
+
+    @Override
+    protected void onSendSucceed() {
+        super.onSendSucceed();
+
+        super.loadPreview();
+    }
+
 }

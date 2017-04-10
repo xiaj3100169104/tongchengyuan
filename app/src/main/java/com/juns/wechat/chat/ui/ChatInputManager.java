@@ -2,6 +2,7 @@ package com.juns.wechat.chat.ui;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.MediaMetadataRetriever;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
@@ -297,6 +298,7 @@ public class ChatInputManager implements View.OnClickListener {
     private void recordVideo() {
         mChatActivity.startActivityForResult(new Intent(mChatActivity, CameraActivity.class), Skip.CODE_RECORD_VIDEO);
     }
+
     /***
      * 发送语音消息
      *
@@ -352,17 +354,30 @@ public class ChatInputManager implements View.OnClickListener {
         }
 
     }
+
     public void sendOfflineVideo(final String otherUserName, final String filePath) {
         if (filePath == null || filePath.isEmpty()) {
             throw new NullPointerException("filePaths should not be empty");
         }
-         ThreadPoolUtil.execute(new Runnable() {
-                @Override
-                public void run() {
-                   SendMessage.sendOfflineVideoMsg(otherUserName, new File(filePath));
+        ThreadPoolUtil.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    MediaMetadataRetriever retriever = new MediaMetadataRetriever();
+                    retriever.setDataSource(filePath);
+                    Bitmap bitmap = retriever.getFrameAtTime(1000 * 1000, MediaMetadataRetriever.OPTION_CLOSEST);
+                    //ivVideoPreview.setImageBitmap(bitmap);
+                    com.style.utils.BitmapUtil.saveBitmap(filePath + ".preview", bitmap, 100);
+                    int width = bitmap.getWidth();
+                    int height = bitmap.getHeight();
+                    SendMessage.sendOfflineVideoMsg(otherUserName, new File(filePath), width, height);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            });
+            }
+        });
     }
+
     private void sendLocation() {
         Intent intent = new Intent(mChatActivity, SendLocationActivity.class);
         mChatActivity.startActivity(intent);

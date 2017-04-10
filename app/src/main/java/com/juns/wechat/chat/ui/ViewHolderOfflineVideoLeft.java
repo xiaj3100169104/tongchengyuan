@@ -31,5 +31,6 @@ public class ViewHolderOfflineVideoLeft extends ViewHolderOfflineVideoBase {
             tvReceivePercent.setText(videoMsg.progress + "%");
         }
 
+        super.loadPreview();
     }
 }

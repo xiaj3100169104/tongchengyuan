@@ -19,7 +19,7 @@ import java.io.File;
 public class ViewHolderPictureBase extends BaseMsgViewHolder {
     protected ImageView ivPicture;
     protected PictureMsg pictureMsg;
-    private String path;
+    protected String path;
 
     ViewHolderPictureBase(View view) {
         super(view);
@@ -30,7 +30,6 @@ public class ViewHolderPictureBase extends BaseMsgViewHolder {
     protected void updateView() {
         //先得到bean，在进行其他操作
         pictureMsg = (PictureMsg) messageBean.getMsgObj();
-        super.updateView();
         float width = pictureMsg.width;
         float height = pictureMsg.height;
         float scale = height / width;
@@ -46,11 +45,7 @@ public class ViewHolderPictureBase extends BaseMsgViewHolder {
         params.height = (int) height;
 
         this.path = FileConfig.DIR_CACHE + "/" + pictureMsg.imgName;
-        File f = new File(path);
-        if (f.exists())
-            ImageLoader.loadTriangleImage(ivPicture, path, isLeftLayout() ? 0 : 1);
-        else
-            loadPicture();
+        super.updateView();
 
     }
 
@@ -59,9 +54,13 @@ public class ViewHolderPictureBase extends BaseMsgViewHolder {
         super.onClickLayoutContainer();
     }
 
-    private void loadPicture() {
-        
-        PictureMsgLoader.getInstance().down(FileConfig.DIR_CACHE + "/" + pictureMsg.imgName, pictureMsg.size, messageBean);
+    //加载图片，已发送或一接收的图片消息
+    protected void loadPicture() {
+        File f = new File(path);
+        if (f.exists())
+            ImageLoader.loadTriangleImage(ivPicture, path, isLeftLayout() ? 0 : 1);
+        else
+            PictureMsgLoader.getInstance().down(path, pictureMsg.size, messageBean);
     }
 
 }

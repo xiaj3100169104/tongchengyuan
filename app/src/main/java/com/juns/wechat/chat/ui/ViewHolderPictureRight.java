@@ -24,13 +24,7 @@ public class ViewHolderPictureRight extends ViewHolderPictureBase {
 
     }
 
-   /* @Override
-    protected void onSendSucceed() {
-        super.onSendSucceed();
-        tvSendPercent.setVisibility(View.GONE);
-
-    }
-
+   /*
     @Override
     protected void onSendFailed() {
         super.onSendFailed();
@@ -48,4 +42,12 @@ public class ViewHolderPictureRight extends ViewHolderPictureBase {
             super.onSendSucceed();
         }
     }
+
+    @Override
+    protected void onSendSucceed() {
+        super.onSendSucceed();
+
+        super.loadPicture();
+    }
+
 }
