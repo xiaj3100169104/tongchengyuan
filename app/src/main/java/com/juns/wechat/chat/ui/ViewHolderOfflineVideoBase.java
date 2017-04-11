@@ -59,6 +59,7 @@ public class ViewHolderOfflineVideoBase extends BaseMsgViewHolder {
         imagePath = path + ".image";
         super.updateView();
 
+        this.loadPreview();
     }
 
     @Override

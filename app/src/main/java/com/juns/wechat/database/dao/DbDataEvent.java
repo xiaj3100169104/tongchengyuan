@@ -10,6 +10,7 @@ public class DbDataEvent<T>{
     public static final int SAVE = 11;
     public static final int UPDATE = 21;
     public static final int REPLACE = 31;  //对于replace，其通知的数据不带有id
+    public static final int DELETE_ONE = 41;  //删除单条
 
     public int action;
 

@@ -31,7 +31,5 @@ public class ViewHolderPictureLeft extends ViewHolderPictureBase {
             tvReceivePercent.setText(pictureMsg.progress + "%");
         }
 
-        super.loadPicture();
-
     }
 }

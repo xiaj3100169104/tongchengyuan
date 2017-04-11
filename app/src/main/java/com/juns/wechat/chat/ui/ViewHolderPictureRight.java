@@ -43,11 +43,4 @@ public class ViewHolderPictureRight extends ViewHolderPictureBase {
         }
     }
 
-    @Override
-    protected void onSendSucceed() {
-        super.onSendSucceed();
-
-        super.loadPicture();
-    }
-
 }

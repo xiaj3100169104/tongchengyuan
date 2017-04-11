@@ -210,9 +210,9 @@ public class ChatActivity extends BaseToolbarActivity {
         }
     }
 
-    public void refreshOneData(boolean scrollListView) {
+    public void refreshOneData(boolean scroll2bottom) {
         mDataAdapter.notifyDataSetChanged();
-        if (scrollListView) {
+        if (scroll2bottom) {
             scrollListViewToBottom();
         }
     }
@@ -476,7 +476,7 @@ public class ChatActivity extends BaseToolbarActivity {
         deleteDialog.setListener(new PromptDialog.OnPromptListener() {
             @Override
             public void onPositiveButton() {
-                MessageDao.getInstance().delete(messageBean.getId());
+                MessageDao.getInstance().deleteOne(messageBean);
 
             }
 

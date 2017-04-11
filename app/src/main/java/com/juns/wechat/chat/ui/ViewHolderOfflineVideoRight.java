@@ -35,11 +35,4 @@ public class ViewHolderOfflineVideoRight extends ViewHolderOfflineVideoBase {
         }
     }
 
-    @Override
-    protected void onSendSucceed() {
-        super.onSendSucceed();
-
-        super.loadPreview();
-    }
-
 }

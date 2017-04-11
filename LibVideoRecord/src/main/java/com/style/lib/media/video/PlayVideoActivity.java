@@ -16,6 +16,7 @@ public class PlayVideoActivity extends AppCompatActivity {
     private VideoView videoView;
     private TextView textExist;
     private View container;
+    private int currentPosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +51,11 @@ public class PlayVideoActivity extends AppCompatActivity {
                 return false;
             }
         });
-        playVideo();
+        //playVideo();
     }
 
     private void playVideo() {
+        videoView.seekTo(currentPosition);
         // 开始播放
         videoView.start();
     }
@@ -61,12 +63,14 @@ public class PlayVideoActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-       videoView.resume();
+        playVideo();
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        currentPosition = videoView.getCurrentPosition();
         videoView.pause();
         videoView.suspend();
     }

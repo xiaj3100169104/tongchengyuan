@@ -261,4 +261,15 @@ public class MessageDao extends BaseDao<MessageBean>{
         KeyValue keyValue = new KeyValue(MessageBean.STATE, MessageBean.State.SEND_FAILED.value);
         update(whereBuilder, keyValue);
     }
+
+    public boolean delete(MessageBean t) {
+        try {
+            dbManager.saveOrUpdate(t);
+            postDataChangedEvent(DbDataEvent.UPDATE, t);
+            return true;
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

@@ -110,6 +110,12 @@ public class ChatActivityHelper {
                 Collections.sort(msgViewModels, new MessageBeanComparator());
                 chatActivity.refreshOneData(true);
                 break;
+            case DbDataEvent.DELETE_ONE:
+                if (position != -1) {
+                    msgViewModels.remove(position);
+                }
+                chatActivity.refreshOneData(false);
+                break;
             default:
                 break;
         }

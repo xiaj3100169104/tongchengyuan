@@ -47,6 +47,7 @@ public class ViewHolderPictureBase extends BaseMsgViewHolder {
         this.path = FileConfig.DIR_CACHE + "/" + pictureMsg.imgName;
         super.updateView();
 
+        this.loadPicture();
     }
 
     @Override

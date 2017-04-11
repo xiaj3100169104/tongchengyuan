@@ -126,7 +126,7 @@ public class NewFriendsAdapter extends BaseAdapter {
         convertView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                MessageDao.getInstance().delete(messageBean.getId());
+                //MessageDao.getInstance().delete(messageBean.getId());
                 return true;
             }
         });

@@ -28,7 +28,7 @@ public abstract class BaseDao<T> implements IDao<T> {
     private Class<T> clazz;
     private TableEntity<T> tableEntity;
 
-    public BaseDao(){
+    public BaseDao() {
         dbManager = DbUtil.getDbManager();
         clazz = getEntityClass();
         try {
@@ -52,7 +52,7 @@ public abstract class BaseDao<T> implements IDao<T> {
     @Override
     public T findByParams(WhereBuilder whereBuilder) {
         List<T> results = findAllByParams(whereBuilder);
-        if(results != null  && results.size() > 0){
+        if (results != null && results.size() > 0) {
             return results.get(0);
         }
         return null;
@@ -128,8 +128,20 @@ public abstract class BaseDao<T> implements IDao<T> {
         return false;
     }
 
+    public boolean deleteOne(T t) {
+        try {
+            dbManager.delete(t);
+            postDataChangedEvent(DbDataEvent.DELETE_ONE, t);
+            return true;
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     /**
      * 并不会执行真正的删除，只是将flag标记置为1，要求所有表有这个通用字段
+     *
      * @param id
      * @return
      */
@@ -142,8 +154,10 @@ public abstract class BaseDao<T> implements IDao<T> {
             WhereBuilder whereBuilder = WhereBuilder.b();
             whereBuilder.and(idName, "=", id);
             KeyValue keyValue = new KeyValue("flag", Flag.INVALID.value());
-            update(whereBuilder, keyValue);
-
+            int updatedRow = dbManager.update(clazz, whereBuilder, keyValue);
+            if (updatedRow >= 1) {
+                return true;
+            }
         } catch (DbException e) {
             e.printStackTrace();
         }
@@ -157,11 +171,11 @@ public abstract class BaseDao<T> implements IDao<T> {
             int updatedRow = dbManager.update(clazz, whereBuilder, keyValuePairs);
             LogUtil.i("updatedRow: " + updatedRow);
 
-            if(updatedRow >= 1){  //需要将更新后的数据查询出来
+            if (updatedRow >= 1) {  //需要将更新后的数据查询出来
                 WhereBuilder builder = WhereBuilder.b();
                 ColumnEntity idColumn = tableEntity.getId();
                 String idName = idColumn.getName();
-                for(T t : list){
+                for (T t : list) {
                     int id = (int) idColumn.getFieldValue(t);
                     builder.and(idName, "=", id);
                 }
@@ -176,13 +190,13 @@ public abstract class BaseDao<T> implements IDao<T> {
         return false;
     }
 
-    public final void postDataChangedEvent(int action, T data){
+    public final void postDataChangedEvent(int action, T data) {
         List<T> list = new ArrayList<>();
         list.add(data);
         postDataChangedEvent(action, list);
     }
 
-    public final void postDataChangedEvent(int action, List<T> datas){
+    public final void postDataChangedEvent(int action, List<T> datas) {
         DbDataEvent<T> dbDataEvent = new DbDataEvent();
         dbDataEvent.action = action;
         dbDataEvent.data = datas;
@@ -190,7 +204,7 @@ public abstract class BaseDao<T> implements IDao<T> {
         EventBus.getDefault().post(dbDataEvent, tag);
     }
 
-    private String getTableName(){
+    private String getTableName() {
         return tableEntity.getName();
     }
 
@@ -200,8 +214,8 @@ public abstract class BaseDao<T> implements IDao<T> {
         return result;
     }
 
-    protected void closeCursor(Cursor cursor){
-        if(cursor != null){
+    protected void closeCursor(Cursor cursor) {
+        if (cursor != null) {
             cursor.close();
         }
     }
