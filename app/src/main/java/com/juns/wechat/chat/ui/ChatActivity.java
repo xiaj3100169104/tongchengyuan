@@ -26,6 +26,7 @@ import com.juns.wechat.chat.xmpp.util.SendMessage;
 import com.juns.wechat.database.dao.DbDataEvent;
 import com.juns.wechat.database.dao.FriendDao;
 import com.juns.wechat.database.ChatTable;
+import com.juns.wechat.database.dao.MessageDao;
 import com.juns.wechat.exception.UserNotFoundException;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.util.LogUtil;
@@ -80,6 +81,7 @@ public class ChatActivity extends BaseToolbarActivity {
     private String contactName;
 
     private PromptDialog reSendDialog;
+    private PromptDialog deleteDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -399,7 +401,7 @@ public class ChatActivity extends BaseToolbarActivity {
         }
         File file = new File(filePath);
         /*if (file == null || !file.exists()) {
-			String st7 = getResources().getString(R.string.File_does_not_exist);
+            String st7 = getResources().getString(R.string.File_does_not_exist);
 			Toast.makeText(getApplicationContext(), st7, 0).show();
 			return;
 		}
@@ -457,12 +459,7 @@ public class ChatActivity extends BaseToolbarActivity {
         reSendDialog.setListener(new PromptDialog.OnPromptListener() {
             @Override
             public void onPositiveButton() {
-                ThreadPoolUtil.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        SendMessage.sendMsgDirect(messageBean);
-                    }
-                });
+                SendMessage.reSendMsg(messageBean);
             }
 
             @Override
@@ -471,5 +468,23 @@ public class ChatActivity extends BaseToolbarActivity {
             }
         });
         reSendDialog.show();
+    }
+
+    public void delete(final MessageBean messageBean) {
+        deleteDialog = new PromptDialog(getContext());
+        deleteDialog.setMessage("确定要删除这条消息？");
+        deleteDialog.setListener(new PromptDialog.OnPromptListener() {
+            @Override
+            public void onPositiveButton() {
+                MessageDao.getInstance().delete(messageBean.getId());
+
+            }
+
+            @Override
+            public void onNegativeButton() {
+                deleteDialog.dismiss();
+            }
+        });
+        deleteDialog.show();
     }
 }

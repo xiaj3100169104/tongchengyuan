@@ -36,6 +36,8 @@ public class PictureDownloadTask implements Runnable {
         PictureMsg pictureMsg;
         public MyProgressListener(MessageBean messageBean) {
             this.messageBean = messageBean;
+            pictureMsg = (PictureMsg) messageBean.getMsgObj();
+
         }
 
         @Override

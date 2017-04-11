@@ -1,6 +1,9 @@
 package com.juns.wechat.chat.xmpp.util;
 
 
+import android.widget.Toast;
+
+import com.juns.wechat.App;
 import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.chat.bean.InviteMsg;
 import com.juns.wechat.chat.bean.OfflineVideoMsg;
@@ -13,6 +16,9 @@ import com.juns.wechat.config.MsgType;
 import com.juns.wechat.database.dao.MessageDao;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.util.ThreadPoolUtil;
+import com.juns.wechat.util.ToastUtil;
+import com.style.constant.FileConfig;
+import com.style.manager.ToastManager;
 
 
 import org.jivesoftware.smack.packet.id.StanzaIdUtil;
@@ -58,11 +64,15 @@ public class SendMessage {
     }
 
     @SuppressWarnings("unchecked")
-    public static void sendPictureMsg(final String otherName, final File file, final int width, final int height) {
+    public static void sendPictureMsg(final String otherName, final String path, final int width, final int height) {
         ThreadPoolUtil.execute(new Runnable() {
             @Override
             public void run() {
-                if (file == null || !file.exists()) return;
+                File file = new File(path);
+                if (!file.exists()) {
+                    ToastUtil.showToast("文件已被删除", Toast.LENGTH_SHORT);
+                    return;
+                }
 
                 String imgName = file.getName();
                 final PictureMsg pictureMsg = new PictureMsg();
@@ -80,33 +90,43 @@ public class SendMessage {
                 completeMessageEntityInfo(messageBean);
                 addMessageToDB(messageBean);
 
-                if (!XmppManagerImpl.getInstance().login()) {
-                    updateMessageState(messageBean.getPacketId(), MessageBean.State.SEND_FAILED.value);
-                    return;
-                }
+                uploadPicture(messageBean);
+            }
+        });
+    }
 
-                FileTransferManager fileTransferManager = new FileTransferManager();
+    private static void uploadPicture(final MessageBean messageBean) {
+        final PictureMsg pictureMsg = (PictureMsg) messageBean.getMsgObj();
+        String filePath = FileConfig.DIR_CACHE + "/" + pictureMsg.imgName;
+        File file = new File(filePath);
+        if (!file.exists()) {
+            ToastManager.showToast(App.getInstance(), "文件已被删除");
+            return;
+        }
+        if (!XmppManagerImpl.getInstance().login()) {
+            updateMessageState(messageBean.getPacketId(), MessageBean.State.SEND_FAILED.value);
+            return;
+        }
 
-                fileTransferManager.sendFile(file, otherName, new FileTransferManager.ProgressListener() {
-                    @Override
-                    public void progressUpdated(int progress) {
-                        pictureMsg.progress = progress;
-                        messageBean.setMsg(pictureMsg.toJson());
-                        WhereBuilder whereBuilder = WhereBuilder.b(MessageBean.PACKET_ID, "=", messageBean.getPacketId());
-                        KeyValue keyValue = new KeyValue(MessageBean.MSG, messageBean.getMsg());
-                        messageDao.update(whereBuilder, keyValue);
-                    }
+        FileTransferManager fileTransferManager = new FileTransferManager();
+        fileTransferManager.sendFile(file, messageBean.getOtherName(), new FileTransferManager.ProgressListener() {
+            @Override
+            public void progressUpdated(int progress) {
+                pictureMsg.progress = progress;
+                messageBean.setMsg(pictureMsg.toJson());
+                WhereBuilder whereBuilder = WhereBuilder.b(MessageBean.PACKET_ID, "=", messageBean.getPacketId());
+                KeyValue keyValue = new KeyValue(MessageBean.MSG, messageBean.getMsg());
+                messageDao.update(whereBuilder, keyValue);
+            }
 
-                    @Override
-                    public void onFailed() {
-                        updateMessageState(messageBean.getPacketId(), MessageBean.State.SEND_FAILED.value);
-                    }
+            @Override
+            public void onFailed() {
+                updateMessageState(messageBean.getPacketId(), MessageBean.State.SEND_FAILED.value);
+            }
 
-                    @Override
-                    public void transferFinished() {
-                        sendMsgDirect(messageBean);
-                    }
-                });
+            @Override
+            public void transferFinished() {
+                sendMsgDirect(messageBean);
             }
         });
     }
@@ -244,6 +264,24 @@ public class SendMessage {
         completeMessageEntityInfo(message);
         addMessageToDB(message);
         sendMsgDirect(message);
+    }
+
+    public static void reSendMsg(final MessageBean message) {
+        ThreadPoolUtil.execute(new Runnable() {
+            @Override
+            public void run() {
+                switch (message.getType()) {
+                    case MsgType.MSG_TYPE_PICTURE:
+                        uploadPicture(message);
+                        break;
+                    case MsgType.MSG_TYPE_OFFLINE_VIDEO:
+                        break;
+                    default:
+                        sendMsgDirect(message);
+                        break;
+                }
+            }
+        });
     }
 
     public static void completeMessageEntityInfo(MessageBean message) {

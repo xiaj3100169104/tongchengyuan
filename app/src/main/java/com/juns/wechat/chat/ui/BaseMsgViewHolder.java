@@ -113,6 +113,13 @@ public abstract class BaseMsgViewHolder extends RecyclerView.ViewHolder {
                 onClickLayoutContainer();
             }
         });
+        layoutContainer.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                onLongClickLayoutContainer();
+                return true;
+            }
+        });
 
         if (!isLeftLayout()) {
             tvSendPercent.setVisibility(View.GONE);//默认隐藏百分比,文件消息才需要显示
@@ -125,10 +132,6 @@ public abstract class BaseMsgViewHolder extends RecyclerView.ViewHolder {
             }
         }
 
-    }
-
-    protected void onClickLayoutContainer() {
-        Log.e(TAG, "onClickLayoutContainer");
     }
 
     private final long MSG_TIME_INTERVAL = 120000L; //两分钟
@@ -195,8 +198,19 @@ public abstract class BaseMsgViewHolder extends RecyclerView.ViewHolder {
     /**
      * 重发该条消息
      */
-    public final void reSend() {
+    public void reSend() {
+        Log.e(TAG, "reSend");
         ChatActivity chatActivity = (ChatActivity) context;
         chatActivity.reSend(messageBean);
+    }
+
+    protected void onClickLayoutContainer() {
+        Log.e(TAG, "onClickLayoutContainer");
+
+    }
+    protected void onLongClickLayoutContainer() {
+        Log.e(TAG, "onLongClickLayoutContainer");
+        ChatActivity chatActivity = (ChatActivity) context;
+        chatActivity.delete(messageBean);
     }
 }

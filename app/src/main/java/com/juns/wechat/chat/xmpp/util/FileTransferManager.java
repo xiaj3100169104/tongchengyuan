@@ -1,5 +1,7 @@
 package com.juns.wechat.chat.xmpp.util;
 
+import android.util.Log;
+
 import com.juns.wechat.config.ConfigUtil;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.util.FileUtil;
@@ -56,7 +58,7 @@ public class FileTransferManager {
             int wrote = 0;
             byte[] buffer = new byte[1024];
             int len = 0;
-            while ((len = in.read(buffer)) != -1){
+            while ((len = in.read(buffer)) != -1) {
                 out.write(buffer, 0, len);
                 wrote += len;
                 notifyProgressUpdated(listener, wrote, count);
@@ -70,7 +72,7 @@ public class FileTransferManager {
             socketIn.read(data);
             socket.close();
             String result = new String(data).trim();
-            if("success".equals(result)){
+            if ("success".equals(result)) {
                 listener.transferFinished();
             }
 
@@ -80,9 +82,10 @@ public class FileTransferManager {
         }
     }
 
-    public void downloadFile(String path, int fileSize,  ProgressListener listener){
+    public void downloadFile(String path, int fileSize, ProgressListener listener) {
+        Log.e("path ==", path);
         File f = new File(path);
-        if(f.exists()){  //由于文件名都是唯一的，说明这张图片是由同一个手机上发出并在本手机上接收。
+        if (f.exists()) {  //由于文件名都是唯一的，说明这张图片是由同一个手机上发出并在本手机上接收。
             listener.transferFinished();
             return;
         }
@@ -106,20 +109,20 @@ public class FileTransferManager {
             socketIn.read(data);
             String result = new String(data).trim();
             LogUtil.i("result: " + result);
-            if(!"success".equals(result)){
+            if (!"success".equals(result)) {
                 listener.onFailed();
                 return;
             }
 
             OutputStream fileOut = FileUtil.getOutputStream(f);
-            if(fileOut == null){
+            if (fileOut == null) {
                 listener.onFailed();
                 return;
             }
             byte[] buffer = new byte[1024];
             int wrote = 0;
             int len;
-            while ((len = socketIn.read(buffer)) != -1){
+            while ((len = socketIn.read(buffer)) != -1) {
                 fileOut.write(buffer, 0, len);
                 wrote += len;
                 notifyProgressUpdated(listener, wrote, fileSize);
@@ -133,9 +136,9 @@ public class FileTransferManager {
         }
     }
 
-    private void notifyProgressUpdated(ProgressListener listener, int wrote, int amount){
+    private void notifyProgressUpdated(ProgressListener listener, int wrote, int amount) {
         int progress = (int) ((((float) wrote) / amount) * 100);
-        if(progress == 100 || (progress - lastProgress > 10 + 10 *Math.random())){
+        if (progress == 100 || (progress - lastProgress > 10 + 10 * Math.random())) {
             lastProgress = progress;
             listener.progressUpdated(progress);
         }
@@ -143,7 +146,9 @@ public class FileTransferManager {
 
     public interface ProgressListener {
         void progressUpdated(int progress);
+
         void transferFinished();
+
         void onFailed();
     }
 }

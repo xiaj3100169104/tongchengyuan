@@ -15,7 +15,7 @@ public class FileConfig {
      * @return
      */
     public static String getUniqueFileName(){
-        return StanzaIdUtil.newStanzaId() + ".cache";
+        return StanzaIdUtil.newStanzaId() + ".image";
     }
     /**
      * app文件存储根目录

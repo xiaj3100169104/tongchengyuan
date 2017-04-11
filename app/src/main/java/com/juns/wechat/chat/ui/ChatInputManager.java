@@ -348,7 +348,7 @@ public class ChatInputManager implements View.OnClickListener {
                     int width = compressedBitmap.getWidth();
                     int height = compressedBitmap.getHeight();
                     compressedBitmap.recycle();
-                    SendMessage.sendPictureMsg(otherUserName, new File(filePath), width, height);
+                    SendMessage.sendPictureMsg(otherUserName, filePath, width, height);
                 }
             });
         }
@@ -367,7 +367,7 @@ public class ChatInputManager implements View.OnClickListener {
                     retriever.setDataSource(filePath);
                     Bitmap bitmap = retriever.getFrameAtTime(1000 * 1000, MediaMetadataRetriever.OPTION_CLOSEST);
                     //ivVideoPreview.setImageBitmap(bitmap);
-                    com.style.utils.BitmapUtil.saveBitmap(filePath + ".preview", bitmap, 100);
+                    com.style.utils.BitmapUtil.saveBitmap(filePath + ".image", bitmap, 100);
                     int width = bitmap.getWidth();
                     int height = bitmap.getHeight();
                     SendMessage.sendOfflineVideoMsg(otherUserName, new File(filePath), width, height);

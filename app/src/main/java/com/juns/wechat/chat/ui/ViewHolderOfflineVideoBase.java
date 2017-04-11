@@ -56,7 +56,7 @@ public class ViewHolderOfflineVideoBase extends BaseMsgViewHolder {
         params.height = (int) height;
 
         path = FileConfig.DIR_CACHE + "/" + videoMsg.fileName;
-        imagePath = path + ".preview";
+        imagePath = path + ".image";
         super.updateView();
 
     }
