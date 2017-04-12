@@ -18,19 +18,18 @@ import java.net.URLConnection;
  * 多线程下载文件
  * Created by xiajun on 2017/2/12.
  */
-public class ImageDownloadTask extends Thread {
+public class FileDownloader implements Runnable {
     private static final int DOWN_FAILED = 1;
     private static final int DOWN_START = 2;
     private static final int DOWN_PROGRESS = 3;
     private static final int DOWN_COMPLETE = 4;
 
-    private static final String TAG = ImageDownloadTask.class.getSimpleName();
-    private ImageCallback fileDownCallback;
+    private static final String TAG = FileDownloader.class.getSimpleName();
+    private FileDownloadCallback fileDownCallback;
     private boolean canCallback = true;//是否需要执行回调,默认true
 
     private String downloadUrl;// 下载链接地址
-    private final String dir;// 文件保存跟目录
-    private String fileName;// 文件名
+    private String targetPath;//存储路径
     private int fileSize;//文件总大小
     private int progress = 0;//文件下载大小
     private int percent = 0;//文件下载百分比
@@ -52,7 +51,7 @@ public class ImageDownloadTask extends Thread {
                     break;
                 case DOWN_COMPLETE:
                     if (isCallbackEnable()) {
-                        fileDownCallback.complete(dir, fileName);
+                        fileDownCallback.complete(targetPath);
                     }
                     break;
                 case DOWN_FAILED:
@@ -64,20 +63,26 @@ public class ImageDownloadTask extends Thread {
         }
     };
 
-    public ImageDownloadTask(String downloadUrl, String dir, String fileName, ImageCallback fileDownCallback) {
+    public FileDownloader(String downloadUrl, String targetPath, FileDownloadCallback fileDownCallback) {
         this.downloadUrl = downloadUrl;
-        this.dir = dir;
-        this.fileName = fileName;
+        this.targetPath = targetPath;
         this.fileDownCallback = fileDownCallback;
     }
 
     @Override
     public void run() {
+        File f = new File(targetPath);
+        if (f.exists()) {  //如果文件存在就不再重新下载
+            sendMsg2Completed();
+            return;
+        }
+        if (!f.getParentFile().exists())
+            f.mkdirs();
         InputStream is = null;
         FileOutputStream fileOutputStream = null;
         try {
             URL url = new URL(downloadUrl);
-            Log.e(TAG, "download file http path:" + downloadUrl);
+            Log.e(TAG, "file url:" + downloadUrl);
             URLConnection conn = url.openConnection();
             conn.setRequestProperty("Charset", "UTF-8");
             // 读取下载文件总大小
@@ -90,23 +95,18 @@ public class ImageDownloadTask extends Thread {
                 if (is == null) {
                     sendMsg2Failed("文件获取失败");
                 } else {
-                    File file = FileUtil.create(dir, fileName);
-                    if (file == null) {
-                        sendMsg2Failed("文件创建失败");
-                    } else {
-                        sendMsg2Start();
-                        fileOutputStream = new FileOutputStream(file);
-                        byte[] buffer = new byte[1024];
-                        int byteCount;
-                        while ((byteCount = is.read(buffer)) != -1) {
-                            fileOutputStream.write(buffer, 0, byteCount);
-                            fileOutputStream.flush();
-                            progress = progress + byteCount;
-                            percent = (int) (progress / block);// 进度百分比
-                            sendMsg2Progress();
-                        }
-                        sendMsg2Completed();
+                    sendMsg2Start();
+                    fileOutputStream = new FileOutputStream(f);
+                    byte[] buffer = new byte[1024];
+                    int byteCount;
+                    while ((byteCount = is.read(buffer)) != -1) {
+                        fileOutputStream.write(buffer, 0, byteCount);
+                        fileOutputStream.flush();
+                        progress = progress + byteCount;
+                        percent = (int) (progress / block);// 进度百分比
+                        sendMsg2Progress();
                     }
+                    sendMsg2Completed();
                 }
             }
         } catch (IOException e) {
@@ -128,7 +128,7 @@ public class ImageDownloadTask extends Thread {
         this.error = error;
         Log.e(TAG, error);
         sendMsg(DOWN_FAILED);
-        deleteCacheFile(dir, fileName);
+        deleteCacheFile(targetPath);
     }
 
     protected void sendMsg2Start() {
@@ -148,8 +148,8 @@ public class ImageDownloadTask extends Thread {
         mHandler.sendMessage(msg);
     }
 
-    private void deleteCacheFile(String dir, String fileName) {
-        FileUtil.delete(dir, fileName);
+    private void deleteCacheFile(String path) {
+        FileUtil.delete(path);
     }
 
 
@@ -163,7 +163,7 @@ public class ImageDownloadTask extends Thread {
         return false;
     }
 
-    public void setCallback(ImageCallback callback) {
+    public void setCallback(FileDownloadCallback callback) {
         this.fileDownCallback = callback;
     }
 }

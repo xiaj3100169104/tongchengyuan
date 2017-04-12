@@ -15,6 +15,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.Arrays;
 
@@ -100,6 +102,8 @@ public class FileTransferManager {
             out.write(fileName.length());
             out.write(fileName.getBytes());
             out.flush();
+            InetAddress i = socket.getLocalAddress();
+            InetSocketAddress s = (InetSocketAddress) socket.getLocalSocketAddress();
             socket.shutdownOutput();
 
             LogUtil.i("socket write finished!");

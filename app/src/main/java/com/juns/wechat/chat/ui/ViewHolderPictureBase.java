@@ -6,8 +6,11 @@ import android.widget.RelativeLayout;
 
 import com.juns.wechat.R;
 import com.juns.wechat.chat.bean.PictureMsg;
+import com.juns.wechat.config.ConfigUtil;
 import com.style.constant.FileConfig;
 import com.style.manager.ImageLoader;
+import com.style.net.image.FileDownloadCallback;
+import com.style.net.image.FileDownloadManager;
 import com.style.utils.CommonUtil;
 
 import java.io.File;
@@ -20,6 +23,7 @@ public class ViewHolderPictureBase extends BaseMsgViewHolder {
     protected ImageView ivPicture;
     protected PictureMsg pictureMsg;
     protected String path;
+    private String url;
 
     ViewHolderPictureBase(View view) {
         super(view);
@@ -45,6 +49,7 @@ public class ViewHolderPictureBase extends BaseMsgViewHolder {
         params.height = (int) height;
 
         this.path = FileConfig.DIR_CACHE + "/" + pictureMsg.imgName;
+        this.url = ConfigUtil.getMsgDownUrl(pictureMsg.imgName);
         super.updateView();
 
         this.loadPicture();
@@ -61,8 +66,7 @@ public class ViewHolderPictureBase extends BaseMsgViewHolder {
         if (f.exists())
             ImageLoader.loadTriangleImage(ivPicture, path, isLeftLayout() ? 0 : 1);
         else
-            PictureMsgLoader.getInstance().down(path, pictureMsg.size, messageBean);
+            FileDownloadManager.getInstance().down(url, path, new PictureDownloadCallback(messageBean));
     }
-
 }
 

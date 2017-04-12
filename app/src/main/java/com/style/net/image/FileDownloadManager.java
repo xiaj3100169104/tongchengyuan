@@ -1,30 +1,32 @@
 package com.style.net.image;
 
+import com.juns.wechat.util.ThreadPoolUtil;
+
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Created by xiajun on 2016/12/22.
  */
-public class ImageManager {
+public class FileDownloadManager {
     protected String TAG = getClass().getSimpleName();
 
-    private Map<String, ImageDownloadTask> taskMap = new HashMap<>();
-    private static ImageManager instance;
+    private Map<String, FileDownloader> taskMap = new HashMap<>();
+    private static FileDownloadManager instance;
 
-    public synchronized static ImageManager getInstance() {
+    public synchronized static FileDownloadManager getInstance() {
         if (instance == null) {
-            instance = new ImageManager();
+            instance = new FileDownloadManager();
         }
         return instance;
     }
 
     //注意tag唯一
-    public void down(String url, String dir, String fileName, ImageCallback callback) {
-        ImageDownloadTask task = taskMap.get(url);
+    public void down(String url, String targetPath, FileDownloadCallback callback) {
+        FileDownloader task = taskMap.get(url);
         if (task == null) {
-            task = new ImageDownloadTask(url, dir, fileName, callback);
-            task.start();
+            task = new FileDownloader(url, targetPath, callback);
+            ThreadPoolUtil.execute(task);
             taskMap.put(url, task);
         }
         task.setCallback(callback);
@@ -32,7 +34,7 @@ public class ImageManager {
     }
 
     public void cancelCallback(String tag) {
-        ImageDownloadTask task = taskMap.get(tag);
+        FileDownloader task = taskMap.get(tag);
         if (task != null)
             task.setCanCallback(false);
     }

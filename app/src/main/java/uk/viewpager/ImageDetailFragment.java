@@ -1,6 +1,5 @@
 package uk.viewpager;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,12 +13,11 @@ import com.juns.wechat.config.ConfigUtil;
 import com.style.base.BaseFragment;
 import com.style.constant.FileConfig;
 import com.style.manager.ImageLoader;
-import com.style.net.image.ImageCallback;
-import com.style.net.image.ImageManager;
+import com.style.net.image.FileDownloadCallback;
+import com.style.net.image.FileDownloadManager;
 import com.style.utils.FileUtil;
 
 import butterknife.Bind;
-import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class ImageDetailFragment extends BaseFragment {
 	@Bind(R.id.image)
@@ -43,17 +41,17 @@ public class ImageDetailFragment extends BaseFragment {
 
 	@Override
 	protected void initData() {
-        String dir = FileConfig.DIR_CACHE;
-        if (FileUtil.isExist(dir, imgName)) {
-            fileExist(dir + "/" + imgName);
+        String path = FileConfig.DIR_CACHE + "/" + imgName;
+        if (FileUtil.isExist(path)) {
+            fileExist(path);
             return;
         }
-        url = ConfigUtil.BASE_UPLOAD_URL + imgName;
-        ImageManager.getInstance().down(url, dir, imgName, new ImageCallback() {
+        url = ConfigUtil.getDownUrl(imgName);
+        FileDownloadManager.getInstance().down(url, path, new FileDownloadCallback() {
             @Override
-            public void complete(String dir, String fileName) {
-                super.complete(dir, fileName);
-                fileExist(dir + "/" + fileName);
+            public void complete(String filePath) {
+                super.complete(filePath);
+                fileExist(filePath);
             }
 
             @Override
@@ -95,6 +93,6 @@ public class ImageDetailFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        ImageManager.getInstance().cancelCallback(url);
+        FileDownloadManager.getInstance().cancelCallback(url);
     }
 }
