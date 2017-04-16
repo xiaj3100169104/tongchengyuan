@@ -12,10 +12,13 @@ import com.juns.wechat.R;
 import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.chat.bean.OfflineVideoMsg;
 import com.juns.wechat.chat.xmpp.util.FileTransferManager;
+import com.juns.wechat.config.ConfigUtil;
 import com.juns.wechat.database.dao.MessageDao;
 import com.style.constant.FileConfig;
 import com.style.lib.media.video.PlayVideoActivity;
 import com.style.manager.ImageLoader;
+import com.style.net.image.FileDownloadCallback;
+import com.style.net.image.FileDownloadManager;
 import com.style.utils.BitmapUtil;
 import com.style.utils.CommonUtil;
 
@@ -31,6 +34,7 @@ public class ViewHolderOfflineVideoBase extends BaseMsgViewHolder {
     protected OfflineVideoMsg videoMsg;
     protected String path;
     protected String imagePath;
+    private String url;
 
     ViewHolderOfflineVideoBase(View view) {
         super(view);
@@ -57,6 +61,8 @@ public class ViewHolderOfflineVideoBase extends BaseMsgViewHolder {
 
         path = FileConfig.DIR_CACHE + "/" + videoMsg.fileName;
         imagePath = path + ".image";
+        this.url = ConfigUtil.getMsgDownUrl(videoMsg.fileName);
+
         super.updateView();
 
         this.loadPreview();
@@ -87,7 +93,7 @@ public class ViewHolderOfflineVideoBase extends BaseMsgViewHolder {
                     e.printStackTrace();
                 }
             }else {
-                PictureMsgLoader.getInstance().down(path, videoMsg.size, messageBean);
+                FileDownloadManager.getInstance().down(url, path, new OfflineVideoDownloadCallback(messageBean));
             }
         }
         ImageLoader.loadTriangleImage(ivPicture, imagePath, isLeftLayout() ? 0 : 1);

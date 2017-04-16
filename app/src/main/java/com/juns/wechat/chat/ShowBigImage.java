@@ -12,12 +12,11 @@ import com.style.base.BaseToolbarActivity;
 import com.style.constant.FileConfig;
 import com.style.constant.Skip;
 import com.style.manager.ImageLoader;
-import com.style.net.image.ImageCallback;
-import com.style.net.image.ImageManager;
+import com.style.net.image.FileDownloadCallback;
+import com.style.net.image.FileDownloadManager;
 import com.style.utils.FileUtil;
 
 import butterknife.Bind;
-import uk.co.senab.photoview.PhotoViewAttacher;
 
 /**
  * 下载显示大图
@@ -45,17 +44,17 @@ public class ShowBigImage extends BaseToolbarActivity {
         setToolbarTitle("我的头像");
 
         imgName = getIntent().getStringExtra(Skip.KEY_IMG_NAME);
-        String dir = FileConfig.DIR_CACHE;
-        if (FileUtil.isExist(dir, imgName)) {
-            fileExist(dir + "/" + imgName);
+        String path = FileConfig.DIR_CACHE + "/" + imgName;
+        if (FileUtil.isExist(path)) {
+            fileExist(path);
             return;
         }
-        url = ConfigUtil.BASE_UPLOAD_URL + imgName;
-        ImageManager.getInstance().down(url, dir, imgName, new ImageCallback() {
+        url = ConfigUtil.getDownUrl(imgName);
+        FileDownloadManager.getInstance().down(url, path, new FileDownloadCallback() {
             @Override
-            public void complete(String dir, String fileName) {
-                super.complete(dir, fileName);
-                fileExist(dir + "/" + fileName);
+            public void complete(String filePath) {
+                super.complete(filePath);
+                fileExist(filePath);
             }
 
             @Override
@@ -95,6 +94,6 @@ public class ShowBigImage extends BaseToolbarActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        ImageManager.getInstance().cancelCallback(url);
+        FileDownloadManager.getInstance().cancelCallback(url);
     }
 }

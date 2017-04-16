@@ -19,11 +19,8 @@ import org.xutils.cache.LruCache;
 public class ImageLoader {
     private static final String TAG = "ImageLoader";
 
-    private static final String REMOTE_PATH = ConfigUtil.BASE_UPLOAD_URL;
-
     private static CharSequence getUrl(String fileName) {
-        Log.e(TAG, REMOTE_PATH + fileName);
-        return REMOTE_PATH + fileName;
+        return ConfigUtil.getDownUrl(fileName);
     }
 
     public static void loadAvatar(Context context, ImageView imageView, String fileName) {

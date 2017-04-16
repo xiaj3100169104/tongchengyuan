@@ -39,10 +39,6 @@ public class FileUtil {
         }
     }
 
-    public static void delete(String dir, String name) {
-        delete(dir + "/" + name);
-    }
-
     public static void delete(String path) {
         delete(new File(path));
     }
