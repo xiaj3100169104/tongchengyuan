@@ -16,28 +16,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
 public class FileUtil {
-    public static File create(String dirPath, String fileName) {
-        File dir = new File(dirPath);
-        return createFile(dir, fileName);
-    }
-
-    public static File create(File dir, String fileName) {
-        return createFile(dir, fileName);
-    }
-
-    private static File createFile(File dir, String fileName) {
-        boolean isMkdirs = true;
-        if (!dir.exists()) {
-            isMkdirs = dir.mkdirs();
-        }
-        if (isMkdirs) {
-            File file = new File(dir, fileName);
-            return file;
-        } else {
-            ToastManager.showToastOnApplication("文件夹创建失败");
-            return null;
-        }
-    }
 
     public static void delete(String path) {
         delete(new File(path));
@@ -111,7 +89,7 @@ public class FileUtil {
         }
     }
 
-    public static String getRealFilePath(final Context context, final Uri uri) {
+    public static String getRealFilePath(Context context, final Uri uri) {
         if (null == uri)
             return null;
         final String scheme = uri.getScheme();

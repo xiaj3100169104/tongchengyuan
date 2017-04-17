@@ -362,22 +362,26 @@ public class CommonUtil {
         context.sendBroadcast(intent);
     }
 
-    public static File takePhoto(Activity activity, String dir, String name) {
-        File photo = FileUtil.create(dir, name);
-        Uri imageUri = Uri.fromFile(photo);
+    public static File takePhoto(Activity activity, String path) {
+        File f = new File(path);
+        if (!f.getParentFile().exists())
+            f.getParentFile().mkdirs();
+        Uri imageUri = Uri.fromFile(f);
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         activity.startActivityForResult(intent, Skip.CODE_TAKE_CAMERA);
-        return photo;
+        return f;
     }
 
-    public static File takePhotoFromFragment(Fragment fragment, String dir, String name) {
-        File photo = FileUtil.create(dir, name);
-        Uri imageUri = Uri.fromFile(photo);
+    public static File takePhotoFromFragment(Fragment fragment, String path) {
+        File f = new File(path);
+        if (!f.getParentFile().exists())
+            f.getParentFile().mkdirs();
+        Uri imageUri = Uri.fromFile(f);
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
         fragment.startActivityForResult(intent, Skip.CODE_TAKE_CAMERA);
-        return photo;
+        return f;
     }
 
     public static void selectPhoto(Activity activity) {

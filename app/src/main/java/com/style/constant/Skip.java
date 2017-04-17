@@ -20,7 +20,6 @@ public class Skip {
     public static final int CODE_PHOTO_CROP = 0x000003;// 系统裁剪头像
     public static final int CODE_EMPTY_HISTORY = 0x000004;
     public static final int CODE_MAP = 0x000005;
-    public static final int CODE_COPY_AND_PASTE = 0x000006;
     public static final int CODE_SELECT_FILE = 0x000007;
     public static final int CODE_PUBLISH_DYNAMIC = 0x000008;
     public static final int CODE_RECORD_VIDEO = 0x000009;
@@ -32,18 +31,6 @@ public class Skip {
     public static final String KEY_USER_NAME = "userName";
     public static final String KEY_SEARCH_RESULTS = "searchResults";
     public static final String KEY_IMG_NAME = "imgName";
-    public static final String KEY_ACCOUNT = "account";
-    public static final String KEY_PASSWORD = "password";
-    public static final String KEY_USER = "user";
-    public static final String KEY_CURUSER = "curUser";
-    public static final String KEY_OUSER = "oUser";
-    public static final String KEY_PHONE = "phone";
-    public static final String KEY_EMODATA = "emoData";
-    public static final String KEY_USERDYNAMIC = "UserDynamic";
-    public static final String KEY_POSITION = "position";
-    public static final String KEY_SQUAREINFO = "SquareInfo";
-    public static final String KEY_ISDELETE = "isDelete";
-    public static final String KEY_USERLIST = "userList";
 
     public static void skipClearTop(Context context, Class<?> cls) {
         context.startActivity(new Intent().setClass(context, cls).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP));

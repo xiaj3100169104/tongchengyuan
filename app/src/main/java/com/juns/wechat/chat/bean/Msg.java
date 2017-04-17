@@ -35,8 +35,12 @@ public abstract class Msg {
                 msg = gson.fromJson(json, OfflineVideoMsg.class);
                 break;
             case MsgType.MSG_TYPE_SEND_INVITE:
+                break;
             case MsgType.MSG_TYPE_REPLY_INVITE:
                 msg = gson.fromJson(json, InviteMsg.class);
+                break;
+            case MsgType.MSG_TYPE_LOCATION:
+                msg = gson.fromJson(json, LocationMsg.class);
                 break;
             default:
                 break;

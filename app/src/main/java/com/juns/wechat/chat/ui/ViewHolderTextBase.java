@@ -16,6 +16,7 @@ import com.style.utils.CommonUtil;
 
 public class ViewHolderTextBase extends BaseMsgViewHolder {
     TextView viewContent;
+    private TextMsg msg;
 
     ViewHolderTextBase(View view) {
         super(view);
@@ -25,9 +26,9 @@ public class ViewHolderTextBase extends BaseMsgViewHolder {
     @Override
     protected void updateView() {
         //先得到bean，在进行其他操作
-        TextMsg textMsg1 = (TextMsg) messageBean.getMsgObj();
+        msg = (TextMsg) messageBean.getMsgObj();
         super.updateView();
-        CommonUtil.setText(viewContent, SmileUtils.getSmiledText(App.getInstance(), textMsg1.content));
+        CommonUtil.setText(viewContent, SmileUtils.getSmiledText(App.getInstance(), msg.content));
     }
     @Override
     protected void onClickLayoutContainer(){

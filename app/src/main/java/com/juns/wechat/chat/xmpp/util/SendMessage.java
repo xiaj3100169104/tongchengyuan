@@ -4,6 +4,7 @@ package com.juns.wechat.chat.xmpp.util;
 import android.widget.Toast;
 
 import com.juns.wechat.App;
+import com.juns.wechat.chat.bean.LocationMsg;
 import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.chat.bean.InviteMsg;
 import com.juns.wechat.chat.bean.OfflineVideoMsg;
@@ -41,7 +42,6 @@ public class SendMessage {
 
     /**
      * 发送普通的文字消息
-     *
      * @param content
      */
     public static void sendTextMsg(final String otherName, final String content) {
@@ -51,7 +51,6 @@ public class SendMessage {
                 MessageBean messageBean = new MessageBean();
                 TextMsg textMsg = new TextMsg();
                 textMsg.content = content;
-
                 messageBean.setMsg(textMsg.toJson());
                 messageBean.setOtherName(otherName);
                 messageBean.setType(MsgType.MSG_TYPE_TEXT);
@@ -60,9 +59,28 @@ public class SendMessage {
 
             }
         });
-
     }
+    /**
+     * 发送地理位置消息
+     */
+    public static void sendLocationMsg(final String otherName, final double latitude, final double longitude, final String address) {
+        ThreadPoolUtil.execute(new Runnable() {
+            @Override
+            public void run() {
+                MessageBean messageBean = new MessageBean();
+                LocationMsg msg = new LocationMsg();
+                msg.latitude = latitude;
+                msg.longitude = longitude;
+                msg.address = address;
+                messageBean.setMsg(msg.toJson());
+                messageBean.setOtherName(otherName);
+                messageBean.setType(MsgType.MSG_TYPE_LOCATION);
+                messageBean.setTypeDesc(MsgType.MSG_TYPE_LOCATION_DESC);
+                sendMsg(messageBean);
 
+            }
+        });
+    }
     @SuppressWarnings("unchecked")
     public static void sendPictureMsg(final String otherName, final String path, final int width, final int height) {
         ThreadPoolUtil.execute(new Runnable() {

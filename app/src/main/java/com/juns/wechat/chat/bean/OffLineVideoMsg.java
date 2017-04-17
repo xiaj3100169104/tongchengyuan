@@ -3,9 +3,6 @@ package com.juns.wechat.chat.bean;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/**
- * Created by 王者 on 2016/8/19.
- */
 public class OfflineVideoMsg extends Msg {
     public static final String FILE_NAME = "fileName";
     public static final String PROGRESS = "progress";

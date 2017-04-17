@@ -25,6 +25,8 @@ public class ChatAdapter extends BaseRecyclerViewAdapter {
     private static final int MSG_TYPE_VOICE_RIGHT = 5;
     private static final int MSG_TYPE_OFFLINE_VIDEO_LEFT = 6;
     private static final int MSG_TYPE_OFFLINE_VIDEO_RIGHT = 7;
+    private static final int MSG_TYPE_LOCATION_LEFT = 8;
+    private static final int MSG_TYPE_LOCATION_RIGHT = 9;
 
     public ChatAdapter(Context context, List list) {
         super(context, list);
@@ -32,7 +34,7 @@ public class ChatAdapter extends BaseRecyclerViewAdapter {
 
     @Override
     public int getItemViewType(int position) {
-        int viewType = MSG_TYPE_TEXT_LEFT;
+        int viewType = -1;
         MessageBean msg = (MessageBean) list.get(position);
         int direction = msg.getDirection();
         switch (msg.getType()) {
@@ -59,6 +61,12 @@ public class ChatAdapter extends BaseRecyclerViewAdapter {
                     viewType = MSG_TYPE_OFFLINE_VIDEO_LEFT;
                 else
                     viewType = MSG_TYPE_OFFLINE_VIDEO_RIGHT;
+                break;
+            case MsgType.MSG_TYPE_LOCATION:
+                if (direction == MessageBean.Direction.INCOMING.value)
+                    viewType = MSG_TYPE_LOCATION_LEFT;
+                else
+                    viewType = MSG_TYPE_LOCATION_RIGHT;
                 break;
         }
         return viewType;
@@ -92,6 +100,12 @@ public class ChatAdapter extends BaseRecyclerViewAdapter {
                 break;
             case MSG_TYPE_OFFLINE_VIDEO_RIGHT:
                 holder = new ViewHolderOfflineVideoRight(getView(R.layout.chat_item_sent_video, parent));
+                break;
+            case MSG_TYPE_LOCATION_LEFT:
+                holder = new ViewHolderLocationLeft(getView(R.layout.chat_item_received_location, parent));
+                break;
+            case MSG_TYPE_LOCATION_RIGHT:
+                holder = new ViewHolderLocationRight(getView(R.layout.chat_item_sent_location, parent));
                 break;
         }
         holder.setContext(mContext, parent);
@@ -139,6 +153,13 @@ public class ChatAdapter extends BaseRecyclerViewAdapter {
             case MSG_TYPE_OFFLINE_VIDEO_RIGHT:
                 ViewHolderOfflineVideoRight viewHolderVideoRight = (ViewHolderOfflineVideoRight) viewHolder;
                 viewHolderVideoRight.updateView();
+            case MSG_TYPE_LOCATION_LEFT:
+                ViewHolderLocationLeft viewHolderLocationLeft = (ViewHolderLocationLeft) viewHolder;
+                viewHolderLocationLeft.updateView();
+                break;
+            case MSG_TYPE_LOCATION_RIGHT:
+                ViewHolderLocationRight viewHolderLocationRight = (ViewHolderLocationRight) viewHolder;
+                viewHolderLocationRight.updateView();
                 break;
         }
     }
