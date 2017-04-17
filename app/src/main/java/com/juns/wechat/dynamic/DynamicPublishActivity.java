@@ -282,7 +282,7 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
                 dialog.setOnItemClickListener(new SelAvatarDialog.OnItemClickListener() {
                     @Override
                     public void OnClickCamera() {
-                        photoFile = CommonUtil.takePhoto(DynamicPublishActivity.this, FileConfig.DIR_IMAGE, String.valueOf(System.currentTimeMillis()) + ".jpg");
+                        photoFile = CommonUtil.takePhoto(DynamicPublishActivity.this, FileConfig.DIR_IMAGE + File.separator + String.valueOf(System.currentTimeMillis()) + ".jpg");
 
                     }
 

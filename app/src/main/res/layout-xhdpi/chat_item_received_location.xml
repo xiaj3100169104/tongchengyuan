@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="13dp">
+
+    <include layout="@layout/chat_item_common_time" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_chat_activity"
+        android:orientation="horizontal">
+
+        <include layout="@layout/chat_item_common_avatar_left" />
+
+        <RelativeLayout
+            android:id="@+id/layout_content_container"
+            style="@style/chat_item_from_content_container">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/location_msg"/>
+                <TextView
+                    android:id="@+id/tv_address"
+                    style="@style/chat_item_text_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_centerVertical="true"
+                    android:autoLink="web"
+                    android:lineSpacingExtra="2dp"
+                    tools:text="成都市" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

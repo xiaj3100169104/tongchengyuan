@@ -266,28 +266,6 @@ public class ChatActivity extends BaseToolbarActivity {
 				clipboard.setText(((TextMessageBody) copyMsg.getBody())
 						.getMessage());
 				break;
-			case RESULT_CODE_DELETE: // 删除消息
-				EMMessage deleteMsg = (EMMessage) adapter.getItem(data
-						.getIntExtra("position", -1));
-				conversation.removeMessage(deleteMsg.getMsgId());
-				adapter.refresh();
-				listView.setSelection(data.getIntExtra("position",
-						adapter.getCount()) - 1);
-				break;
-
-			case RESULT_CODE_FORWARD: // 转发消息
-				// EMMessage forwardMsg = (EMMessage) adapter.getItem(data
-				// .getIntExtra("position", 0));
-				// Intent intent = new Intent(this,
-				// ForwardMessageActivity.class);
-				// intent.putExtra("forward_msg_id", forwardMsg.getMsgId());
-				// startActivity(intent);
-
-				break;
-
-			default:
-				break;
-			}
 		}*/
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
@@ -320,22 +298,10 @@ public class ChatActivity extends BaseToolbarActivity {
                     double longitude = data.getDoubleExtra("longitude", 0);
                     String locationAddress = data.getStringExtra("address");
                     if (locationAddress != null && !locationAddress.equals("")) {
-
-                        sendLocationMsg(latitude, longitude, "", locationAddress);
+                        sendLocationMsg(latitude, longitude, locationAddress);
                     } else {
                         String st = getResources().getString(R.string.unable_to_get_loaction);
-                    }
-                    break;
-                // 重发消息
-                case Skip.CODE_COPY_AND_PASTE:
-                    // 粘贴
-                    if (!TextUtils.isEmpty(clipboard.getText())) {
-                        String pasteText = clipboard.getText().toString();
-                        if (pasteText.startsWith(COPY_IMAGE)) {
-                            // 把图片前缀去掉，还原成正常的path
-                            //sendPicture(pasteText.replace(COPY_IMAGE, ""));
-                        }
-
+                        showToast(st);
                     }
                     break;
             }
@@ -369,10 +335,10 @@ public class ChatActivity extends BaseToolbarActivity {
      *
      * @param latitude
      * @param longitude
-     * @param imagePath
-     * @param locationAddress
+     * @param address
      */
-    private void sendLocationMsg(double latitude, double longitude, String imagePath, String locationAddress) {
+    private void sendLocationMsg(double latitude, double longitude, String address) {
+        chatInputManager.sendLocation(contactName,latitude,longitude,address);
     }
 
     /**
@@ -400,32 +366,6 @@ public class ChatActivity extends BaseToolbarActivity {
             filePath = uri.getPath();
         }
         File file = new File(filePath);
-        /*if (file == null || !file.exists()) {
-            String st7 = getResources().getString(R.string.File_does_not_exist);
-			Toast.makeText(getApplicationContext(), st7, 0).show();
-			return;
-		}
-		if (file.length() > 10 * 1024 * 1024) {
-			String st6 = getResources().getString(
-					R.string.The_file_is_not_greater_than_10_m);
-			Toast.makeText(getApplicationContext(), st6, 0).show();
-			return;
-		}*/
-
-	/*	// 创建一个文件消息
-		EMMessage message = EMMessage.createSendMessage(EMMessage.Type.FILE);
-		// 如果是群聊，设置chattype,默认是单聊
-		if (chatType == CHATTYPE_GROUP)
-			message.setChatType(ChatType.GroupChat);
-
-		message.setReceipt(toChatUsername);
-		// insertOrUpdate message body
-		NormalFileMessageBody body = new NormalFileMessageBody(new File(
-				filePath));
-		message.addBody(body);
-		conversation.addMessage(message);*/
-        //listView.setAdapter(adapter);
-        //listView.setSelection(listView.getCount() - 1);
         setResult(RESULT_OK);
     }
 

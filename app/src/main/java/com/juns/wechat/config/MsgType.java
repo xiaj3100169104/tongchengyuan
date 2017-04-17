@@ -15,7 +15,7 @@ public class MsgType {
     public final static int MSG_TYPE_PAY       = MSG_TYPE_LOCATION+1;     //支付
     public final static int MSG_TYPE_MEETING   = MSG_TYPE_PAY+1;     //会议室请求
     public final static int MSG_TYPE_FACE      = MSG_TYPE_MEETING+1;     //表情
-    public final static int MSG_TYPE_TRANSFER  = MSG_TYPE_FACE+1;     //转让消息
+    public final static int MSG_TYPE_TRANSFER  = MSG_TYPE_FACE+1;     //转发消息
 
     //大于500的消息不会在消息界面展示
     public final static int MSG_TYPE_SEND_INVITE = 500; //发送邀请消息成为好友。
@@ -24,5 +24,6 @@ public class MsgType {
     public static final String MSG_TYPE_VOICE_DESC = "[语音]";
     public static final String MSG_TYPE_PICTURE_DESC = "[图片]";
     public static final String MSG_TYPE_OFFLINE_VIDEO_DESC = "[视频]";
+    public static final String MSG_TYPE_LOCATION_DESC = "[位置]";
 
 }

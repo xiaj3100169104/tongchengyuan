@@ -196,8 +196,4 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected int dip2px(float dpValue) {
         return CommonUtil.dip2px(mContext, dpValue);
     }
-
-    protected int px2dip(float pxValue) {
-        return CommonUtil.px2dip(mContext, pxValue);
-    }
 }

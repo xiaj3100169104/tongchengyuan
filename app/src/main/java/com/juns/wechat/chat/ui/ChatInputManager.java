@@ -22,12 +22,14 @@ import android.widget.Toast;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.juns.wechat.R;
 import com.juns.wechat.activity.SendLocationActivity;
+import com.juns.wechat.chat.BaiduMapActivity;
 import com.juns.wechat.chat.adpter.ExpressionAdapter;
 import com.juns.wechat.chat.adpter.ExpressionPagerAdapter;
 import com.juns.wechat.chat.utils.SmileUtils;
 import com.juns.wechat.chat.voice.CallVoiceBaseActivity;
 import com.juns.wechat.chat.widght.ExpandGridView;
 import com.juns.wechat.chat.widght.PasteEditText;
+import com.juns.wechat.chat.xmpp.iq.FileTransferIQ;
 import com.juns.wechat.util.BitmapUtil;
 import com.juns.wechat.util.LogUtil;
 import com.juns.wechat.util.PhotoUtil;
@@ -237,7 +239,7 @@ public class ChatInputManager implements View.OnClickListener {
                 recordVideo();       //录制视频
                 break;
             case R.id.view_location:
-                sendLocation();       //发送位置
+                openMap();       //点击位置图标
                 break;
             case R.id.view_file:
                 // selectFileFromLocal(); // 发送文件
@@ -270,19 +272,6 @@ public class ChatInputManager implements View.OnClickListener {
     }
 
     /**
-     * 发送文本消息
-     *
-     * @param otherUserName
-     */
-    private void sendText(String otherUserName) {
-        String content = etInputText.getText().toString();
-        if (!TextUtils.isEmpty(content)) {
-            SendMessage.sendTextMsg(otherUserName, content);
-            etInputText.getText().clear();
-        }
-    }
-
-    /**
      * 从图库获取图片
      */
     private void selectPicFromLocal() {
@@ -292,19 +281,71 @@ public class ChatInputManager implements View.OnClickListener {
     }
 
     private void takeCamera() {
-        mChatActivity.cameraFile = com.style.utils.CommonUtil.takePhoto(mChatActivity, FileConfig.DIR_IMAGE, String.valueOf(System.currentTimeMillis()) + ".jpg");
+        mChatActivity.cameraFile = CommonUtil.takePhoto(mChatActivity, FileConfig.DIR_IMAGE + File.separator + String.valueOf(System.currentTimeMillis()) + ".jpg");
     }
 
     private void recordVideo() {
         mChatActivity.startActivityForResult(new Intent(mChatActivity, CameraActivity.class), Skip.CODE_RECORD_VIDEO);
     }
 
-    /***
-     * 发送语音消息
+    private void openMap() {
+        mChatActivity.startActivityForResult(new Intent(mChatActivity, BaiduMapActivity.class), Skip.CODE_MAP);
+    }
+
+
+    /**
+     * 显示语音图标按钮
      *
-     * @param seconds
-     * @param filePath
+     * @param view
      */
+    public void setModeVoice(View view) {
+        CommonUtil.hiddenSoftInput(mChatActivity);
+        rlInputText.setVisibility(View.GONE);
+        llMore.setVisibility(View.GONE);
+        view.setVisibility(View.GONE);
+        btnSetModeKeyBoard.setVisibility(View.VISIBLE);
+        btnSend.setVisibility(View.GONE);
+        viewMore.setVisibility(View.VISIBLE);
+        llPressToSpeak.setVisibility(View.VISIBLE);
+        viewEmoticon.setChecked(false);
+        llMoreFunctionContainer.setVisibility(View.VISIBLE);
+        llEmoticonContainer.setVisibility(View.GONE);
+    }
+
+    /**
+     * 显示键盘图标
+     *
+     * @param view
+     */
+    public void setModeKeyboard(View view) {
+        rlInputText.setVisibility(View.VISIBLE);
+        llMore.setVisibility(View.GONE);
+        view.setVisibility(View.GONE);
+        btnSetModeVoice.setVisibility(View.VISIBLE);
+        etInputText.requestFocus();
+        llPressToSpeak.setVisibility(View.GONE);
+        if (TextUtils.isEmpty(etInputText.getText())) {
+            viewMore.setVisibility(View.VISIBLE);
+            btnSend.setVisibility(View.GONE);
+        } else {
+            viewMore.setVisibility(View.GONE);
+            btnSend.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void sendText(String otherUserName) {
+        String content = etInputText.getText().toString();
+        if (!TextUtils.isEmpty(content)) {
+            SendMessage.sendTextMsg(otherUserName, content);
+            etInputText.getText().clear();
+        }
+    }
+
+    public void sendLocation(String contactName, double latitude, double longitude, String address) {
+        SendMessage.sendLocationMsg(contactName, latitude, longitude, address);
+        etInputText.getText().clear();
+    }
+
     private void sendVoice(String otherUserName, int seconds, String filePath) {
         File file = new File(filePath);
         if (!file.exists()) {
@@ -314,11 +355,6 @@ public class ChatInputManager implements View.OnClickListener {
         SendMessage.sendVoiceMsg(otherUserName, seconds, filePath);
     }
 
-    /**
-     * 发送图片
-     *
-     * @param filePaths
-     */
     public void sendPicture(final String otherUserName, final ArrayList<String> filePaths) {
         if (filePaths == null || filePaths.isEmpty()) {
             throw new NullPointerException("filePaths should not be empty");
@@ -378,11 +414,6 @@ public class ChatInputManager implements View.OnClickListener {
         });
     }
 
-    private void sendLocation() {
-        Intent intent = new Intent(mChatActivity, SendLocationActivity.class);
-        mChatActivity.startActivity(intent);
-    }
-
     /**
      * 拨打语音电话
      */
@@ -392,46 +423,6 @@ public class ChatInputManager implements View.OnClickListener {
         mChatActivity.startActivity(intent);
     }
 
-
-    /**
-     * 显示语音图标按钮
-     *
-     * @param view
-     */
-    public void setModeVoice(View view) {
-        CommonUtil.hiddenSoftInput(mChatActivity);
-        rlInputText.setVisibility(View.GONE);
-        llMore.setVisibility(View.GONE);
-        view.setVisibility(View.GONE);
-        btnSetModeKeyBoard.setVisibility(View.VISIBLE);
-        btnSend.setVisibility(View.GONE);
-        viewMore.setVisibility(View.VISIBLE);
-        llPressToSpeak.setVisibility(View.VISIBLE);
-        viewEmoticon.setChecked(false);
-        llMoreFunctionContainer.setVisibility(View.VISIBLE);
-        llEmoticonContainer.setVisibility(View.GONE);
-    }
-
-    /**
-     * 显示键盘图标
-     *
-     * @param view
-     */
-    public void setModeKeyboard(View view) {
-        rlInputText.setVisibility(View.VISIBLE);
-        llMore.setVisibility(View.GONE);
-        view.setVisibility(View.GONE);
-        btnSetModeVoice.setVisibility(View.VISIBLE);
-        etInputText.requestFocus();
-        llPressToSpeak.setVisibility(View.GONE);
-        if (TextUtils.isEmpty(etInputText.getText())) {
-            viewMore.setVisibility(View.VISIBLE);
-            btnSend.setVisibility(View.GONE);
-        } else {
-            viewMore.setVisibility(View.GONE);
-            btnSend.setVisibility(View.VISIBLE);
-        }
-    }
 
     private void onClickFaceView(boolean isChecked) {
         if (isChecked) {//选中表示打开对应界面
