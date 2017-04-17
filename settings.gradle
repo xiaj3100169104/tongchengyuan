@@ -1,4 +1,4 @@
 include ':app'
-include ':MaterialProgressBar'
+include ':LibProgressbar'
 include ':LRecyclerview_library'
 include ':LibVideoRecord'

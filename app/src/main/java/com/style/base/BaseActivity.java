@@ -1,14 +1,11 @@
 package com.style.base;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -17,11 +14,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.juns.wechat.R;
-import com.juns.wechat.dialog.FlippingLoadingDialog;
 import com.juns.wechat.util.ToastUtil;
 import com.style.manager.LogManager;
 import com.style.manager.ToastManager;
-import com.style.dialog.MaterialProgressDialog;
+import com.style.dialog.LoadingDialog;
 import com.style.rxAndroid.RXTaskManager;
 import com.style.utils.CommonUtil;
 
@@ -35,7 +31,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected Integer mLayoutResID;
     protected View mContentView;
     protected boolean isVisibleToUser = false;
-    private MaterialProgressDialog progressDialog;
+    private LoadingDialog progressDialog;
 
     protected abstract void initData();
 
@@ -165,7 +161,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void showProgressDialog(String msg) {
         if (progressDialog == null)
-            progressDialog = new MaterialProgressDialog(mContext);
+            progressDialog = new LoadingDialog(mContext);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setMessage(msg);
         progressDialog.show();

@@ -10,14 +10,14 @@ import android.widget.TextView;
 
 import com.juns.wechat.R;
 
-public class MaterialProgressDialog extends Dialog {
+public class LoadingDialog extends Dialog {
 
-    public MaterialProgressDialog(Context context) {
+    public LoadingDialog(Context context) {
         this(context, R.style.Dialog_NoTitle);
         init();
     }
 
-    public MaterialProgressDialog(Context context, int theme) {
+    public LoadingDialog(Context context, int theme) {
         super(context, theme);
         init();
     }
