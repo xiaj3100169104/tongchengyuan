@@ -258,14 +258,7 @@ public class BaiduMapActivity extends BaseActivity implements OnClickListener {
                 finish();
                 break;
             case R.id.txt_right:
-                if (lastLocation != null) {
-                    Intent intent = getIntent();
-                    intent.putExtra("latitude", lastLocation.getLatitude());
-                    intent.putExtra("longitude", lastLocation.getLongitude());
-                    intent.putExtra("address", lastLocation.getAddrStr());
-                    setResult(RESULT_OK, intent);
-                    finish();
-                }
+
                 break;
             default:
                 break;

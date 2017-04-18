@@ -1,8 +1,10 @@
 package com.juns.wechat.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.CheckBox;
@@ -15,6 +17,7 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapStatus;
+import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MapViewLayoutParams;
@@ -31,12 +34,13 @@ import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.juns.wechat.R;
 import com.style.base.BaseToolbarActivity;
 import com.juns.wechat.util.LogUtil;
+import com.style.base.BaseToolbarBtnActivity;
 
 import java.util.List;
 
 import butterknife.Bind;
 
-public class SendLocationActivity extends BaseToolbarActivity implements OnGetGeoCoderResultListener {
+public class SendLocationActivity extends BaseToolbarBtnActivity implements OnGetGeoCoderResultListener {
     @Bind(R.id.ivMarker)
     ImageView ivMarker;
     /**
@@ -57,6 +61,8 @@ public class SendLocationActivity extends BaseToolbarActivity implements OnGetGe
     private MarkerOptions markOps;
     GeoCoder mSearch = null; // 搜索模块，也可去掉地图模块独立使用
     private Point mCenterPoint;
+    private ReverseGeoCodeResult targetLocation;
+    private boolean isSelect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,8 +75,13 @@ public class SendLocationActivity extends BaseToolbarActivity implements OnGetGe
     public void initData() {
 
         mMapView = (MapView) findViewById(R.id.bmapView);
+        setToolbarTitle("选择位置");
+        getToolbarRightView().setText("发送");
+        Intent intent = getIntent();
+        isSelect = intent.getBooleanExtra("select", true);
+        if (!isSelect)
+            getToolbarRightView().setVisibility(View.GONE);
         mBaiduMap = mMapView.getMap();
-
         mUiSettings = mBaiduMap.getUiSettings();
         mBaiduMap.setOnMapStatusChangeListener(new BaiduMap.OnMapStatusChangeListener() {
             @Override
@@ -103,6 +114,12 @@ public class SendLocationActivity extends BaseToolbarActivity implements OnGetGe
         // 初始化搜索模块，注册事件监听
         mSearch = GeoCoder.newInstance();
         mSearch.setOnGetGeoCodeResultListener(this);
+        if (!isSelect) {
+            double latitude = intent.getDoubleExtra("latitude", 0);
+            double longitude = intent.getDoubleExtra("longitude", 0);
+            String address = intent.getStringExtra("address");
+            moveMapViewToMarkerByLocation(latitude, longitude);
+        }
 
         initLocation();
     }
@@ -115,24 +132,45 @@ public class SendLocationActivity extends BaseToolbarActivity implements OnGetGe
         LocationClientOption option = new LocationClientOption();
         option.setOpenGps(true); // 打开gps
         option.setCoorType("bd09ll"); // 设置坐标类型
-        option.setScanSpan(1000);
+        option.setScanSpan(10000);
         mLocClient.setLocOption(option);
         mLocClient.start();
     }
 
     @Override
     public void onGetGeoCodeResult(GeoCodeResult geoCodeResult) {
-
+        Log.e(TAG, "onGetGeoCodeResult");
+        LatLng latLng = geoCodeResult.getLocation();
+        Log.e(TAG, "经纬度:" + latLng.latitude + "--" + latLng.longitude);
+        Log.e(TAG, "address:" + geoCodeResult.getAddress());
     }
 
     @Override
     public void onGetReverseGeoCodeResult(ReverseGeoCodeResult reverseGeoCodeResult) {
+        targetLocation = reverseGeoCodeResult;
+        LatLng latLng = reverseGeoCodeResult.getLocation();
+        Log.e(TAG, "经纬度:" + latLng.latitude + "--" + latLng.longitude);
         String address = reverseGeoCodeResult.getAddress();
-        LogUtil.i("标记: " + address);
+        LogUtil.e("address: " + address);
+        LogUtil.e("getSematicDescription: " + reverseGeoCodeResult.getSematicDescription());
+        LogUtil.e("getBusinessCircle: " + reverseGeoCodeResult.getBusinessCircle());
         List<PoiInfo> poiInfos = reverseGeoCodeResult.getPoiList();
         for (PoiInfo poiInfo : poiInfos) {
             LogUtil.i("附近:" + poiInfo.address);
         }
+    }
+
+    @Override
+    protected void onClickTitleRightView() {
+        if (targetLocation != null) {
+            LatLng latLng = targetLocation.getLocation();
+            Intent intent = getIntent();
+            intent.putExtra("latitude", latLng.latitude);
+            intent.putExtra("longitude", latLng.longitude);
+            intent.putExtra("address", targetLocation.getAddress());
+            setResult(RESULT_OK, intent);
+        }
+        finish();
     }
 
     /**
@@ -146,39 +184,40 @@ public class SendLocationActivity extends BaseToolbarActivity implements OnGetGe
             if (location == null || mMapView == null) {
                 return;
             }
-            //  LogUtil.i("myLocation: " + location.getAddress().address);
-            MyLocationData locData = new MyLocationData.Builder()
-                    //.accuracy(location.getRadius())
-                    // 此处设置开发者获取到的方向信息，顺时针0-360
-                    .direction(100).latitude(location.getLatitude())
-                    .longitude(location.getLongitude()).build();
-            mBaiduMap.setMyLocationData(locData);
-            if (isFirstLoc) {
+            Log.d(TAG, "经纬度:" + location.getLatitude() + "--" + location.getLongitude());
+            Log.d(TAG, "address:" + location.getAddrStr());
+
+            if (isFirstLoc && isSelect) {//选择位置时才自动定位
                 isFirstLoc = false;
-                LatLng ll = new LatLng(location.getLatitude(),
-                        location.getLongitude());
-                MapStatus.Builder builder = new MapStatus.Builder();
-                builder.target(ll).zoom(18.0f);
-
-                // 初始化当前MapView中心屏幕坐标，初始化当前地理坐标
-                mCenterPoint = mBaiduMap.getMapStatus().targetScreen;
-                mCenterPoint.y = (int) (mMapView.getY() + mMapView.getMeasuredHeight() / 2);
-                LogUtil.i("X: " + mCenterPoint.x + ", Y: " + mCenterPoint.y);
-                builder.targetScreen(mCenterPoint);
-                int w = ivMarker.getMeasuredWidth();
-                int h = ivMarker.getMeasuredHeight();
-                int x = (int) (mCenterPoint.x - w * 0.5);
-                int y = (int) (mCenterPoint.y - h);
-                ivMarker.setLeft(x);
-                ivMarker.setTop(y);
-
-                mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
-
+                moveMapViewToMarkerByLocation(location.getLatitude(), location.getLongitude());
             }
         }
 
-        public void onReceivePoi(BDLocation poiLocation) {
-        }
+    }
+
+    private void moveMapViewToMarkerByLocation(double latitude, double longitude) {
+        MyLocationData locData = new MyLocationData.Builder()
+                //.accuracy(location.getRadius())
+                // 此处设置开发者获取到的方向信息，顺时针0-360
+                .direction(100).latitude(latitude).longitude(longitude).build();
+        mBaiduMap.setMyLocationData(locData);
+        LatLng ll = new LatLng(latitude, longitude);
+        MapStatus.Builder builder = new MapStatus.Builder();
+        builder.target(ll).zoom(18.0f);
+
+        // 初始化当前MapView中心屏幕坐标，初始化当前地理坐标
+        mCenterPoint = mBaiduMap.getMapStatus().targetScreen;
+        mCenterPoint.y = (int) (mMapView.getY() + mMapView.getMeasuredHeight() / 2);
+        LogUtil.e("X: " + mCenterPoint.x + ", Y: " + mCenterPoint.y);
+        builder.targetScreen(mCenterPoint);
+        int w = ivMarker.getMeasuredWidth();
+        int h = ivMarker.getMeasuredHeight();
+        int x = (int) (mCenterPoint.x - w * 0.5);
+        int y = (int) (mCenterPoint.y - h);
+        ivMarker.setLeft(x);
+        ivMarker.setTop(y);
+        MapStatusUpdate mapStatusUpdate = MapStatusUpdateFactory.newMapStatus(builder.build());
+        mBaiduMap.animateMapStatus(mapStatusUpdate);
     }
 
     /**

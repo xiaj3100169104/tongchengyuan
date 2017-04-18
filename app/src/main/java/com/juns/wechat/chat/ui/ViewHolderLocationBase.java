@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.juns.wechat.R;
+import com.juns.wechat.activity.SendLocationActivity;
 import com.juns.wechat.chat.BaiduMapActivity;
 import com.juns.wechat.chat.bean.LocationMsg;
 import com.style.utils.CommonUtil;
@@ -34,10 +35,11 @@ public class ViewHolderLocationBase extends BaseMsgViewHolder {
     @Override
     protected void onClickLayoutContainer() {
         super.onClickLayoutContainer();
-        Intent i = new Intent(context, BaiduMapActivity.class);
+        Intent i = new Intent(context, SendLocationActivity.class);
         i.putExtra("latitude", msg.latitude);
         i.putExtra("longitude", msg.longitude);
         i.putExtra("address", msg.address);
+        i.putExtra("select", false);
         context.startActivity(i);
 
     }

@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 
 import com.juns.wechat.R;
-import com.style.base.BaseActivity;
 
 import org.simple.eventbus.EventBus;
 
