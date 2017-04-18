@@ -24,7 +24,6 @@ public class SplashActivity extends BaseActivity {
     protected void initData() {
         UserBean userBean = AccountManager.getInstance().getUser();
         if (userBean != null) {
-            showProgressDialog("正在同步数据");
             SyncDataUtil.getInstance().syncData(TAG, new SyncDataUtil.Callback() {
                 @Override
                 public void onSuccess() {
@@ -33,8 +32,7 @@ public class SplashActivity extends BaseActivity {
 
                 @Override
                 public void onFailure() {
-                    dismissProgressDialog();
-                    showToast("数据同步错误");
+                    pageToHome();
                 }
             });
         } else {

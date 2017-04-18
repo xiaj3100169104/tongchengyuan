@@ -40,6 +40,7 @@ public abstract class MessageProcess {
      * 2：将消息存入数据库
      * 3：发出提示音和显示通知
      * 特定类型的消息需要重写此方法
+     * 注：此时用不着下载图片或者视频编码之类的
      * @param messageBean
      * @return
      */

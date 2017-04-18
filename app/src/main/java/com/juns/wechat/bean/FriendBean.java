@@ -40,7 +40,7 @@ public class FriendBean {
     private long modifyDate;
     private String sortLetters;
 
-    public FriendBean(){
+    public FriendBean() {
 
     }
 
@@ -108,21 +108,20 @@ public class FriendBean {
         this.sortLetters = sortLetters;
     }
 
-    public UserBean getContactUser() throws UserNotFoundException{
+    public UserBean getContactUser() throws UserNotFoundException {
         try {
-            UserBean userBean =
-                    DbUtil.getDbManager().selector(UserBean.class).where(UserBean.USER_ID, "=", contactId).findFirst();
-            if(userBean != null) return userBean;
+            UserBean userBean = DbUtil.getDbManager().selector(UserBean.class).where(UserBean.USER_ID, "=", contactId).findFirst();
+            if (userBean != null) return userBean;
         } catch (DbException e) {
             e.printStackTrace();
         }
         throw new UserNotFoundException();
     }
 
-    public String getShowName(){
-        if(!TextUtils.isEmpty(remark)){
+    public String getShowName() {
+        if (!TextUtils.isEmpty(remark)) {
             return remark;
-        }else{
+        } else {
             try {
                 UserBean userBean = getContactUser();
                 return userBean.getShowName();
@@ -133,7 +132,7 @@ public class FriendBean {
         }
     }
 
-    public String getHeadUrl(){
+    public String getHeadUrl() {
         try {
             UserBean userBean = getContactUser();
             return userBean.getHeadUrl();

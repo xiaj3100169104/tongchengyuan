@@ -1,7 +1,6 @@
 package com.juns.wechat.chat.xmpp.util;
 
 
-
 import com.juns.wechat.common.BASE64;
 
 import java.io.BufferedOutputStream;
@@ -19,12 +18,9 @@ import java.io.OutputStream;
 public class MsgCode {
     private String TAG = MsgCode.class.getName();
 
-    public String encode(String filePath){
+    public String encode(String filePath) {
         byte[] data = null;
-
-        // 读取图片字节数组
         try {
-
             InputStream in = new FileInputStream(filePath);
             data = new byte[in.available()];
             in.read(data);
@@ -32,21 +28,20 @@ public class MsgCode {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         // 对字节数组Base64编码=1
-
         BASE64 encoder = new BASE64();
         return encoder.encode(data);// 返回Base64编码过的字节数组字符串*/
     }
 
     /**
      * 将字符串解码并存入指定文件中
+     *
      * @param encodedStr
      * @param filePath
      * @return
      */
-    public boolean decode(String encodedStr, String filePath){
-        if (encodedStr == null) // 图像数据为空
+    public boolean decode(String encodedStr, String filePath) {
+        if (encodedStr == null)
             return false;
         try {
             BASE64 decoder = new BASE64();
