@@ -43,7 +43,7 @@ public class BaiduMapActivity extends BaseActivity implements OnClickListener {
     FrameLayout mMapViewContainer = null;
     // 定位相关
     LocationClient mLocClient;
-    public MyLocationListenner myListener = new MyLocationListenner();
+    public MyLocationListener myListener = new MyLocationListener();
     public NotifyLister mNotifyer = null;
     private TextView txt_right, txt_title;
     private ImageView img_back;
@@ -51,7 +51,6 @@ public class BaiduMapActivity extends BaseActivity implements OnClickListener {
     private int index = 0;
     // LocationData locData = null;
     private static BDLocation lastLocation = null;
-    public static BaiduMapActivity instance = null;
     // private ProgressDialog progressDialog;
     private BaiduMap mBaiduMap;
     private FlippingLoadingDialog mLoadingDialog;
@@ -65,22 +64,30 @@ public class BaiduMapActivity extends BaseActivity implements OnClickListener {
         public void onReceive(Context context, Intent intent) {
             String s = intent.getAction();
             if (s.equals(SDKInitializer.SDK_BROADTCAST_ACTION_STRING_PERMISSION_CHECK_ERROR)) {
-                Toast.makeText(instance,
+                Toast.makeText(BaiduMapActivity.this,
                         "key 验证出错! 请在 AndroidManifest.xml 文件中检查 key 设置",
                         Toast.LENGTH_SHORT).show();
             } else if (s
                     .equals(SDKInitializer.SDK_BROADCAST_ACTION_STRING_NETWORK_ERROR)) {
-                Toast.makeText(instance, "网络出错", Toast.LENGTH_SHORT).show();
+                Toast.makeText(BaiduMapActivity.this, "网络出错", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
     @Override
-    public void initData() {
-        instance = this;
+    public void onCreate(Bundle savedInstanceState) {
         // 在使用SDK各组件之前初始化context信息，传入ApplicationContext
         // 注意该方法要再setContentView方法之前实现
         SDKInitializer.initialize(getApplicationContext());
+
+        mLayoutResID = R.layout.activity_baidumap;
+        super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
+    public void initData() {
+
         mMapView = (MapView) findViewById(R.id.bmapView);
         txt_right = (TextView) findViewById(R.id.txt_right);
         txt_right.setText("发送");
@@ -120,13 +127,6 @@ public class BaiduMapActivity extends BaseActivity implements OnClickListener {
         initClick();
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        mLayoutResID = R.layout.activity_baidumap;
-        super.onCreate(savedInstanceState);
-
-    }
-
     private void initClick() {
         txt_right.setOnClickListener(this);
         img_back.setOnClickListener(this);
@@ -141,12 +141,11 @@ public class BaiduMapActivity extends BaseActivity implements OnClickListener {
         LatLng convertLatLng = converter.convert();
         OverlayOptions ooA = new MarkerOptions()
                 .position(convertLatLng)
-                .icon(BitmapDescriptorFactory
-                        .fromResource(R.drawable.icon_marka)).zIndex(4)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_marka))
+                .zIndex(4)
                 .draggable(true);
         mBaiduMap.addOverlay(ooA);
-        MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(convertLatLng,
-                17.0f);
+        MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(convertLatLng, 17.0f);
         mBaiduMap.animateMapStatus(u);
     }
 
@@ -203,14 +202,14 @@ public class BaiduMapActivity extends BaseActivity implements OnClickListener {
     /**
      * 监听函数，有新位置的时候，格式化成字符串，输出到屏幕中
      */
-    public class MyLocationListenner implements BDLocationListener {
+    public class MyLocationListener implements BDLocationListener {
         @Override
         public void onReceiveLocation(BDLocation location) {
             if (location == null) {
                 return;
             }
             Log.d("map", "On location change received:" + location);
-            Log.d("map", "addr:" + location.getAddrStr());
+            Log.d("map", "address:" + location.getAddrStr());
             txt_right.setEnabled(true);
             if (mLoadingDialog != null) {
                 mLoadingDialog.dismiss();
@@ -218,37 +217,27 @@ public class BaiduMapActivity extends BaseActivity implements OnClickListener {
 
             if (lastLocation != null) {
                 if (lastLocation.getLatitude() == location.getLatitude()
-                        && lastLocation.getLongitude() == location
-                        .getLongitude()) {
+                        && lastLocation.getLongitude() == location.getLongitude()) {
                     Log.d("map", "same location, skip refresh");
-
-                    // mMapView.refresh(); //need this refresh?
+                    //mMapView.refresh(); //need this refresh?
                     return;
                 }
             }
             lastLocation = location;
             mBaiduMap.clear();
-            LatLng llA = new LatLng(lastLocation.getLatitude(),
-                    lastLocation.getLongitude());
+            LatLng llA = new LatLng(lastLocation.getLatitude(), lastLocation.getLongitude());
             CoordinateConverter converter = new CoordinateConverter();
             converter.coord(llA);
             converter.from(CoordinateConverter.CoordType.COMMON);
             LatLng convertLatLng = converter.convert();
             OverlayOptions ooA = new MarkerOptions()
                     .position(convertLatLng)
-                    .icon(BitmapDescriptorFactory
-                            .fromResource(R.drawable.icon_marka)).zIndex(2)
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.icon_marka))
+                    .zIndex(2)
                     .draggable(true);
             mBaiduMap.addOverlay(ooA);
-            MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(
-                    convertLatLng, 17.0f);
+            MapStatusUpdate u = MapStatusUpdateFactory.newLatLngZoom(convertLatLng, 17.0f);
             mBaiduMap.animateMapStatus(u);
-        }
-
-        public void onReceivePoi(BDLocation poiLocation) {
-            if (poiLocation == null) {
-                return;
-            }
         }
     }
 
