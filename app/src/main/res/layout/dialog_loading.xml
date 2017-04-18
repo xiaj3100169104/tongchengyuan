@@ -1,17 +1,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rela_dialog"
     android:layout_width="300dp"
     android:layout_height="70dp"
     android:gravity="center_vertical"
     android:orientation="horizontal">
 
-    <me.zhanghai.android.materialprogressbar.MaterialProgressBar
+    <com.style.view.progressbar.CirclePercentView
         android:id="@+id/indeterminate_progress"
-        style="@style/Widget.MaterialProgressBar.ProgressBar"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginLeft="20dp"
-        android:indeterminate="true" />
+        android:indeterminate="true"
+        custom:centerTextSize="15sp"
+        custom:percent="75"
+        custom:radius="20dp"
+        custom:stripeWidth="6dp"/>
 
     <TextView
         android:id="@+id/tv_loading_info"

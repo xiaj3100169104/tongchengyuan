@@ -1,28 +1,21 @@
 package com.style.base;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.juns.wechat.R;
-import com.style.dialog.MaterialProgressDialog;
 import com.style.manager.LogManager;
 import com.style.manager.ToastManager;
 import com.style.utils.CommonUtil;
 
 import org.simple.eventbus.EventBus;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.ButterKnife;
 

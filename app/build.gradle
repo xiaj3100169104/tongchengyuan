@@ -60,7 +60,7 @@ dependencies {
     compile 'org.igniterealtime.smack:smack-tcp:4.1.0'
     compile 'com.makeramen:roundedimageview:2.3.0'
     //compile 'me.zhanghai.android.materialprogressbar:library:1.3.0'
-    compile project(':MaterialProgressBar')
+    compile project(':LibProgressbar')
     compile project(':LRecyclerview_library')
     compile project(':LibVideoRecord')
 

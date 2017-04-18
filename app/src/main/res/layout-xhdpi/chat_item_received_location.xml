@@ -30,6 +30,8 @@
                 <TextView
                     android:id="@+id/tv_address"
                     style="@style/chat_item_text_content"
+                    android:maxWidth="90dp"
+                    android:maxHeight="60dp"
                     android:layout_marginLeft="10dp"
                     android:layout_centerVertical="true"
                     android:autoLink="web"
