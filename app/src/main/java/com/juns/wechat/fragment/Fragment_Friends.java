@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -122,9 +123,10 @@ public class Fragment_Friends extends BaseFragment {
         List<FriendBean> list = friendDao.getMyFriends(accountId);
         if (null != list) {
             int size = list.size();
-            for (int i = 0; i < size; i++) {
-                String sortLetter = HanyuToPinyin.hanziToCapital(list.get(i).getShowName());
-                list.get(i).setSortLetters(sortLetter);
+            for (FriendBean f : list) {
+                String hanzi = !TextUtils.isEmpty(f.getRemark()) ? f.getRemark() : f.getContactUser().getShowName();
+                String sortLetter = HanyuToPinyin.hanziToCapital(hanzi);
+                f.setSortLetters(sortLetter);
             }
             // 根据a-z进行排序源数据
             Collections.sort(list, new UploadPhoneComparator());

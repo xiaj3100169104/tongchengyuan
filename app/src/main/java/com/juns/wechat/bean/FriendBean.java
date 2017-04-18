@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.juns.wechat.database.DbUtil;
 import com.juns.wechat.database.FriendTable;
+import com.juns.wechat.database.dao.UserDao;
 import com.juns.wechat.exception.UserNotFoundException;
 
 import org.xutils.db.annotation.Column;
@@ -38,7 +39,9 @@ public class FriendBean {
     private int flag;
     @Column(name = MODIFY_DATE)
     private long modifyDate;
-    private String sortLetters;
+
+    public String sortLetters;
+    public UserBean contactUser;
 
     public FriendBean() {
 
@@ -108,37 +111,14 @@ public class FriendBean {
         this.sortLetters = sortLetters;
     }
 
-    public UserBean getContactUser() throws UserNotFoundException {
-        try {
-            UserBean userBean = DbUtil.getDbManager().selector(UserBean.class).where(UserBean.USER_ID, "=", contactId).findFirst();
-            if (userBean != null) return userBean;
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        throw new UserNotFoundException();
+    public void setContactUser(UserBean userBean) {
+        this.contactUser = userBean;
     }
 
-    public String getShowName() {
-        if (!TextUtils.isEmpty(remark)) {
-            return remark;
-        } else {
-            try {
-                UserBean userBean = getContactUser();
-                return userBean.getShowName();
-            } catch (UserNotFoundException e) {
-                e.printStackTrace();
-            }
-            return "";
-        }
-    }
+    public UserBean getContactUser() {
+        if (contactUser == null)
+            contactUser = UserDao.getInstance().findByUserId(contactId);
+        return contactUser;
 
-    public String getHeadUrl() {
-        try {
-            UserBean userBean = getContactUser();
-            return userBean.getHeadUrl();
-        } catch (UserNotFoundException e) {
-            e.printStackTrace();
-        }
-        return "";
     }
 }

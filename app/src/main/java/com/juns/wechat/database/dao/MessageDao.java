@@ -2,13 +2,16 @@ package com.juns.wechat.database.dao;
 
 import android.database.Cursor;
 
+import com.juns.wechat.App;
 import com.juns.wechat.bean.Flag;
+import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.bean.Msg;
 import com.juns.wechat.fragment.msg.MsgItem;
 import com.juns.wechat.config.MsgType;
 import com.juns.wechat.database.CursorUtil;
+import com.juns.wechat.manager.AccountManager;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.SqlInfo;
@@ -66,8 +69,7 @@ public class MessageDao extends BaseDao<MessageBean>{
      * @param userName
      */
     public List<MsgItem> getLastMessageWithEveryFriend(String userName){
-        SqlInfo sqlInfo = new SqlInfo("select id, otherName, typeDesc, type, date" +
-                " from wcMessage where myselfName = ? and flag != -1 and type < ? group by otherName order by date");
+        SqlInfo sqlInfo = new SqlInfo("select * from wcMessage where myselfName = ? and flag != -1 and type < ? group by otherName order by date");
         sqlInfo.addBindArg(new KeyValue(UserBean.USERNAME, userName));
         sqlInfo.addBindArg(new KeyValue("key2", MsgType.MSG_TYPE_SEND_INVITE));
         try {
@@ -75,12 +77,14 @@ public class MessageDao extends BaseDao<MessageBean>{
             Cursor cursor = dbManager.execQuery(sqlInfo);
             while (cursor.moveToNext()){
                 MsgItem msgItem = new MsgItem();
-                msgItem.itemId = cursor.getInt(cursor.getColumnIndex("id"));
-                msgItem.userName = cursor.getString(cursor.getColumnIndex("otherName"));
-                msgItem.userId = UserDao.getInstance().findByName(msgItem.userName).getUserId();
-                msgItem.content = cursor.getString(cursor.getColumnIndex("typeDesc"));
-                long time = cursor.getLong(cursor.getColumnIndex("date"));
-                msgItem.date = new Date(time);
+                MessageBean msg = CursorUtil.fromCursor(cursor, MessageBean.class);
+                FriendBean friendBean = FriendDao.getInstance().findByOwnerAndContactName(AccountManager.getInstance().getUser().userId, msg.getOtherName());
+                UserBean userBean = UserDao.getInstance().findByName(msg.getOtherName());
+                int unreadMsgCount = MessageDao.getInstance().getUnreadMsgNum(msg.getMyselfName(), msg.getOtherName());
+                msgItem.msg = msg;
+                msgItem.friendBean = friendBean;
+                msgItem.user = userBean;
+                msgItem.unreadMsgCount = unreadMsgCount;
                 msgItems.add(msgItem);
             }
             closeCursor(cursor);

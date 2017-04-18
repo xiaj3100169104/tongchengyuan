@@ -15,6 +15,7 @@ import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.ui.ChatActivity;
 import com.juns.wechat.database.dao.FriendDao;
+import com.juns.wechat.database.dao.UserDao;
 import com.juns.wechat.exception.UserNotFoundException;
 import com.juns.wechat.helper.CommonViewHelper;
 import com.juns.wechat.manager.AccountManager;
@@ -82,30 +83,28 @@ public class UserInfoActivity extends BaseToolbarActivity implements OnClickList
         }
 
         friendBean = FriendDao.getInstance().findByOwnerAndContactName(curUser.getUserId(), userId);
-        if (friendBean == null) {  //不是好友关系
-            HttpActionImpl.getInstance().queryUserData(TAG, userId, new NetDataBeanCallback<UserBean>(UserBean.class) {
-                @Override
-                protected void onCodeSuccess(UserBean data) {
-                    if (data != null) {
-                        userBean =data;
-                        setData();
-                    }
-                }
-
-                @Override
-                protected void onCodeFailure(String msg) {
-
-                }
-            });
-        } else {
+        if (friendBean != null) {  //不是好友关系
             subType = friendBean.getSubType();
-            try {
-                userBean = friendBean.getContactUser();
-                setData();
-            } catch (UserNotFoundException e) {
-                e.printStackTrace();
-            }
         }
+        userBean = UserDao.getInstance().findByUserId(userId);
+        if (userBean != null) {
+            setData();
+        }
+        HttpActionImpl.getInstance().queryUserData(TAG, userId, new NetDataBeanCallback<UserBean>(UserBean.class) {
+            @Override
+            protected void onCodeSuccess(UserBean data) {
+                if (data != null) {
+                    userBean = data;
+                    UserDao.getInstance().save(data);
+                    setData();
+                }
+            }
+
+            @Override
+            protected void onCodeFailure(String msg) {
+                showToast("获取用户信息失败");
+            }
+        });
     }
 
     private void setData() {

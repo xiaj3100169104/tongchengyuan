@@ -27,6 +27,7 @@ import com.juns.wechat.database.dao.DbDataEvent;
 import com.juns.wechat.database.dao.FriendDao;
 import com.juns.wechat.database.ChatTable;
 import com.juns.wechat.database.dao.MessageDao;
+import com.juns.wechat.database.dao.UserDao;
 import com.juns.wechat.exception.UserNotFoundException;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.util.LogUtil;
@@ -115,16 +116,16 @@ public class ChatActivity extends BaseToolbarActivity {
     public void initData() {
         contactId = getIntent().getIntExtra(Skip.KEY_USER_ID, 0);
         friendBean = FriendDao.getInstance().findByOwnerAndContactName(account.getUserId(), contactId);
-        try {
-            contactUser = friendBean.getContactUser();
-            contactName = contactUser.getUserName();
-        } catch (UserNotFoundException e) {
-            e.printStackTrace();
+        contactUser = UserDao.getInstance().findByUserId(friendBean.getContactId());
+        if (contactUser == null) {
             finish();
             return;
         }
 
-        setToolbarTitle(friendBean.getShowName());
+        contactName = contactUser.getUserName();
+        String showName = !TextUtils.isEmpty(friendBean.getRemark()) ? friendBean.getRemark() : contactUser.getShowName();
+
+        setToolbarTitle(showName);
 
         chatInputManager = new ChatInputManager(this);
         chatInputManager.onCreate();
@@ -136,7 +137,6 @@ public class ChatActivity extends BaseToolbarActivity {
         mLRecyclerViewAdapter = new LRecyclerViewAdapter(mDataAdapter);
         mRecyclerView.setAdapter(mLRecyclerViewAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         mRecyclerView.setLoadMoreEnabled(false);
         mRecyclerView.setRefreshProgressStyle(ProgressStyle.BallPulse);
         mRecyclerView.setArrowImageView(R.drawable.ic_pulltorefresh_arrow);
@@ -338,7 +338,7 @@ public class ChatActivity extends BaseToolbarActivity {
      * @param address
      */
     private void sendLocationMsg(double latitude, double longitude, String address) {
-        chatInputManager.sendLocation(contactName,latitude,longitude,address);
+        chatInputManager.sendLocation(contactName, latitude, longitude, address);
     }
 
     /**

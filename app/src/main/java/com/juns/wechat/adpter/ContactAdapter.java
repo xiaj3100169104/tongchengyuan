@@ -2,6 +2,7 @@ package com.juns.wechat.adpter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.juns.wechat.R;
 import com.juns.wechat.bean.FriendBean;
+import com.juns.wechat.bean.UserBean;
 import com.style.base.BaseRecyclerViewAdapter;
 import com.style.manager.ImageLoader;
 import com.style.view.CustomNotifyView;
@@ -91,9 +93,11 @@ public class ContactAdapter extends BaseRecyclerViewAdapter<FriendBean> implemen
             } else {
                 holder.tvCatalog.setVisibility(View.GONE);
             }
+            UserBean u = friendBean.contactUser;
+            ImageLoader.loadAvatar(mContext, holder.ivAvatar, u.getHeadUrl());
+            String showName = !TextUtils.isEmpty(friendBean.getRemark()) ? friendBean.getRemark() : u.getShowName();
+            setText(holder.tvNick, showName);
 
-            ImageLoader.loadAvatar(mContext, holder.ivAvatar, friendBean.getHeadUrl());
-            holder.tvNick.setText(friendBean.getShowName());
             super.setOnItemClickListener(holder, position);
         }
     }

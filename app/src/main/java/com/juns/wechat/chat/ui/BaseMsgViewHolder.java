@@ -21,6 +21,7 @@ import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.database.dao.FriendDao;
+import com.juns.wechat.database.dao.UserDao;
 import com.juns.wechat.exception.UserNotFoundException;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.util.ThreadPoolUtil;
@@ -46,9 +47,7 @@ public abstract class BaseMsgViewHolder extends RecyclerView.ViewHolder {
     protected TextView tvSendPercent;
 
     protected MessageBean messageBean;
-    protected UserBean curUser;
-    protected FriendBean friendBean;
-    protected UserBean contactUser;
+    protected UserBean user;
 
     protected Context context;
     private ViewGroup parent;
@@ -71,6 +70,7 @@ public abstract class BaseMsgViewHolder extends RecyclerView.ViewHolder {
     protected boolean isLeftLayout() {
         return true;
     }
+
     public void setContext(Context mContext, ViewGroup parent) {
         this.context = mContext;
         this.parent = parent;
@@ -79,7 +79,12 @@ public abstract class BaseMsgViewHolder extends RecyclerView.ViewHolder {
     public void setData(MessageBean data, List list, final int position) {
         this.messageBean = data;
         this.position = position;
-        initUser();
+        String userName;
+        if (isLeftLayout())
+            userName = messageBean.getOtherName();
+        else userName = messageBean.getMyselfName();
+        this.user = UserDao.getInstance().findByName(userName);
+
         if (isShowTime(list, position, messageBean)) {
             tvDate.setVisibility(View.VISIBLE);
             tvDate.setText(TimeUtil.getRecentTime(messageBean.getDate()));
@@ -88,18 +93,10 @@ public abstract class BaseMsgViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    private void initUser() {
-        curUser = AccountManager.getInstance().getUser();
-        friendBean = FriendDao.getInstance().findByOwnerAndContactName(curUser.getUserId(), messageBean.getOtherName());
-        try {
-            contactUser = friendBean.getContactUser();
-        } catch (UserNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
     protected void updateView() {
-        loadAvatar();
+        if (user != null)
+            ImageLoader.loadAvatar(context, viewAvatar, user.getHeadUrl());
+
         viewAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -153,23 +150,15 @@ public abstract class BaseMsgViewHolder extends RecyclerView.ViewHolder {
         return mMsgTime - mPrevMsgTime > MSG_TIME_INTERVAL;
     }
 
-    public void loadAvatar() {
-        String url = curUser.getHeadUrl();
-        if (isLeftLayout())
-            url = contactUser.getHeadUrl();
-        ImageLoader.loadAvatar(context, viewAvatar, url);
-    }
-
     /**
      * 点击用户头像的事件
      */
     protected void onUserPhotoClick() {
-        int userId = curUser.getUserId();
-        if (isLeftLayout())
-            userId = contactUser.getUserId();
-        Intent intent = new Intent(context, UserInfoActivity.class);
-        intent.putExtra(Skip.KEY_USER_ID, userId);
-        context.startActivity(intent);
+        if (user!=null){
+            Intent intent = new Intent(context, UserInfoActivity.class);
+            intent.putExtra(Skip.KEY_USER_ID, user.userId);
+            context.startActivity(intent);
+        }
     }
 
     protected void onSending() {
@@ -208,6 +197,7 @@ public abstract class BaseMsgViewHolder extends RecyclerView.ViewHolder {
         Log.e(TAG, "onClickLayoutContainer");
 
     }
+
     protected void onLongClickLayoutContainer() {
         Log.e(TAG, "onLongClickLayoutContainer");
         ChatActivity chatActivity = (ChatActivity) context;

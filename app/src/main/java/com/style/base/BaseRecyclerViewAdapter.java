@@ -158,7 +158,7 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Re
         LogManager.logE(tag, msg);
     }
 
-    protected void setText(TextView textView, String str) {
+    protected void setText(TextView textView, CharSequence str) {
         CommonUtil.setText(textView, str);
     }
 

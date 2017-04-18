@@ -30,7 +30,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/contactitem_layout"
+            android:id="@+id/contact_item_layout"
             style="@style/MMListItem"
             android:layout_height="65.0dip"
             android:background="@color/white"

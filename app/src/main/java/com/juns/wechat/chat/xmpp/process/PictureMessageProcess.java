@@ -17,48 +17,4 @@ public class PictureMessageProcess extends MessageProcess {
         super(context);
     }
 
-    /**
-     * 先下载图片，无论下载成功还是失败都会保存进数据库
-     *
-     * @param messageBean
-     */
-    @Override
-    public void processMessage(MessageBean messageBean) {
-        PictureMsg pictureMsg = (PictureMsg) messageBean.getMsgObj();
-        FileTransferManager fileTransferManager = new FileTransferManager();
-        fileTransferManager.downloadFile(FileConfig.DIR_CACHE + "/" + pictureMsg.imgName, pictureMsg.size, new MyProgressListener(messageBean));
-    }
-
-    class MyProgressListener implements FileTransferManager.ProgressListener {
-        private MessageBean messageBean;
-        private int progress = 0;
-
-        public MyProgressListener(MessageBean messageBean) {
-            this.messageBean = messageBean;
-        }
-
-        @Override
-        public void progressUpdated(int progress) {
-            this.progress = progress;
-        }
-
-        @Override
-        public void transferFinished() {
-            progress = 100;
-            saveMessage(progress);
-            noticeShow(messageBean);
-        }
-
-        @Override
-        public void onFailed() {
-
-        }
-
-        private void saveMessage(int progress) {
-            PictureMsg pictureMsg = (PictureMsg) messageBean.getMsgObj();
-            pictureMsg.progress = progress;
-            messageBean.setMsg(pictureMsg.toJson());
-            saveMessageToDB(messageBean);
-        }
-    }
 }
