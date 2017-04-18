@@ -116,7 +116,7 @@ public class BaiduMapActivity extends BaseActivity implements OnClickListener {
             String address = intent.getStringExtra("address");
             LatLng p = new LatLng(latitude, longitude);
             mMapView = new MapView(this, new BaiduMapOptions().mapStatus(new MapStatus.Builder().target(p).build()));
-            showMap(latitude, longitude, address);
+            showMap(latitude, longitude);
         }
         // 注册 SDK 广播监听者
         IntentFilter iFilter = new IntentFilter();
@@ -132,7 +132,7 @@ public class BaiduMapActivity extends BaseActivity implements OnClickListener {
         img_back.setOnClickListener(this);
     }
 
-    private void showMap(double latitude, double longitude, String address) {
+    private void showMap(double latitude, double longitude) {
         txt_right.setVisibility(View.GONE);
         LatLng llA = new LatLng(latitude, longitude);
         CoordinateConverter converter = new CoordinateConverter();
@@ -162,7 +162,8 @@ public class BaiduMapActivity extends BaseActivity implements OnClickListener {
         // Johnson change to use gcj02 coordination. chinese national standard
         // so need to conver to bd09 everytime when draw on baidu map
         option.setCoorType("gcj02");
-        option.setScanSpan(30000);
+        //多久把当前位置移动到中心标杆处
+        //option.setScanSpan(1000);
         option.setAddrType("all");
         mLocClient.setLocOption(option);
     }
@@ -208,7 +209,7 @@ public class BaiduMapActivity extends BaseActivity implements OnClickListener {
             if (location == null) {
                 return;
             }
-            Log.d("map", "On location change received:" + location);
+            Log.d("map", "经纬度:" + location.getLatitude() + "--" + location.getLongitude());
             Log.d("map", "address:" + location.getAddrStr());
             txt_right.setEnabled(true);
             if (mLoadingDialog != null) {
@@ -220,7 +221,7 @@ public class BaiduMapActivity extends BaseActivity implements OnClickListener {
                         && lastLocation.getLongitude() == location.getLongitude()) {
                     Log.d("map", "same location, skip refresh");
                     //mMapView.refresh(); //need this refresh?
-                    return;
+                    //return;
                 }
             }
             lastLocation = location;

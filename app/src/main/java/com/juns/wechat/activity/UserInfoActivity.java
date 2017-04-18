@@ -89,13 +89,14 @@ public class UserInfoActivity extends BaseToolbarActivity implements OnClickList
         userBean = UserDao.getInstance().findByUserId(userId);
         if (userBean != null) {
             setData();
+            return;
         }
         HttpActionImpl.getInstance().queryUserData(TAG, userId, new NetDataBeanCallback<UserBean>(UserBean.class) {
             @Override
             protected void onCodeSuccess(UserBean data) {
                 if (data != null) {
                     userBean = data;
-                    UserDao.getInstance().save(data);
+                    UserDao.getInstance().replace(data);
                     setData();
                 }
             }
