@@ -26,7 +26,8 @@
                 <ImageView
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:src="@drawable/location_msg"/>
+                    android:src="@drawable/location_msg"
+                    android:clickable="false"/>
                 <TextView
                     android:id="@+id/tv_address"
                     style="@style/chat_item_text_content"
@@ -36,7 +37,8 @@
                     android:layout_centerVertical="true"
                     android:autoLink="web"
                     android:lineSpacingExtra="2dp"
-                    tools:text="成都市" />
+                    tools:text="成都市"
+                    android:clickable="false"/>
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>

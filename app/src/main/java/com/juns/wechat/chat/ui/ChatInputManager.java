@@ -289,7 +289,7 @@ public class ChatInputManager implements View.OnClickListener {
     }
 
     private void openMap() {
-        mChatActivity.startActivityForResult(new Intent(mChatActivity, BaiduMapActivity.class), Skip.CODE_MAP);
+        mChatActivity.startActivityForResult(new Intent(mChatActivity, SendLocationActivity.class), Skip.CODE_MAP);
     }
 
 
