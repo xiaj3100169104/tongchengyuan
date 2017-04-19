@@ -35,7 +35,7 @@ public class ChatAdapter extends BaseRecyclerViewAdapter<MessageBean> {
     @Override
     public int getItemViewType(int position) {
         int viewType = -1;
-        MessageBean msg = (MessageBean) list.get(position);
+        MessageBean msg = list.get(position);
         int direction = msg.getDirection();
         switch (msg.getType()) {
             case MsgType.MSG_TYPE_TEXT:
