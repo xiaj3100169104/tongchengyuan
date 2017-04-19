@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * xiajun
  */
-public class ChatAdapter extends BaseRecyclerViewAdapter {
+public class ChatAdapter extends BaseRecyclerViewAdapter<MessageBean> {
     private static final int MSG_TYPE_TEXT_LEFT = 0;
     private static final int MSG_TYPE_TEXT_RIGHT = 1;
     private static final int MSG_TYPE_PICTURE_LEFT = 2;
@@ -28,7 +28,7 @@ public class ChatAdapter extends BaseRecyclerViewAdapter {
     private static final int MSG_TYPE_LOCATION_LEFT = 8;
     private static final int MSG_TYPE_LOCATION_RIGHT = 9;
 
-    public ChatAdapter(Context context, List list) {
+    public ChatAdapter(Context context, List<MessageBean> list) {
         super(context, list);
     }
 
@@ -118,7 +118,7 @@ public class ChatAdapter extends BaseRecyclerViewAdapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        MessageBean messageBean = (MessageBean) getData(position);
+        MessageBean messageBean = getData(position);
         BaseMsgViewHolder baseMsgViewHolder = (BaseMsgViewHolder) viewHolder;
         baseMsgViewHolder.setData(messageBean, list, position);
         switch (getItemViewType(position)) {
@@ -153,6 +153,7 @@ public class ChatAdapter extends BaseRecyclerViewAdapter {
             case MSG_TYPE_OFFLINE_VIDEO_RIGHT:
                 ViewHolderOfflineVideoRight viewHolderVideoRight = (ViewHolderOfflineVideoRight) viewHolder;
                 viewHolderVideoRight.updateView();
+                break;
             case MSG_TYPE_LOCATION_LEFT:
                 ViewHolderLocationLeft viewHolderLocationLeft = (ViewHolderLocationLeft) viewHolder;
                 viewHolderLocationLeft.updateView();
