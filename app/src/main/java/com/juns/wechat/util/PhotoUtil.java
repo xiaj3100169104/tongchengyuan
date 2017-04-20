@@ -26,8 +26,7 @@ public class PhotoUtil {
     public static void takePhoto(Activity activity, int requestCode, String outputImgName){
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // 指定调用相机拍照后照片的储存路径
-        intent.putExtra(MediaStore.EXTRA_OUTPUT,
-                Uri.fromFile(getFile(outputImgName)));
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(getFile(outputImgName)));
         activity.startActivityForResult(intent, requestCode);
     }
 
@@ -38,9 +37,7 @@ public class PhotoUtil {
             intent.setType("image/*");
 
         } else {
-            intent = new Intent(
-                    Intent.ACTION_PICK,
-                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         }
         activity.startActivityForResult(intent, requestCode);
     }

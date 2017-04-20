@@ -174,15 +174,14 @@ public class MyProfileActivity extends BaseToolbarActivity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case Skip.CODE_TAKE_CAMERA:
-                 /*   startPhotoZoom(
-                            Uri.fromFile(PhotoUtil.getFile(imageName)),
-                            480);*/
                     Uri uri = Uri.fromFile(PhotoUtil.getFile(imageName));
                     PhotoUtil.cropView(uri, 480, MyProfileActivity.this, Skip.CODE_PHOTO_CROP, imageName);
                     break;
 
                 case Skip.CODE_TAKE_ALBUM:
-                    if (data != null)
+                    if (data != null){
+                        
+                    }
                         PhotoUtil.cropView(data.getData(), 480, MyProfileActivity.this, Skip.CODE_PHOTO_CROP, imageName);
                     break;
 
