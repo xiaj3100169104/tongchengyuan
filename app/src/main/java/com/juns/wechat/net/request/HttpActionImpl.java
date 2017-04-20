@@ -6,6 +6,8 @@ import com.style.net.core.HttpActionManager;
 import com.style.net.core.NetDataBeanCallback;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;

@@ -17,13 +17,15 @@ import com.juns.wechat.dialog.SelectSexDialog;
 import com.juns.wechat.helper.CommonViewHelper;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.request.HttpActionImpl;
+import com.style.constant.FileConfig;
 import com.style.net.core.NetDataBeanCallback;
-import com.juns.wechat.util.PhotoUtil;
 import com.style.base.BaseToolbarActivity;
 import com.style.constant.Skip;
+import com.style.utils.CommonUtil;
 
 import org.simple.eventbus.Subscriber;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -49,7 +51,7 @@ public class MyProfileActivity extends BaseToolbarActivity {
 
     private SelectPhotoDialog selectPhotoDialog;
     private SelectSexDialog selectSexDialog;
-    private String imageName;
+    private String avatarFile;
 
 
     @Override
@@ -79,15 +81,14 @@ public class MyProfileActivity extends BaseToolbarActivity {
             selectPhotoDialog.setOnItemClickListener(new SelectPhotoDialog.OnItemClickListener() {
                 @Override
                 public void takePhoto(View v) {
-                    imageName = getNowTime() + ".png";
-                    PhotoUtil.takePhoto(MyProfileActivity.this, Skip.CODE_TAKE_CAMERA, imageName);
+                    avatarFile = FileConfig.DIR_IMAGE + File.separator + getNowTime() + ".png";
+                    CommonUtil.takePhoto(MyProfileActivity.this, avatarFile);
                     selectPhotoDialog.dismiss();
                 }
 
                 @Override
                 public void openAlbum(View v) {
-                    imageName = getNowTime() + ".png";
-                    PhotoUtil.openAlbum(MyProfileActivity.this, Skip.CODE_TAKE_ALBUM);
+                    CommonUtil.selectPhoto(MyProfileActivity.this);
                     selectPhotoDialog.dismiss();
                 }
             });
@@ -174,21 +175,21 @@ public class MyProfileActivity extends BaseToolbarActivity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case Skip.CODE_TAKE_CAMERA:
-                    Uri uri = Uri.fromFile(PhotoUtil.getFile(imageName));
-                    PhotoUtil.cropView(uri, 480, MyProfileActivity.this, Skip.CODE_PHOTO_CROP, imageName);
+                    Uri uri = Uri.fromFile(new File(avatarFile));
+                    Intent intent = new Intent(this, CropImageActivity.class);
+                    intent.putExtra("uri", uri);
+                    startActivity(intent);
                     break;
-
                 case Skip.CODE_TAKE_ALBUM:
-                    if (data != null){
-                        
+                    if (data != null) {
+                        Intent intent2 = new Intent(this, CropImageActivity.class);
+                        intent2.putExtra("uri", data.getData());
+                        startActivity(intent2);
                     }
-                        PhotoUtil.cropView(data.getData(), 480, MyProfileActivity.this, Skip.CODE_PHOTO_CROP, imageName);
                     break;
-
                 case Skip.CODE_PHOTO_CROP:
 
                     break;
-
             }
             super.onActivityResult(requestCode, resultCode, data);
         }
