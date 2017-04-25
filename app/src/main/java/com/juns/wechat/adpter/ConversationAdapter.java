@@ -27,9 +27,9 @@ import butterknife.ButterKnife;
 /**
  * Created by 王者 on 2016/8/9.
  */
-public class ConversationAdapter extends BaseRecyclerViewAdapter {
+public class ConversationAdapter<T> extends BaseRecyclerViewAdapter<T> {
 
-    public ConversationAdapter(Context context, List list) {
+    public ConversationAdapter(Context context, List<T> list) {
         super(context, list);
     }
 
