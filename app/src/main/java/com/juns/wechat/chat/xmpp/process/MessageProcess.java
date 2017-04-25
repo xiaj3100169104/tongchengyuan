@@ -5,18 +5,24 @@ import android.content.Intent;
 import android.text.TextUtils;
 
 import com.juns.wechat.chat.bean.MessageBean;
+import com.juns.wechat.chat.bean.MessageObject;
 import com.juns.wechat.chat.ui.ChatActivity;
 import com.juns.wechat.chat.xmpp.prompt.NoticePrompt;
 import com.juns.wechat.chat.xmpp.prompt.SoundPrompt;
 import com.juns.wechat.database.dao.MessageDao;
+import com.juns.wechat.database.dao.MessageObjDao;
 import com.juns.wechat.manager.AccountManager;
+import com.juns.wechat.realm.RealmHelper;
 import com.juns.wechat.util.LogUtil;
+
+import io.realm.Realm;
 
 /*******************************************************
  * Created by 王宗文 on 2015/11/27
  *******************************************************/
 public abstract class MessageProcess {
     private MessageDao messageDao;
+    private MessageObjDao messageObjDao;
     /**
      * 声音提示
      */
@@ -30,6 +36,7 @@ public abstract class MessageProcess {
     public MessageProcess(Context context){
         mContext = context;
         messageDao = MessageDao.getInstance();
+        messageObjDao = MessageObjDao.getInstance();
         mSoundPrompt = new SoundPrompt(mContext);
         mNoticePrompt = new NoticePrompt(mContext);
     }
@@ -62,6 +69,10 @@ public abstract class MessageProcess {
 
     protected void saveMessageToDB(MessageBean messageBean){
         messageDao.save(messageBean);
+        Realm realm = RealmHelper.getIMInstance();
+        MessageObject messageObject = new MessageObject(messageBean);
+        messageObjDao.save(realm, messageObject);
+        realm.close();
     }
 
     public void noticeShow(MessageBean entity){

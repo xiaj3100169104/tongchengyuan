@@ -1,14 +1,20 @@
 package com.juns.wechat.chat.ui;
 
+import com.juns.wechat.bean.Flag;
 import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.bean.UserBean;
+import com.juns.wechat.chat.bean.MessageObject;
+import com.juns.wechat.config.MsgType;
 import com.juns.wechat.database.dao.DbDataEvent;
 import com.juns.wechat.database.dao.MessageDao;
 import com.juns.wechat.manager.AccountManager;
+import com.juns.wechat.realm.RealmHelper;
 import com.juns.wechat.util.ThreadPoolUtil;
 
 import java.util.Collections;
 import java.util.List;
+
+import io.realm.Realm;
 
 /**
  * Created by 王者 on 2016/8/8.

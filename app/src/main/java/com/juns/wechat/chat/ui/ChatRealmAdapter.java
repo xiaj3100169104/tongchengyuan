@@ -2,21 +2,29 @@ package com.juns.wechat.chat.ui;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
 import com.juns.wechat.R;
 import com.juns.wechat.chat.bean.MessageBean;
+import com.juns.wechat.chat.bean.MessageObject;
 import com.juns.wechat.config.MsgType;
 import com.style.base.BaseRecyclerViewAdapter;
 
 import java.util.List;
 
+import io.realm.OrderedRealmCollection;
+import io.realm.RealmModel;
+
 /**
  * xiajun
  */
-public class ChatAdapter extends BaseRecyclerViewAdapter<MessageBean> {
+public class ChatRealmAdapter extends RecyclerView.Adapter<BaseRealMsgViewHolder> {
+    private Context mContext;
+    private OrderedRealmCollection<MessageObject> dataList;
+    private LayoutInflater layoutInflater;
+
     private static final int MSG_TYPE_TEXT_LEFT = 0;
     private static final int MSG_TYPE_TEXT_RIGHT = 1;
     private static final int MSG_TYPE_PICTURE_LEFT = 2;
@@ -28,16 +36,18 @@ public class ChatAdapter extends BaseRecyclerViewAdapter<MessageBean> {
     private static final int MSG_TYPE_LOCATION_LEFT = 8;
     private static final int MSG_TYPE_LOCATION_RIGHT = 9;
 
-    public ChatAdapter(Context context, List<MessageBean> list) {
-        super(context, list);
+    public ChatRealmAdapter(Context context, OrderedRealmCollection<MessageObject> dataList) {
+        this.mContext = context;
+        this.dataList = dataList;
+        layoutInflater = LayoutInflater.from(mContext);
     }
 
     @Override
     public int getItemViewType(int position) {
         int viewType = -1;
-        MessageBean msg = list.get(position);
-        int direction = msg.getDirection();
-        switch (msg.getType()) {
+        MessageObject messageObject = dataList.get(position);
+        int direction = messageObject.getDirection();
+        switch (messageObject.getType()) {
             case MsgType.MSG_TYPE_TEXT:
                 if (direction == MessageBean.Direction.INCOMING.value)
                     viewType = MSG_TYPE_TEXT_LEFT;
@@ -74,43 +84,22 @@ public class ChatAdapter extends BaseRecyclerViewAdapter<MessageBean> {
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        BaseMsgViewHolder holder = null;
+    public int getItemCount() {
+        return dataList.size();
+    }
+
+    @Override
+    public BaseRealMsgViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        BaseRealMsgViewHolder holder = null;
         switch (viewType) {
             case MSG_TYPE_TEXT_LEFT:
-                holder = new ViewHolderTextLeft(getView(R.layout.chat_item_received_message, parent));
+                holder = new ViewHolderRealmTextLeft(getView(R.layout.chat_item_received_message, parent));
                 break;
             case MSG_TYPE_TEXT_RIGHT:
-                holder = new ViewHolderTextRight(getView(R.layout.chat_item_sent_message, parent));
+                holder = new ViewHolderRealmTextRight(getView(R.layout.chat_item_sent_message, parent));
                 break;
-            case MSG_TYPE_PICTURE_LEFT:
-                holder = new ViewHolderPictureLeft(getView(R.layout.chat_item_received_picture, parent));
-                break;
-            case MSG_TYPE_PICTURE_RIGHT:
-                holder = new ViewHolderPictureRight(getView(R.layout.chat_item_sent_picture, parent));
-                break;
-            case MSG_TYPE_VOICE_LEFT:
-                holder = new ViewHolderVoiceLeft(getView(R.layout.chat_item_received_voice, parent));
-                break;
-            case MSG_TYPE_VOICE_RIGHT:
-                holder = new ViewHolderVoiceRight(getView(R.layout.chat_item_sent_voice, parent));
-                break;
-            case MSG_TYPE_OFFLINE_VIDEO_LEFT:
-                holder = new ViewHolderOfflineVideoLeft(getView(R.layout.chat_item_received_video, parent));
-                break;
-            case MSG_TYPE_OFFLINE_VIDEO_RIGHT:
-                holder = new ViewHolderOfflineVideoRight(getView(R.layout.chat_item_sent_video, parent));
-                break;
-            case MSG_TYPE_LOCATION_LEFT:
-                holder = new ViewHolderLocationLeft(getView(R.layout.chat_item_received_location, parent));
-                break;
-            case MSG_TYPE_LOCATION_RIGHT:
-                holder = new ViewHolderLocationRight(getView(R.layout.chat_item_sent_location, parent));
-                break;
-        }
-
-        if(holder == null){
-            holder = new ViewHolderLocationRight(getView(R.layout.chat_item_sent_message, parent));
+            default:
+                holder = new ViewHolderRealmTextRight(getView(R.layout.chat_item_sent_message, parent));
         }
 
         holder.setContext(mContext, parent);
@@ -118,24 +107,24 @@ public class ChatAdapter extends BaseRecyclerViewAdapter<MessageBean> {
     }
 
     private View getView(int resId, ViewGroup parent) {
-        return mInflater.inflate(resId, parent, false);
+        return layoutInflater.inflate(resId, parent, false);
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        MessageBean messageBean = getData(position);
-        BaseMsgViewHolder baseMsgViewHolder = (BaseMsgViewHolder) viewHolder;
-        baseMsgViewHolder.setData(messageBean, list, position);
+    public void onBindViewHolder(BaseRealMsgViewHolder viewHolder, int position) {
+        MessageObject messageObject = dataList.get(position);
+        BaseRealMsgViewHolder baseMsgViewHolder = viewHolder;
+        baseMsgViewHolder.setData(messageObject, dataList, position);
         switch (getItemViewType(position)) {
             case MSG_TYPE_TEXT_LEFT:
-                ViewHolderTextLeft viewHolderTextLeft = (ViewHolderTextLeft) viewHolder;
+                ViewHolderRealmTextLeft viewHolderTextLeft = (ViewHolderRealmTextLeft) viewHolder;
                 viewHolderTextLeft.updateView();
                 break;
             case MSG_TYPE_TEXT_RIGHT:
-                ViewHolderTextRight viewHolderTextRight = (ViewHolderTextRight) viewHolder;
+                ViewHolderRealmTextRight viewHolderTextRight = (ViewHolderRealmTextRight) viewHolder;
                 viewHolderTextRight.updateView();
                 break;
-            case MSG_TYPE_PICTURE_LEFT:
+     /*       case MSG_TYPE_PICTURE_LEFT:
                 ViewHolderPictureLeft viewHolderPictureLeft = (ViewHolderPictureLeft) viewHolder;
                 viewHolderPictureLeft.updateView();
                 break;
@@ -166,7 +155,7 @@ public class ChatAdapter extends BaseRecyclerViewAdapter<MessageBean> {
             case MSG_TYPE_LOCATION_RIGHT:
                 ViewHolderLocationRight viewHolderLocationRight = (ViewHolderLocationRight) viewHolder;
                 viewHolderLocationRight.updateView();
-                break;
+                break;*/
         }
     }
 }

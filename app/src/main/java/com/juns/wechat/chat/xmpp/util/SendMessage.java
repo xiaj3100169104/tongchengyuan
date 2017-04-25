@@ -7,6 +7,7 @@ import com.juns.wechat.App;
 import com.juns.wechat.chat.bean.LocationMsg;
 import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.chat.bean.InviteMsg;
+import com.juns.wechat.chat.bean.MessageObject;
 import com.juns.wechat.chat.bean.OfflineVideoMsg;
 import com.juns.wechat.chat.bean.PictureMsg;
 import com.juns.wechat.chat.bean.TextMsg;
@@ -15,7 +16,9 @@ import com.juns.wechat.chat.xmpp.XmppManagerImpl;
 import com.juns.wechat.common.BASE64;
 import com.juns.wechat.config.MsgType;
 import com.juns.wechat.database.dao.MessageDao;
+import com.juns.wechat.database.dao.MessageObjDao;
 import com.juns.wechat.manager.AccountManager;
+import com.juns.wechat.realm.RealmHelper;
 import com.juns.wechat.util.ThreadPoolUtil;
 import com.juns.wechat.util.ToastUtil;
 import com.style.constant.FileConfig;
@@ -28,6 +31,8 @@ import org.xutils.db.sqlite.WhereBuilder;
 
 import java.io.File;
 import java.util.Date;
+
+import io.realm.Realm;
 
 /*******************************************************
  * Copyright (C) 2014-2015 Yunyun Network <yynetworks@yycube.com>
@@ -319,6 +324,10 @@ public class SendMessage {
      */
     private static void addMessageToDB(MessageBean messageBean) {
         messageDao.save(messageBean);
+        Realm realm = RealmHelper.getIMInstance();
+        MessageObject messageObject = new MessageObject(messageBean);
+        MessageObjDao.getInstance().save(realm, messageObject);
+        realm.close();
     }
 
     public static void sendMsgDirect(MessageBean message) {
