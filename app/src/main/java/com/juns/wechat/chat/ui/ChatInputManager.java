@@ -22,17 +22,14 @@ import android.widget.Toast;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.juns.wechat.R;
 import com.juns.wechat.activity.SendLocationActivity;
-import com.juns.wechat.chat.BaiduMapActivity;
 import com.juns.wechat.chat.adpter.ExpressionAdapter;
 import com.juns.wechat.chat.adpter.ExpressionPagerAdapter;
 import com.juns.wechat.chat.utils.SmileUtils;
 import com.juns.wechat.chat.voice.CallVoiceBaseActivity;
 import com.juns.wechat.chat.widght.ExpandGridView;
 import com.juns.wechat.chat.widght.PasteEditText;
-import com.juns.wechat.chat.xmpp.iq.FileTransferIQ;
 import com.juns.wechat.util.BitmapUtil;
 import com.juns.wechat.util.LogUtil;
-import com.juns.wechat.util.PhotoUtil;
 import com.juns.wechat.util.ThreadPoolUtil;
 import com.juns.wechat.util.ToastUtil;
 import com.juns.wechat.view.AudioRecordButton;
@@ -375,7 +372,7 @@ public class ChatInputManager implements View.OnClickListener {
                         return;
                     }
                     String fileName = FileConfig.getUniqueFileName();
-                    String filePath = FileConfig.DIR_CACHE + "/" + fileName;
+                    String filePath = FileConfig.DIR_CACHE + File.separator + fileName;
                     try {
                         com.style.utils.BitmapUtil.saveBitmap(filePath, compressedBitmap, 100);
                     } catch (IOException e) {

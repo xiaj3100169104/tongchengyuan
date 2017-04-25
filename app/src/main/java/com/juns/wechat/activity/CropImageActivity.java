@@ -11,13 +11,14 @@ import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.request.HttpActionImpl;
 import com.style.net.core.NetDataBeanCallback;
-import com.juns.wechat.util.PhotoUtil;
 import com.juns.wechat.view.ClipImageLayout;
 import com.style.base.BaseToolbarActivity;
 import com.style.constant.FileConfig;
+import com.style.utils.BitmapUtil;
 
 import org.jivesoftware.smack.packet.id.StanzaIdUtil;
 
+import java.io.File;
 import java.io.IOException;
 
 import butterknife.Bind;
@@ -53,9 +54,13 @@ public class CropImageActivity extends BaseToolbarActivity {
     public void saveInfo(View v) {
         Bitmap croppedBitmap = clipImageLayout.clip();
         fileName = StanzaIdUtil.newStanzaId() + ".image";
-        String filePath = FileConfig.DIR_CACHE + "/" + fileName;
-        PhotoUtil.saveBitmap(croppedBitmap, filePath);
-        updateAvatarInServer(filePath);
+        String filePath = FileConfig.DIR_CACHE + File.separator + fileName;
+        try {
+            BitmapUtil.saveBitmap(filePath, croppedBitmap, 100);
+            updateAvatarInServer(filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void updateAvatarInServer(String filePath) {
