@@ -1,4 +1,4 @@
-package com.juns.wechat.fragment;
+package com.juns.wechat.homePage.fragment;
 
 
 import android.os.Bundle;

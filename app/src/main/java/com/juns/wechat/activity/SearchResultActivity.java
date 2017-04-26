@@ -29,7 +29,7 @@ public class SearchResultActivity extends BaseToolbarActivity {
     @Override
     public void initData() {
         setToolbarTitle("搜索结果");
-        searchResults = (List<UserBean>) getIntent().getSerializableExtra(Skip.KEY_SEARCH_RESULTS);
+        searchResults = (List<UserBean>) getIntent().getSerializableExtra("results");
 
         if(searchResults == null || searchResults.isEmpty()){
             throw new IllegalArgumentException("search results is null or empty!");

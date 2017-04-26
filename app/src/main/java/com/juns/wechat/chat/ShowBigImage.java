@@ -43,7 +43,7 @@ public class ShowBigImage extends BaseToolbarActivity {
     public void initData() {
         setToolbarTitle("我的头像");
 
-        imgName = getIntent().getStringExtra(Skip.KEY_IMG_NAME);
+        imgName = getIntent().getStringExtra("imgName");
         String path = FileConfig.DIR_CACHE + "/" + imgName;
         if (FileUtil.isExist(path)) {
             fileExist(path);
