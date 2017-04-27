@@ -32,10 +32,10 @@ public class ChatActivityHelper {
     private UserBean account = AccountManager.getInstance().getUser();
 
 
-    public ChatActivityHelper(ChatActivity chatActivity) {
+    public ChatActivityHelper(ChatActivity chatActivity, String contactName) {
         this.chatActivity = chatActivity;
         this.myselfName = account.getUserName();
-        this.otherName = chatActivity.getContactName();
+        this.otherName = contactName;
         messageDao = MessageDao.getInstance();
     }
 

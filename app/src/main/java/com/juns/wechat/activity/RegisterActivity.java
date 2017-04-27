@@ -13,6 +13,7 @@ import android.widget.EditText;
 
 import com.juns.wechat.R;
 import com.juns.wechat.bean.UserBean;
+import com.juns.wechat.homePage.MainActivity;
 import com.juns.wechat.manager.AccountManager;
 
 import com.juns.wechat.net.request.HttpActionImpl;

@@ -224,7 +224,7 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
                     break;
                 case Skip.CODE_TAKE_CAMERA:
                     if (photoFile.exists()) {
-                        CommonUtil.notifyUpdateGallary(this, photoFile);// 通知系统更新相册
+                        CommonUtil.notifyUpdateAlbum(this, photoFile);// 通知系统更新相册
                         String filePath = photoFile.getAbsolutePath();// 获取相片的保存路径
                         int size = paths.size();
                         if (size >= 10) {

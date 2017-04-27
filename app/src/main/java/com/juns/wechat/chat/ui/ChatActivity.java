@@ -46,13 +46,7 @@ import butterknife.Bind;
 
 //聊天页面
 public class ChatActivity extends BaseToolbarActivity {
-    public static final int RESULT_CODE_COPY = 1;
-    public static final int RESULT_CODE_DELETE = 2;
-    public static final int RESULT_CODE_FORWARD = 3;
-    public static final int RESULT_CODE_OPEN = 4;
-    public static final int RESULT_CODE_DWONLOAD = 5;
-    public static final int RESULT_CODE_TO_CLOUD = 6;
-    public static final int RESULT_CODE_EXIT_GROUP = 7;
+
 
     public static final int CHATTYPE_SINGLE = 1;
 
@@ -74,9 +68,7 @@ public class ChatActivity extends BaseToolbarActivity {
     private List<MessageBean> msgViewModels;
     private Handler mHandler = new Handler();
 
-    private ClipboardManager clipboard;
     private int chatType;
-    public File cameraFile;
     public String playMsgId;
     private int contactId;
     private String contactName;
@@ -114,6 +106,12 @@ public class ChatActivity extends BaseToolbarActivity {
     }
 
     public void initData() {
+        // 判断单聊还是群聊
+        chatType = getIntent().getIntExtra(Constants.TYPE, CHATTYPE_SINGLE);
+        if (chatType == CHATTYPE_SINGLE) { // 单聊
+        } else {// 群聊
+        }
+
         contactId = getIntent().getIntExtra(Skip.KEY_USER_ID, 0);
         friendBean = FriendDao.getInstance().findByOwnerAndContactName(account.getUserId(), contactId);
         contactUser = UserDao.getInstance().findByUserId(friendBean.getContactId());
@@ -127,9 +125,9 @@ public class ChatActivity extends BaseToolbarActivity {
 
         setToolbarTitle(showName);
 
-        chatInputManager = new ChatInputManager(this);
+        chatInputManager = new ChatInputManager(this, contactName);
         chatInputManager.onCreate();
-        chatActivityHelper = new ChatActivityHelper(this);
+        chatActivityHelper = new ChatActivityHelper(this, contactName);
         chatActivityHelper.onCreate();
 
         msgViewModels = new ArrayList<>();
@@ -162,37 +160,8 @@ public class ChatActivity extends BaseToolbarActivity {
             }
         });
 
-        setUpView();
         chatActivityHelper.loadMessagesFromDb();
 
-    }
-
-    private void setUpView() {
-        // position = getIntent().getIntExtra("position", -1);
-        clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-
-        // 判断单聊还是群聊
-        chatType = getIntent().getIntExtra(Constants.TYPE, CHATTYPE_SINGLE);
-        if (chatType == CHATTYPE_SINGLE) { // 单聊
-
-        } else {
-            // 群聊
-            findViewById(R.id.view_location_video).setVisibility(View.GONE);
-        }
-
-        String forward_msg_id = getIntent().getStringExtra("forward_msg_id");
-        if (forward_msg_id != null) {
-            // 显示发送要转发的消息
-        }
-
-    }
-
-    public String getContactName() {
-        return contactName;
-    }
-
-    public UserBean getContactUser() {
-        return contactUser;
     }
 
     /**
@@ -247,135 +216,16 @@ public class ChatActivity extends BaseToolbarActivity {
     /**
      * onActivityResult
      */
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        findViewById(R.id.ll_more_function_container).setVisibility(View.GONE);
-        mRecyclerView.smoothScrollToPosition(mRecyclerView.getChildCount());
-        if (resultCode == RESULT_CODE_EXIT_GROUP) {
-            setResult(RESULT_OK);
-            finish();
-            return;
-        }
-        /*if (requestCode == REQUEST_CODE_CONTEXT_MENU) {
-            switch (resultCode) {
-			case RESULT_CODE_COPY: // 复制消息
-				EMMessage copyMsg = ((EMMessage) adapter.getItem(data
-						.getIntExtra("position", -1)));
-				// clipboard.setText(SmileUtils.getSmiledText(ChatActivity.this,
-				// ((TextMessageBody) copyMsg.getBody()).getMessage()));
-				clipboard.setText(((TextMessageBody) copyMsg.getBody())
-						.getMessage());
-				break;
-		}*/
-        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case Skip.CODE_EMPTY_HISTORY:// 清空会话
-                    break;
-                case Skip.CODE_TAKE_CAMERA: // 发送照片
-                    if (cameraFile != null && cameraFile.exists())
-                        sendPicture(cameraFile.getAbsolutePath());
-                    break;
-                case Skip.CODE_TAKE_ALBUM://发送本地图片
-                    ArrayList<String> selectedPhotos = data.getStringArrayListExtra("paths");
-                    sendPicture(selectedPhotos);
-                    break;
-                case Skip.CODE_RECORD_VIDEO:
-                    if (data != null) {
-                        String videoPath = data.getStringExtra("videoPath");
-                        sendOfflineVideo(videoPath);
-                    }
-                    break;
-                case Skip.CODE_SELECT_FILE:// 发送选择的文件
-                    if (data != null) {
-                        Uri uri = data.getData();
-                        if (uri != null) {
-                            sendFile(uri);
-                        }
-                    }
-                    break;
-                case Skip.CODE_MAP: // 地图
-                    double latitude = data.getDoubleExtra("latitude", 0);
-                    double longitude = data.getDoubleExtra("longitude", 0);
-                    String locationAddress = data.getStringExtra("address");
-                    if (locationAddress != null && !locationAddress.equals("")) {
-                        sendLocationMsg(latitude, longitude, locationAddress);
-                    } else {
-                        String st = getResources().getString(R.string.unable_to_get_loaction);
-                        showToast(st);
-                    }
-                    break;
-            }
-        }
-    }
-
-    private void sendPicture(String filePath) {
-        ArrayList<String> filePaths = new ArrayList<>();
-        filePaths.add(filePath);
-        sendPicture(filePaths);
+        chatInputManager.onActivityResult(requestCode, resultCode, data);
     }
 
     /**
-     * 发送图片
-     *
-     * @param filePaths
+     *  清空聊天记录
      */
-    private void sendPicture(ArrayList<String> filePaths) {
-        chatInputManager.sendPicture(contactName, filePaths);
-    }
-
-    /**
-     * 发送视频消息
-     */
-    private void sendOfflineVideo(String filePath) {
-        chatInputManager.sendOfflineVideo(contactName, filePath);
-    }
-
-    /**
-     * 发送位置信息
-     *
-     * @param latitude
-     * @param longitude
-     * @param address
-     */
-    private void sendLocationMsg(double latitude, double longitude, String address) {
-        chatInputManager.sendLocation(contactName, latitude, longitude, address);
-    }
-
-    /**
-     * 发送文件
-     *
-     * @param uri
-     */
-    private void sendFile(Uri uri) {
-        String filePath = null;
-        if ("content".equalsIgnoreCase(uri.getScheme())) {
-            String[] projection = {"_data"};
-            Cursor cursor = null;
-
-            try {
-                cursor = getContentResolver().query(uri, projection, null,
-                        null, null);
-                int column_index = cursor.getColumnIndexOrThrow("_data");
-                if (cursor.moveToFirst()) {
-                    filePath = cursor.getString(column_index);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else if ("file".equalsIgnoreCase(uri.getScheme())) {
-            filePath = uri.getPath();
-        }
-        File file = new File(filePath);
-        setResult(RESULT_OK);
-    }
-
-
-    /**
-     * 点击清空聊天记录
-     *
-     * @param view
-     */
-    public void emptyHistory(View view) {
+    public void emptyHistory() {
         String st5 = getResources().getString(R.string.Whether_to_empty_all_chats);
 
     }

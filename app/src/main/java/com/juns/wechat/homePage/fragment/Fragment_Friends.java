@@ -1,4 +1,4 @@
-package com.juns.wechat.fragment;
+package com.juns.wechat.homePage.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.juns.wechat.R;
-import com.juns.wechat.activity.MainActivity;
+import com.juns.wechat.homePage.MainActivity;
 import com.juns.wechat.activity.NewFriendsListActivity;
 import com.juns.wechat.activity.UserInfoActivity;
 import com.juns.wechat.adpter.ContactAdapter;

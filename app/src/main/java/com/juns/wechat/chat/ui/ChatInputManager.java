@@ -1,8 +1,11 @@
 package com.juns.wechat.chat.ui;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
+import android.net.Uri;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
@@ -50,8 +53,13 @@ import java.util.List;
  * Created by 王者 on 2016/8/7.
  */
 public class ChatInputManager implements View.OnClickListener {
+    public static final int CODE_MAP = 0x000001;
+    public static final int CODE_SELECT_FILE = 0x000002;
+    public static final int CODE_RECORD_VIDEO = 0x000003;
+
     private static final int EMOTICONS_COUNT = 59;
     private static final String EMOTION_NAME_DELETE = "f_emotion_del_normal";
+    private String otherUserName;
     private Button btnSetModeVoice; //输入语音按钮
     private Button btnSetModeKeyBoard; //输入文字按钮
     private LinearLayout llPressToSpeak; //按住说话
@@ -69,15 +77,17 @@ public class ChatInputManager implements View.OnClickListener {
     private LRecyclerView recyclerView;  //消息列表
     private List<String> emoticonsFileNames;
     //  private AnimationDrawable animationDrawable;
+    public File cameraFile;
 
     private ChatActivity mChatActivity;
 
     static Handler mHandler = new Handler();
 
 
-    public ChatInputManager(ChatActivity chatActivity) {
-        View view = chatActivity.getWindow().getDecorView();
+    public ChatInputManager(ChatActivity chatActivity, String otherUserName) {
         mChatActivity = chatActivity;
+        View view = chatActivity.getWindow().getDecorView();
+        this.otherUserName = otherUserName;
 
         btnSetModeVoice = (Button) view.findViewById(R.id.btn_set_mode_voice);
         btnSetModeKeyBoard = (Button) view.findViewById(R.id.btn_set_mode_keyboard);
@@ -175,7 +185,7 @@ public class ChatInputManager implements View.OnClickListener {
         btnRecord.setAudioFinishRecorderListener(new AudioRecordButton.AudioFinishRecorderListener() {
             @Override
             public void onFinished(float seconds, String filePath) {
-                sendVoice(mChatActivity.getContactName(), (int) seconds, filePath);
+                sendVoice((int) seconds, filePath);
             }
         });
 
@@ -222,7 +232,6 @@ public class ChatInputManager implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        String otherUserName = mChatActivity.getContactName();
         int id = view.getId();
         switch (id) {
             case R.id.view_photo:
@@ -278,17 +287,17 @@ public class ChatInputManager implements View.OnClickListener {
     }
 
     private void takeCamera() {
-        mChatActivity.cameraFile = CommonUtil.takePhoto(mChatActivity, FileConfig.DIR_IMAGE + File.separator + String.valueOf(System.currentTimeMillis()) + ".jpg");
+        String cameraFilePath = FileConfig.DIR_IMAGE + File.separator + String.valueOf(System.currentTimeMillis()) + ".jpg";
+        this.cameraFile = CommonUtil.takePhoto(mChatActivity, cameraFilePath);
     }
 
     private void recordVideo() {
-        mChatActivity.startActivityForResult(new Intent(mChatActivity, CameraActivity.class), Skip.CODE_RECORD_VIDEO);
+        mChatActivity.startActivityForResult(new Intent(mChatActivity, CameraActivity.class), CODE_RECORD_VIDEO);
     }
 
     private void openMap() {
-        mChatActivity.startActivityForResult(new Intent(mChatActivity, SendLocationActivity.class), Skip.CODE_MAP);
+        mChatActivity.startActivityForResult(new Intent(mChatActivity, SendLocationActivity.class), CODE_MAP);
     }
-
 
     /**
      * 显示语音图标按钮
@@ -338,12 +347,61 @@ public class ChatInputManager implements View.OnClickListener {
         }
     }
 
-    public void sendLocation(String contactName, double latitude, double longitude, String address) {
-        SendMessage.sendLocationMsg(contactName, latitude, longitude, address);
-        etInputText.getText().clear();
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        llMoreFunctionContainer.setVisibility(View.GONE);
+        recyclerView.smoothScrollToPosition(recyclerView.getChildCount());
+
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case Skip.CODE_TAKE_CAMERA: // 发送照片
+                    if (cameraFile != null && cameraFile.exists())
+                        sendPicture(cameraFile.getAbsolutePath());
+                    break;
+                case Skip.CODE_TAKE_ALBUM://发送本地图片
+                    ArrayList<String> selectedPhotos = data.getStringArrayListExtra("paths");
+                    sendPicture(selectedPhotos);
+                    break;
+                case CODE_RECORD_VIDEO:
+                    if (data != null) {
+                        String videoPath = data.getStringExtra("videoPath");
+                        sendOfflineVideo(videoPath);
+                    }
+                    break;
+                case CODE_SELECT_FILE:// 发送选择的文件
+                    if (data != null) {
+                        Uri uri = data.getData();
+                        if (uri != null) {
+                            sendFile(uri);
+                        }
+                    }
+                    break;
+                case CODE_MAP: // 地图
+                    double latitude = data.getDoubleExtra("latitude", 0);
+                    double longitude = data.getDoubleExtra("longitude", 0);
+                    String locationAddress = data.getStringExtra("address");
+                    if (locationAddress != null && !locationAddress.equals("")) {
+                        sendLocationMsg(latitude, longitude, locationAddress);
+                    } else {
+                        String st = mChatActivity.getResources().getString(R.string.unable_to_get_loaction);
+                        mChatActivity.showToast(st);
+                    }
+                    break;
+            }
+        }
     }
 
-    private void sendVoice(String otherUserName, int seconds, String filePath) {
+    /**
+     * 发送位置信息
+     *
+     * @param latitude
+     * @param longitude
+     * @param address
+     */
+    private void sendLocationMsg(double latitude, double longitude, String address) {
+        SendMessage.sendLocationMsg(otherUserName, latitude, longitude, address);
+    }
+
+    private void sendVoice(int seconds, String filePath) {
         File file = new File(filePath);
         if (!file.exists()) {
             LogUtil.e("filePath is invalid!");
@@ -352,7 +410,18 @@ public class ChatInputManager implements View.OnClickListener {
         SendMessage.sendVoiceMsg(otherUserName, seconds, filePath);
     }
 
-    public void sendPicture(final String otherUserName, final ArrayList<String> filePaths) {
+    private void sendPicture(String filePath) {
+        ArrayList<String> filePaths = new ArrayList<>();
+        filePaths.add(filePath);
+        sendPicture(filePaths);
+    }
+
+    /**
+     * 发送图片
+     *
+     * @param filePaths
+     */
+    private void sendPicture(final ArrayList<String> filePaths) {
         if (filePaths == null || filePaths.isEmpty()) {
             throw new NullPointerException("filePaths should not be empty");
         }
@@ -388,7 +457,10 @@ public class ChatInputManager implements View.OnClickListener {
 
     }
 
-    public void sendOfflineVideo(final String otherUserName, final String filePath) {
+    /**
+     * 发送视频消息
+     */
+    private void sendOfflineVideo(final String filePath) {
         if (filePath == null || filePath.isEmpty()) {
             throw new NullPointerException("filePaths should not be empty");
         }
@@ -412,11 +484,37 @@ public class ChatInputManager implements View.OnClickListener {
     }
 
     /**
+     * 发送文件
+     *
+     * @param uri
+     */
+    private void sendFile(Uri uri) {
+        String filePath = null;
+        if ("content".equalsIgnoreCase(uri.getScheme())) {
+            String[] projection = {"_data"};
+            Cursor cursor = null;
+            try {
+                cursor = mChatActivity.getContentResolver().query(uri, projection, null,
+                        null, null);
+                int column_index = cursor.getColumnIndexOrThrow("_data");
+                if (cursor.moveToFirst()) {
+                    filePath = cursor.getString(column_index);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else if ("file".equalsIgnoreCase(uri.getScheme())) {
+            filePath = uri.getPath();
+        }
+        File file = new File(filePath);
+    }
+
+    /**
      * 拨打语音电话
      */
     private void makeAudioCall() {
         Intent intent = new Intent(mChatActivity, CallVoiceBaseActivity.class);
-        intent.putExtra(Skip.KEY_USER_NAME, mChatActivity.getContactName());
+        intent.putExtra(Skip.KEY_USER_NAME, otherUserName);
         mChatActivity.startActivity(intent);
     }
 

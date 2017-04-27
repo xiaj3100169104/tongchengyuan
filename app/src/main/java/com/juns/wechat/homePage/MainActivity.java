@@ -1,4 +1,4 @@
-package com.juns.wechat.activity;
+package com.juns.wechat.homePage;
 
 
 import android.content.Intent;
@@ -13,11 +13,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.juns.wechat.R;
+import com.juns.wechat.activity.AddFriendActivity;
+import com.juns.wechat.activity.LoginActivity;
+import com.juns.wechat.activity.QRScanActivity;
 import com.juns.wechat.adpter.MainAdapter;
-import com.juns.wechat.fragment.Fragment_Dicover;
-import com.juns.wechat.fragment.Fragment_Friends;
-import com.juns.wechat.fragment.Fragment_Profile;
-import com.juns.wechat.fragment.msg.Fragment_Msg;
+import com.juns.wechat.homePage.fragment.Fragment_Dicover;
+import com.juns.wechat.homePage.fragment.Fragment_Friends;
+import com.juns.wechat.homePage.fragment.Fragment_Profile;
+import com.juns.wechat.homePage.fragment.msg.Fragment_Msg;
 import com.juns.wechat.processes.Watcher;
 import com.juns.wechat.util.LogUtil;
 import com.style.base.BaseActivity;

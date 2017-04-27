@@ -1,4 +1,4 @@
-package com.juns.wechat.fragment.msg;
+package com.juns.wechat.homePage.fragment.msg;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.juns.wechat.activity.MainActivity;
+import com.juns.wechat.homePage.MainActivity;
 import com.juns.wechat.R;
 import com.juns.wechat.chat.ui.ChatActivity;
 import com.juns.wechat.adpter.ConversationAdapter;
