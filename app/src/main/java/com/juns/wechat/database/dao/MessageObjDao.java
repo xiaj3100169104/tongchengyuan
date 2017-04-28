@@ -5,6 +5,9 @@ import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.chat.bean.MessageObject;
 import com.juns.wechat.config.MsgType;
 
+import org.xutils.common.util.KeyValue;
+import org.xutils.db.sqlite.WhereBuilder;
+
 import java.util.List;
 
 import io.realm.Realm;
@@ -30,5 +33,22 @@ public class MessageObjDao extends BaseObjDao<MessageObject> {
                 .lessThan(MessageObject.TYPE, MsgType.MSG_TYPE_SEND_INVITE)
                 .notEqualTo(MessageObject.FLAG, Flag.INVALID.value())
                 .findAllSorted(MessageObject.ID, Sort.ASCENDING);
+    }
+
+    public void markAsRead(Realm realm, final String myselfName, final String otherName){
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<MessageObject> realmResults =
+                        realm.where(clazz).equalTo(MessageObject.MYSELF_NAME, myselfName).equalTo(MessageObject.OTHER_NAME, otherName)
+                        .notEqualTo(MessageObject.FLAG, Flag.INVALID.value())
+                        .equalTo(MessageObject.STATE, MessageObject.State.NEW.value)
+                        .findAll();
+                for(MessageObject messageObject : realmResults){
+                    //messageObject.setState(MessageObject.State.READ.value);
+                    messageObject.setFlag(Flag.INVALID.value());
+                }
+            }
+        });
     }
 }

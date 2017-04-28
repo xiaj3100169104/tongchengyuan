@@ -23,6 +23,7 @@ import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 import org.xutils.x;
 
 import cn.smssdk.SMSSDK;
+import io.realm.Realm;
 
 public class App extends Application {
 
@@ -43,6 +44,7 @@ public class App extends Application {
 		ZXingLibrary.initDisplayOpinion(this);
         AccountManager.getInstance().init(mContext);
 		HttpActionImpl.getInstance().init();
+		Realm.init(this);
         /*// 设置拍摄视频缓存路径
 		VCamera.setVideoCachePath(FileConfig.DIR_CACHE);
 		// 开启log输出,ffmpeg输出到logcat

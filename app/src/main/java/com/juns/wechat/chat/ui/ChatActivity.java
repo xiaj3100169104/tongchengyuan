@@ -22,6 +22,7 @@ import com.juns.wechat.R;
 import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.bean.UserBean;
+import com.juns.wechat.chat.bean.MessageObject;
 import com.juns.wechat.chat.xmpp.util.SendMessage;
 import com.juns.wechat.database.dao.DbDataEvent;
 import com.juns.wechat.database.dao.FriendDao;
@@ -58,7 +59,8 @@ public class ChatActivity extends BaseToolbarActivity {
 
     private ChatInputManager chatInputManager;
     private ChatActivityHelper chatActivityHelper;
-    private ChatAdapter mDataAdapter;
+   // private ChatAdapter mDataAdapter;
+    private ChatRealmAdapter mRealmAdapter;
     private LRecyclerViewAdapter mLRecyclerViewAdapter = null;
 
     private UserBean account = AccountManager.getInstance().getUser();
@@ -66,6 +68,7 @@ public class ChatActivity extends BaseToolbarActivity {
     private UserBean contactUser;
     private boolean mFirstLoad = true; //是否第一次加载数据
     private List<MessageBean> msgViewModels;
+   // private List<MessageObject> messageObjectList;
     private Handler mHandler = new Handler();
 
     private int chatType;
@@ -131,8 +134,10 @@ public class ChatActivity extends BaseToolbarActivity {
         chatActivityHelper.onCreate();
 
         msgViewModels = new ArrayList<>();
-        mDataAdapter = new ChatAdapter(this, msgViewModels);
-        mLRecyclerViewAdapter = new LRecyclerViewAdapter(mDataAdapter);
+      //  messageObjectList = new ArrayList<>();
+       // mDataAdapter = new ChatAdapter(this, msgViewModels);
+        mRealmAdapter = new ChatRealmAdapter(this);
+        mLRecyclerViewAdapter = new LRecyclerViewAdapter(mRealmAdapter);
         mRecyclerView.setAdapter(mLRecyclerViewAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setLoadMoreEnabled(false);
@@ -148,6 +153,7 @@ public class ChatActivity extends BaseToolbarActivity {
             public void onRefresh() {
                 int queryIndex = chatActivityHelper.getQueryIndex();
                 if (queryIndex < 0) {
+                    mRecyclerView.setNoMore(true);
                     mRecyclerView.refreshComplete(5);
                 } else {
                     chatActivityHelper.loadMessagesFromDb();
@@ -167,10 +173,12 @@ public class ChatActivity extends BaseToolbarActivity {
     /**
      * {@link ChatActivityHelper#loadMessagesFromDb()}方法完成之后调用
      */
-    public void loadDataComplete(boolean hasNewData) {
+    public void loadDataComplete(boolean hasNewData, List<MessageObject> dataList) {
         mRecyclerView.refreshComplete(5);
         if (hasNewData) {
-            mDataAdapter.notifyDataSetChanged();  //ChatActivityHelper已经更新数据源
+            //mDataAdapter.notifyDataSetChanged();  //ChatActivityHelper已经更新数据源
+            mRealmAdapter.setData(dataList);
+            mRealmAdapter.notifyDataSetChanged();
         }
         //第一次加载数据，listView要滚动到底部，下拉刷新加载出来的数据，不用滚动到底部
         if (mFirstLoad) {
@@ -180,7 +188,7 @@ public class ChatActivity extends BaseToolbarActivity {
     }
 
     public void refreshOneData(boolean scroll2bottom) {
-        mDataAdapter.notifyDataSetChanged();
+       // mDataAdapter.notifyDataSetChanged();
         if (scroll2bottom) {
             scrollListViewToBottom();
         }
@@ -194,7 +202,7 @@ public class ChatActivity extends BaseToolbarActivity {
         mHandler.post(new Runnable() {
             @Override
             public void run() {
-                mRecyclerView.smoothScrollToPosition(mDataAdapter.getItemCount());
+                mRecyclerView.smoothScrollToPosition(mRealmAdapter.getItemCount());
             }
         });
     }

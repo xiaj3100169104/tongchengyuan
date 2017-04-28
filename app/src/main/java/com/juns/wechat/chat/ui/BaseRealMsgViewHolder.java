@@ -72,7 +72,7 @@ public abstract class BaseRealMsgViewHolder extends RecyclerView.ViewHolder {
         this.parent = parent;
     }
 
-    public void setData(MessageObject data, OrderedRealmCollection<MessageObject> list, final int position) {
+    public void setData(MessageObject data, List<MessageObject> list, final int position) {
         this.messageObject = data;
         this.position = position;
         String userName;
@@ -134,7 +134,7 @@ public abstract class BaseRealMsgViewHolder extends RecyclerView.ViewHolder {
      *
      * @return
      */
-    public boolean isShowTime(OrderedRealmCollection<MessageObject> list, int position, MessageObject msg) {
+    public boolean isShowTime(List<MessageObject> list, int position, MessageObject msg) {
         long mMsgTime = msg.getDate().getTime();
         long mPrevMsgTime;
         if (0 == position) {

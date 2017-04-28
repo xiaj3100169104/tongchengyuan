@@ -199,5 +199,34 @@ public class MessageObject extends RealmObject{
         this.msgObj = msgObj;
     }
 
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 37 * result + id;
+        result = 37 * result + type;
+        result = 37 * result + direction;
+        result += myselfName.hashCode();
+        result += otherName.hashCode();
+        result += msg.hashCode();
+        result += date.hashCode();
+        return result;
+    }
 
+    @Override
+    public boolean equals(Object object) {
+        if(this == object){
+            return true;
+        }
+        if(object == null){
+            return false;
+        }
+        if(getClass() != object.getClass()){
+            return false;
+        }
+        MessageObject messageObject = (MessageObject) object;
+        return (id == messageObject.getId() && myselfName.equals(messageObject.myselfName) && otherName.equals(messageObject.otherName)
+                && msg.equals(messageObject.msg) && type == messageObject.type && packetId.equals(messageObject.packetId)
+                && date.equals(messageObject.packetId) && direction == messageObject.direction
+                && flag == messageObject.flag);
+    }
 }

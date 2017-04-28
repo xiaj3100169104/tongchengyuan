@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.homePage.MainActivity;
 import com.juns.wechat.R;
 import com.juns.wechat.chat.ui.ChatActivity;
@@ -43,8 +44,8 @@ public class Fragment_Msg extends BaseFragment {
     @Bind(R.id.txt_nochat)
     TextView txtNochat;
     private String account = AccountManager.getInstance().getUserName();
-    private List<MsgItemShow> dataList;
-    private ConversationAdapter<MsgItemShow> adapter;
+    private List<MsgItem> dataList;
+    private ConversationAdapter<MsgItem> adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,14 +60,15 @@ public class Fragment_Msg extends BaseFragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.addItemDecoration(new DividerItemDecoration(this.getActivity()));
         recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener<MsgItemShow>() {
+        adapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener<MsgItem>() {
             @Override
-            public void onItemClick(int position, MsgItemShow data) {
-                MsgItemShow  msgItemShow = data;
-                Intent intent = new Intent(mContext, ChatActivity.class);
-                intent.putExtra(Skip.KEY_USER_ID, msgItemShow.msgItem.userId);
-                startActivity(intent);
-
+            public void onItemClick(int position, MsgItem data) {
+                UserBean u = data.user;
+                if (u != null) {
+                    Intent intent = new Intent(mContext, ChatActivity.class);
+                    intent.putExtra(Skip.KEY_USER_ID, u.userId);
+                    startActivity(intent);
+                }
             }
         });
         refreshData();
@@ -79,10 +81,7 @@ public class Fragment_Msg extends BaseFragment {
         } else {
             txtNochat.setVisibility(View.GONE);
             dataList.clear();
-            for (MsgItem msgItem : msgItems) {
-                MsgItemShow msgItemShow = new ChatMsgItemShow(getActivity(), msgItem);
-                dataList.add(msgItemShow);
-            }
+            dataList.addAll(msgItems);
             adapter.notifyDataSetChanged();
         }
         setUnreadMsgNum();

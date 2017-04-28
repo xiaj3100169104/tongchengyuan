@@ -12,6 +12,7 @@ import com.juns.wechat.chat.bean.MessageObject;
 import com.juns.wechat.config.MsgType;
 import com.style.base.BaseRecyclerViewAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.OrderedRealmCollection;
@@ -20,10 +21,7 @@ import io.realm.RealmModel;
 /**
  * xiajun
  */
-public class ChatRealmAdapter extends RecyclerView.Adapter<BaseRealMsgViewHolder> {
-    private Context mContext;
-    private OrderedRealmCollection<MessageObject> dataList;
-    private LayoutInflater layoutInflater;
+public class ChatRealmAdapter extends BaseRecyclerViewAdapter<MessageObject> {
 
     private static final int MSG_TYPE_TEXT_LEFT = 0;
     private static final int MSG_TYPE_TEXT_RIGHT = 1;
@@ -36,16 +34,18 @@ public class ChatRealmAdapter extends RecyclerView.Adapter<BaseRealMsgViewHolder
     private static final int MSG_TYPE_LOCATION_LEFT = 8;
     private static final int MSG_TYPE_LOCATION_RIGHT = 9;
 
-    public ChatRealmAdapter(Context context, OrderedRealmCollection<MessageObject> dataList) {
-        this.mContext = context;
-        this.dataList = dataList;
-        layoutInflater = LayoutInflater.from(mContext);
+    public ChatRealmAdapter(Context context){
+        super(context, new ArrayList<MessageObject>());
+    }
+
+    public ChatRealmAdapter(Context context, List<MessageObject> dataList) {
+        super(context, dataList);
     }
 
     @Override
     public int getItemViewType(int position) {
         int viewType = -1;
-        MessageObject messageObject = dataList.get(position);
+        MessageObject messageObject = list.get(position);
         int direction = messageObject.getDirection();
         switch (messageObject.getType()) {
             case MsgType.MSG_TYPE_TEXT:
@@ -85,7 +85,7 @@ public class ChatRealmAdapter extends RecyclerView.Adapter<BaseRealMsgViewHolder
 
     @Override
     public int getItemCount() {
-        return dataList.size();
+        return list.size();
     }
 
     @Override
@@ -107,14 +107,14 @@ public class ChatRealmAdapter extends RecyclerView.Adapter<BaseRealMsgViewHolder
     }
 
     private View getView(int resId, ViewGroup parent) {
-        return layoutInflater.inflate(resId, parent, false);
+        return mInflater.inflate(resId, parent, false);
     }
 
     @Override
-    public void onBindViewHolder(BaseRealMsgViewHolder viewHolder, int position) {
-        MessageObject messageObject = dataList.get(position);
-        BaseRealMsgViewHolder baseMsgViewHolder = viewHolder;
-        baseMsgViewHolder.setData(messageObject, dataList, position);
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+        MessageObject messageObject = list.get(position);
+        BaseRealMsgViewHolder baseMsgViewHolder = (BaseRealMsgViewHolder) viewHolder;
+        baseMsgViewHolder.setData(messageObject, list, position);
         switch (getItemViewType(position)) {
             case MSG_TYPE_TEXT_LEFT:
                 ViewHolderRealmTextLeft viewHolderTextLeft = (ViewHolderRealmTextLeft) viewHolder;
