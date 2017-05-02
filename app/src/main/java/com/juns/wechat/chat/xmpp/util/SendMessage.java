@@ -344,6 +344,9 @@ public class SendMessage {
      */
     private static void updateMessageState(String packetId, int state) {
         messageDao.updateMessageState(packetId, state, null);
+        Realm realm = RealmHelper.getIMInstance();
+        MessageObjDao.getInstance().updateMessageState(realm, packetId, state, null);
+        realm.close();
     }
 
 }

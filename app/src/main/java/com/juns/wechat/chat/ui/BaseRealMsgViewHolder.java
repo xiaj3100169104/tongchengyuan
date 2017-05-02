@@ -58,7 +58,6 @@ public abstract class BaseRealMsgViewHolder extends RecyclerView.ViewHolder {
             ivSendFailed = (ImageView) view.findViewById(R.id.iv_send_failed);
             sendingProgress = (ProgressBar) view.findViewById(R.id.sending_progress);
             tvSendPercent = (TextView) view.findViewById(R.id.sending_percentage);
-
         }
 
     }

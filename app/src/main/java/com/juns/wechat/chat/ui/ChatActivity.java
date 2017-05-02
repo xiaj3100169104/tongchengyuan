@@ -36,8 +36,7 @@ import com.juns.wechat.util.ThreadPoolUtil;
 import com.style.base.BaseToolbarActivity;
 import com.style.constant.Skip;
 import com.style.dialog.PromptDialog;
-
-import org.simple.eventbus.Subscriber;
+import com.juns.wechat.chat.ui.ChatActivityHelper.Action;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -151,12 +150,12 @@ public class ChatActivity extends BaseToolbarActivity {
 
             @Override
             public void onRefresh() {
-                int queryIndex = chatActivityHelper.getQueryIndex();
-                if (queryIndex < 0) {
+                boolean hasMoreData = chatActivityHelper.isHaveMoreData();
+                if (hasMoreData) {
                     mRecyclerView.setNoMore(true);
                     mRecyclerView.refreshComplete(5);
                 } else {
-                    chatActivityHelper.loadMessagesFromDb();
+                    chatActivityHelper.loadMessagesFromDb(Action.LOAD_MORE);
                 }
             }
 
@@ -166,25 +165,28 @@ public class ChatActivity extends BaseToolbarActivity {
             }
         });
 
-        chatActivityHelper.loadMessagesFromDb();
+        chatActivityHelper.loadMessagesFromDb(Action.FIRST_LOAD);
 
     }
 
     /**
      * {@link ChatActivityHelper#loadMessagesFromDb()}方法完成之后调用
      */
-    public void loadDataComplete(boolean hasNewData, List<MessageObject> dataList) {
-        mRecyclerView.refreshComplete(5);
-        if (hasNewData) {
-            //mDataAdapter.notifyDataSetChanged();  //ChatActivityHelper已经更新数据源
-            mRealmAdapter.setData(dataList);
-            mRealmAdapter.notifyDataSetChanged();
+    public void notifyDataSetChanged(Action action, List<MessageObject> dataList) {
+        switch (action){
+            case FIRST_LOAD:
+                scrollListViewToBottom();
+                break;
+            case LOAD_MORE:
+                mRecyclerView.refreshComplete(5);
+                break;
+            case DATA_INSERT:
+                scrollListViewToBottom();
+                break;
+            default:
+                break;
         }
-        //第一次加载数据，listView要滚动到底部，下拉刷新加载出来的数据，不用滚动到底部
-        if (mFirstLoad) {
-            scrollListViewToBottom();
-            mFirstLoad = false;
-        }
+        mRealmAdapter.setData(dataList);
     }
 
     public void refreshOneData(boolean scroll2bottom) {
@@ -205,20 +207,6 @@ public class ChatActivity extends BaseToolbarActivity {
                 mRecyclerView.smoothScrollToPosition(mRealmAdapter.getItemCount());
             }
         });
-    }
-
-    /***
-     * 监听数据库中消息表数据的变化
-     *
-     * @param event
-     * @see ChatActivityHelper#processOneMessage(List, MessageBean, int)
-     */
-    @Subscriber(tag = ChatTable.TABLE_NAME)
-    private void onDdDataChanged(DbDataEvent<MessageBean> event) {
-        if (event.data == null || event.data.isEmpty()) return;
-        LogUtil.i("data: " + event.data.toString() + "action: " + event.action);
-        MessageBean messageBean = event.data.get(0);
-        chatActivityHelper.processOneMessage(msgViewModels, messageBean, event.action);
     }
 
     /**

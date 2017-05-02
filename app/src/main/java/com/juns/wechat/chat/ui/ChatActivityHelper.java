@@ -31,6 +31,7 @@ public class ChatActivityHelper {
     private MessageDao messageDao;
     private MessageObjDao messageObjDao;
     private String otherName;
+
     private int mFromIndex; //从该位置开始查询
     private int mEndIndex;
     private Realm realm;
@@ -66,22 +67,7 @@ public class ChatActivityHelper {
         realmResults.addChangeListener(resultsRealmChangeListener);
     }
 
-    private List<MessageBean> getMessagesByIndexAndSize() {
-        return messageDao.getMessagesByIndexAndSize(myselfName, otherName, mFromIndex, SIZE);
-    }
-
-    public void loadMessagesFromDb() {
-        //取出来结果是按升序排列的
-
-
-      /*  List<MessageBean> list = getMessagesByIndexAndSize();
-        if (list == null || list.isEmpty()) {
-            notifyActivityDataSetChanged(false);
-            return;
-        }
-        mFromIndex = mFromIndex - list.size();
-
-        addEntityToViewModel(chatActivity.getMsgViewModels(), list);*/
+    public void loadMessagesFromDb(Action action) {
         if(!mHaveMoreData){
             LogUtil.w("no more data can be fetched!");
             return;
@@ -97,69 +83,15 @@ public class ChatActivityHelper {
         }
 
         LogUtil.i("dataList: " + dataList.size());
-        notifyActivityDataSetChanged(true, dataList);
+        notifyActivityDataSetChanged(action, dataList);
     }
 
-    private void notifyActivityDataSetChanged(boolean hasNewData, List<MessageObject> dataList) {
-        chatActivity.loadDataComplete(hasNewData, dataList);
+    private void notifyActivityDataSetChanged(Action action, List<MessageObject> dataList) {
+        chatActivity.notifyDataSetChanged(action, dataList);
     }
 
-    /**
-     * 由于消息是从上向下展示，下拉刷新查询出消息应该放在数据链表头部
-     *
-     * @param messageEntities
-     */
-    private void addEntityToViewModel(List<MessageBean> msgViewModels, List<MessageBean> messageEntities) {
-        int size = messageEntities.size();
-        for (int i = size - 1; i >= 0; i--) {
-            MessageBean entity = messageEntities.get(i);
-            addEntityToViewModel(msgViewModels, entity);
-        }
-        Collections.sort(msgViewModels, new MessageBeanComparator());
-    }
-
-    private void addEntityToViewModel(List<MessageBean> msgViewModels, MessageBean entity) {
-        if (entity == null) return;
-        msgViewModels.add(entity);
-    }
-
-    /**
-     * 处理一条消息，在观察到一条数据变化时调用。下拉刷新出来的数据不应该调用此方法
-     *
-     * @param entity
-     */
-    public void processOneMessage(List<MessageBean> msgViewModels, MessageBean entity, int action) {
-        int position = -1;
-        for (int i = 0; i < msgViewModels.size(); i++) {
-            MessageBean viewModel = msgViewModels.get(i);
-            if (entity.getId() == viewModel.getId()) {
-                position = i;
-                break;
-            }
-        }
-        switch (action) {
-            case DbDataEvent.SAVE:
-                addEntityToViewModel(msgViewModels, entity);
-                Collections.sort(msgViewModels, new MessageBeanComparator());
-                chatActivity.refreshOneData(true);
-                break;
-            case DbDataEvent.UPDATE:
-                if (position != -1) {
-                    msgViewModels.remove(position);
-                }
-                addEntityToViewModel(msgViewModels, entity);
-                Collections.sort(msgViewModels, new MessageBeanComparator());
-                chatActivity.refreshOneData(true);
-                break;
-            case DbDataEvent.DELETE_ONE:
-                if (position != -1) {
-                    msgViewModels.remove(position);
-                }
-                chatActivity.refreshOneData(false);
-                break;
-            default:
-                break;
-        }
+    public boolean isHaveMoreData() {
+        return mHaveMoreData;
     }
 
     /**
@@ -168,12 +100,6 @@ public class ChatActivityHelper {
      * @param otherName
      */
     public void markAsRead(final String myselfName, final String otherName) {
-      /*  ThreadPoolUtil.execute(new Runnable() {
-            @Override
-            public void run() {
-                messageDao.markAsRead(myselfName, otherName);
-            }
-        });*/
         messageObjDao.markAsRead(realm, myselfName, otherName);
     }
 
@@ -182,12 +108,12 @@ public class ChatActivityHelper {
         realm.close();
     }
 
-    public int getQueryIndex() {
-        return mFromIndex;
-    }
+    public enum Action{
+        FIRST_LOAD(0), LOAD_MORE(1), DATA_INSERT(2), DATA_UPDATE(3), DATA_DELETE(4);
 
-    public void setQueryIndex(int mQueryIndex) {
-        this.mFromIndex = mQueryIndex;
+        Action(int i){
+
+        }
     }
 
     class MyRealmChangeListener implements RealmChangeListener<RealmResults<MessageObject>>{
@@ -198,29 +124,33 @@ public class ChatActivityHelper {
                    dataList.add(realmResults.get(i));
                    mEndIndex++;
                }
+               notifyActivityDataSetChanged(Action.DATA_INSERT, dataList);
            }else if(mEndIndex == realmResults.size()){
                for(int i = 0 ; i < dataList.size() ; i++){
                    if(!dataList.get(i).equals(realmResults.get(mFromIndex + i))){
                        dataList.set(i, realmResults.get(mFromIndex + i));
                    }
                }
-               LogUtil.i("some data changed!");
-           }else {  //some data is deleted!
-               Iterator<MessageObject> iterator = dataList.iterator();
+               notifyActivityDataSetChanged(Action.DATA_UPDATE, dataList);
+           }else {  //数据被删除了
                int realmResultsCount = realmResults.size();
-               int i = 0;
-               while (iterator.hasNext()){
-                   if(mFromIndex + i > realmResultsCount - 1){
-                       break;
+               if(realmResultsCount == 0){
+                   dataList.clear();
+               }else {
+                   Iterator<MessageObject> iterator = dataList.iterator();
+                   while (iterator.hasNext()){
+                       MessageObject messageObject = iterator.next();
+                       if(!realmResults.contains(messageObject)){
+                           iterator.remove();
+                       }
                    }
-                   MessageObject messageObject = iterator.next();
-                   if(!messageObject.equals(realmResults.get(mFromIndex + i))){
-                       iterator.remove();
-                   }
-                   i++;
                }
+               //realResults 集合数组下标项已经改变，需要重新计算EndIndex和FromIndex.
+               mEndIndex = realmResultsCount;
+               mFromIndex = realmResultsCount - dataList.size();
+
+               notifyActivityDataSetChanged(Action.DATA_DELETE, dataList);
            }
-           notifyActivityDataSetChanged(true, dataList);
         }
     }
 }
