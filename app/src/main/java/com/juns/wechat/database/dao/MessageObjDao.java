@@ -4,6 +4,7 @@ import com.juns.wechat.bean.Flag;
 import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.chat.bean.MessageObject;
 import com.juns.wechat.config.MsgType;
+import com.juns.wechat.homePage.fragment.msg.MsgItem;
 
 import org.xutils.common.util.KeyValue;
 import org.xutils.db.sqlite.WhereBuilder;
@@ -33,7 +34,7 @@ public class MessageObjDao extends BaseObjDao<MessageObject> {
         return realm.where(clazz).equalTo(MessageObject.MYSELF_NAME, myselfName).equalTo(MessageObject.OTHER_NAME, otherName)
                 .lessThan(MessageObject.TYPE, MsgType.MSG_TYPE_SEND_INVITE)
                 .notEqualTo(MessageObject.FLAG, Flag.INVALID.value())
-                .findAllSorted(MessageObject.ID, Sort.ASCENDING);
+                .findAllSorted(MessageObject.DATE, Sort.ASCENDING);
     }
 
     public void markAsRead(Realm realm, final String myselfName, final String otherName){
@@ -67,8 +68,8 @@ public class MessageObjDao extends BaseObjDao<MessageObject> {
             realm.executeTransaction(new Realm.Transaction() {
                 @Override
                 public void execute(Realm realm) {
+                    messageObject.setState(state);
                     if (date != null) {
-                        messageObject.setState(state);
                         messageObject.setDate(date);
                     }
                 }
@@ -76,4 +77,5 @@ public class MessageObjDao extends BaseObjDao<MessageObject> {
         }
 
     }
+
 }
