@@ -4,8 +4,6 @@ package com.juns.wechat.config;
  * Created by 王者 on 2016/7/21
  */
 public class MsgType {
-    public static final int MSG_TYPE_UNKNOWN = -1; //消息未知
-
     public final static int MSG_TYPE_TEXT = 0;                  //文字
     public final static int MSG_TYPE_VOICE = 1; //语音
     public final static int MSG_TYPE_PICTURE = 2;//图片

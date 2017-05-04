@@ -355,7 +355,7 @@ public class CommonUtil {
         return true;
     }
 
-    public static void notifyUpdateAlbum(Context context, File photoFile) {
+    public static void notifyUpdateGallary(Context context, File photoFile) {
         Intent intent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         Uri uri = Uri.fromFile(photoFile);
         intent.setData(uri);

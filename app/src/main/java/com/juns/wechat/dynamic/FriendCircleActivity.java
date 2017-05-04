@@ -42,8 +42,6 @@ import butterknife.ButterKnife;
  * Created by Administrator on 2016/4/11.
  */
 public class FriendCircleActivity extends BaseToolbarActivity {
-    public static final int CODE_PUBLISH_DYNAMIC = 0x000008;
-
     private static int ACTION_REFRESH = 0;
     private static int ACTION_LOAD_MORE = 1;
     private static final int COMMENT = 0;
@@ -83,7 +81,7 @@ public class FriendCircleActivity extends BaseToolbarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.select:
-                skipForResult(DynamicPublishActivity.class, CODE_PUBLISH_DYNAMIC);
+                skipForResult(DynamicPublishActivity.class, Skip.CODE_PUBLISH_DYNAMIC);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -285,7 +283,7 @@ public class FriendCircleActivity extends BaseToolbarActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
-                case CODE_PUBLISH_DYNAMIC:
+                case Skip.CODE_PUBLISH_DYNAMIC:
                     if (data != null) {
                         DynamicBean bean = (DynamicBean) data.getSerializableExtra("sendDynamic");
                         dataList.add(0, bean);

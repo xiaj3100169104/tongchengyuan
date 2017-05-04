@@ -83,30 +83,26 @@ public class MyDateUtil {
         if (!strTimeIsTheCorrectFormatType(strTime, formatType)) {
             return null;
         }
-        SimpleDateFormat format = new SimpleDateFormat(formatType);
-        Date date = null;
-        try {
-            date = format.parse(strTime);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        Date date = stringToDate(strTime, formatType);
+        if (null == date) {
             return null;
         }
-        long speMillis = date.getTime();
-        String pattern = null;
+        long speMillis = stringToLong(strTime, formatType);
+        String format = null;
         if (isBelongToThisYear(speMillis)) {
             if (isTheDayBefore(speMillis, 0)) {
-                pattern = "今天 HH:mm";
+                format = "今天 HH:mm";
             } else if (isTheDayBefore(speMillis, -1)) {
-                pattern = "昨天 HH:mm";
+                format = "昨天 HH:mm";
             } else if (isTheDayBefore(speMillis, -2)) {
-                pattern = "前天 HH:mm";
+                format = "前天 HH:mm";
             } else {
-                pattern = FORMAT_MM_dd_HH_mm_CHINA;
+                format = FORMAT_MM_dd_HH_mm_CHINA;
             }
         } else {
-            pattern = FORMAT_yyyy_MM_dd_HH_mm;
+            format = FORMAT_yyyy_MM_dd_HH_mm;
         }
-        return new SimpleDateFormat(pattern, Locale.CHINA).format(date);
+        return new SimpleDateFormat(format, Locale.CHINA).format(date);
     }
 
     /**
@@ -118,15 +114,11 @@ public class MyDateUtil {
         if (!strTimeIsTheCorrectFormatType(strTime, formatType)) {
             return null;
         }
-        SimpleDateFormat format = new SimpleDateFormat(formatType);
-        Date date = null;
-        try {
-            date = format.parse(strTime);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        Date date = stringToDate(strTime, formatType);
+        if (null == date) {
             return null;
         }
-        long speMillis = date.getTime();
+        long speMillis = stringToLong(strTime, formatType);
         long currentMillis = System.currentTimeMillis();
         long value = currentMillis - speMillis;
         String discribleTime = null;
@@ -153,9 +145,8 @@ public class MyDateUtil {
      * @return true 属于，false不属于
      */
     private static boolean isBelongToThisYear(long inputTime) {
-        SimpleDateFormat format = new SimpleDateFormat(FORMAT_yyyy);
-        String year = format.format(new Date(inputTime));
-        String curYear = format.format(new Date(System.currentTimeMillis()));
+        String year = longToString(inputTime, FORMAT_yyyy);
+        String curYear = longToString(System.currentTimeMillis(), FORMAT_yyyy);
         if (year.equals(curYear))
             return true;
         return false;
@@ -210,6 +201,82 @@ public class MyDateUtil {
         return info;
     }
 
+    public static Date getCurrentTimeForDate(String df) {
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat(df);// 设置日期格式
+        System.out.println(sdf.format(date));// new Date()为获取当前系统时间
+        return date;
+    }
+
+    public static String getCurrentTimeForString(String df) {
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat(df);// 设置日期格式
+        String d = sdf.format(date);
+        return d;
+    }
+
+    /**
+     * 获取当前日期的指定格式的字符串
+     *
+     * @param format 指定的日期时间格式，若为null或""则使用指定的格式"yyyy-MM-dd HH:MM"
+     * @return
+     */
+    public static String getCurrentTime(String format) {
+        if (format == null || format.trim().equals("")) {
+            sdf.applyPattern(FORMAT_yyyy_MM_dd_HH_mm);
+        } else {
+            sdf.applyPattern(format);
+        }
+        return sdf.format(new Date());
+    }
+
+    // date类型转换为String类型
+    // formatType格式为yyyy-MM-dd HH:mm:ss//yyyy年MM月dd日 HH时mm分ss秒
+    // data Date类型的时间
+    public static String dateToString(Date data, String formatType) {
+        return new SimpleDateFormat(formatType).format(data);
+    }
+
+    /*
+     * string类型转换为date类型 strTime要转换的string类型的时间， formatType要转换的格式 HH时mm分ss秒，
+     * strTime的时间格式必须要与formatType的时间格式相同
+     */
+    public static Date stringToDate(String strTime, String formatType) {
+        if (!strTimeIsTheCorrectFormatType(strTime, formatType)) {
+            return null;
+        }
+        SimpleDateFormat formatter = new SimpleDateFormat(formatType);
+        Date date = null;
+        try {
+            date = formatter.parse(strTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date;
+    }
+
+    // string类型转换为long类型
+    // strTime要转换的String类型的时间
+    // formatType时间格式
+    // strTime的时间格式和formatType的时间格式必须相同
+    public static long stringToLong(String strTime, String formatType) {
+        Date date = stringToDate(strTime, formatType); // String类型转成date类型
+        if (date == null) {
+            return 0;
+        } else {
+            long currentTime = date.getTime(); // date类型转成long类型
+            return currentTime;
+        }
+    }
+
+    // 时间戳：long类型转换为String类型
+    // currentTime要转换的long类型的时间
+    // formatType要转换的string类型的时间格式
+    public static String longToString(long time, String formatType) {
+        SimpleDateFormat format = new SimpleDateFormat(formatType);
+        return format.format(new Date(time));
+    }
+
     /**
      * 判断当前日期是星期几
      *
@@ -238,7 +305,7 @@ public class MyDateUtil {
      * @Exception 发生异常
      */
     public static String longToWeek(long millis) {
-        String format = new SimpleDateFormat(FORMAT_DATE).format(new Date(millis));
+        String format = longToString(millis, FORMAT_DATE);
         int index = 0;
         try {
             index = dayForWeek(format);
@@ -284,30 +351,4 @@ public class MyDateUtil {
         }
     }
 
-    //计算倒计时的时间
-    public static String endData(long time) {
-        long second = time / 1000;
-        //不到一分钟
-        if (second < DateUtils.MINUTE_IN_MILLIS) {
-            return "0:0:" + second;
-        }
-        //不到一小时
-        long minute = second / 60;
-        if (minute < 60) {
-            second = second - 60 * minute;
-            return "0:" + minute + ":" + second;
-        }
-        //不到一天
-        long hour = minute / 60;
-        if (hour < 24) {
-            second = second - 60 * minute;
-            minute = minute - 60 * hour;
-            return hour + ":" + minute + ":" + second;
-        }
-        long day = hour / 24;
-        second = second - 60 * minute;
-        minute = minute - 60 * hour;
-        hour = hour - 24 * day;
-        return day + "天" + " " + hour + ":" + minute + ":" + second;
-    }
 }

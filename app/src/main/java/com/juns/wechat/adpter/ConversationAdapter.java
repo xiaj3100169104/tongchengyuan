@@ -13,7 +13,7 @@ import com.juns.wechat.R;
 import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.utils.SmileUtils;
-import com.juns.wechat.homePage.fragment.msg.MsgItem;
+import com.juns.wechat.fragment.msg.MsgItem;
 import com.juns.wechat.util.TimeUtil;
 import com.juns.wechat.widget.swipe.SwipeLayout;
 import com.style.base.BaseRecyclerViewAdapter;
@@ -27,9 +27,9 @@ import butterknife.ButterKnife;
 /**
  * Created by 王者 on 2016/8/9.
  */
-public class ConversationAdapter<T> extends BaseRecyclerViewAdapter<T> {
+public class ConversationAdapter extends BaseRecyclerViewAdapter {
 
-    public ConversationAdapter(Context context, List<T> list) {
+    public ConversationAdapter(Context context, List list) {
         super(context, list);
     }
 

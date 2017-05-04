@@ -1,10 +1,15 @@
 package com.juns.wechat.bean;
 
+import android.text.TextUtils;
+
+import com.juns.wechat.database.DbUtil;
 import com.juns.wechat.database.FriendTable;
 import com.juns.wechat.database.dao.UserDao;
+import com.juns.wechat.exception.UserNotFoundException;
 
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
+import org.xutils.ex.DbException;
 
 /**
  * Created by 王宗文 on 2016/6/20.

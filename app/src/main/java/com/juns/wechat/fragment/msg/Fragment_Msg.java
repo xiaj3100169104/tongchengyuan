@@ -1,4 +1,4 @@
-package com.juns.wechat.homePage.fragment.msg;
+package com.juns.wechat.fragment.msg;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.homePage.MainActivity;
+import com.juns.wechat.activity.MainActivity;
 import com.juns.wechat.R;
+import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.ui.ChatActivity;
 import com.juns.wechat.adpter.ConversationAdapter;
 import com.juns.wechat.chat.bean.MessageBean;
@@ -45,7 +45,7 @@ public class Fragment_Msg extends BaseFragment {
     TextView txtNochat;
     private String account = AccountManager.getInstance().getUserName();
     private List<MsgItem> dataList;
-    private ConversationAdapter<MsgItem> adapter;
+    private ConversationAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -69,6 +69,7 @@ public class Fragment_Msg extends BaseFragment {
                     intent.putExtra(Skip.KEY_USER_ID, u.userId);
                     startActivity(intent);
                 }
+
             }
         });
         refreshData();

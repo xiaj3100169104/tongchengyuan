@@ -2,12 +2,13 @@ package com.juns.wechat.database.dao;
 
 import android.database.Cursor;
 
+import com.juns.wechat.App;
 import com.juns.wechat.bean.Flag;
 import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.bean.Msg;
-import com.juns.wechat.homePage.fragment.msg.MsgItem;
+import com.juns.wechat.fragment.msg.MsgItem;
 import com.juns.wechat.config.MsgType;
 import com.juns.wechat.database.CursorUtil;
 import com.juns.wechat.manager.AccountManager;
