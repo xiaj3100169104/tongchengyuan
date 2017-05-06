@@ -35,7 +35,7 @@ public interface HttpActionService {
     @POST("updateUser") @FormUrlEncoded
     Call<String> updateUser(@FieldMap Map<String, Object> map);
 
-    @POST("uploadAvatar")
+    @POST("uploadAvatar") 
     Call<String> uploadAvatar(@Body RequestBody requestBody);
 
     @POST("searchUser") @FormUrlEncoded

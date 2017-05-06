@@ -80,6 +80,11 @@ public class HttpActionImpl {
     }
 
     public void uploadAvatar(String tag, String filePath, NetDataBeanCallback callback) {
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:8080/wechat_server/")
+                .addConverterFactory(ScalarsConverterFactory.create()).build();
+        service = retrofit.create(HttpActionService.class);
+        httpActionManager = HttpActionManager.getInstance();
+
         TokenRequestParams params = new TokenRequestParams();
         File file = new File(filePath);
         RequestBody requestBody = new MultipartBody.Builder()
