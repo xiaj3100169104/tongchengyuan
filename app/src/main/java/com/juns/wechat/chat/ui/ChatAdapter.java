@@ -108,11 +108,6 @@ public class ChatAdapter extends BaseRecyclerViewAdapter<MessageBean> {
                 holder = new ViewHolderLocationRight(getView(R.layout.chat_item_sent_location, parent));
                 break;
         }
-
-        if(holder == null){
-            holder = new ViewHolderLocationRight(getView(R.layout.chat_item_sent_message, parent));
-        }
-
         holder.setContext(mContext, parent);
         return holder;
     }

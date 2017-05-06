@@ -12,6 +12,16 @@ import org.xutils.ex.DbException;
 public class ChatTable {
     public static final String TABLE_NAME = "wcMessage";
 
+    // boolean mappings
+    public static final int INCOMING = 0;
+    public static final int OUTGOING = 1;//自己的消息
+    public static final int STATE_NEW = 0; // <
+    public static final int STATE_SEND_SUCC = 1; // < 消息已发送
+    public static final int STATE_SEND_FAIL = 2; //消息发送失败
+    public static final int STATE_READ = 3; // < 消息已读
+    public static final int MSG_VALID   = 1;
+    public static final int MSG_INVALID = 0;
+
     public static final String CREATE_INDEX = "create index chat_index on " + TABLE_NAME
             + " (" + MessageBean.PACKET_ID + ");";
 

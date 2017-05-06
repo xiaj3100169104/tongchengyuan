@@ -25,6 +25,7 @@ import org.jivesoftware.smackx.iqregister.AccountManager;
 import org.jivesoftware.smackx.search.ReportedData;
 import org.jivesoftware.smackx.search.UserSearchManager;
 import org.jivesoftware.smackx.xdata.Form;
+import org.json.JSONException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -194,7 +195,12 @@ public class XmppManagerImpl implements XmppManager {
         String toJid = ConfigUtil.getXmppJid(messageBean.getOtherName());
         message.setTo(toJid);
         message.setStanzaId(messageBean.getPacketId());
-        message.setBody(messageBean.toSendJson());
+        try {
+            message.setBody(messageBean.toSendJson());
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
+        }
         return sendPacket(message);
     }
 

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.juns.wechat.config.MsgType;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -12,12 +13,11 @@ import org.json.JSONObject;
 public abstract class Msg {
     private static Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 
-
     public String toJson(){
         return gson.toJson(this);
     }
 
-    public abstract JSONObject toSendJsonObject();
+    public abstract JSONObject toSendJsonObject()  throws JSONException;
 
     public static Msg fromJson(String json, int type){
         Msg msg = null;
@@ -43,6 +43,32 @@ public abstract class Msg {
                 msg = gson.fromJson(json, LocationMsg.class);
                 break;
             default:
+                break;
+        }
+        return msg;
+    }
+
+    public static String getTypeDesc(int type, Msg msgObj){
+        String msg = null;
+        switch (type){
+            case MsgType.MSG_TYPE_TEXT:
+                TextMsg textMsg = (TextMsg) msgObj;
+                msg = textMsg.content;
+                break;
+            case MsgType.MSG_TYPE_PICTURE:
+                msg = MsgType.MSG_TYPE_DESC_PICTURE;
+                break;
+            case MsgType.MSG_TYPE_VOICE:
+                msg = MsgType.MSG_TYPE_DESC_VOICE;
+                break;
+            case MsgType.MSG_TYPE_OFFLINE_VIDEO:
+                msg = MsgType.MSG_TYPE_DESC_OFFLINE_VIDEO;
+                break;
+            case MsgType.MSG_TYPE_LOCATION:
+                msg = MsgType.MSG_TYPE_DESC_LOCATION;
+                break;
+            default:
+                msg = "";
                 break;
         }
         return msg;

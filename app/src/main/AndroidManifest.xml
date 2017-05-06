@@ -65,7 +65,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".homePage.MainActivity"/>
+        <activity android:name=".activity.MainActivity"/>
         <activity android:name=".activity.LoginActivity"
             android:launchMode="singleTop"/>
         <activity android:name=".activity.RegisterActivity"/>

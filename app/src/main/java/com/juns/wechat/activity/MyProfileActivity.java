@@ -37,7 +37,6 @@ import butterknife.OnClick;
  * create by 王者 on 2016/7/14
  */
 public class MyProfileActivity extends BaseToolbarActivity {
-    public static final int CODE_PHOTO_CROP = 0x000003;// 系统裁剪头像
 
     @Bind(R.id.ivAvatar)
     ImageView ivAvatar;
@@ -100,7 +99,7 @@ public class MyProfileActivity extends BaseToolbarActivity {
     @OnClick(R.id.ivAvatar)
     public void showBigAvatar() {
         Intent intent = new Intent(this, ShowBigImage.class);
-        intent.putExtra("imgName", curUser.getHeadUrl());
+        intent.putExtra(Skip.KEY_IMG_NAME, curUser.getHeadUrl());
         startActivity(intent);
     }
 
@@ -188,7 +187,7 @@ public class MyProfileActivity extends BaseToolbarActivity {
                         startActivity(intent2);
                     }
                     break;
-                case CODE_PHOTO_CROP:
+                case Skip.CODE_PHOTO_CROP:
 
                     break;
             }

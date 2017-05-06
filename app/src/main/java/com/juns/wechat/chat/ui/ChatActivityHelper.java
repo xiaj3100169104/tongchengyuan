@@ -2,22 +2,13 @@ package com.juns.wechat.chat.ui;
 
 import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.chat.bean.MessageObject;
 import com.juns.wechat.database.dao.DbDataEvent;
 import com.juns.wechat.database.dao.MessageDao;
-import com.juns.wechat.database.dao.MessageObjDao;
 import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.realm.RealmHelper;
-import com.juns.wechat.util.LogUtil;
+import com.juns.wechat.util.ThreadPoolUtil;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
-
-import io.realm.Realm;
-import io.realm.RealmChangeListener;
-import io.realm.RealmResults;
 
 /**
  * Created by 王者 on 2016/8/8.
@@ -29,69 +20,105 @@ public class ChatActivityHelper {
 
     private String myselfName;
     private MessageDao messageDao;
-    private MessageObjDao messageObjDao;
     private String otherName;
-
-    private int mFromIndex; //从该位置开始查询
-    private int mEndIndex;
-    private Realm realm;
-    private RealmResults<MessageObject> realmResults;
-    private List<MessageObject> dataList = new ArrayList<>();
-    private boolean mHaveMoreData = true;
-    private RealmChangeListener<RealmResults<MessageObject>> resultsRealmChangeListener =
-           new MyRealmChangeListener();
+    private int mQueryIndex; //从该位置开始查询
 
     private UserBean account = AccountManager.getInstance().getUser();
 
 
-    public ChatActivityHelper(ChatActivity chatActivity, String contactName) {
+    public ChatActivityHelper(ChatActivity chatActivity) {
         this.chatActivity = chatActivity;
         this.myselfName = account.getUserName();
-        this.otherName = contactName;
+        this.otherName = chatActivity.getContactName();
         messageDao = MessageDao.getInstance();
     }
 
     public void onCreate() {
-        realm = RealmHelper.getIMInstance();
-        messageObjDao = MessageObjDao.getInstance();
         initQueryIndex(myselfName, otherName);
         markAsRead(myselfName, otherName);
     }
 
     private void initQueryIndex(String myselfName, String otherName) {
-        //结果是按升序排列的。
-        realmResults = messageObjDao.getMessagesBetweenTwoUsers(realm, myselfName, otherName);
-        int count = realmResults.size();
-        mFromIndex = count;
-        mEndIndex = count;
-        realmResults.addChangeListener(resultsRealmChangeListener);
+        int size = messageDao.getMessageCount(myselfName, otherName);
+        mQueryIndex = size > SIZE ? size - SIZE : 0;
     }
 
-    public void loadMessagesFromDb(Action action) {
-        if(!mHaveMoreData){
-            LogUtil.w("no more data can be fetched!");
+    private List<MessageBean> getMessagesByIndexAndSize() {
+        return messageDao.getMessagesByIndexAndSize(myselfName, otherName, mQueryIndex, SIZE);
+    }
+
+    public void loadMessagesFromDb() {
+        List<MessageBean> list = getMessagesByIndexAndSize();
+        if (list == null || list.isEmpty()) {
+            notifyActivityDataSetChanged(false);
             return;
         }
+        mQueryIndex = mQueryIndex - list.size();
 
-        mFromIndex = mFromIndex - SIZE > 0 ? mFromIndex - SIZE : 0;
-        LogUtil.i("mFromIndex: " + mFromIndex + ", mEndIndex: " + mEndIndex);
-        for(int i = mFromIndex; i < mEndIndex ; i++){
-            dataList.add(realmResults.get(i));
-        }
-        if(mFromIndex == 0){ //no more data!
-           mHaveMoreData = false;
-        }
-
-        LogUtil.i("dataList: " + dataList.size());
-        notifyActivityDataSetChanged(action, dataList);
+        addEntityToViewModel(chatActivity.getMsgViewModels(), list);
+        notifyActivityDataSetChanged(true);
     }
 
-    private void notifyActivityDataSetChanged(Action action, List<MessageObject> dataList) {
-        chatActivity.notifyDataSetChanged(action, dataList);
+    private void notifyActivityDataSetChanged(boolean hasNewData) {
+        chatActivity.loadDataComplete(hasNewData);
     }
 
-    public boolean isHaveMoreData() {
-        return mHaveMoreData;
+    /**
+     * 由于消息是从上向下展示，下拉刷新查询出消息应该放在数据链表头部
+     *
+     * @param messageEntities
+     */
+    private void addEntityToViewModel(List<MessageBean> msgViewModels, List<MessageBean> messageEntities) {
+        int size = messageEntities.size();
+        for (int i = size - 1; i >= 0; i--) {
+            MessageBean entity = messageEntities.get(i);
+            addEntityToViewModel(msgViewModels, entity);
+        }
+        Collections.sort(msgViewModels, new MessageBeanComparator());
+    }
+
+    private void addEntityToViewModel(List<MessageBean> msgViewModels, MessageBean entity) {
+        if (entity == null) return;
+        msgViewModels.add(entity);
+    }
+
+    /**
+     * 处理一条消息，在观察到一条数据变化时调用。下拉刷新出来的数据不应该调用此方法
+     *
+     * @param entity
+     */
+    public void processOneMessage(List<MessageBean> msgViewModels, MessageBean entity, int action) {
+        int position = -1;
+        for (int i = 0; i < msgViewModels.size(); i++) {
+            MessageBean viewModel = msgViewModels.get(i);
+            if (entity.getId() == viewModel.getId()) {
+                position = i;
+                break;
+            }
+        }
+        switch (action) {
+            case DbDataEvent.SAVE:
+                addEntityToViewModel(msgViewModels, entity);
+                Collections.sort(msgViewModels, new MessageBeanComparator());
+                chatActivity.refreshOneData(true);
+                break;
+            case DbDataEvent.UPDATE:
+                if (position != -1) {
+                    msgViewModels.remove(position);
+                }
+                addEntityToViewModel(msgViewModels, entity);
+                Collections.sort(msgViewModels, new MessageBeanComparator());
+                chatActivity.refreshOneData(true);
+                break;
+            case DbDataEvent.DELETE_ONE:
+                if (position != -1) {
+                    msgViewModels.remove(position);
+                }
+                chatActivity.refreshOneData(false);
+                break;
+            default:
+                break;
+        }
     }
 
     /**
@@ -100,57 +127,23 @@ public class ChatActivityHelper {
      * @param otherName
      */
     public void markAsRead(final String myselfName, final String otherName) {
-        messageObjDao.markAsRead(realm, myselfName, otherName);
+        ThreadPoolUtil.execute(new Runnable() {
+            @Override
+            public void run() {
+                messageDao.markAsRead(myselfName, otherName);
+            }
+        });
     }
 
     public void onDestroy() {
         chatActivity = null;
-        realm.close();
     }
 
-    public enum Action{
-        FIRST_LOAD(0), LOAD_MORE(1), DATA_INSERT(2), DATA_UPDATE(3), DATA_DELETE(4);
-
-        Action(int i){
-
-        }
+    public int getQueryIndex() {
+        return mQueryIndex;
     }
 
-    class MyRealmChangeListener implements RealmChangeListener<RealmResults<MessageObject>>{
-        @Override
-        public void onChange(RealmResults<MessageObject> realmResults) {
-           if(mEndIndex < realmResults.size()){
-               for(int i = mEndIndex ; i < realmResults.size() ; i++){
-                   dataList.add(realmResults.get(i));
-                   mEndIndex++;
-               }
-               notifyActivityDataSetChanged(Action.DATA_INSERT, dataList);
-           }else if(mEndIndex == realmResults.size()){
-               for(int i = 0 ; i < dataList.size() ; i++){
-                   if(!dataList.get(i).equals(realmResults.get(mFromIndex + i))){
-                       dataList.set(i, realmResults.get(mFromIndex + i));
-                   }
-               }
-               notifyActivityDataSetChanged(Action.DATA_UPDATE, dataList);
-           }else {  //数据被删除了
-               int realmResultsCount = realmResults.size();
-               if(realmResultsCount == 0){
-                   dataList.clear();
-               }else {
-                   Iterator<MessageObject> iterator = dataList.iterator();
-                   while (iterator.hasNext()){
-                       MessageObject messageObject = iterator.next();
-                       if(!realmResults.contains(messageObject)){
-                           iterator.remove();
-                       }
-                   }
-               }
-               //realResults 集合数组下标项已经改变，需要重新计算EndIndex和FromIndex.
-               mEndIndex = realmResultsCount;
-               mFromIndex = realmResultsCount - dataList.size();
-
-               notifyActivityDataSetChanged(Action.DATA_DELETE, dataList);
-           }
-        }
+    public void setQueryIndex(int mQueryIndex) {
+        this.mQueryIndex = mQueryIndex;
     }
 }

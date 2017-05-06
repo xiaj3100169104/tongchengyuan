@@ -6,7 +6,6 @@ import android.os.Handler;
 
 import com.juns.wechat.R;
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.homePage.MainActivity;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.util.SyncDataUtil;
 import com.style.base.BaseActivity;

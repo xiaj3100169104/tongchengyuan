@@ -5,7 +5,7 @@ import android.text.TextUtils;
 
 import com.juns.wechat.App;
 import com.juns.wechat.Constants;
-import com.juns.wechat.homePage.MainActivity;
+import com.juns.wechat.activity.MainActivity;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.database.dao.UserDao;
 import com.juns.wechat.util.SharedPreferencesUtil;

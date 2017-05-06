@@ -1,4 +1,4 @@
-package com.juns.wechat.homePage.fragment;
+package com.juns.wechat.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

@@ -34,9 +34,8 @@ public class NewFriendsListActivity extends BaseToolbarActivity {
 
     protected void initControl() {
         String myselfName = AccountManager.getInstance().getUserName();
-        List<MessageBean> myReceivedInviteMessages =
-                MessageDao.getInstance().getMyReceivedInviteMessages(myselfName);
-
-        lvNewFriends.setAdapter(new NewFriendsAdapter(this, myReceivedInviteMessages));
+        List<MessageBean> list = MessageDao.getInstance().getMyReceivedInviteMessages(myselfName);
+        if (list != null)
+            lvNewFriends.setAdapter(new NewFriendsAdapter(this, list));
     }
 }

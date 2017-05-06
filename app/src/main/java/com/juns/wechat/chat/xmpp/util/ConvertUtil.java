@@ -14,7 +14,7 @@ import org.json.JSONObject;
  */
 public class ConvertUtil {
 
-    public static MessageBean convertToMessageBean(Message message){
+    public static MessageBean convertToMessageBean(Message message) throws JSONException {
         MessageBean messageBean = new MessageBean();
         messageBean.setMyselfName(ConfigUtil.getUserName(message.getTo()));
         messageBean.setOtherName(ConfigUtil.getUserName(message.getFrom()));
@@ -23,17 +23,11 @@ public class ConvertUtil {
         messageBean.setDirection(MessageBean.Direction.INCOMING.value);
         messageBean.setPacketId(message.getStanzaId());
 
-        try {
-            JSONObject jsonObject = new JSONObject(message.getBody());
-            String msg = jsonObject.optString(MessageBean.MSG);
-            int type = jsonObject.optInt(MessageBean.TYPE);
-            String typeDesc = jsonObject.optString(MessageBean.TYPE_DESC);
-            messageBean.setMsg(msg);
-            messageBean.setType(type);
-            messageBean.setTypeDesc(typeDesc);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        JSONObject jsonObject = new JSONObject(message.getBody());
+        String msg = jsonObject.optString(MessageBean.MSG);
+        int type = jsonObject.optInt(MessageBean.TYPE);
+        messageBean.setMsg(msg);
+        messageBean.setType(type);
         return messageBean;
     }
 }

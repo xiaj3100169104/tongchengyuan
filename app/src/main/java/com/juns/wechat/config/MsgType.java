@@ -4,7 +4,9 @@ package com.juns.wechat.config;
  * Created by 王者 on 2016/7/21
  */
 public class MsgType {
-    public static final int MSG_TYPE_UNKNOWN = -1; //消息未知
+    //大于500的消息不会在消息界面展示
+    public final static int MSG_TYPE_SEND_INVITE = 500; //发送邀请消息成为好友。
+    public final static int MSG_TYPE_REPLY_INVITE = 501; // 是否同意添加好友请求消息
 
     public final static int MSG_TYPE_TEXT = 0;                  //文字
     public final static int MSG_TYPE_VOICE = 1; //语音
@@ -19,13 +21,10 @@ public class MsgType {
     public final static int MSG_TYPE_FACE = 10;     //表情
     public final static int MSG_TYPE_TRANSFER = 11;     //转发消息
 
-    //大于500的消息不会在消息界面展示
-    public final static int MSG_TYPE_SEND_INVITE = 500; //发送邀请消息成为好友。
-    public final static int MSG_TYPE_REPLY_INVITE = 501; // 是否同意添加好友请求消息
 
-    public static final String MSG_TYPE_VOICE_DESC = "[语音]";
-    public static final String MSG_TYPE_PICTURE_DESC = "[图片]";
-    public static final String MSG_TYPE_OFFLINE_VIDEO_DESC = "[视频]";
-    public static final String MSG_TYPE_LOCATION_DESC = "[位置]";
+    public static final String MSG_TYPE_DESC_VOICE = "[语音]";
+    public static final String MSG_TYPE_DESC_PICTURE = "[图片]";
+    public static final String MSG_TYPE_DESC_OFFLINE_VIDEO = "[视频]";
+    public static final String MSG_TYPE_DESC_LOCATION = "[位置]";
 
 }

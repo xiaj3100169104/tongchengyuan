@@ -7,8 +7,6 @@ import com.juns.wechat.chat.xmpp.process.IQRouter;
 import com.juns.wechat.config.ConfigUtil;
 import com.juns.wechat.config.MsgType;
 import com.juns.wechat.database.dao.MessageDao;
-import com.juns.wechat.database.dao.MessageObjDao;
-import com.juns.wechat.realm.RealmHelper;
 import com.juns.wechat.util.LogUtil;
 import com.juns.wechat.chat.xmpp.XmppManagerUtil;
 import com.juns.wechat.chat.xmpp.extensionelement.TimeElement;
@@ -29,11 +27,10 @@ import org.jivesoftware.smack.packet.IQ;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Presence;
 import org.jivesoftware.smack.packet.Stanza;
+import org.json.JSONException;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import io.realm.Realm;
 
 /*******************************************************
  * Created by 王者 on 2015/11/19
@@ -97,11 +94,6 @@ public class XmppReceivePacketListener implements StanzaListener {
 
             MessageDao.getInstance().updateMessageState(message.getStanzaId(),
                     MessageBean.State.SEND_SUCCESS.value, timeElement.getTime());
-
-            Realm realm = RealmHelper.getIMInstance();
-            MessageObjDao.getInstance().updateMessageState(realm, message.getStanzaId(),
-                    MessageBean.State.SEND_SUCCESS.value, timeElement.getTime());
-            realm.close();
         }
     }
 
@@ -117,10 +109,11 @@ public class XmppReceivePacketListener implements StanzaListener {
      * @param message
      */
     private void handleChatMessageByType(Message message){
-        MessageBean messageBean = ConvertUtil.convertToMessageBean(message);
-        int type = messageBean.getType();
-        MessageProcess messageProcess = processMap.get(type);
-        if(messageProcess == null){
+        try {
+            MessageBean messageBean = ConvertUtil.convertToMessageBean(message);
+            int type = messageBean.getType();
+            MessageProcess messageProcess = processMap.get(type);
+            if(messageProcess == null){
                 switch (type){
                     case MsgType.MSG_TYPE_TEXT:
                         messageProcess = new TextMessageProcess(App.getInstance());
@@ -147,9 +140,12 @@ public class XmppReceivePacketListener implements StanzaListener {
                         messageProcess = new UnknownTypeMessageProcess(App.getInstance());
                         break;
                 }
-        }
+            }
 
-        processMap.put(type, messageProcess);
-        messageProcess.processMessage(messageBean);
+            processMap.put(type, messageProcess);
+            messageProcess.processMessage(messageBean);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

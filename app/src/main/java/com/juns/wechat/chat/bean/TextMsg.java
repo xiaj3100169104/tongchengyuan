@@ -11,19 +11,15 @@ import org.json.JSONObject;
  * @since 1.6
  * Created by 王宗文 on 2015/11/24
  *******************************************************/
-public class TextMsg extends Msg{
+public class TextMsg extends Msg {
     public static final String CONTENT = "content";
 
     public String content;
 
     @Override
-    public JSONObject toSendJsonObject() {
+    public JSONObject toSendJsonObject() throws JSONException {
         JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put(CONTENT, content);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        jsonObject.put(CONTENT, content);
         return jsonObject;
     }
 }

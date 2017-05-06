@@ -186,7 +186,7 @@
                  android:layout_below="@id/ib_profile"
                  android:layout_centerHorizontal="true"
                  android:layout_marginTop="3dp"
-                 android:text="@string/me"
+                 android:text="@string/mime"
                  android:textColor="#9A9A9A"
                  android:textSize="12sp" />
          </RelativeLayout>

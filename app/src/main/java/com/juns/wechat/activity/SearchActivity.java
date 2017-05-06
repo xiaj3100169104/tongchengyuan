@@ -114,7 +114,7 @@ public class SearchActivity extends BaseActivity {
     private void showSearchResult(List<UserBean> userBeans){
         if(userBeans != null && !userBeans.isEmpty()){
             Intent intent = new Intent(SearchActivity.this, SearchResultActivity.class);
-            intent.putExtra("results", (Serializable) userBeans);
+            intent.putExtra(Skip.KEY_SEARCH_RESULTS, (Serializable) userBeans);
             startActivity(intent);
         }else {
             showToast("没有搜索到用户");
