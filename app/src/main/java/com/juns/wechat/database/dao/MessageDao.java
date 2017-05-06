@@ -146,12 +146,6 @@ public class MessageDao extends BaseDao<MessageBean>{
         whereBuilder.and(MessageBean.DIRECTION, "=", MessageBean.Direction.INCOMING.value);
         whereBuilder.and(MessageBean.TYPE, "=", MsgType.MSG_TYPE_SEND_INVITE);
         List<MessageBean> messageBeen =  findAllByParams(whereBuilder);
-
-        if(messageBeen != null && !messageBeen.isEmpty()){
-            for(MessageBean messageBean : messageBeen){
-                messageBean.setMsgObj(Msg.fromJson(messageBean.getMsg(),  MsgType.MSG_TYPE_SEND_INVITE));
-            }
-        }
         return messageBeen;
     }
 

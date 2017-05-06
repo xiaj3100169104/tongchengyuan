@@ -27,6 +27,7 @@ import org.jivesoftware.smack.packet.IQ;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Presence;
 import org.jivesoftware.smack.packet.Stanza;
+import org.json.JSONException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -108,10 +109,11 @@ public class XmppReceivePacketListener implements StanzaListener {
      * @param message
      */
     private void handleChatMessageByType(Message message){
-        MessageBean messageBean = ConvertUtil.convertToMessageBean(message);
-        int type = messageBean.getType();
-        MessageProcess messageProcess = processMap.get(type);
-        if(messageProcess == null){
+        try {
+            MessageBean messageBean = ConvertUtil.convertToMessageBean(message);
+            int type = messageBean.getType();
+            MessageProcess messageProcess = processMap.get(type);
+            if(messageProcess == null){
                 switch (type){
                     case MsgType.MSG_TYPE_TEXT:
                         messageProcess = new TextMessageProcess(App.getInstance());
@@ -138,9 +140,12 @@ public class XmppReceivePacketListener implements StanzaListener {
                         messageProcess = new UnknownTypeMessageProcess(App.getInstance());
                         break;
                 }
-        }
+            }
 
-        processMap.put(type, messageProcess);
-        messageProcess.processMessage(messageBean);
+            processMap.put(type, messageProcess);
+            messageProcess.processMessage(messageBean);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

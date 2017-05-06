@@ -54,7 +54,6 @@ public class SendMessage {
                 messageBean.setMsg(textMsg.toJson());
                 messageBean.setOtherName(otherName);
                 messageBean.setType(MsgType.MSG_TYPE_TEXT);
-                messageBean.setTypeDesc(content);
                 sendMsg(messageBean);
 
             }
@@ -75,7 +74,6 @@ public class SendMessage {
                 messageBean.setMsg(msg.toJson());
                 messageBean.setOtherName(otherName);
                 messageBean.setType(MsgType.MSG_TYPE_LOCATION);
-                messageBean.setTypeDesc(MsgType.MSG_TYPE_LOCATION_DESC);
                 sendMsg(messageBean);
 
             }
@@ -104,7 +102,6 @@ public class SendMessage {
                 messageBean.setMsg(pictureMsg.toJson());
                 messageBean.setOtherName(otherName);
                 messageBean.setType(MsgType.MSG_TYPE_PICTURE);
-                messageBean.setTypeDesc(MsgType.MSG_TYPE_PICTURE_DESC);
                 completeMessageEntityInfo(messageBean);
                 addMessageToDB(messageBean);
 
@@ -167,7 +164,6 @@ public class SendMessage {
                 messageBean.setMsg(contentMsg.toJson());
                 messageBean.setOtherName(otherName);
                 messageBean.setType(MsgType.MSG_TYPE_OFFLINE_VIDEO);
-                messageBean.setTypeDesc(MsgType.MSG_TYPE_OFFLINE_VIDEO_DESC);
                 completeMessageEntityInfo(messageBean);
                 addMessageToDB(messageBean);
 
@@ -215,7 +211,6 @@ public class SendMessage {
                 messageBean.setMsg(voiceMsg.toJson());
                 messageBean.setOtherName(otherName);
                 messageBean.setType(MsgType.MSG_TYPE_VOICE);
-                messageBean.setTypeDesc(MsgType.MSG_TYPE_VOICE_DESC);
                 sendMsg(messageBean);
             }
         });

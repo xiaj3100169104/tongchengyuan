@@ -1,6 +1,7 @@
 package com.juns.wechat.chat.bean;
 
 import com.juns.wechat.chat.bean.Msg;
+import com.juns.wechat.config.MsgType;
 import com.juns.wechat.database.ChatTable;
 
 import org.json.JSONException;
@@ -15,15 +16,14 @@ import java.util.Date;
  *******************************************************/
 
 @Table(name = ChatTable.TABLE_NAME, onCreated = ChatTable.CREATE_INDEX)
-public class MessageBean{
+public class MessageBean {
     public static final String ID = "id";
     public static final String MYSELF_NAME = "myselfName";
     public static final String OTHER_NAME = "otherName";
     public static final String MSG = "msg";
     public static final String TYPE = "type";
-    public static final String TYPE_DESC = "typeDesc";
     public static final String PACKET_ID = "packetId";
-    public static final String DATE  = "date";
+    public static final String DATE = "date";
     public static final String DIRECTION = "direction"; //消息方向，是发出去还是接受到的
     public static final String STATE = "state";
     public static final String FLAG = "flag";
@@ -38,8 +38,6 @@ public class MessageBean{
     private String msg; //对应表中msg字段
     @Column(name = TYPE)
     private int type; //消息类型
-    @Column(name = TYPE_DESC)
-    private String typeDesc;
     @Column(name = PACKET_ID)
     private String packetId; //每一条消息在网络上发送时都表现为一个消息包，这个packetId与每条消息的消息Id是一致的
     @Column(name = DATE)
@@ -52,37 +50,32 @@ public class MessageBean{
     private int flag; //判断消息是否有效
     private Msg msgObj; //msg字段对应的对象
 
-    public MessageBean() { }
+    public MessageBean() {
+    }
 
 
-    public String toSendJson(){
+    public String toSendJson() throws JSONException {
         JSONObject jsonObject = new JSONObject();
-        try {
-            if(msgObj == null){
-                msgObj = Msg.fromJson(msg, type);
-            }
-            jsonObject.put(MSG, msgObj.toSendJsonObject());
-            jsonObject.put(TYPE, type);
-            jsonObject.put(TYPE_DESC, typeDesc);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        jsonObject.put(MSG, getMsgObj().toSendJsonObject());
+        jsonObject.put(TYPE, type);
         return jsonObject.toString();
     }
 
-    public enum State{
+    public enum State {
         NEW(0), SEND_SUCCESS(1), SEND_FAILED(2), READ(3);
 
         public int value;
-        State(int value){
+
+        State(int value) {
             this.value = value;
         }
     }
 
-    public enum Direction{
+    public enum Direction {
         INCOMING(0), OUTGOING(1);
         public int value;
-        Direction(int value){
+
+        Direction(int value) {
             this.value = value;
         }
     }
@@ -120,9 +113,10 @@ public class MessageBean{
         return msg;
     }
 
+    //应先设置消息类型，不然会有强制类型转换报错，除非不加类型转换
     public void setMsg(String msg) {
         this.msg = msg;
-        msgObj = Msg.fromJson(msg, type);
+        //msgObj = Msg.fromJson(msg, type);
     }
 
     public int getType() {
@@ -131,14 +125,6 @@ public class MessageBean{
 
     public void setType(int type) {
         this.type = type;
-    }
-
-    public String getTypeDesc() {
-        return typeDesc;
-    }
-
-    public void setTypeDesc(String typeDesc) {
-        this.typeDesc = typeDesc;
     }
 
     public String getPacketId() {
@@ -181,16 +167,14 @@ public class MessageBean{
         this.flag = flag;
     }
 
+    public String getTypeDesc() {
+        return Msg.getTypeDesc(type, getMsgObj());
+    }
+
     public Msg getMsgObj() {
-        if(msgObj == null){
+        if (msgObj == null) {
             msgObj = Msg.fromJson(msg, type);
         }
         return msgObj;
     }
-
-    public void setMsgObj(Msg msgObj) {
-        this.msgObj = msgObj;
-    }
-
-
 }

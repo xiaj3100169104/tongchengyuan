@@ -62,7 +62,6 @@ public class ReplyInviteMessageProcess extends MessageProcess {
         textMsg.content = inviteMsg.reason;
         textMessage.setMsg(textMsg.toJson());
         textMessage.setType(MsgType.MSG_TYPE_TEXT);
-        textMessage.setTypeDesc(textMsg.content);
 
         String packetId = StanzaIdUtil.newStanzaId();
         textMessage.setPacketId(packetId);
