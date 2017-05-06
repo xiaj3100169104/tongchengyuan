@@ -83,14 +83,14 @@
                     android:drawableLeft="@drawable/icon_me_photo"
                     android:drawableRight="@drawable/right"
                     android:gravity="center_vertical"
-                    android:text="@string/my_posts" />
+                    android:text="我的生活" />
 
                 <TextView
                     android:id="@+id/txt_collect"
                     style="@style/TxtTitle"
                     android:drawableLeft="@drawable/icon_me_collect"
                     android:drawableRight="@drawable/right"
-                    android:text="@string/collection" />
+                    android:text="喜欢" />
 
             </LinearLayout>
 
@@ -109,14 +109,14 @@
                     android:background="@drawable/bg_pressed_default"
                     android:drawableLeft="@drawable/icon_me_money"
                     android:drawableRight="@drawable/right"
-                    android:text="@string/wallet" />
+                    android:text="会员服务" />
 
                 <TextView
                     android:id="@+id/txt_card"
                     style="@style/TxtTitle"
                     android:drawableLeft="@drawable/icon_me_card"
                     android:drawableRight="@drawable/right"
-                    android:text="@string/card_bag" />
+                    android:text="我的认证" />
             </LinearLayout>
 
             <TextView
@@ -125,7 +125,7 @@
                 android:layout_marginTop="20dp"
                 android:drawableLeft="@drawable/icon_me_smail"
                 android:drawableRight="@drawable/right"
-                android:text="@string/expression2" />
+                android:text="我的二维码" />
 
             <TextView
                 android:id="@+id/txt_setting"
