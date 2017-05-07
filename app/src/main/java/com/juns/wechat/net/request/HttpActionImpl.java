@@ -2,17 +2,24 @@ package com.juns.wechat.net.request;
 
 import com.juns.wechat.bean.CommentBean;
 import com.juns.wechat.config.ConfigUtil;
+import com.juns.wechat.manager.AccountManager;
 import com.style.net.core.HttpActionManager;
 import com.style.net.core.NetDataBeanCallback;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
+import okhttp3.HttpUrl;
+import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.Response;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
@@ -40,10 +47,33 @@ public class HttpActionImpl {
     }
 
     public void init() {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(URL_BASE)
-                .addConverterFactory(ScalarsConverterFactory.create()).build();
+        Retrofit retrofit = new Retrofit.Builder()
+                .client(getClient())
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .baseUrl(URL_BASE)
+                .build();
         service = retrofit.create(HttpActionService.class);
         httpActionManager = HttpActionManager.getInstance();
+    }
+    private OkHttpClient getClient() {
+        OkHttpClient.Builder client = new OkHttpClient.Builder()
+                //添加请求拦截
+                .connectTimeout(5, TimeUnit.SECONDS)//设置超时时间
+                .retryOnConnectionFailure(true)
+                .addInterceptor(new Interceptor() {
+                    @Override
+                    public Response intercept(Interceptor.Chain chain) throws IOException {
+                        Request original = chain.request();
+
+                        // Request customization: add request headers
+                        Request.Builder requestBuilder = original.newBuilder()
+                                .header("token", AccountManager.getInstance().getToken());
+                        Request request = requestBuilder.build();
+                        return chain.proceed(request);
+                    }
+                });
+
+        return client.build();
     }
 
     private void addTask(String tag, Call call) {
@@ -66,8 +96,7 @@ public class HttpActionImpl {
     }
 
     public void refreshToken(String tag, NetDataBeanCallback callback) {
-        TokenRequestParams params = new TokenRequestParams();
-        Call<String> call = service.refreshToken(params.token);
+        Call<String> call = service.refreshToken(AccountManager.getInstance().getToken());
         runTask(tag, call, callback);
     }
 
@@ -80,16 +109,9 @@ public class HttpActionImpl {
     }
 
     public void uploadAvatar(String tag, String filePath, NetDataBeanCallback callback) {
-        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://192.168.0.103:8080/wechat_server/")
-                .addConverterFactory(ScalarsConverterFactory.create()).build();
-        service = retrofit.create(HttpActionService.class);
-        httpActionManager = HttpActionManager.getInstance();
-
-        TokenRequestParams params = new TokenRequestParams();
-        File file = new File(filePath);
+         File file = new File(filePath);
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
-                .addFormDataPart("token", params.token)
                 .addFormDataPart("avatar", file.getName(), RequestBody.create(MediaType.parse("image/*"), file))
                 .build();
 
@@ -106,7 +128,6 @@ public class HttpActionImpl {
 
     public void syncFriendData(String tag, long lastModifyDate, NetDataBeanCallback callback) {
         TokenRequestParams params = new TokenRequestParams();
-        //params.addBodyParameter("token", token);
         params.addParameter("modifyDate", lastModifyDate);
         Call<String> call = service.syncFriendData(params.map);
         runTask(tag, call, callback);
@@ -161,8 +182,7 @@ public class HttpActionImpl {
      */
     public void addDynamic(String tag, String content, File[] fileList, NetDataBeanCallback callback) {
         TokenRequestParams params = new TokenRequestParams();
-        MultipartBody.Builder requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM)
-                .addFormDataPart("token", params.token);
+        MultipartBody.Builder requestBody = new MultipartBody.Builder().setType(MultipartBody.FORM);
         requestBody.addFormDataPart("content", content);
         if (fileList != null && fileList.length > 0) {
             for (int i = 0; i < fileList.length; i++) {
