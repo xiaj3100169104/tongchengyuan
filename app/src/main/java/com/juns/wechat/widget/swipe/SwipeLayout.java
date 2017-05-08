@@ -23,7 +23,7 @@ import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ListAdapter;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 
 public class SwipeLayout extends FrameLayout {
 

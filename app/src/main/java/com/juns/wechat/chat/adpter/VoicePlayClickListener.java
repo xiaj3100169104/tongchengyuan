@@ -24,7 +24,7 @@ import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.juns.wechat.chat.ui.ChatActivity;
 
 public class VoicePlayClickListener implements View.OnClickListener {

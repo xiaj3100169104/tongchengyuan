@@ -5,7 +5,7 @@ import android.text.TextUtils;
 import android.widget.Toast;
 
 import com.juns.wechat.App;
-import com.juns.wechat.R;
+import com.same.city.love.R;
 
 
 public class ToastManager {

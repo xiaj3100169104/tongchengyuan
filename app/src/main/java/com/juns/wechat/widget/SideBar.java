@@ -12,7 +12,7 @@ import android.widget.ListView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.style.utils.CommonUtil;
 
 public class SideBar extends View {

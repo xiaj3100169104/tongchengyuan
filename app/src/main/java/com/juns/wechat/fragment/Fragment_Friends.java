@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.juns.wechat.activity.MainActivity;
 import com.juns.wechat.activity.NewFriendsListActivity;
 import com.juns.wechat.activity.UserInfoActivity;

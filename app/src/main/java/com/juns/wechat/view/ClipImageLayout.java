@@ -6,7 +6,7 @@ import android.graphics.Bitmap;
 import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 
 /**
  * http://blog.csdn.net/lmj623565791/article/details/39761281

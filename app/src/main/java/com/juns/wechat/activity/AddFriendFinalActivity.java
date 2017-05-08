@@ -6,7 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.style.base.BaseToolbarActivity;
 import com.juns.wechat.chat.xmpp.util.SendMessage;
 import com.style.constant.Skip;

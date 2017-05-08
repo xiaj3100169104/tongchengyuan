@@ -7,7 +7,7 @@ import java.util.Map;
 import android.os.Bundle;
 import android.widget.ProgressBar;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.style.base.BaseActivity;
 
 public class ShowNormalFileActivity extends BaseActivity {

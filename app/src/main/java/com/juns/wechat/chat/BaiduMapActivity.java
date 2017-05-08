@@ -33,7 +33,7 @@ import com.baidu.mapapi.map.MyLocationConfiguration.LocationMode;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.utils.CoordinateConverter;
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.style.base.BaseActivity;
 import com.juns.wechat.dialog.FlippingLoadingDialog;
 

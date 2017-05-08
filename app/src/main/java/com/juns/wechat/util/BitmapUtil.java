@@ -12,7 +12,7 @@ import android.graphics.Rect;
 
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.juns.wechat.App;
-import com.juns.wechat.R;
+import com.same.city.love.R;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

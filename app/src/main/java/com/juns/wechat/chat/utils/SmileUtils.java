@@ -13,7 +13,7 @@ import android.text.Spannable;
 import android.text.Spannable.Factory;
 import android.text.style.ImageSpan;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 
 //表情
 public class SmileUtils {

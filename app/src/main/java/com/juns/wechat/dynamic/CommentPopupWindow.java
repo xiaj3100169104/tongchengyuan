@@ -7,7 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.style.base.BasePopupWindow;
 
 import butterknife.Bind;

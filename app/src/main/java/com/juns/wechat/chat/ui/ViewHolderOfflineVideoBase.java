@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.juns.wechat.chat.bean.OfflineVideoMsg;
 import com.juns.wechat.config.ConfigUtil;
 import com.style.constant.FileConfig;

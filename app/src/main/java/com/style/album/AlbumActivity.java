@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.style.base.BaseRecyclerViewAdapter;
 import com.style.base.BaseToolbarActivity;
 import com.style.rxAndroid.RXTaskManager;

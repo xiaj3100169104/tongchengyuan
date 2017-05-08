@@ -7,7 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.juns.wechat.chat.ui.ChatMediaPlayer;
 import com.juns.wechat.util.AudioManager;
 

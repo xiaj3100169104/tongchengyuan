@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.style.base.BaseRecyclerViewAdapter;
 import com.style.manager.ImageLoader;
 

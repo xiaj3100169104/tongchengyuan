@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 
 public class ExpressionAdapter extends ArrayAdapter<String> {
 	Context context;

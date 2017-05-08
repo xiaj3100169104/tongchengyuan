@@ -20,7 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.juns.wechat.activity.SendLocationActivity;
 import com.juns.wechat.chat.adpter.ExpressionAdapter;
 import com.juns.wechat.chat.adpter.ExpressionPagerAdapter;

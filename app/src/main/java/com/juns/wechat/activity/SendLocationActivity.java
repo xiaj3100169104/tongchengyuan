@@ -31,7 +31,7 @@ import com.baidu.mapapi.search.geocode.GeoCoder;
 import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.style.base.BaseToolbarActivity;
 import com.juns.wechat.util.LogUtil;
 import com.style.base.BaseToolbarBtnActivity;

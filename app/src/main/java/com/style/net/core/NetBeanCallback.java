@@ -5,7 +5,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.juns.wechat.util.ToastUtil;
 
 import retrofit2.Call;

@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.juns.wechat.activity.SendLocationActivity;
 import com.juns.wechat.chat.BaiduMapActivity;
 import com.juns.wechat.chat.bean.LocationMsg;

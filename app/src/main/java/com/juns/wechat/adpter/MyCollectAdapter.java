@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.juns.wechat.chat.utils.SmileUtils;
 import com.style.base.BaseRecyclerViewAdapter;
 
@@ -27,7 +27,7 @@ public class MyCollectAdapter extends BaseRecyclerViewAdapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(mInflater.inflate(R.layout.adapter_my_collect, parent, false));
+        return new ViewHolder(mInflater.inflate(R.layout.adapter_dialog_multi_select, parent, false));
     }
 
     @Override
@@ -38,16 +38,7 @@ public class MyCollectAdapter extends BaseRecyclerViewAdapter {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.iv_avatar)
-        ImageView ivAvatar;
-        @Bind(R.id.tv_nike)
-        TextView tvNike;
-        @Bind(R.id.tv_content)
-        TextView tvContent;
-        @Bind(R.id.tv_time)
-        TextView tvTime;
-        @Bind(R.id.iv_first)
-        ImageView ivFirst;
+
         public ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);

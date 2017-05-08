@@ -13,7 +13,7 @@ import android.os.Vibrator;
 
 
 import com.juns.wechat.App;
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.juns.wechat.util.LogUtil;
 import com.juns.wechat.util.SharedPreferencesUtil;
 import com.style.constant.Skip;

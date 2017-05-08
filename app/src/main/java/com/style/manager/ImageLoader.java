@@ -9,7 +9,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.juns.wechat.App;
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.juns.wechat.config.ConfigUtil;
 import com.juns.wechat.util.BitmapUtil;
 import com.juns.wechat.util.DisplayUtil;

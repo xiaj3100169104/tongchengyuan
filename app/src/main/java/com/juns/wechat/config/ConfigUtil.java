@@ -1,7 +1,5 @@
 package com.juns.wechat.config;
 
-import com.juns.wechat.BuildConfig;
-
 /**
  * ****************************************************
  * Created by 王者 on 2015/5/13
@@ -24,7 +22,7 @@ public class ConfigUtil {
 
     public static final String RESOURCE = "XMPP";
 
-    public static boolean isDebug = BuildConfig.DEBUG;
+    public static boolean isDebug = true;
 
     public static String getXmppServer() {
         if (isDebug) {

@@ -10,7 +10,7 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 
 
 /**

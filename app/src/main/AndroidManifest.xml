@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.juns.wechat">
+    package="com.same.city.love">
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -50,14 +50,14 @@
         android:required="true" />
 
     <application
-        android:name=".App"
+        android:name="com.juns.wechat.App"
         android:allowBackup="true"
         android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.SplashActivity"
+            android:name="com.juns.wechat.activity.SplashActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -65,34 +65,34 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MainActivity"/>
-        <activity android:name=".activity.LoginActivity"
+        <activity android:name="com.juns.wechat.activity.MainActivity"/>
+        <activity android:name="com.juns.wechat.activity.LoginActivity"
             android:launchMode="singleTop"/>
-        <activity android:name=".activity.RegisterActivity"/>
-        <activity android:name=".activity.UserInfoActivity"/>
-        <activity android:name=".activity.NewFriendsListActivity"/>
-        <activity android:name=".activity.SettingActivity"/>
-        <activity android:name=".activity.AboutProductActivity"/>
-        <activity android:name=".chat.ui.ChatActivity"
+        <activity android:name="com.juns.wechat.activity.RegisterActivity"/>
+        <activity android:name="com.juns.wechat.activity.UserInfoActivity"/>
+        <activity android:name="com.juns.wechat.activity.NewFriendsListActivity"/>
+        <activity android:name="com.juns.wechat.activity.SettingActivity"/>
+        <activity android:name="com.juns.wechat.activity.AboutProductActivity"/>
+        <activity android:name="com.juns.wechat.chat.ui.ChatActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".chat.voice.VoiceCallActivity"/>
-        <activity android:name=".chat.video.VideoCallActivity"/>
-        <activity android:name=".chat.BaiduMapActivity"
+        <activity android:name="com.juns.wechat.chat.voice.VoiceCallActivity"/>
+        <activity android:name="com.juns.wechat.chat.video.VideoCallActivity"/>
+        <activity android:name="com.juns.wechat.chat.BaiduMapActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".chat.ShowBigImage"/>
-        <activity android:name=".chat.ShowNormalFileActivity"/>
-        <activity android:name=".activity.AddFriendActivity" />
+        <activity android:name="com.juns.wechat.chat.ShowBigImage"/>
+        <activity android:name="com.juns.wechat.chat.ShowNormalFileActivity"/>
+        <activity android:name="com.juns.wechat.activity.AddFriendActivity" />
         <activity
-            android:name=".activity.SearchActivity"
+            android:name="com.juns.wechat.activity.SearchActivity"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".activity.SearchResultActivity"/>
-        <activity android:name=".activity.MyProfileActivity"/>
-        <activity android:name=".activity.ModifyNameActivity"/>
-        <activity android:name=".activity.CropImageActivity"/>
-        <activity android:name=".activity.AddFriendFinalActivity"/>
-        <activity android:name=".activity.SendLocationActivity"/>
+        <activity android:name="com.juns.wechat.activity.SearchResultActivity"/>
+        <activity android:name="com.juns.wechat.activity.MyProfileActivity"/>
+        <activity android:name="com.juns.wechat.activity.ModifyNameActivity"/>
+        <activity android:name="com.juns.wechat.activity.CropImageActivity"/>
+        <activity android:name="com.juns.wechat.activity.AddFriendFinalActivity"/>
+        <activity android:name="com.juns.wechat.activity.SendLocationActivity"/>
         <activity android:name="com.style.album.AlbumActivity"/>
         <activity android:name="com.style.album.SelectLocalPictureActivity" />
         <activity android:name="com.juns.wechat.chat.voice.CallVoiceBaseActivity" />
@@ -111,7 +111,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
 
-        <service android:name=".view.UpdateService" />
+        <service android:name="com.juns.wechat.view.UpdateService" />
 
         <!-- 百度地图所需的service -->
         <service
@@ -124,9 +124,9 @@
             android:value="53912a3156240b01a7075ed1"></meta-data>
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="3ecea51f560650b1ed8a4b99808f52e8" />
+            android:value="uzgqaKAQRAem48seXGKX2wIUVGxsH37B" />
 
-        <receiver android:name=".receiver.WeChatBroadCastReceiver">
+        <receiver android:name="com.juns.wechat.receiver.WeChatBroadCastReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.CONFIGURATION_CHANGED" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -135,7 +135,7 @@
         </receiver>
 
         <service
-            android:name=".service.XmppService"
+            android:name="com.juns.wechat.service.XmppService"
             android:exported="true" />
 
     </application>

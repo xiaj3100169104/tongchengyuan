@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 
 
 public class DialogManager {

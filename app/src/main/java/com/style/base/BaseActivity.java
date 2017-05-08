@@ -13,7 +13,7 @@ import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.juns.wechat.util.ToastUtil;
 import com.style.manager.LogManager;
 import com.style.manager.ToastManager;
