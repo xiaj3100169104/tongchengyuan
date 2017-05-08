@@ -7,6 +7,7 @@
     <color name="text_color_white">#FFFFFF</color>
     <color name="text_color_black_light">#333333</color>
     <color name="text_color_gray">#777777</color>
+    <color name="text_color_hint">#ff9a9b9c</color>
     <color name="text_color_gray_light">#ff9a9b9c</color>
     <color name="text_color_btn_uneable">#999999</color>
     <!-- button color -->
