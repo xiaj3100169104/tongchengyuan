@@ -16,6 +16,7 @@ import android.text.TextUtils;
 
 
 import com.baidu.mapapi.SDKInitializer;
+import com.juns.wechat.config.ConfigUtil;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.request.HttpActionImpl;
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
@@ -34,7 +35,7 @@ public class App extends Application {
 		mContext = this;
 
         x.Ext.init(this);
-        x.Ext.setDebug(BuildConfig.DEBUG); // 开启debug会影响性能
+        x.Ext.setDebug(ConfigUtil.isDebug); // 开启debug会影响性能
 		//短信发送
         SMSSDK.initSDK(this, Constants.MOB_SDK_KEY, Constants.MOB_SDK_SECRET);
         // 百度MAP sdk initinitializeialize

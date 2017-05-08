@@ -18,7 +18,7 @@ import com.github.jdsjlzx.interfaces.OnRefreshListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.github.jdsjlzx.recyclerview.ProgressStyle;
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.juns.wechat.bean.CommentBean;
 import com.juns.wechat.bean.DynamicBean;
 import com.juns.wechat.bean.UserBean;

@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.style.manager.LogManager;
 import com.style.manager.ToastManager;
 import com.style.utils.CommonUtil;

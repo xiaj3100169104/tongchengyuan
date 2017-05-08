@@ -1,6 +1,6 @@
 package com.juns.wechat.dialog;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 
 import android.app.Dialog;
 import android.content.Context;

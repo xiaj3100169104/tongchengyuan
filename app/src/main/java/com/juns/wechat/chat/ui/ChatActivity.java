@@ -18,7 +18,7 @@ import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.github.jdsjlzx.recyclerview.ProgressStyle;
 import com.juns.wechat.Constants;
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.bean.UserBean;

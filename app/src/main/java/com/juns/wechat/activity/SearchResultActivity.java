@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.juns.wechat.adpter.SearchResultAdapter;
 import com.juns.wechat.bean.UserBean;
 import com.style.base.BaseToolbarActivity;

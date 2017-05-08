@@ -15,20 +15,13 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.juns.wechat.R;
 import com.juns.wechat.activity.UserInfoActivity;
-import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.bean.MessageBean;
-import com.juns.wechat.database.dao.FriendDao;
 import com.juns.wechat.database.dao.UserDao;
-import com.juns.wechat.exception.UserNotFoundException;
-import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.util.ThreadPoolUtil;
 import com.juns.wechat.util.TimeUtil;
-import com.juns.wechat.chat.xmpp.util.SendMessage;
+import com.same.city.love.R;
 import com.style.constant.Skip;
-import com.style.dialog.PromptDialog;
 import com.style.manager.ImageLoader;
 
 import java.util.List;

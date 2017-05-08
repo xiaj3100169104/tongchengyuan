@@ -2,7 +2,7 @@ package com.juns.wechat.activity;
 
 import android.os.Bundle;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.style.base.BaseToolbarBtnActivity;
 
 

@@ -8,7 +8,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 
 public class LoadingDialog extends Dialog {
 

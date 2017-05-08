@@ -3,7 +3,7 @@ package com.juns.wechat.chat.ui;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.juns.wechat.database.dao.MessageDao;
 
 /**

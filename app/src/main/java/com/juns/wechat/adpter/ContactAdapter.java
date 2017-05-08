@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.bean.UserBean;
 import com.style.base.BaseRecyclerViewAdapter;

@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 
 /**
  * Created by xiajun on 2017/1/20.

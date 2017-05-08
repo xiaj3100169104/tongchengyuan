@@ -6,7 +6,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.style.base.BaseToolbarActivity;
 import com.style.base.BaseRecyclerViewAdapter;
 import com.style.constant.FileConfig;

@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.TextView;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.style.base.BaseToolbarActivity;
 
 import java.io.IOException;

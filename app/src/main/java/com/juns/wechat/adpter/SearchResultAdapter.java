@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.juns.wechat.bean.UserBean;
 import com.style.manager.ImageLoader;
 

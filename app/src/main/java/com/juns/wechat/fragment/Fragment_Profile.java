@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.juns.wechat.dynamic.FriendCircleActivity;
 import com.juns.wechat.activity.MyCollectActivity;
 import com.juns.wechat.activity.MyProfileActivity;

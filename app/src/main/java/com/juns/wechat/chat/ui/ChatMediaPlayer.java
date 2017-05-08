@@ -7,7 +7,7 @@ import android.util.Log;
 import android.widget.ImageView;
 
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 
 import java.io.IOException;
 

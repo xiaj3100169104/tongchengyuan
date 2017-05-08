@@ -6,7 +6,7 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.widget.EditText;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 
 /**
  * Created by 王宗文 on 2016/6/20.

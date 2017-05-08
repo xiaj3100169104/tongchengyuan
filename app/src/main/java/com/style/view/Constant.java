@@ -13,7 +13,7 @@ public class Constant {
         int id = 0;
         try {
             Class<?> cls = Class
-                    .forName("com.juns.wechat.R$"
+                    .forName("com.same.city.love.R$"
                             + className);
             id = cls.getField(idName).getInt(cls);
         } catch (Exception e) {
@@ -26,7 +26,7 @@ public class Constant {
         int[] id = {};
         try {
             Class<?> cls = Class
-                    .forName("com.juns.wechat.R$"
+                    .forName("com.same.city.love.R$"
                             + className);
             id = (int[]) cls.getField(idName).get(cls);
         } catch (Exception e) {

@@ -11,7 +11,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 
 /**
  * Created by 王宗文 on 2016/7/16.

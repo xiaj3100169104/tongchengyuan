@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.juns.wechat.config.ConfigUtil;
 import com.style.base.BaseFragment;
 import com.style.constant.FileConfig;
@@ -20,27 +20,34 @@ import com.style.utils.FileUtil;
 import butterknife.Bind;
 
 public class ImageDetailFragment extends BaseFragment {
-	@Bind(R.id.image)
-	ImageView image;
-	@Bind(R.id.progressbar)
-	ProgressBar progressBar;
-	@Bind(R.id.tv_percent)
-	TextView tvPercent;
-	private String imgName;
+    @Bind(R.id.image)
+    ImageView image;
+    @Bind(R.id.progressbar)
+    ProgressBar progressBar;
+    @Bind(R.id.tv_percent)
+    TextView tvPercent;
+    private String imgName;
     private String url;
 
-    public ImageDetailFragment(String imgName) {
-        this.imgName = imgName;
+    public static ImageDetailFragment newInstance(String imgName) {
+        ImageDetailFragment newFragment = new ImageDetailFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("imgName", imgName);
+        return newFragment;
+
     }
 
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		mLayoutResID = R.layout.fragment_dynamic_image_detail;
-		return super.onCreateView(inflater, container, savedInstanceState);
-	}
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        mLayoutResID = R.layout.fragment_dynamic_image_detail;
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
 
-	@Override
-	protected void initData() {
+    @Override
+    protected void initData() {
+        Bundle args = getArguments();
+        if (args != null)
+            imgName = args.getString("imgName");
         String path = FileConfig.DIR_CACHE + "/" + imgName;
         if (FileUtil.isExist(path)) {
             fileExist(path);
@@ -88,7 +95,7 @@ public class ImageDetailFragment extends BaseFragment {
        /* PhotoViewAttacher attacher = new PhotoViewAttacher(image);
         attacher.update();*/
 
-	}
+    }
 
     @Override
     public void onDestroyView() {

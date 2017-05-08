@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 
 /**
  * Created by xiajun on 2017/3/29.

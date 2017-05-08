@@ -3,7 +3,7 @@ package com.juns.wechat.dialog;
 import android.content.Context;
 import android.widget.TextView;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.juns.wechat.widget.FlippingImageView.FlippingImageView;
 
 public class FlippingLoadingDialog extends BaseDialog {

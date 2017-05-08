@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import com.juns.wechat.R;
+import com.same.city.love.R;
 
 public class MyGroupAdpter extends BaseAdapter {
 	protected Context context;

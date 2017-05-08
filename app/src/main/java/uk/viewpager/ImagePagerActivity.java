@@ -12,7 +12,7 @@ import android.util.Log;
 import android.widget.TextView;
 
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.style.base.BaseActivity;
 
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ public class ImagePagerActivity extends BaseActivity {
         ArrayList<String> urls = getIntent().getStringArrayListExtra(EXTRA_IMAGE_URLS);
         List<Fragment> dataList = new ArrayList<>();
         for (String url : urls) {
-            ImageDetailFragment f = new ImageDetailFragment(url);
+            ImageDetailFragment f = ImageDetailFragment.newInstance(url);
             dataList.add(f);
         }
         ImagePagerAdapter mAdapter = new ImagePagerAdapter(getSupportFragmentManager(), dataList);

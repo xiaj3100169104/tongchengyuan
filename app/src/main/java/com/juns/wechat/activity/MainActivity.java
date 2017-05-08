@@ -12,7 +12,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.juns.wechat.adpter.MainAdapter;
 import com.juns.wechat.fragment.Fragment_Dicover;
 import com.juns.wechat.fragment.Fragment_Friends;

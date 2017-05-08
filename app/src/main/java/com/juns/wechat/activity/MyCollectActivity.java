@@ -7,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.juns.wechat.adpter.MyCollectAdapter;
 import com.style.base.BaseToolbarActivity;
 import com.style.view.DividerItemDecoration;

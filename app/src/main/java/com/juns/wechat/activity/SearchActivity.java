@@ -12,7 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.TypeReference;
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.net.request.HttpActionImpl;
 import com.style.net.core.NetDataBeanCallback;

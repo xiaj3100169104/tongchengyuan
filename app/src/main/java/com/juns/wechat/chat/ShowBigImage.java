@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.juns.wechat.config.ConfigUtil;
 import com.style.base.BaseToolbarActivity;
 import com.style.constant.FileConfig;

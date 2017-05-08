@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-import com.juns.wechat.R;
+import com.same.city.love.R;
 import com.style.base.BaseToolbarActivity;
 import com.juns.wechat.manager.AccountManager;
 
