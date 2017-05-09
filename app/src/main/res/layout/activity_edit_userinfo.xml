@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
+    android:background="@color/gray_light"
     android:orientation="vertical">
 
     <include layout="@layout/comm_toolbar" />
@@ -22,10 +22,10 @@
                 android:columnCount="3"
                 android:orientation="horizontal"
                 android:rowCount="3"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <ImageView
-                    android:id="@+id/photo_wall_1"
+                    android:id="@+id/iv_photo_wall_1"
                     android:layout_width="240dp"
                     android:layout_height="240dp"
                     android:layout_column="0"
@@ -36,7 +36,7 @@
                     android:src="@mipmap/ic_add_photo" />
 
                 <ImageView
-                    android:id="@+id/photo_wall_2"
+                    android:id="@+id/iv_photo_wall_2"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
                     android:layout_column="2"
@@ -47,7 +47,7 @@
                     android:src="@mipmap/ic_add_photo" />
 
                 <ImageView
-                    android:id="@+id/photo_wall_3"
+                    android:id="@+id/iv_photo_wall_3"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
                     android:layout_column="2"
@@ -58,7 +58,7 @@
                     android:src="@mipmap/ic_add_photo" />
 
                 <ImageView
-                    android:id="@+id/photo_wall_4"
+                    android:id="@+id/iv_photo_wall_4"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
                     android:layout_column="0"
@@ -69,7 +69,7 @@
                     android:src="@mipmap/ic_add_photo" />
 
                 <ImageView
-                    android:id="@+id/photo_wall_5"
+                    android:id="@+id/iv_photo_wall_5"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
                     android:layout_column="1"
@@ -80,7 +80,7 @@
                     android:src="@mipmap/ic_add_photo" />
 
                 <ImageView
-                    android:id="@+id/photo_wall_6"
+                    android:id="@+id/iv_photo_wall_6"
                     android:layout_width="120dp"
                     android:layout_height="120dp"
                     android:layout_column="2"
@@ -90,139 +90,284 @@
                     android:scaleType="centerCrop"
                     android:src="@mipmap/ic_add_photo" />
             </GridLayout>
+
             <LinearLayout
+                android:id="@+id/layout_base_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_marginTop="10dp"
-                android:padding="15dp">
+                android:orientation="vertical"
+                android:background="@drawable/bg_pressed_default"
+                android:padding="15dp"
+                android:visibility="visible">
+
                 <TextView
                     android:id="@+id/tv_name"
+                    style="@style/text_black_16sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/text_black_16sp"
-                    android:text="Style"/>
+                    android:text="Style" />
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp">
+
                     <TextView
                         android:id="@+id/tv_age"
+                        style="@style/text_white_12sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        style="@style/text_white_12sp"
                         android:background="#00f"
-                        android:paddingTop="2dp"
                         android:paddingBottom="2dp"
                         android:paddingLeft="4dp"
                         android:paddingRight="4dp"
-                        android:text="25"/>
+                        android:paddingTop="2dp"
+                        android:text="25" />
+
                     <TextView
                         android:id="@+id/tv_constellation"
+                        style="@style/text_white_12sp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="3dp"
-                        style="@style/text_white_12sp"
                         android:background="#0f0"
-                        android:paddingTop="2dp"
                         android:paddingBottom="2dp"
                         android:paddingLeft="4dp"
                         android:paddingRight="4dp"
-                        android:text="狮子座"/>
+                        android:paddingTop="2dp"
+                        android:text="狮子座" />
                 </LinearLayout>
+
                 <TextView
+                    style="@style/text_gray_light_13sp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    style="@style/text_gray_light_13sp"
-                    android:text="点击编辑个人信息(如姓名、年龄、性别)"/>
+                    android:text="点击编辑个人信息(如姓名、年龄、性别)" />
             </LinearLayout>
-            <View style="@style/divider_horizontal_transparent_black"/>
+
+            <View style="@style/divider_horizontal_transparent_black" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingBottom="15dp">
-                <TextView style="@style/text_user_info_title"
-                    android:text="我的信息"/>
+                android:paddingBottom="15dp"
+                android:visibility="visible">
+
+                <TextView
+                    style="@style/text_user_info_title"
+                    android:text="我的信息" />
+
                 <LinearLayout
-                    android:id="@+id/layout_11"
-                    style="@style/Layouts.normal_LinearLayout">
-                    <ImageView style="@style/user_info_icon"/>
-                    <TextView android:id="@+id/tv_11"
+                    android:id="@+id/layout_industry"
+                    style="@style/Layouts.user_info_item">
+
+                    <ImageView style="@style/user_info_icon" />
+
+                    <TextView
+                        android:id="@+id/tv_industry"
                         style="@style/user_info_content"
-                        android:hint="添加行业信息"/>
+                        android:hint="添加行业信息" />
                 </LinearLayout>
+
                 <LinearLayout
-                    android:id="@+id/layout_12"
-                    style="@style/Layouts.normal_LinearLayout">
-                    <ImageView style="@style/user_info_icon"/>
-                    <TextView android:id="@+id/tv_12"
+                    android:id="@+id/layout_work_area"
+                    style="@style/Layouts.user_info_item">
+
+                    <ImageView style="@style/user_info_icon" />
+
+                    <TextView
+                        android:id="@+id/tv_work_area"
                         style="@style/user_info_content"
-                        android:hint="添加工作领域信息"/>
+                        android:hint="添加工作领域信息" />
                 </LinearLayout>
+
                 <LinearLayout
-                    android:id="@+id/layout_13"
-                    style="@style/Layouts.normal_LinearLayout">
-                    <ImageView style="@style/user_info_icon"/>
-                    <TextView android:id="@+id/tv_13"
+                    android:id="@+id/layout_company_info"
+                    style="@style/Layouts.user_info_item">
+
+                    <ImageView style="@style/user_info_icon" />
+
+                    <TextView
+                        android:id="@+id/tv_company_info"
                         style="@style/user_info_content"
-                        android:hint="添加公司信息"/>
+                        android:hint="添加公司信息" />
                 </LinearLayout>
+
                 <LinearLayout
-                    android:id="@+id/layout_14"
-                    style="@style/Layouts.normal_LinearLayout">
-                    <ImageView style="@style/user_info_icon"/>
-                    <TextView android:id="@+id/tv_14"
+                    android:id="@+id/layout_hometown_info"
+                    style="@style/Layouts.user_info_item">
+
+                    <ImageView style="@style/user_info_icon" />
+
+                    <TextView
+                        android:id="@+id/tv_hometown_info"
                         style="@style/user_info_content"
-                        android:hint="添加你的家乡信息"/>
+                        android:hint="添加你的家乡信息" />
                 </LinearLayout>
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingBottom="15dp">
-                <TextView style="@style/text_user_info_title"
-                    android:text="我的内心独白"/>
+
+                <TextView
+                    style="@style/text_user_info_title"
+                    android:text="内心独白" />
+
                 <LinearLayout
-                    android:id="@+id/layout_21"
-                    style="@style/Layouts.normal_LinearLayout">
-                    <ImageView style="@style/user_info_icon"/>
-                    <TextView android:id="@+id/tv_21"
+                    android:id="@+id/layout_my_heart"
+                    style="@style/Layouts.user_info_item">
+
+                    <ImageView style="@style/user_info_icon" />
+
+                    <TextView
+                        android:id="@+id/tv_my_heart"
                         style="@style/user_info_content"
-                        android:hint="添加你的内心独白"/>
+                        android:hint="添加你的内心独白" />
                 </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingBottom="15dp">
-                <TextView style="@style/text_user_info_title"
-                    android:text="我的标签"/>
-                <LinearLayout style="@style/Layouts.normal_LinearLayout">
+
+                <TextView
+                    style="@style/text_user_info_title"
+                    android:text="我的标签" />
+
+                <LinearLayout
+                    android:id="@+id/layout_my_label"
+                    style="@style/Layouts.user_info_item">
+
+                    <ImageView style="@style/user_info_icon" />
+
+                    <RelativeLayout
+                        android:id="@+id/layout_content_my_label"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tv_my_label"
+                            style="@style/user_info_content"
+                            android:hint="添加属于你的标签" />
+                    </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingBottom="15dp">
-                <TextView style="@style/text_user_info_title"
-                    android:text="我的兴趣"/>
-                <LinearLayout style="@style/Layouts.normal_LinearLayout">
+
+                <TextView
+                    style="@style/text_user_info_title"
+                    android:text="我的兴趣" />
+
+                <LinearLayout
+                    android:id="@+id/layout_interest_sport"
+                    style="@style/Layouts.user_info_item">
+
+                    <ImageView style="@style/user_info_icon" />
+
+                    <RelativeLayout
+                        android:id="@+id/layout_content_interest_sport"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tv_interest_sport"
+                            style="@style/user_info_content"
+                            android:hint="添加你喜欢的运动" />
+                    </RelativeLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/layout_interest_music"
+                    style="@style/Layouts.user_info_item">
+
+                    <ImageView style="@style/user_info_icon" />
+
+                    <RelativeLayout
+                        android:id="@+id/layout_content_interest_music"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tv_interest_music"
+                            style="@style/user_info_content"
+                            android:hint="添加你喜欢的音乐" />
+                    </RelativeLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/layout_interest_food"
+                    style="@style/Layouts.user_info_item">
+
+                    <ImageView style="@style/user_info_icon" />
+
+                    <RelativeLayout
+                        android:id="@+id/layout_content_interest_food"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tv_interest_food"
+                            style="@style/user_info_content"
+                            android:hint="添加你喜欢的美食" />
+                    </RelativeLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/layout_interest_movie"
+                    style="@style/Layouts.user_info_item">
+
+                    <ImageView style="@style/user_info_icon" />
+
+                    <RelativeLayout
+                        android:id="@+id/layout_content_interest_movie"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tv_interest_movie"
+                            style="@style/user_info_content"
+                            android:hint="添加你喜欢的电影" />
+                    </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingBottom="15dp">
-                <TextView style="@style/text_user_info_title"
-                    android:text="我的内心独白"/>
-                <LinearLayout style="@style/Layouts.normal_LinearLayout">
+
+                <TextView
+                    style="@style/text_user_info_title"
+                    android:text="我的问答" />
+
+                <LinearLayout
+                    android:id="@+id/layout_question"
+                    style="@style/Layouts.user_info_item">
+
+                    <ImageView style="@style/user_info_icon" />
+
+                    <RelativeLayout
+                        android:id="@+id/layout_content_question"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tv_question"
+                            style="@style/user_info_content"
+                            android:hint="添加你的问答" />
+                    </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

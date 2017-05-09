@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="Layouts.user_info_item" parent="Layouts.normal_LinearLayout">
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">@dimen/height_normal</item>
+    </style>
     <style name="text_user_info_title" parent="text_black_13sp">
         <item name="android:textColor">#FF6347</item>
         <item name="android:layout_width">match_parent</item>
@@ -12,6 +17,7 @@
         <item name="android:layout_width">30dp</item>
         <item name="android:layout_height">30dp</item>
         <item name="android:src">@mipmap/ic_launcher</item>
+        <item name="android:layout_gravity">center_vertical</item>
     </style>
     <style name="user_info_content" parent="text_black_15sp">
         <item name="android:layout_width">match_parent</item>

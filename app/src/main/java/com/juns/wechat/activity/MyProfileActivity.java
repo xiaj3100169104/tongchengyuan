@@ -3,6 +3,7 @@ package com.juns.wechat.activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,6 +18,7 @@ import com.juns.wechat.dialog.SelectSexDialog;
 import com.juns.wechat.helper.CommonViewHelper;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.request.HttpActionImpl;
+import com.style.base.BaseToolbarBtnActivity;
 import com.style.constant.FileConfig;
 import com.style.net.core.NetDataBeanCallback;
 import com.style.base.BaseToolbarActivity;
@@ -36,7 +38,7 @@ import butterknife.OnClick;
 /**
  * create by 王者 on 2016/7/14
  */
-public class MyProfileActivity extends BaseToolbarActivity {
+public class MyProfileActivity extends BaseToolbarBtnActivity {
 
     @Bind(R.id.ivAvatar)
     ImageView ivAvatar;
@@ -64,6 +66,11 @@ public class MyProfileActivity extends BaseToolbarActivity {
     public void initData() {
         setToolbarTitle(R.string.my_profile);
         setData();
+    }
+
+    @Override
+    protected void onClickTitleRightView() {
+        skip(EditPersonInfoActivity.class);
     }
 
     private void setData() {

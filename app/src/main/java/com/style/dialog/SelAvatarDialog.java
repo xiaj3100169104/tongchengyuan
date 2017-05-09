@@ -29,7 +29,7 @@ public class SelAvatarDialog extends Dialog {
     }
 
     public void init(Context context) {
-        setContentView(R.layout.dlg_sel_avatar);
+        setContentView(R.layout.dialog_sel_avatar);
         bt_takePhoto = (Button) this.findViewById(R.id.item_camera);
         bt_selPhoto = (Button) this.findViewById(R.id.item_photo);
         bt_selCancel = (Button) this.findViewById(R.id.item_cancel);

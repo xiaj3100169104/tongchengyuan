@@ -15,7 +15,7 @@ import com.same.city.love.R;
 /**
  * Created by 王宗文 on 2016/7/16.
  */
-public class SelectSexDialog extends Dialog{
+public class SelectSexDialog extends Dialog {
     private Button tvTakePhoto;
     private Button tvOpenAlbum;
     private OnItemClickListener mListener;
@@ -59,16 +59,17 @@ public class SelectSexDialog extends Dialog{
         window.setGravity(Gravity.CENTER);
         DisplayMetrics dm = new DisplayMetrics();
         ((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(dm);
-        window.setLayout(dm.widthPixels-200, window.getAttributes().height);
-       // window.setWindowAnimations(R.style.Animations_SlideInFromBottom_OutToBottom);
+        window.setLayout(dm.widthPixels - 200, window.getAttributes().height);
+        // window.setWindowAnimations(R.style.Animations_SlideInFromBottom_OutToBottom);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener){
+    public void setOnItemClickListener(OnItemClickListener listener) {
         this.mListener = listener;
     }
 
-    public interface OnItemClickListener{
+    public interface OnItemClickListener {
         void onClickMan(View v);
+
         void onClickWoman(View v);
     }
 }
