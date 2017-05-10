@@ -40,7 +40,7 @@ public class App extends Application {
         SMSSDK.initSDK(this, Constants.MOB_SDK_KEY, Constants.MOB_SDK_SECRET);
         // 百度MAP sdk initinitializeialize
         SDKInitializer.initialize(this);
-        Thread.setDefaultUncaughtExceptionHandler(new CustomExceptionHandler());
+        //Thread.setDefaultUncaughtExceptionHandler(new CustomExceptionHandler());
 		ZXingLibrary.initDisplayOpinion(this);
         AccountManager.getInstance().init(mContext);
 		HttpActionImpl.getInstance().init();

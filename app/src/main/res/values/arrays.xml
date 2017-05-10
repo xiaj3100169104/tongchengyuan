@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sex">
+        <item>@string/man</item>
+        <item>@string/woman</item>
+    </string-array>
+    <string-array name="industry">
+        <item>学生</item>
+        <item>文化/艺术</item>
+        <item>影视/娱乐</item>
+        <item>金融</item>
+        <item>医药/健康</item>
+        <item>工业/制造业</item>
+        <item>IT/互联网/通信</item>
+        <item>媒体/公关</item>
+        <item>零售</item>
+        <item>教育/科研</item>
+        <item>其他</item>
+    </string-array>
+    <string-array name="occupations">
+        <item>医生</item>
+        <item>护士</item>
+        <item>行政机关工作者</item>
+        <item>事业单位工作者</item>
+        <item>私营业主</item>
+        <item>学生</item>
+        <item>教师</item>
+        <item>军人</item>
+        <item>企业职工</item>
+        <item>自由职业者</item>
+    </string-array>
+    <string-array name="emotion">
+        <item>@string/married</item>
+        <item>@string/divorce</item>
+        <item>@string/gay</item>
+        <item>@string/single</item>
+        <item>@string/loving</item>
+        <item>@string/secrecy</item>
+    </string-array>
+    <string-array name="education">
+        <item>@string/primary_school</item>
+        <item>@string/junior_middle_school</item>
+        <item>@string/high_school</item>
+        <item>@string/secondary_specialized_school</item>
+        <item>@string/junior_College</item>
+        <item>@string/undergraduate</item>
+        <item>@string/graduate_student</item>
+        <item>@string/master</item>
+        <item>@string/doctor</item>
+    </string-array>
+    <string-array name="condition_education">
+        <item>@string/Unlimited</item>
+        <item>高中及以上</item>
+        <item>大专及以上</item>
+        <item>本科及以上</item>
+        <item>硕士及以上</item>
+        <item>博士及以上</item>
+    </string-array>
+    <string-array name="body_height">
+        <item>@string/cm_150_160</item>
+        <item>@string/cm_160_170</item>
+        <item>@string/cm_170_180</item>
+        <item>@string/cm_180_190</item>
+        <item>@string/cm_180_190</item>
+        <item>@string/cm_190_200</item>
+        <item>@string/cm_200_210</item>
+    </string-array>
+    <string-array name="condition_body_height">
+        <item>@string/Unlimited</item>
+        <item>@string/cm_150_160</item>
+        <item>@string/cm_160_170</item>
+        <item>@string/cm_170_180</item>
+        <item>@string/cm_180_190</item>
+        <item>@string/cm_180_190</item>
+        <item>@string/cm_190_200</item>
+        <item>@string/cm_200_210</item>
+    </string-array>
+    <string-array name="age_groups_1">
+        <item>@string/Unlimited</item>
+        <item>@string/age_group_1</item>
+        <item>@string/age_group_2</item>
+        <item>@string/age_group_3</item>
+        <item>@string/age_group_4</item>
+        <item>@string/age_group_5</item>
+        <item>@string/age_group_6</item>
+        <item>@string/age_group_7</item>
+    </string-array>
+    <string-array name="age_groups_2">
+        <item>@string/Unlimited</item>
+        <item>@string/age_group_1</item>
+        <item>@string/age_group_2</item>
+        <item>@string/age_group_3</item>
+        <item>@string/age_group_4</item>
+        <item>@string/age_group_5</item>
+        <item>@string/age_group_6</item>
+        <item>@string/age_group_7</item>
+    </string-array>
+
+    <string-array name="income_groups">
+        <item>@string/income_group_1</item>
+        <item>@string/income_group_2</item>
+        <item>@string/income_group_3</item>
+        <item>@string/income_group_4</item>
+        <item>@string/income_group_5</item>
+        <item>@string/income_group_6</item>
+        <item>@string/income_group_7</item>
+    </string-array>
+    <string-array name="income_condition">
+        <item>@string/Unlimited</item>
+        <item>2000</item>
+        <item>4000</item>
+        <item>6000</item>
+        <item>10000</item>
+        <item>20000</item>
+        <item>20000以上</item>
+    </string-array>
+    <string-array name="housing_situation">
+        <item>已购房</item>
+        <item>租房</item>
+        <item>单位宿舍</item>
+        <item>和家人同住</item>
+    </string-array>
+
+    <string-array name="report_user">
+        <item>@string/sexy_obscene</item>
+        <item>@string/Illegal_crime</item>
+        <item>@string/cheat_money</item>
+        <item>@string/politics</item>
+    </string-array>
+    <string-array name="report_square">
+        <item>@string/advertisement_cheat</item>
+        <item>@string/false_identity</item>
+        <item>@string/harass_info</item>
+        <item>@string/improper_speek</item>
+    </string-array>
+    <integer-array name="colors">
+        <item>@color/red_single</item>
+        <item>@color/cyan_dark</item>
+        <item>@color/yellow_dark</item>
+        <item>@color/green_dark</item>
+        <item>@color/purple_dark</item>
+        <item>@color/blue_single</item>
+    </integer-array>
+
+</resources>

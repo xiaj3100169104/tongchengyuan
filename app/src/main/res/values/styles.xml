@@ -7,17 +7,18 @@
         <!--按钮选中或者点击获得焦点后的颜色-->
         <item name="colorAccent">@color/colorAccent</item>
         <!--返回键颜色-->
-        <item name="android:textColorPrimary">@color/black_light</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
         <!--Button按钮正常状态颜色-->
         <item name="colorButtonNormal">@color/colorPrimary</item>
         <!--EditText 输入框中字体的颜色-->
         <item name="editTextColor">@color/black_light</item>
         <!-- 布局还没加载出来前的窗口背景颜色 -->
-        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:windowBackground">@color/windowBackground</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+
         <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>
         <!-- SearchView -->
         <item name="searchViewStyle">@style/MySearchViewStyle</item>
-        <item name="android:colorBackgroundCacheHint">@null</item>
     </style>
 
     <style name="AppTheme" parent="BaseAppTheme">
@@ -58,7 +59,7 @@
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="AppTheme.Toolbar" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="android:background">@color/bar_color</item>
+        <item name="android:background">@color/colorPrimary</item>
         <item name="actionMenuTextColor">@color/white</item>
         <item name="actionMenuTextAppearance">@style/TextAppearance.AppCompat.Medium</item>
     </style>

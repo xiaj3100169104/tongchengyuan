@@ -31,6 +31,7 @@ public class SelectSexDialog extends Dialog {
         setOwnerActivity((Activity) context);
     }
 
+    //第一次调show之后才执行
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +55,7 @@ public class SelectSexDialog extends Dialog {
                 mListener.onClickWoman(v);
             }
         });
+        //调show之后才能调用
         Window window = getWindow();
         window.getDecorView().setPadding(0, 0, 0, 0);
         window.setGravity(Gravity.CENTER);

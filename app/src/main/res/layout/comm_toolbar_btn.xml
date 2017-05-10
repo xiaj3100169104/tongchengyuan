@@ -5,14 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="48dp"
     android:minHeight="48dp"
+    android:theme="@style/AppTheme.Toolbar"
     app:contentInsetEnd="0dp"
-    app:contentInsetStart="0dp"
-    android:theme="@style/AppTheme.Toolbar">
+    app:contentInsetStart="0dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
         <include layout="@layout/comm_toolbar_layout" />
 
@@ -23,10 +22,9 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="8dp"
-            android:background="@drawable/btn_register_bg"
             android:gravity="center"
             android:text="保存"
-            android:textColor="@color/white"
+            android:textColor="@color/sel_title_right_text_white"
             android:textSize="14sp" />
 
     </RelativeLayout>

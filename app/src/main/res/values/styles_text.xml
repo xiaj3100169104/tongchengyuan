@@ -162,6 +162,6 @@
     <style name="title_bar_text_right" parent="text_base">
         <item name="android:layout_centerInParent">true</item>
         <item name="android:singleLine">true</item>
-        <item name="android:textColor">@color/sel_titlebar_right_text_white</item>
+        <item name="android:textColor">@color/sel_title_right_text_white</item>
     </style>
 </resources>

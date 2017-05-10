@@ -3,7 +3,7 @@
     android:id="@+id/title"
     android:layout_width="match_parent"
     android:layout_height="@dimen/height_top_bar"
-    android:background="@color/common_top_bar_black">
+    android:background="@color/colorPrimary">
 
     <ImageView
         android:id="@+id/ivBack"
@@ -18,15 +18,6 @@
         android:paddingTop="5dp"
         android:scaleType="centerInside"
         android:src="@drawable/top_bar_back" />
-
-    <View
-        android:id="@+id/viewDivider"
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_toRightOf="@id/ivBack"
-        android:background="#14191A" />
 
     <TextView
         android:id="@+id/tvTitle"

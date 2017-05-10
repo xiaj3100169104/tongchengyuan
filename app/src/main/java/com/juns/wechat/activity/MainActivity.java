@@ -57,7 +57,7 @@ public class MainActivity extends BaseActivity {
 
         int userId = Process.myUid();
 
-       new Watcher(this).createAppMonitor(userId + "");
+       //new Watcher(this).createAppMonitor(userId + "");
     }
 
     @Override

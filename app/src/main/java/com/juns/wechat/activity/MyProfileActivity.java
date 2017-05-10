@@ -65,6 +65,7 @@ public class MyProfileActivity extends BaseToolbarBtnActivity {
     @Override
     public void initData() {
         setToolbarTitle(R.string.my_profile);
+        getToolbarRightView().setText("编辑");
         setData();
     }
 

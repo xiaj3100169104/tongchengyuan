@@ -1,18 +1,15 @@
 package com.juns.wechat.activity;
 
 import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.same.city.love.R;
-import com.style.base.BaseRecyclerViewAdapter;
 import com.style.base.BaseToolbarActivity;
-import com.style.dialog.SimpleEditDialog;
-import com.style.dialog.SingleSelectDialog;
-
-import java.util.ArrayList;
+import com.style.dialog.EditAlertDialog;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -30,9 +27,8 @@ public class EditBaseInfoActivity extends BaseToolbarActivity {
     @Bind(R.id.tv_birthday)
     TextView tvBirthday;
 
-    private ArrayList<String> sexList;
-    private SingleSelectDialog singleSelectDialog;
-    private SimpleEditDialog simpleEditDialog;
+    private String[] sexList = {"男", "女"};
+    private EditAlertDialog editAlertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +39,6 @@ public class EditBaseInfoActivity extends BaseToolbarActivity {
     @Override
     protected void initData() {
         setToolbarTitle("个人信息");
-        sexList = new ArrayList<>();
-        sexList.add("男");
-        sexList.add("女");
     }
 
     @OnClick(R.id.layout_sex)
@@ -65,44 +58,47 @@ public class EditBaseInfoActivity extends BaseToolbarActivity {
     }
 
     private void openSelectSex() {
-        if (singleSelectDialog == null) {
-            singleSelectDialog = new SingleSelectDialog(this, sexList);
-            singleSelectDialog.adapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener<String>() {
-                @Override
-                public void onItemClick(int position, String data) {
-                    tvSex.setText(data);
-                    singleSelectDialog.dismiss();
-                }
-            });
-        }
-        singleSelectDialog.show();
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setSingleChoiceItems(sexList, 0, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                }).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ;
+                    }
+                }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).create();
+        alertDialog.show();
     }
 
     private void openEditName() {
         String name = tvName.getText().toString();
-        if (simpleEditDialog == null) {
-            simpleEditDialog = new SimpleEditDialog(this, name, "姓名");
-            simpleEditDialog.setOnItemClickListener(new SimpleEditDialog.OnItemClickListener() {
-                @Override
-                public void OnClickOk() {
-                    String s = simpleEditDialog.getContent();
-                    setText(tvName, s);
-                    simpleEditDialog.dismiss();
-                }
+        editAlertDialog = new EditAlertDialog(this);
+        editAlertDialog.setData(name, "姓名");
+        editAlertDialog.show(new EditAlertDialog.OnPromptListener() {
+            @Override
+            public void onPositiveButton(String s) {
+                setText(tvName, s);
+                editAlertDialog.dismiss();
+            }
 
-                @Override
-                public void OnClickCancel() {
-
-                }
-            });
-        }
-        simpleEditDialog.show();
+            @Override
+            public void onNegativeButton() {
+                editAlertDialog.dismiss();
+            }
+        });
 
     }
 
     private void openSelectBirthday() {
-       /* DatePicker datePicker = new DatePicker(this);
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this);
-        TimePickerDialog timePickerDialog = new TimePickerDialog(this);*/
+        //DatePickerDialog datePicker = new DatePickerDialog(this);
+
     }
 }

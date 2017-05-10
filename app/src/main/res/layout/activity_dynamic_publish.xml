@@ -47,8 +47,6 @@
                     android:layout_marginTop="10dp" />
             </LinearLayout>
         </ScrollView>
-
-        <include layout="@layout/layout_more_dynamic_publish" />
     </LinearLayout>
 
     <include layout="@layout/layout_bottom_publish_dynamic_activity" />

@@ -11,11 +11,11 @@ android {
         versionCode Integer.parseInt(project.VERSION_CODE)
         versionName project.VERSION_NAME
         multiDexEnabled true
-        externalNativeBuild {
+        /*externalNativeBuild {
             cmake {
                 cppFlags ""
             }
-        }
+        }*/
     }
 
     buildTypes {
@@ -25,11 +25,11 @@ android {
         }
     }
 
-    externalNativeBuild {
+   /* externalNativeBuild {
         cmake {
             path "CMakeLists.txt"
         }
-    }
+    }*/
 }
 
 repositories{

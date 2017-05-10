@@ -6,7 +6,7 @@
         <item name="android:minHeight">@dimen/height_normal</item>
     </style>
     <style name="text_user_info_title" parent="text_black_13sp">
-        <item name="android:textColor">#FF6347</item>
+        <item name="android:textColor">@color/colorPrimary</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/height_normal</item>
         <item name="android:paddingLeft">@dimen/activity_horizontal_margin</item>

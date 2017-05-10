@@ -2,19 +2,19 @@
     <!-- 黑色水平分割线风格 -->
     <style name="divider_horizontal_transparent_black">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/divider_1px_width</item>
+        <item name="android:layout_height">@dimen/divider_width</item>
         <item name="android:background">@color/divider_color</item>
     </style>
     <!-- 黑色竖直分割线风格 -->
     <style name="divider_vertical_transparent_black">
         <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_width">@dimen/divider_1px_width</item>
+        <item name="android:layout_width">@dimen/divider_width</item>
         <item name="android:background">@color/divider_color</item>
     </style>
     <!-- 白色竖直分割线风格 -->
     <style name="divider_horizontal_white">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/divider_1px_width</item>
+        <item name="android:layout_height">@dimen/divider_width</item>
         <item name="android:background">@android:color/white</item>
     </style>
 

@@ -2,45 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#ffffff"
     android:orientation="vertical"
+    android:background="#fff"
     android:padding="15dp">
 
     <EditText
         android:id="@+id/et_content"
-        style="@style/text_black_16sp"
+        style="@style/text_black_18sp"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:background="#fff"
-        android:maxLength="20" />
+        android:maxLength="20" android:paddingLeft="10dp"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:gravity="right"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/item_cancel"
-            style="@style/text_black_13sp"
-            android:layout_width="40dp"
-            android:layout_height="30dp"
-            android:background="@drawable/bg_pressed_default"
-            android:gravity="center"
-            android:clickable="true"
-            android:text="取消" />
-
-        <TextView
-            android:id="@+id/item_ok"
-            style="@style/text_black_13sp"
-            android:layout_width="40dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="20dp"
-            android:background="@drawable/bg_pressed_default"
-            android:clickable="true"
-            android:gravity="center"
-            android:text="确定" />
-
-    </LinearLayout>
 </LinearLayout>
