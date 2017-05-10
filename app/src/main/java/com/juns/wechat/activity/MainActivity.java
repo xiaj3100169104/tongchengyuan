@@ -21,7 +21,6 @@ import com.juns.wechat.fragment.msg.Fragment_Msg;
 import com.juns.wechat.processes.Watcher;
 import com.juns.wechat.util.LogUtil;
 import com.style.base.BaseActivity;
-import com.juns.wechat.dialog.WarnTipDialog;
 import com.juns.wechat.dialog.TitleMenu.ActionItem;
 import com.juns.wechat.dialog.TitleMenu.TitlePopup;
 import com.juns.wechat.dialog.TitleMenu.TitlePopup.OnItemOnClickListener;
@@ -33,7 +32,6 @@ import java.util.List;
 public class MainActivity extends BaseActivity {
     private TextView txt_title;
     private ImageView img_right;
-    private WarnTipDialog Tipdialog;
     protected static final String TAG = "MainActivity";
     private ViewPager vpMainContent;
     private TitlePopup titlePopup;

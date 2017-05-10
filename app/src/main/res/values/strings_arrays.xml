@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 性别 -->
+    <string name="man">男</string>
+    <string name="woman">女</string>
+    <!-- 情感-->
+    <string name="married">已婚</string>
+    <string name="divorce">离异</string>
+    <string name="gay">同性</string>
+    <string name="single">单身</string>
+    <string name="loving">热恋中</string>
+    <string name="secrecy">保密</string>
+    <!-- 学历 -->
+    <string name="primary_school">小学</string>
+    <string name="junior_middle_school">初中</string>
+    <string name="high_school">高中</string>
+    <string name="secondary_specialized_school">中专</string>
+    <string name="junior_College">大专</string>
+    <string name="undergraduate">本科</string>
+    <string name="graduate_student">研究生</string>
+    <string name="master">硕士</string>
+    <string name="doctor">博士</string>
+    <!-- 身高 -->
+    <string name="cm_150_160">150 &#8211; 160</string>
+    <string name="cm_160_170">160 &#8211; 170</string>
+    <string name="cm_170_180">170 &#8211; 180</string>
+    <string name="cm_180_190">180 &#8211; 190</string>
+    <string name="cm_190_200">190 &#8211; 200</string>
+    <string name="cm_200_210">200 &#8211; 210</string>
+    <!-- 年龄 -->
+    <string name="age_group_1">0 &#8211; 18</string>
+    <string name="age_group_2">18 &#8211; 22</string>
+    <string name="age_group_3">22 &#8211; 25</string>
+    <string name="age_group_4">25 &#8211; 28</string>
+    <string name="age_group_5">28 &#8211; 30</string>
+    <string name="age_group_6">30 &#8211; 35</string>
+    <string name="age_group_7">35 &#8211; 40</string>
+    <!-- 收入-->
+    <string name="income_group_1">2000以下</string>
+    <string name="income_group_2">2000 &#8211; 4000</string>
+    <string name="income_group_3">4000 &#8211; 6000</string>
+    <string name="income_group_4">6000 &#8211; 8000</string>
+    <string name="income_group_5">8000 &#8211; 10000</string>
+    <string name="income_group_6">10000 &#8211; 20000</string>
+    <string name="income_group_7">20000以上</string>
+
+    <!-- 举报理由-->
+    <string name="sexy_obscene">色情淫秽</string>
+    <string name="Illegal_crime">违法犯罪</string>
+    <string name="cheat_money">欺诈骗钱</string>
+    <string name="politics">政治</string>
+    <string name="advertisement_cheat">广告欺骗</string>
+    <string name="false_identity">虚假身份</string>
+    <string name="harass_info">骚扰信息</string>
+    <string name="improper_speek">不当发言</string>
+</resources>

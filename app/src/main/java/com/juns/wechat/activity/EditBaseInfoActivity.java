@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
@@ -58,8 +59,17 @@ public class EditBaseInfoActivity extends BaseToolbarActivity {
     }
 
     private void openSelectSex() {
+        int checkedItem = 0;
+        String sex = tvSex.getText().toString();
+        if (!TextUtils.isEmpty(sex))
+            for (int i = 0; i < sexList.length; i++) {
+                if (sex.endsWith(sexList[i])){
+                    checkedItem = i;
+                    break;
+                }
+            }
         AlertDialog alertDialog = new AlertDialog.Builder(this)
-                .setSingleChoiceItems(sexList, 0, new DialogInterface.OnClickListener() {
+                .setSingleChoiceItems(sexList, checkedItem, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 

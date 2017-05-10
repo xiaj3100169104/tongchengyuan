@@ -4,6 +4,7 @@ package com.style.dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -81,7 +82,7 @@ public class EditAlertDialog extends AlertDialog {
     }
 
     public void setContent(String content) {
-        if (content != null && !"".equals(content)) {
+        if (!TextUtils.isEmpty(content)) {
             etContent.setText(content);
             etContent.setSelection(content.length());
         } else
@@ -93,12 +94,11 @@ public class EditAlertDialog extends AlertDialog {
     }
 
     public void setHint(String hint) {
-        if (hint != null && !"".equals(hint))
+        if (!TextUtils.isEmpty(hint))
             etContent.setHint(hint);
         else
             etContent.setHint("");
     }
-
 
 
     public interface OnPromptListener {

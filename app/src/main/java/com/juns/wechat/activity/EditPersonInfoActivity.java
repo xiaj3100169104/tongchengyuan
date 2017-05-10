@@ -3,12 +3,14 @@ package com.juns.wechat.activity;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.same.city.love.R;
 import com.style.base.BaseToolbarActivity;
+import com.style.dialog.EditAlertDialog;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -133,8 +135,17 @@ public class EditPersonInfoActivity extends BaseToolbarActivity {
     }
 
     private void openSingleSelect(final String[] strings, final TextView textView) {
+        int checkedItem = 0;
+        String sex = textView.getText().toString();
+        if (!TextUtils.isEmpty(sex))
+            for (int i = 0; i < strings.length; i++) {
+                if (sex.endsWith(strings[i])) {
+                    checkedItem = i;
+                    break;
+                }
+            }
         AlertDialog alertDialog = new AlertDialog.Builder(this)
-                .setSingleChoiceItems(strings, 0, new DialogInterface.OnClickListener() {
+                .setSingleChoiceItems(strings, checkedItem, new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -152,5 +163,39 @@ public class EditPersonInfoActivity extends BaseToolbarActivity {
                     }
                 }).create();
         alertDialog.show();
+    }
+
+    @OnClick(R.id.layout_company_info)
+    public void modifyInfo5() {
+        openEdit(tvCompanyInfo);
+    }
+
+    @OnClick(R.id.layout_hometown_info)
+    public void modifyInfo6() {
+        openEdit(tvHometownInfo);
+    }
+
+    @OnClick(R.id.layout_my_heart)
+    public void modifyInfo7() {
+        openEdit(tvMyHeart);
+    }
+
+    private void openEdit(final TextView textView) {
+        String name = textView.getText().toString();
+        final EditAlertDialog editAlertDialog = new EditAlertDialog(this);
+        editAlertDialog.setData(name, textView.getHint().toString());
+        editAlertDialog.show(new EditAlertDialog.OnPromptListener() {
+            @Override
+            public void onPositiveButton(String s) {
+                setText(textView, s);
+                editAlertDialog.dismiss();
+            }
+
+            @Override
+            public void onNegativeButton() {
+                editAlertDialog.dismiss();
+            }
+        });
+
     }
 }

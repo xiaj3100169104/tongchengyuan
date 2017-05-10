@@ -3,11 +3,11 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="app_name">微趣</string>
-    <string name="app_name_number">微趣号</string>
-    <string name="about_app">关于微趣</string>
+    <string name="app_name">同城缘</string>
+    <string name="app_name_number">缘号</string>
+    <string name="about_app">关于同城缘</string>
     <string name="chat">消息</string>
-    <string name="contacts">趣友</string>
+    <string name="contacts">缘友</string>
     <string name="me">我</string>
     <string name="mime">我的</string>
     <string name="discover">发现</string>
@@ -37,7 +37,6 @@
     <string name="group_chats">群聊</string>
     <string name="official_accounts">订阅号</string>
     <string name="no_msg">暂时没有新消息</string>
-    <string name="wechat_id">微信号</string>
     <string name="my_posts">相册</string>
     <string name="comment">评论</string>
     <string name="click_zan">赞</string>
@@ -106,57 +105,83 @@
     <string name="occupation">职业</string>
     <string name="emotion_state">情感状态</string>
     <string name="live_place">居住地</string>
-    <!-- 性别 -->
-    <string name="man">男</string>
-    <string name="woman">女</string>
-    <!-- 情感-->
-    <string name="married">已婚</string>
-    <string name="divorce">离异</string>
-    <string name="gay">同性</string>
-    <string name="single">单身</string>
-    <string name="loving">热恋中</string>
-    <string name="secrecy">保密</string>
-    <!-- 学历 -->
-    <string name="primary_school">小学</string>
-    <string name="junior_middle_school">初中</string>
-    <string name="high_school">高中</string>
-    <string name="secondary_specialized_school">中专</string>
-    <string name="junior_College">大专</string>
-    <string name="undergraduate">本科</string>
-    <string name="graduate_student">研究生</string>
-    <string name="master">硕士</string>
-    <string name="doctor">博士</string>
-    <!-- 身高 -->
-    <string name="cm_150_160">150 &#8211; 160</string>
-    <string name="cm_160_170">160 &#8211; 170</string>
-    <string name="cm_170_180">170 &#8211; 180</string>
-    <string name="cm_180_190">180 &#8211; 190</string>
-    <string name="cm_190_200">190 &#8211; 200</string>
-    <string name="cm_200_210">200 &#8211; 210</string>
-    <!-- 年龄 -->
-    <string name="age_group_1">0 &#8211; 18</string>
-    <string name="age_group_2">18 &#8211; 22</string>
-    <string name="age_group_3">22 &#8211; 25</string>
-    <string name="age_group_4">25 &#8211; 28</string>
-    <string name="age_group_5">28 &#8211; 30</string>
-    <string name="age_group_6">30 &#8211; 35</string>
-    <string name="age_group_7">35 &#8211; 40</string>
-    <!-- 收入-->
-    <string name="income_group_1">2000以下</string>
-    <string name="income_group_2">2000 &#8211; 4000</string>
-    <string name="income_group_3">4000 &#8211; 6000</string>
-    <string name="income_group_4">6000 &#8211; 8000</string>
-    <string name="income_group_5">8000 &#8211; 10000</string>
-    <string name="income_group_6">10000 &#8211; 20000</string>
-    <string name="income_group_7">20000以上</string>
+    <string name="title_activity_settings">Settings</string>
 
-    <!-- 举报理由-->
-    <string name="sexy_obscene">色情淫秽</string>
-    <string name="Illegal_crime">违法犯罪</string>
-    <string name="cheat_money">欺诈骗钱</string>
-    <string name="politics">政治</string>
-    <string name="advertisement_cheat">广告欺骗</string>
-    <string name="false_identity">虚假身份</string>
-    <string name="harass_info">骚扰信息</string>
-    <string name="improper_speek">不当发言</string>
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_title_social_recommendations">Enable social recommendations</string>
+    <string name="pref_description_social_recommendations">Recommendations for people to contact
+        based on your message history
+    </string>
+
+    <string name="pref_title_display_name">Display name</string>
+    <string name="pref_default_display_name">John Smith</string>
+
+    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
+    <string-array name="pref_example_list_titles">
+        <item>Always</item>
+        <item>When possible</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_example_list_values">
+        <item>1</item>
+        <item>0</item>
+        <item>-1</item>
+    </string-array>
+
+    <!-- Example settings for Data & Sync -->
+    <string name="pref_header_data_sync">Data &amp; sync</string>
+
+    <string name="pref_title_sync_frequency">Sync frequency</string>
+    <string-array name="pref_sync_frequency_titles">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>3 hours</item>
+        <item>6 hours</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>180</item>
+        <item>360</item>
+        <item>-1</item>
+    </string-array>
+
+    <string-array name="list_preference_entries">
+        <item>Entry 1</item>
+        <item>Entry 2</item>
+        <item>Entry 3</item>
+    </string-array>
+
+    <string-array name="list_preference_entry_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="multi_select_list_preference_default_value" />
+
+    <string name="pref_title_system_sync_settings">System sync settings</string>
+
+    <!-- Example settings for Notifications -->
+    <string name="pref_header_notifications">Notifications</string>
+
+    <string name="pref_title_new_message_notifications">New message notifications</string>
+
+    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_ringtone_silent">Silent</string>
+
+    <string name="pref_title_vibrate">Vibrate</string>
+    
+
+    <string name="action_share">Share</string>
+    <string name="action_reply">Reply</string>
+
+
 </resources>

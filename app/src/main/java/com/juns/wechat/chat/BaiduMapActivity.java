@@ -35,7 +35,6 @@ import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.utils.CoordinateConverter;
 import com.same.city.love.R;
 import com.style.base.BaseActivity;
-import com.juns.wechat.dialog.FlippingLoadingDialog;
 
 public class BaiduMapActivity extends BaseActivity implements OnClickListener {
 
@@ -53,7 +52,6 @@ public class BaiduMapActivity extends BaseActivity implements OnClickListener {
     private static BDLocation lastLocation = null;
     // private ProgressDialog progressDialog;
     private BaiduMap mBaiduMap;
-    private FlippingLoadingDialog mLoadingDialog;
     private LocationMode mCurrentMode;
     private BaiduSDKReceiver mBaiduReceiver;
 
@@ -150,8 +148,7 @@ public class BaiduMapActivity extends BaseActivity implements OnClickListener {
     }
 
     private void showMapWithLocationClient() {
-        mLoadingDialog = new FlippingLoadingDialog(this, "正在确定你的位置...");
-        mLoadingDialog.show();
+        showProgressDialog("正在确定你的位置...");
 
         mLocClient = new LocationClient(this);
         mLocClient.registerLocationListener(myListener);
@@ -212,9 +209,8 @@ public class BaiduMapActivity extends BaseActivity implements OnClickListener {
             Log.d("map", "经纬度:" + location.getLatitude() + "--" + location.getLongitude());
             Log.d("map", "address:" + location.getAddrStr());
             txt_right.setEnabled(true);
-            if (mLoadingDialog != null) {
-                mLoadingDialog.dismiss();
-            }
+
+            dismissProgressDialog();
 
             if (lastLocation != null) {
                 if (lastLocation.getLatitude() == location.getLatitude()
