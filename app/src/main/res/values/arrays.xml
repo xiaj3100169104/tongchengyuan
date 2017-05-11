@@ -48,13 +48,204 @@
         <item>@string/master</item>
         <item>@string/doctor</item>
     </string-array>
-    <string-array name="condition_education">
-        <item>@string/Unlimited</item>
-        <item>高中及以上</item>
-        <item>大专及以上</item>
-        <item>本科及以上</item>
-        <item>硕士及以上</item>
-        <item>博士及以上</item>
+
+    <string-array name="my_label">
+        <item>喜欢简单</item>
+        <item>敢爱敢恨</item>
+        <item>靠谱</item>
+        <item>马甲线</item>
+        <item>随性</item>
+        <item>热血</item>
+        <item>萌萌哒</item>
+        <item>女汉子</item>
+        <item>强迫症</item>
+        <item>拖延症</item>
+        <item>极品吃货</item>
+        <item>叫我逗比</item>
+        <item>双重人格</item>
+        <item>选择恐惧症</item>
+        <item>宅</item>
+        <item>文艺</item>
+        <item>正气</item>
+        <item>有面儿</item>
+        <item>讲义气</item>
+        <item>女友永远是对的</item>
+        <item>AJ控</item>
+        <item>大叔控</item>
+        <item>萝莉控</item>
+        <item>长发及腰</item>
+        <item>安静</item>
+        <item>健谈</item>
+        <item>叛逆</item>
+        <item>不走寻常路</item>
+        <item>理想主义</item>
+        <item>直来直去</item>
+    </string-array>
+    <string-array name="sport">
+        <item>游泳</item>
+        <item>跑步</item>
+        <item>单车</item>
+        <item>羽毛球</item>
+        <item>网球</item>
+        <item>足球</item>
+        <item>瑜伽</item>
+        <item>郊游</item>
+        <item>篮球</item>
+        <item>滑板</item>
+        <item>滑雪</item>
+        <item>乒乓球</item>
+        <item>高尔夫</item>
+        <item>台球</item>
+        <item>舞蹈</item>
+        <item>街舞</item>
+        <item>健身房</item>
+        <item>射箭</item>
+        <item>射击</item>
+        <item>击剑</item>
+        <item>拳击</item>
+        <item>跆拳道</item>
+        <item>爬山</item>
+        <item>骑马</item>
+        <item>暴走</item>
+        <item>睡觉</item>
+    </string-array>
+    <string-array name="music">
+        <item>欧美</item>
+        <item>乡村</item>
+        <item>摇滚</item>
+        <item>日韩</item>
+        <item>流行</item>
+        <item>电子</item>
+        <item>RAB</item>
+        <item>嘻哈</item>
+        <item>爵士</item>
+        <item>布鲁斯</item>
+        <item>金属</item>
+        <item>轻音乐</item>
+        <item>古典</item>
+        <item>经典</item>
+        <item>Taylor Swift</item>
+        <item>Justin Bieber</item>
+        <item>Rihanna</item>
+        <item>Michael Jackson</item>
+        <item>Lady GaGa</item>
+        <item>Madonna</item>
+        <item>Maroon 5</item>
+        <item>Linkin Park</item>
+        <item>Eminem</item>
+        <item>Justin Timberlake</item>
+        <item>Adele</item>
+        <item>Queen</item>
+        <item>Coldplay</item>
+        <item>Beyonce</item>
+        <item>Green Day</item>
+        <item>Katy Perry</item>
+        <item>Bruno Mars</item>
+        <item>Westlife</item>
+
+        <item>张国荣</item>
+        <item>张学友</item>
+        <item>刘德华</item>
+        <item>黎明</item>
+        <item>本兮</item>
+        <item>萧亚轩</item>
+        <item>王菲</item>
+        <item>周杰伦</item>
+        <item>陈奕迅</item>
+        <item>汪峰</item>
+        <item>萧敬腾</item>
+        <item>苏打绿</item>
+        <item>朴树</item>
+        <item>张杰</item>
+
+    </string-array>
+
+    <string-array name="food">
+        <item>牛排</item>
+        <item>美式炸鸡</item>
+        <item>可乐</item>
+        <item>凉拌</item>
+        <item>干锅</item>
+        <item>烤鱼</item>
+        <item>北京烤鸭</item>
+        <item>素食</item>
+        <item>港式早茶</item>
+        <item>火锅</item>
+        <item>汤锅</item>
+        <item>烤串</item>
+        <item>麻辣烫</item>
+        <item>生煎包</item>
+        <item>寿司</item>
+        <item>卤肉饭</item>
+        <item>生鱼片</item>
+        <item>日本拉面</item>
+        <item>日式铁板烧</item>
+        <item>韩国烤肉</item>
+        <item>泰国菜</item>
+        <item>意大利面</item>
+        <item>墨西哥Tacos</item>
+        <item>披萨</item>
+        <item>汉堡</item>
+        <item>薯条</item>
+        <item>土耳其烤肉</item>
+        <item>提拉米苏</item>
+        <item>奶酪</item>
+        <item>巧克力</item>
+        <item>慕斯蛋糕</item>
+
+    </string-array>
+    <string-array name="movie">
+        <item>速度与激情</item>
+        <item>疯狂动物城</item>
+        <item>泰山</item>
+        <item>大话西游</item>
+        <item>复仇者联盟</item>
+        <item>美国队长</item>
+        <item>血战钢锯岭</item>
+
+        <item>九条命</item>
+        <item>魔兽</item>
+        <item>刺客信条</item>
+        <item>斯巴达300勇士</item>
+        <item>碟中谍</item>
+        <item>狂怒</item>
+        <item>霍比特人</item>
+
+        <item>美丽人生</item>
+        <item>心灵捕手</item>
+        <item>美丽心灵</item>
+        <item>肖申克的救赎</item>
+        <item>这个杀手不太冷</item>
+        <item>泰坦尼克号</item>
+        <item>一条狗的使命</item>
+        <item>变形金刚</item>
+        <item>教父</item>
+        <item>阿甘正传</item>
+        <item>九条命</item>
+        <item>极限特工</item>
+        <item>盗梦空间</item>
+        <item>金刚狼</item>
+        <item>黑客帝国</item>
+        <item>千与千寻</item>
+        <item>天使爱美丽</item>
+        <item>两杆大烟枪</item>
+        <item>飞越疯人院</item>
+        <item>闻香识女人</item>
+        <item>哈利波特</item>
+        <item>生化危机</item>
+        <item>功夫熊猫</item>
+        <item>偷拐抢骗</item>
+        <item>沉默的羔羊</item>
+        <item>美国往事</item>
+        <item>X战警</item>
+        <item>终结者</item>
+        <item>星球大战</item>
+        <item>源代码</item>
+        <item>机械师</item>
+        <item>猩球崛起</item>
+        <item>小时代</item>
+        <item>傲慢与偏见</item>
+
     </string-array>
     <string-array name="body_height">
         <item>@string/cm_150_160</item>
@@ -64,6 +255,16 @@
         <item>@string/cm_180_190</item>
         <item>@string/cm_190_200</item>
         <item>@string/cm_200_210</item>
+    </string-array>
+
+
+    <string-array name="condition_education">
+        <item>@string/Unlimited</item>
+        <item>高中及以上</item>
+        <item>大专及以上</item>
+        <item>本科及以上</item>
+        <item>硕士及以上</item>
+        <item>博士及以上</item>
     </string-array>
     <string-array name="condition_body_height">
         <item>@string/Unlimited</item>
@@ -134,7 +335,7 @@
         <item>@string/improper_speek</item>
     </string-array>
     <integer-array name="colors">
-        <item>@color/red_single</item>
+        <item>@color/tag_my_label</item>
         <item>@color/cyan_dark</item>
         <item>@color/yellow_dark</item>
         <item>@color/green_dark</item>

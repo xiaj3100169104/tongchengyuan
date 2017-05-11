@@ -13,43 +13,43 @@ import com.juns.wechat.manager.AccountManager;
 //设置
 public class SettingActivity extends BaseToolbarActivity implements OnClickListener {
 
-	@Override
-	public void initData() {
-		setToolbarTitle("设置");
-		setOnListener();
-	}
+    @Override
+    public void initData() {
+        setToolbarTitle("设置");
+        setOnListener();
+    }
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		mLayoutResID = R.layout.activity_setting;
-		super.onCreate(savedInstanceState);
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        mLayoutResID = R.layout.activity_setting;
+        super.onCreate(savedInstanceState);
 
-	}
+    }
 
-	private void setOnListener() {
-		findViewById(R.id.txt_msgtip).setOnClickListener(this);
-		findViewById(R.id.txt_usersafe).setOnClickListener(this);
-		findViewById(R.id.txt_yinsi).setOnClickListener(this);
-		findViewById(R.id.txt_tongyong).setOnClickListener(this);
-		findViewById(R.id.txt_about).setOnClickListener(this);
-		findViewById(R.id.btn_exit).setOnClickListener(this);
+    private void setOnListener() {
+        findViewById(R.id.txt_msgtip).setOnClickListener(this);
+        findViewById(R.id.txt_usersafe).setOnClickListener(this);
+        findViewById(R.id.txt_yinsi).setOnClickListener(this);
+        findViewById(R.id.txt_about).setOnClickListener(this);
+        findViewById(R.id.btn_exit).setOnClickListener(this);
 
-	}
+    }
 
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.txt_about:
-			skip(AboutProductActivity.class);
-			break;
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.txt_msgtip:
+                skip(SettingNewMessageActivity.class);
+                break;
+            case R.id.txt_about:
+                skip(AboutProductActivity.class);
+                break;
 
-		case R.id.btn_exit:
-            AccountManager.getInstance().logOut();
-            finish();
-			break;
+            case R.id.btn_exit:
+                AccountManager.getInstance().logOut();
+                finish();
+                break;
 
-		default:
-			break;
-		}
-	}
+        }
+    }
 }

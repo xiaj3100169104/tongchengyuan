@@ -1,9 +1,11 @@
 package com.juns.wechat.activity;
 
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -12,8 +14,13 @@ import com.same.city.love.R;
 import com.style.base.BaseToolbarActivity;
 import com.style.dialog.EditAlertDialog;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.OnClick;
+import me.kaede.tagview.Tag;
+import me.kaede.tagview.TagView;
 
 /**
  * Created by xiajun on 2017/5/9.
@@ -95,7 +102,9 @@ public class EditPersonInfoActivity extends BaseToolbarActivity {
     @Bind(R.id.layout_education)
     LinearLayout layoutEducation;
 
-    public int p = -1;
+    public int p = 0;
+    @Bind(R.id.tag_view_my_label)
+    TagView tagViewMyLabel;
 
 
     @Override
@@ -107,6 +116,7 @@ public class EditPersonInfoActivity extends BaseToolbarActivity {
     @Override
     protected void initData() {
         setToolbarTitle("编辑个人资料");
+
     }
 
     @OnClick(R.id.layout_base_info)
@@ -136,33 +146,42 @@ public class EditPersonInfoActivity extends BaseToolbarActivity {
 
     private void openSingleSelect(final String[] strings, final TextView textView) {
         int checkedItem = 0;
-        String sex = textView.getText().toString();
-        if (!TextUtils.isEmpty(sex))
+        String value = textView.getText().toString();
+        if (!TextUtils.isEmpty(value))
             for (int i = 0; i < strings.length; i++) {
-                if (sex.endsWith(strings[i])) {
+                if (value.endsWith(strings[i])) {
                     checkedItem = i;
                     break;
                 }
             }
-        AlertDialog alertDialog = new AlertDialog.Builder(this)
+        AlertDialog singleDialog = new AlertDialog.Builder(this)
                 .setSingleChoiceItems(strings, checkedItem, new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         p = which;
                     }
-                }).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                })
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         textView.setText(strings[p]);
                     }
-                }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                })
+                .setNeutralButton("清空", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        textView.setText("");
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                     }
                 }).create();
-        alertDialog.show();
+        singleDialog.show();
     }
 
     @OnClick(R.id.layout_company_info)
@@ -197,5 +216,81 @@ public class EditPersonInfoActivity extends BaseToolbarActivity {
             }
         });
 
+    }
+
+    @OnClick(R.id.layout_my_label)
+    public void modifyInfo11() {
+        openMulti("标签", getResources().getStringArray(R.array.my_label), tagViewMyLabel, R.color.tag_my_label, R.color.tag_my_label_bg, tvMyLabel);
+    }
+    @OnClick(R.id.layout_interest_sport)
+    public void modifyInfo12() {
+        openMulti("运动", getResources().getStringArray(R.array.sport), tagViewMyLabel, R.color.tag_sport, R.color.tag_sport_bg, tvInterestSport);
+    }
+    @OnClick(R.id.layout_interest_music)
+    public void modifyInfo13() {
+        openMulti("音乐", getResources().getStringArray(R.array.music), tagViewMyLabel, R.color.tag_music, R.color.tag_music_bg, tvInterestMusic);
+    }
+    @OnClick(R.id.layout_interest_food)
+    public void modifyInfo14() {
+        openMulti("美食", getResources().getStringArray(R.array.food), tagViewMyLabel, R.color.tag_food, R.color.tag_food_bg, tvInterestFood);
+    }
+    @OnClick(R.id.layout_interest_movie)
+    public void modifyInfo15() {
+        openMulti("电影", getResources().getStringArray(R.array.movie), tagViewMyLabel, R.color.tag_movie, R.color.tag_movie_bg, tvInterestMovie);
+    }
+    private void openMulti(final String title, final String[] allData, final TagView tagView, final int tagColor, final int tagColorBg, final TextView textView) {
+        final boolean[] checkedItems = new boolean[allData.length];
+        List<Tag> oldData = tagView.getTags();
+
+        for (int i = 0; i < allData.length; i++) {
+            for (Tag tag : oldData) {
+                if (allData[i].equals(tag.text)) {
+                    checkedItems[i] = true;
+                    break;
+                }
+            }
+        }
+
+        AlertDialog multiDialog = new AlertDialog.Builder(this)
+                .setTitle(title)
+                .setMultiChoiceItems(allData, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                        checkedItems[which] = isChecked;
+                    }
+                })
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ArrayList<Tag> newData = new ArrayList<Tag>();
+                        for (int i = 0; i < checkedItems.length; i++) {
+                            if (checkedItems[i]) {
+                                Tag tag = new Tag(allData[i]);
+                                tag.radius = 10f;
+                                tag.tagTextColor = tagColor;
+                                tag.layoutColor = tagColorBg;
+                                tag.layoutColorPress = tagColorBg;
+                                newData.add(tag);
+                            }
+                        }
+                        tagView.removeAllTags();
+                        if (newData.size()>0) {
+                            textView.setVisibility(View.GONE);
+                            tagView.setVisibility(View.VISIBLE);
+                            tagView.addTags(newData);
+                        } else{
+                            tagView.setVisibility(View.GONE);
+                            textView.setVisibility(View.VISIBLE);
+                        }
+                        tagView.setFocusable(false);
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).create();
+        multiDialog.show();
     }
 }

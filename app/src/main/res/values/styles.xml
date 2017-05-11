@@ -1,19 +1,13 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
     <style name="BaseAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- toolbar（actionbar）颜色 -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <!-- 状态栏颜色 -->
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <!--按钮选中或者点击获得焦点后的颜色-->
-        <item name="colorAccent">@color/colorAccent</item>
-        <!--返回键颜色-->
-        <item name="android:textColorPrimary">@color/textColorPrimary</item>
-        <!--Button按钮正常状态颜色-->
-        <item name="colorButtonNormal">@color/colorPrimary</item>
-        <!--EditText 输入框中字体的颜色-->
-        <item name="editTextColor">@color/black_light</item>
-        <!-- 布局还没加载出来前的窗口背景颜色 -->
         <item name="android:windowBackground">@color/windowBackground</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+
+        <item name="colorButtonNormal">@color/colorButtonNormal</item>
+
         <item name="android:colorBackgroundCacheHint">@null</item>
 
         <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>

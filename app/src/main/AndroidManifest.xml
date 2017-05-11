@@ -75,6 +75,8 @@
         <activity android:name="com.juns.wechat.activity.NewFriendsListActivity" />
         <activity android:name="com.juns.wechat.activity.SettingActivity" />
         <activity android:name="com.juns.wechat.activity.AboutProductActivity" />
+        <activity android:name="com.juns.wechat.activity.SettingNewMessageActivity" />
+
         <activity
             android:name="com.juns.wechat.chat.ui.ChatActivity"
             android:launchMode="singleTop"
@@ -142,10 +144,6 @@
         <service
             android:name="com.juns.wechat.service.XmppService"
             android:exported="true" />
-
-        <activity
-            android:name="com.juns.wechat.activity.SettingsActivity"
-            android:label="@string/title_activity_settings" />
     </application>
 
 </manifest>

@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#fff"
     android:orientation="vertical">
 
@@ -111,7 +112,7 @@
 
                     <TextView
                         android:id="@+id/tv_name"
-                        style="@style/text_black_16sp"
+                        android:textColor="?android:textColorPrimary"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Style" />
@@ -199,7 +200,7 @@
                         <TextView
                             android:id="@+id/tv_industry"
                             style="@style/user_info_content"
-                            android:hint="添加行业信息" />
+                            android:hint="添加我的行业信息" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -211,7 +212,7 @@
                         <TextView
                             android:id="@+id/tv_work_area"
                             style="@style/user_info_content"
-                            android:hint="添加工作领域信息" />
+                            android:hint="添加我的工作领域信息" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -223,7 +224,7 @@
                         <TextView
                             android:id="@+id/tv_company_info"
                             style="@style/user_info_content"
-                            android:hint="添加公司信息" />
+                            android:hint="添加我的公司信息" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -235,7 +236,7 @@
                         <TextView
                             android:id="@+id/tv_hometown_info"
                             style="@style/user_info_content"
-                            android:hint="添加你的家乡信息" />
+                            android:hint="添加我的家乡信息" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -259,7 +260,7 @@
                         <TextView
                             android:id="@+id/tv_my_heart"
                             style="@style/user_info_content"
-                            android:hint="添加你的内心独白" />
+                            android:hint="我的内心独白" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -287,7 +288,19 @@
                             <TextView
                                 android:id="@+id/tv_my_label"
                                 style="@style/user_info_content"
-                                android:hint="添加属于你的标签" />
+                                android:hint="我的标签" />
+                            <me.kaede.tagview.TagView
+                                android:id="@+id/tag_view_my_label"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="30dp"
+                                android:layout_centerVertical="true"
+                                app:lineMargin="10dp"
+                                app:tagMargin="5dp"
+                                app:textPaddingBottom="6dp"
+                                app:textPaddingLeft="20dp"
+                                app:textPaddingRight="20dp"
+                                app:textPaddingTop="6dp" />
                         </RelativeLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -316,7 +329,7 @@
                             <TextView
                                 android:id="@+id/tv_interest_sport"
                                 style="@style/user_info_content"
-                                android:hint="添加你喜欢的运动" />
+                                android:hint="我喜欢的运动" />
                         </RelativeLayout>
                     </LinearLayout>
 
@@ -334,7 +347,7 @@
                             <TextView
                                 android:id="@+id/tv_interest_music"
                                 style="@style/user_info_content"
-                                android:hint="添加你喜欢的音乐" />
+                                android:hint="我喜欢的音乐" />
                         </RelativeLayout>
                     </LinearLayout>
 
@@ -352,7 +365,7 @@
                             <TextView
                                 android:id="@+id/tv_interest_food"
                                 style="@style/user_info_content"
-                                android:hint="添加你喜欢的美食" />
+                                android:hint="我喜欢的美食" />
                         </RelativeLayout>
                     </LinearLayout>
 
@@ -370,7 +383,7 @@
                             <TextView
                                 android:id="@+id/tv_interest_movie"
                                 style="@style/user_info_content"
-                                android:hint="添加你喜欢的电影" />
+                                android:hint="我喜欢的电影" />
                         </RelativeLayout>
                     </LinearLayout>
                 </LinearLayout>

@@ -30,6 +30,7 @@ public class EditBaseInfoActivity extends BaseToolbarActivity {
 
     private String[] sexList = {"男", "女"};
     private EditAlertDialog editAlertDialog;
+    public int p = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class EditBaseInfoActivity extends BaseToolbarActivity {
 
     @OnClick(R.id.layout_sex)
     public void selectSex() {
-        openSelectSex();
+        openSelectSex(sexList, tvSex);
     }
 
     @OnClick(R.id.layout_name)
@@ -58,12 +59,12 @@ public class EditBaseInfoActivity extends BaseToolbarActivity {
         openSelectBirthday();
     }
 
-    private void openSelectSex() {
+    private void openSelectSex(final String[] strings, final TextView textView) {
         int checkedItem = 0;
-        String sex = tvSex.getText().toString();
-        if (!TextUtils.isEmpty(sex))
-            for (int i = 0; i < sexList.length; i++) {
-                if (sex.endsWith(sexList[i])){
+        String value = textView.getText().toString();
+        if (!TextUtils.isEmpty(value))
+            for (int i = 0; i < strings.length; i++) {
+                if (value.endsWith(strings[i])) {
                     checkedItem = i;
                     break;
                 }
@@ -72,16 +73,9 @@ public class EditBaseInfoActivity extends BaseToolbarActivity {
                 .setSingleChoiceItems(sexList, checkedItem, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                }).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        ;
-                    }
-                }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                        //if (which == -1)
+                            p = which;
+                        textView.setText(strings[p]);
                         dialog.dismiss();
                     }
                 }).create();

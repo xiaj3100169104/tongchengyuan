@@ -10,8 +10,9 @@
         android:id="@+id/et_content"
         style="@style/text_black_18sp"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="#fff"
-        android:maxLength="20" android:paddingLeft="10dp"/>
+        android:layout_height="50dp"
+        android:maxLength="20"
+        android:paddingLeft="10dp"
+        android:text=""/>
 
 </LinearLayout>
