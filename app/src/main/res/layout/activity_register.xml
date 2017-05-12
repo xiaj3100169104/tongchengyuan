@@ -34,8 +34,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 android:text="中国"
-                android:textColor="#45c01a"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textColor="@color/colorPrimary"/>
 
             <View
                 android:layout_width="match_parent"
@@ -103,7 +103,7 @@
                 android:textSize="16sp" />
             <Button
                 android:id="@+id/btn_send"
-                style="@style/txt_titleStyle1"
+                style="@style/text_white_12sp"
                 android:layout_width="80dp"
                 android:layout_height="32dp"
                 android:gravity="center"
@@ -111,9 +111,7 @@
                 android:text="发送验证码"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
-                android:textColor="@color/white"
-                android:background="@drawable/btn_enable_green"
-                android:textSize="12sp" />
+                android:background="@drawable/btn_bg_theme_selector"/>
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
@@ -150,7 +148,7 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginTop="40dp"
-            android:background="@drawable/btn_enable_green"
+            android:background="@drawable/btn_bg_theme_selector"
             android:enabled="false"
             android:paddingBottom="7dp"
             android:paddingTop="7dp"

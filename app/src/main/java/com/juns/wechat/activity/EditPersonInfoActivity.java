@@ -1,7 +1,6 @@
 package com.juns.wechat.activity;
 
 import android.content.DialogInterface;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
@@ -105,6 +104,14 @@ public class EditPersonInfoActivity extends BaseToolbarActivity {
     public int p = 0;
     @Bind(R.id.tag_view_my_label)
     TagView tagViewMyLabel;
+    @Bind(R.id.tag_view_interest_sport)
+    TagView tagViewInterestSport;
+    @Bind(R.id.tag_view_interest_music)
+    TagView tagViewInterestMusic;
+    @Bind(R.id.tag_view_interest_food)
+    TagView tagViewInterestFood;
+    @Bind(R.id.tag_view_interest_movie)
+    TagView tagViewInterestMovie;
 
 
     @Override
@@ -222,22 +229,27 @@ public class EditPersonInfoActivity extends BaseToolbarActivity {
     public void modifyInfo11() {
         openMulti("标签", getResources().getStringArray(R.array.my_label), tagViewMyLabel, R.color.tag_my_label, R.color.tag_my_label_bg, tvMyLabel);
     }
+
     @OnClick(R.id.layout_interest_sport)
     public void modifyInfo12() {
-        openMulti("运动", getResources().getStringArray(R.array.sport), tagViewMyLabel, R.color.tag_sport, R.color.tag_sport_bg, tvInterestSport);
+        openMulti("运动", getResources().getStringArray(R.array.sport), tagViewInterestSport, R.color.tag_sport, R.color.tag_sport_bg, tvInterestSport);
     }
+
     @OnClick(R.id.layout_interest_music)
     public void modifyInfo13() {
-        openMulti("音乐", getResources().getStringArray(R.array.music), tagViewMyLabel, R.color.tag_music, R.color.tag_music_bg, tvInterestMusic);
+        openMulti("音乐", getResources().getStringArray(R.array.music), tagViewInterestMusic, R.color.tag_music, R.color.tag_music_bg, tvInterestMusic);
     }
+
     @OnClick(R.id.layout_interest_food)
     public void modifyInfo14() {
-        openMulti("美食", getResources().getStringArray(R.array.food), tagViewMyLabel, R.color.tag_food, R.color.tag_food_bg, tvInterestFood);
+        openMulti("美食", getResources().getStringArray(R.array.food), tagViewInterestFood, R.color.tag_food, R.color.tag_food_bg, tvInterestFood);
     }
+
     @OnClick(R.id.layout_interest_movie)
     public void modifyInfo15() {
-        openMulti("电影", getResources().getStringArray(R.array.movie), tagViewMyLabel, R.color.tag_movie, R.color.tag_movie_bg, tvInterestMovie);
+        openMulti("电影", getResources().getStringArray(R.array.movie), tagViewInterestMovie, R.color.tag_movie, R.color.tag_movie_bg, tvInterestMovie);
     }
+
     private void openMulti(final String title, final String[] allData, final TagView tagView, final int tagColor, final int tagColorBg, final TextView textView) {
         final boolean[] checkedItems = new boolean[allData.length];
         List<Tag> oldData = tagView.getTags();
@@ -274,11 +286,11 @@ public class EditPersonInfoActivity extends BaseToolbarActivity {
                             }
                         }
                         tagView.removeAllTags();
-                        if (newData.size()>0) {
+                        if (newData.size() > 0) {
                             textView.setVisibility(View.GONE);
                             tagView.setVisibility(View.VISIBLE);
                             tagView.addTags(newData);
-                        } else{
+                        } else {
                             tagView.setVisibility(View.GONE);
                             textView.setVisibility(View.VISIBLE);
                         }

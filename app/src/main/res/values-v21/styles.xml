@@ -5,6 +5,8 @@
         <item name="android:windowAnimationStyle">@style/Anim_main</item>
         <item name="android:colorControlNormal">@color/colorButtonNormal</item>
         <item name="android:colorControlActivated">@color/colorControlActivated</item>
-
+    </style>
+    <style name="AppTheme.TranslucentStatus" parent="AppTheme">
+        <item name="android:windowTranslucentStatus">true</item>
     </style>
 </resources>

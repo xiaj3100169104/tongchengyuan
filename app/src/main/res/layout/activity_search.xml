@@ -13,7 +13,7 @@
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="@dimen/height_top_bar"
-            android:background="@color/common_top_bar_black" >
+            android:background="@color/colorPrimary" >
 
             <EditText
                 android:id="@+id/et_search"
@@ -40,7 +40,16 @@
                 android:layout_alignBottom="@id/et_search"
                 android:layout_alignLeft="@id/et_search"
                 android:layout_margin="8dp"
-                android:src="@drawable/icon_search" />
+                android:src="@android:drawable/ic_search_category_default" />
+
+            <SearchView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignEnd="@+id/et_search"
+                android:layout_alignRight="@+id/et_search"
+                android:layout_alignTop="@+id/et_search"
+                android:layout_marginEnd="42dp"
+                android:layout_marginRight="42dp" />
         </RelativeLayout>
 
         <RelativeLayout

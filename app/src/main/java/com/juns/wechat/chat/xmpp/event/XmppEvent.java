@@ -6,6 +6,7 @@ package com.juns.wechat.chat.xmpp.event;
 public class XmppEvent {
     public static final int SUCCESS = 0;
     public static final int FAILED = 1;
+    public static final int LOGOUT = 2;
 
     public static final int CREATE_GROUP_SUCCESS = 100;
     public static final int CREATE_GROUP_FAILED = CREATE_GROUP_SUCCESS + 1;
@@ -13,9 +14,13 @@ public class XmppEvent {
     public static final int JOIN_GROUP_FAILED = JOIN_CROUP_SUCCESS + 1;
 
 
-    private int resultCode;
+    public int resultCode;
     private Object result;
     private Exception exception;
+
+    public XmppEvent(int resultCode){
+        this.resultCode = resultCode;
+    }
 
     public XmppEvent(int resultCode, Exception exception) {
         this.resultCode = resultCode;

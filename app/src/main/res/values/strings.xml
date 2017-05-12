@@ -12,48 +12,48 @@
     <string name="mime">我的</string>
     <string name="discover">发现</string>
     <string name="setting">设置</string>
-
+    <string name="back">返回</string>
+    <string name="save">保存</string>
+    <string name="send">发送</string>
+    <string name="complete">完成</string>
     <string name="ok">确定</string>
     <string name="cancel">取消</string>
+
+    <string name="register">注册</string>
+    <string name="login">登录</string>
+    <string name="prompt">提示</string>
+    <string name="clear">清空</string>
+    <string name="explain">说明</string>
+
+    <string name="my_profile">个人信息</string>
+    <string name="detail_info">详细资料</string>
+
     <string name="delete_succeed">删除成功</string>
     <string name="delete_fail">删除失败</string>
     <string name="request_fail">请求失败</string>
     <string name="no_data_now">暂时还没数据哦</string>
     <string name="no_more">没有更多了</string>
     <string name="refresh_fail">刷新失败</string>
-    <string name="prompt">提示</string>
-    <string name="clear">清空</string>
+
     <string name="sd_card_unavailable">SD不可用</string>
     <string name="cant_find_pictures">找不到图片</string>
     <string name="File_does_not_exist">文件不存在</string>
-    <string name="back">返回</string>
-    <string name="save">保存</string>
-    <string name="send">发送</string>
-    <string name="complete">完成</string>
+    <string name="screen">筛选</string>
 
     <string name="album">相册</string>
-    <string name="explain">说明</string>
-    <string name="recommended_friends">新的朋友</string>
     <string name="group_chats">群聊</string>
-    <string name="official_accounts">订阅号</string>
     <string name="no_msg">暂时没有新消息</string>
-    <string name="my_posts">相册</string>
     <string name="comment">评论</string>
     <string name="click_zan">赞</string>
     <string name="collection">收藏</string>
     <string name="my_collection">我的收藏</string>
     <string name="note">笔记</string>
 
-    <string name="wallet">钱包</string>
-    <string name="card_bag">卡包</string>
     <string name="expression2">表情</string>
-    <string name="moments">趣游</string>
+    <string name="moments">我的心声</string>
     <string name="scan">扫一扫</string>
     <string name="shake2">摇一摇</string>
     <string name="people_nearby">附近的人</string>
-    <string name="drift_bottle">漂流瓶</string>
-    <string name="shopping">购物</string>
-    <string name="games">游戏</string>
     <string name="search">搜索</string>
     <string name="countries_and_areas">国家和地区</string>
     <string name="passWord">密码</string>
@@ -65,20 +65,13 @@
     <string name="menu_groupchat">发起群聊</string>
     <string name="menu_addfriend">添加朋友</string>
     <string name="menu_qrcode">扫一扫</string>
-    <string name="menu_money">微趣支付</string>
-    <string name="menu_add_friend">添加朋友</string>
 
-    <string name="detail_info">详细资料</string>
-    <string name="register">注册</string>
-    <string name="login">登录</string>
-    <string name="my_profile">个人信息</string>
     <string name="qr_card">二维码名片</string>
     <string name="modify_name">更改名字</string>
     <string name="search_result">搜索结果</string>
     <string name="add_friend">添加朋友</string>
     <string name="new_friends">新的朋友</string>
     <string name="crop_image">剪切图片</string>
-    <string name="micro_chat">微信</string>
 
     <string name="normal">按住 说话</string>
     <string name="recording">松开 结束</string>
@@ -178,10 +171,11 @@
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
-    
+
 
     <string name="action_share">Share</string>
     <string name="action_reply">Reply</string>
+    <string name="title_activity_main2">Main2Activity</string>
 
 
 </resources>

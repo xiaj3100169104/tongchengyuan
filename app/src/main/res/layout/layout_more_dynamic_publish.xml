@@ -5,41 +5,4 @@
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:divider="@drawable/divider_common"
-        android:orientation="vertical"
-        android:showDividers="beginning|middle">
-
-        <TextView
-            android:id="@+id/txt_location"
-            style="@style/TxtTitle"
-            android:drawableLeft="@drawable/auj"
-            android:drawableRight="@drawable/right"
-            android:text="所在位置" />
-
-        <TextView
-            android:id="@+id/txt_who"
-            style="@style/TxtTitle"
-            android:drawableLeft="@drawable/aul"
-            android:drawableRight="@drawable/right"
-            android:text="谁可以看" />
-
-        <TextView
-            android:id="@+id/txt_tip"
-            style="@style/TxtTitle"
-            android:drawableLeft="@drawable/aub"
-            android:drawableRight="@drawable/right"
-            android:text="提醒谁看" />
-
-        <ImageView
-            android:id="@+id/img_qzone"
-            android:layout_width="25dip"
-            android:layout_height="25dip"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="11dp"
-            android:background="@drawable/aun" />
-    </LinearLayout>
 </LinearLayout>

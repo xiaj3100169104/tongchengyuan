@@ -1,5 +1,6 @@
 package com.juns.wechat.manager;
 
+import android.app.usage.UsageEvents;
 import android.content.Context;
 import android.text.TextUtils;
 
@@ -7,10 +8,12 @@ import com.juns.wechat.App;
 import com.juns.wechat.Constants;
 import com.juns.wechat.activity.MainActivity;
 import com.juns.wechat.bean.UserBean;
+import com.juns.wechat.chat.xmpp.event.XmppEvent;
 import com.juns.wechat.database.dao.UserDao;
 import com.juns.wechat.util.SharedPreferencesUtil;
 import com.juns.wechat.chat.xmpp.XmppManagerImpl;
 
+import org.simple.eventbus.EventBus;
 import org.xutils.db.sqlite.WhereBuilder;
 
 /**
@@ -80,7 +83,7 @@ public class AccountManager {
 
         XmppManagerImpl.getInstance().shutDownConn();
 
-        MainActivity.logout();
+        EventBus.getDefault().post(new XmppEvent(XmppEvent.LOGOUT), "tagLogout");
     }
 
     public boolean isLogin() {

@@ -5,18 +5,16 @@
     android:background="#ffffff"
     android:orientation="vertical" >
 
-    <include android:id="@+id/toolbar" layout="@layout/comm_toolbar" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="12dp" >
+        android:padding="12dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp" 
-                android:background="@drawable/abs__spinner_ab_default_holo_light">
+            android:layout_height="48dp"
+            android:background="@drawable/abs__spinner_ab_default_holo_light">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -34,7 +32,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 android:text="中国"
-                android:textColor="#45c01a"
+                android:textColor="@color/colorPrimary"
                 android:textSize="16sp" />
 
             <View
@@ -46,8 +44,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_height="48dp" >
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp">
 
             <EditText
                 android:id="@+id/etInputName"
@@ -57,9 +55,9 @@
                 android:background="@drawable/edittext_login"
                 android:hint="你的手机号码"
                 android:inputType="phone"
+                android:maxLength="11"
                 android:paddingLeft="90dp"
                 android:singleLine="true"
-                android:maxLength="11"
                 android:textColorHint="#DDDDDD"
                 android:textSize="16sp" />
 
@@ -76,8 +74,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_height="48dp" >
+            android:layout_height="48dp"
+            android:layout_marginTop="10dp">
 
             <EditText
                 android:id="@+id/etPassWord"
@@ -86,8 +84,8 @@
                 android:layout_centerVertical="true"
                 android:background="@drawable/edittext_login"
                 android:hint="填写密码"
-                android:paddingLeft="90dp"
                 android:inputType="textPassword"
+                android:paddingLeft="90dp"
                 android:singleLine="true"
                 android:textColorHint="#DDDDDD"
                 android:textSize="16sp" />
@@ -109,7 +107,7 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginTop="40dp"
-            android:background="@drawable/btn_enable_green"
+            android:background="@drawable/btn_bg_theme_selector"
             android:enabled="false"
             android:paddingBottom="7dp"
             android:paddingTop="7dp"

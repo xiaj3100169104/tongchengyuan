@@ -245,12 +245,8 @@ public class RegisterActivity extends BaseToolbarActivity implements OnClickList
 			String phone = etInputName.getText().toString();
 			if (phone.length() == 11) {
 				if (FormatUtil.isMobileNum(phone)) {
-					btn_send.setBackgroundDrawable(getResources().getDrawable(
-							R.drawable.btn_bg_green));
 					btn_send.setTextColor(0xFFFFFFFF);
 					btn_send.setEnabled(true);
-					btn_register.setBackgroundDrawable(getResources()
-							.getDrawable(R.drawable.btn_bg_green));
 					btn_register.setTextColor(0xFFFFFFFF);
 					btn_register.setEnabled(true);
 				} else {
@@ -258,12 +254,8 @@ public class RegisterActivity extends BaseToolbarActivity implements OnClickList
 					showToast("请输入正确的手机号码！");
 				}
 			} else {
-				btn_send.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.btn_enable_green));
 				btn_send.setTextColor(0xFFD0EFC6);
 				btn_send.setEnabled(false);
-				btn_register.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.btn_enable_green));
 				btn_register.setTextColor(0xFFD0EFC6);
 				btn_register.setEnabled(true);
 			}
@@ -292,13 +284,9 @@ public class RegisterActivity extends BaseToolbarActivity implements OnClickList
 			boolean Sign3 = etPassword.getText().length() > 0;
 
 			if (Sign1 & Sign2 & Sign3) {
-				btn_register.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.btn_bg_green));
 				btn_register.setTextColor(0xFFFFFFFF);
 				btn_register.setEnabled(true);
 			} else {
-				btn_register.setBackgroundDrawable(getResources().getDrawable(
-						R.drawable.btn_enable_green));
 				btn_register.setTextColor(0xFFD0EFC6);
 				btn_register.setEnabled(false);
 			}

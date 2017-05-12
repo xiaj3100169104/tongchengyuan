@@ -20,18 +20,6 @@ public class Fragment_Dicover extends BaseFragment {
 
     @Bind(R.id.txt_pengyouquan)
     TextView txtPengyouquan;
-    @Bind(R.id.txt_saoyisao)
-    TextView txtSaoyisao;
-    @Bind(R.id.txt_yaoyiyao)
-    TextView txtYaoyiyao;
-    @Bind(R.id.txt_nearby)
-    TextView txtNearby;
-    @Bind(R.id.txt_piaoliuping)
-    TextView txtPiaoliuping;
-    @Bind(R.id.txt_shop)
-    TextView txtShop;
-    @Bind(R.id.txt_game)
-    TextView txtGame;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,16 +36,5 @@ public class Fragment_Dicover extends BaseFragment {
     public void friendCircle() {
         skip(FriendCircleActivity.class);
     }
-    @OnClick(R.id.txt_saoyisao) // 扫一扫
-    public void saoYiSao() {
-        skip(QRScanActivity.class);
-    }
-    @OnClick(R.id.txt_yaoyiyao) // 摇一摇
-    public void yaoYiYao() {
-        skip(CallVoiceBaseActivity.class);
-    }
-    @OnClick(R.id.txt_nearby)
-    public void nearby() {
 
-    }
 }

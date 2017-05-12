@@ -18,7 +18,6 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
@@ -37,7 +36,6 @@
 
     <!-- sip所需要的权限 -->
     <uses-permission android:name="android.permission.USE_SIP" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <uses-feature
         android:name="android.hardware.sip.voip"
@@ -66,7 +64,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.juns.wechat.activity.MainActivity" />
+        <activity android:name="com.juns.wechat.activity.MainActivity"
+            android:theme="@style/AppTheme.TranslucentStatus"/>
         <activity
             android:name="com.juns.wechat.activity.LoginActivity"
             android:launchMode="singleTop" />
@@ -76,22 +75,16 @@
         <activity android:name="com.juns.wechat.activity.SettingActivity" />
         <activity android:name="com.juns.wechat.activity.AboutProductActivity" />
         <activity android:name="com.juns.wechat.activity.SettingNewMessageActivity" />
-
         <activity
             android:name="com.juns.wechat.chat.ui.ChatActivity"
             android:launchMode="singleTop"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name="com.juns.wechat.chat.voice.VoiceCallActivity" />
         <activity android:name="com.juns.wechat.chat.video.VideoCallActivity" />
-        <activity
-            android:name="com.juns.wechat.chat.BaiduMapActivity"
-            android:screenOrientation="portrait" />
+        <activity android:name="com.juns.wechat.chat.BaiduMapActivity" />
         <activity android:name="com.juns.wechat.chat.ShowBigImage" />
         <activity android:name="com.juns.wechat.chat.ShowNormalFileActivity" />
-        <activity android:name="com.juns.wechat.activity.AddFriendActivity" />
-        <activity
-            android:name="com.juns.wechat.activity.SearchActivity"
-            android:screenOrientation="portrait" />
+        <activity android:name="com.juns.wechat.activity.SearchActivity" />
         <activity android:name="com.juns.wechat.activity.SearchResultActivity" />
         <activity android:name="com.juns.wechat.activity.MyProfileActivity" />
         <activity android:name="com.juns.wechat.activity.ModifyNameActivity" />
@@ -144,6 +137,7 @@
         <service
             android:name="com.juns.wechat.service.XmppService"
             android:exported="true" />
+
     </application>
 
 </manifest>

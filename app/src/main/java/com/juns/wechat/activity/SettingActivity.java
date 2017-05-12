@@ -5,19 +5,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 
+import com.juns.wechat.dynamic.FriendCircleActivity;
 import com.same.city.love.R;
 import com.style.base.BaseToolbarActivity;
 import com.juns.wechat.manager.AccountManager;
 
+import butterknife.OnClick;
+
 
 //设置
-public class SettingActivity extends BaseToolbarActivity implements OnClickListener {
-
-    @Override
-    public void initData() {
-        setToolbarTitle("设置");
-        setOnListener();
-    }
+public class SettingActivity extends BaseToolbarActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -26,30 +23,25 @@ public class SettingActivity extends BaseToolbarActivity implements OnClickListe
 
     }
 
-    private void setOnListener() {
-        findViewById(R.id.txt_msgtip).setOnClickListener(this);
-        findViewById(R.id.txt_usersafe).setOnClickListener(this);
-        findViewById(R.id.txt_yinsi).setOnClickListener(this);
-        findViewById(R.id.txt_about).setOnClickListener(this);
-        findViewById(R.id.btn_exit).setOnClickListener(this);
-
-    }
-
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.txt_msgtip:
-                skip(SettingNewMessageActivity.class);
-                break;
-            case R.id.txt_about:
-                skip(AboutProductActivity.class);
-                break;
-
-            case R.id.btn_exit:
-                AccountManager.getInstance().logOut();
-                finish();
-                break;
-
-        }
+    public void initData() {
+        setToolbarTitle("设置");
     }
+
+    @OnClick(R.id.layout_message_notify)
+    public void onClickEvent1() {
+        skip(SettingNewMessageActivity.class);
+    }
+
+    @OnClick(R.id.layout_about)
+    public void onClickEvent2() {
+        skip(AboutProductActivity.class);
+    }
+
+    @OnClick(R.id.btn_exit)
+    public void onClickEvent3() {
+        AccountManager.getInstance().logOut();
+        finish();
+    }
+
 }

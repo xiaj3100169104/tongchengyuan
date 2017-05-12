@@ -3,7 +3,7 @@
     <!-- 布局还没加载出来前的窗口背景颜色 -->
     <color name="windowBackground">@color/white</color>
     <!-- appbar颜色 -->
-    <color name="colorPrimary">@color/red_normal</color>
+    <color name="colorPrimary">@color/pink_500</color>
     <!-- 状态栏颜色 -->
     <color name="colorPrimaryDark">@color/colorPrimary</color>
     <!-- 文本颜色 -->
@@ -16,6 +16,7 @@
     <color name="colorControlActivated">@color/colorPrimary</color>
     <!-- Button按钮正常状态颜色 -->
     <color name="colorButtonNormal">@color/colorPrimary</color>
+    <color name="colorButtonPressed">@color/pink_300</color>
     <color name="textColorHint">@color/gray_light</color>
 
     <!-- font color -->
@@ -44,7 +45,10 @@
     <color name="tag_movie_bg">#50454545</color>
 
     <!-- 粉色 -->
-    <color name="pink">#ff88b7</color>
+    <color name="pink_500">#E91E63</color>
+    <color name="pink_300">#F06292</color>
+    <color name="pink_100">#F8BBD0</color>
+
     <!-- 主题红色 -->
     <color name="red_normal">#f04b32</color>
     <!-- 红色 -->

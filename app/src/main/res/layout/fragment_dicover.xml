@@ -18,85 +18,12 @@
 
             <TextView
                 android:id="@+id/txt_pengyouquan"
-                style="@style/TxtTitle"
+                style="@style/text_black_15sp"
                 android:layout_marginTop="20dp"
                 android:drawableLeft="@drawable/ic_friends_circle"
                 android:drawableRight="@drawable/right"
                 android:text="@string/moments" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:divider="@drawable/divider_common"
-                android:dividerPadding="@dimen/activity_horizontal_margin"
-                android:orientation="vertical"
-                android:showDividers="middle">
-
-                <TextView
-                    android:id="@+id/txt_saoyisao"
-                    style="@style/TxtTitle"
-                    android:drawableLeft="@drawable/icon_de_saoyisao"
-                    android:drawableRight="@drawable/right"
-                    android:text="@string/scan" />
-
-                <TextView
-                    android:id="@+id/txt_yaoyiyao"
-                    style="@style/TxtTitle"
-                    android:drawableLeft="@drawable/icon_de_yao"
-                    android:drawableRight="@drawable/right"
-                    android:text="@string/shake2" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:divider="@drawable/divider_common"
-                android:dividerPadding="@dimen/activity_horizontal_margin"
-                android:orientation="vertical"
-                android:showDividers="middle">
-
-                <TextView
-                    android:id="@+id/txt_nearby"
-                    style="@style/TxtTitle"
-                    android:drawableLeft="@drawable/icon_de_nearby"
-                    android:drawableRight="@drawable/right"
-                    android:text="@string/people_nearby" />
-
-                <TextView
-                    android:id="@+id/txt_piaoliuping"
-                    style="@style/TxtTitle"
-                    android:drawableLeft="@drawable/icon_de_ping"
-                    android:drawableRight="@drawable/right"
-                    android:text="@string/drift_bottle" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:divider="@drawable/divider_common"
-                android:dividerPadding="@dimen/activity_horizontal_margin"
-                android:orientation="vertical"
-                android:showDividers="middle">
-
-                <TextView
-                    android:id="@+id/txt_shop"
-                    style="@style/TxtTitle"
-                    android:drawableLeft="@drawable/icon_de_shop"
-                    android:drawableRight="@drawable/right"
-                    android:text="@string/shopping" />
-
-                <TextView
-                    android:id="@+id/txt_game"
-                    style="@style/TxtTitle"
-                    android:drawableLeft="@drawable/icon_de_game"
-                    android:drawableRight="@drawable/right"
-                    android:gravity="center_vertical"
-                    android:text="@string/games" />
-            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

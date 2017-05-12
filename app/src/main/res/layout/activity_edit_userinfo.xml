@@ -1,8 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="#fff"
     android:orientation="vertical">
 
@@ -112,10 +112,10 @@
 
                     <TextView
                         android:id="@+id/tv_name"
-                        android:textColor="?android:textColorPrimary"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Style" />
+                        android:text="Style"
+                        android:textColor="?android:textColorPrimary" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -289,18 +289,10 @@
                                 android:id="@+id/tv_my_label"
                                 style="@style/user_info_content"
                                 android:hint="我的标签" />
+
                             <me.kaede.tagview.TagView
                                 android:id="@+id/tag_view_my_label"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="30dp"
-                                android:layout_centerVertical="true"
-                                app:lineMargin="10dp"
-                                app:tagMargin="5dp"
-                                app:textPaddingBottom="6dp"
-                                app:textPaddingLeft="20dp"
-                                app:textPaddingRight="20dp"
-                                app:textPaddingTop="6dp" />
+                                style="@style/user_info_tag" />
                         </RelativeLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -330,6 +322,10 @@
                                 android:id="@+id/tv_interest_sport"
                                 style="@style/user_info_content"
                                 android:hint="我喜欢的运动" />
+
+                            <me.kaede.tagview.TagView
+                                android:id="@+id/tag_view_interest_sport"
+                                style="@style/user_info_tag" />
                         </RelativeLayout>
                     </LinearLayout>
 
@@ -348,6 +344,10 @@
                                 android:id="@+id/tv_interest_music"
                                 style="@style/user_info_content"
                                 android:hint="我喜欢的音乐" />
+
+                            <me.kaede.tagview.TagView
+                                android:id="@+id/tag_view_interest_music"
+                                style="@style/user_info_tag" />
                         </RelativeLayout>
                     </LinearLayout>
 
@@ -366,6 +366,10 @@
                                 android:id="@+id/tv_interest_food"
                                 style="@style/user_info_content"
                                 android:hint="我喜欢的美食" />
+
+                            <me.kaede.tagview.TagView
+                                android:id="@+id/tag_view_interest_food"
+                                style="@style/user_info_tag" />
                         </RelativeLayout>
                     </LinearLayout>
 
@@ -384,6 +388,10 @@
                                 android:id="@+id/tv_interest_movie"
                                 style="@style/user_info_content"
                                 android:hint="我喜欢的电影" />
+
+                            <me.kaede.tagview.TagView
+                                android:id="@+id/tag_view_interest_movie"
+                                style="@style/user_info_tag" />
                         </RelativeLayout>
                     </LinearLayout>
                 </LinearLayout>
