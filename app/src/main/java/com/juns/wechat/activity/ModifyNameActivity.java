@@ -56,9 +56,7 @@ public class ModifyNameActivity extends BaseToolbarActivity {
             showToast(R.string.toast_network_unavailable);
             return;
         }
-        String userName = AccountManager.getInstance().getUserName();
         nickName = etInputNick.getText().toString();
-        //UserRequest.updateUser(userName, UserBean.NICKNAME, nickName, updateUserCallBack);
         HttpActionImpl.getInstance().updateUser(TAG, UserBean.NICKNAME, nickName, new NetDataBeanCallback<UserBean>(UserBean.class) {
             @Override
             protected void onCodeSuccess(UserBean data) {

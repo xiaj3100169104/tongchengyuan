@@ -162,7 +162,7 @@ public class EditPersonInfoActivity extends BaseToolbarActivity {
                 }
             }
         AlertDialog singleDialog = new AlertDialog.Builder(this)
-                .setSingleChoiceItems(strings, checkedItem, new DialogInterface.OnClickListener() {
+                .setSingleChoiceItems(strings, checkedItem , new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

@@ -117,7 +117,7 @@
 
                 <ImageView
                     style="@style/user_info_icon"
-                    android:src="@drawable/icon_me_smail" />
+                    android:src="@drawable/a_5" />
 
                 <TextView
                     style="@style/user_info_content"
@@ -130,7 +130,7 @@
 
                 <ImageView
                     style="@style/user_info_icon"
-                    android:src="@drawable/icon_me_smail" />
+                    android:src="@drawable/icon_de_saoyisao" />
 
                 <TextView
                     style="@style/user_info_content"
