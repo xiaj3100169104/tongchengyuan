@@ -16,7 +16,7 @@ import butterknife.Bind;
 public class AddFriendFinalActivity extends BaseToolbarActivity {
     @Bind(R.id.etReason)
     EditText etReason;
-    //@Extra(name = ARG_USER_NAME)
+
     private String wantToAddUser;
 
     @Override

@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@color/red_normal</color>
-    <color name="colorPrimaryDark">@color/red_normal</color>
-    <color name="colorAccent">@color/red_normal</color>
-    <color name="textColorPrimary">@color/white</color>
+    <!-- 布局还没加载出来前的窗口背景颜色 -->
     <color name="windowBackground">@color/white</color>
+    <!-- appbar颜色 -->
+    <color name="colorPrimary">@color/pink_500</color>
+    <!-- 状态栏颜色 -->
+    <color name="colorPrimaryDark">@color/colorPrimary</color>
+    <!-- 文本颜色 -->
+    <color name="textColorPrimary">@color/text_color_black_light</color>
+    <!-- 控件选中后的颜色 -->
+    <color name="colorAccent">@color/colorPrimary</color>
+    <!-- 表示控件默认时的色调 -->
+    <color name="colorControlNormal">@color/gray</color>
+    <!-- 表示控件激活时候的色调 -->
+    <color name="colorControlActivated">@color/colorPrimary</color>
+    <!-- Button按钮正常状态颜色 -->
+    <color name="colorButtonNormal">@color/colorPrimary</color>
+    <color name="colorButtonPressed">@color/pink_300</color>
+    <color name="textColorHint">@color/gray_light</color>
 
     <!-- font color -->
     <color name="text_color_white">#FFFFFF</color>
@@ -18,9 +31,24 @@
     <color name="button_color_press_true">#2e99b6</color>
     <color name="button_color_enable_false">#e8eae9</color>
 
-    <color name="divider_color">#c8c8c8</color>
+    <color name="divider_color">@color/gray_light</color>
+    <!-- tag color -->
+    <color name="tag_my_label">#708090</color>
+    <color name="tag_my_label_bg">#50708090</color>
+    <color name="tag_sport">#458B00</color>
+    <color name="tag_sport_bg">#50458B00</color>
+    <color name="tag_music">#483D8B</color>
+    <color name="tag_music_bg">#50483D8B</color>
+    <color name="tag_food">#EE6A50</color>
+    <color name="tag_food_bg">#50EE6A50</color>
+    <color name="tag_movie">#454545</color>
+    <color name="tag_movie_bg">#50454545</color>
+
     <!-- 粉色 -->
-    <color name="pink">#ff88b7</color>
+    <color name="pink_500">#E91E63</color>
+    <color name="pink_300">#F06292</color>
+    <color name="pink_100">#F8BBD0</color>
+
     <!-- 主题红色 -->
     <color name="red_normal">#f04b32</color>
     <!-- 红色 -->

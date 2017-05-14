@@ -152,6 +152,7 @@ public class LoginActivity extends BaseToolbarActivity implements OnClickListene
             }
         });
     }
+
     // EditText监听器
     class TextChange implements TextWatcher {
 
@@ -172,12 +173,8 @@ public class LoginActivity extends BaseToolbarActivity implements OnClickListene
             boolean Sign2 = etInputName.getText().length() > 0;
             boolean Sign3 = etPassWord.getText().length() > 4;
             if (Sign2 & Sign3) {
-                btnLogin.setBackgroundDrawable(getResources().getDrawable(
-                        R.drawable.btn_bg_green));
                 btnLogin.setEnabled(true);
             } else {
-                btnLogin.setBackgroundDrawable(getResources().getDrawable(
-                        R.drawable.btn_enable_green));
                 btnLogin.setTextColor(0xFFD0EFC6);
                 btnLogin.setEnabled(false);
             }

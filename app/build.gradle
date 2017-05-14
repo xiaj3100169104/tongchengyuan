@@ -51,8 +51,9 @@ dependencies {
     compile fileTree(dir: 'libs', includes: ['*.jar'])
     //compile 'me.zhanghai.android.materialprogressbar:library:1.3.0'
     compile project(':LibProgressbar')
-    compile project(':LRecyclerview_library')
+    compile project(':LibLRecyclerview')
     compile project(':LibVideoRecord')
+    compile project(':LibTagView')
 
     // add AndroidEventBus dependency
     compile name: 'SMSSDK-2.1.1', ext: 'aar'
@@ -69,7 +70,7 @@ dependencies {
     compile 'io.reactivex.rxjava2:rxjava:2.0.4'
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     compile 'com.squareup.retrofit2:retrofit:2.2.0'
-    compile 'com.squareup.retrofit2:converter-scalars:2.0.0'
+    compile 'com.squareup.retrofit2:converter-scalars:2.2.0'
     compile 'org.igniterealtime.smack:smack-android-extensions:4.1.0'
     compile 'org.igniterealtime.smack:smack-tcp:4.1.0'
     compile 'com.makeramen:roundedimageview:2.3.0'
@@ -77,6 +78,5 @@ dependencies {
     compile 'org.xutils:xutils:3.3.36'
     compile 'com.google.code.gson:gson:2.3.1'
     compile 'cn.yipianfengye.android:zxing-library:2.1'
-    compile 'com.android.support:support-v4:25.3.1'
-    compile 'com.android.support:support-vector-drawable:25.3.1'
+    compile 'com.android.support.constraint:constraint-layout:+'
 }

@@ -27,17 +27,8 @@ import java.util.List;
 import butterknife.Bind;
 
 //我
-public class Fragment_Profile extends BaseFragment implements OnClickListener {
-    @Bind(R.id.ivAvatar)
-    ImageView ivAvatar;
-    @Bind(R.id.tvNickName)
-    TextView tvNickName;
-    @Bind(R.id.tvUserName)
-    TextView tvUserName;
-    @Bind(R.id.ivSex)
-    ImageView ivSex;
+public class Fragment_Profile extends BaseFragment {
 
-    private UserBean curUser;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,72 +39,8 @@ public class Fragment_Profile extends BaseFragment implements OnClickListener {
 
     @Override
     protected void initData() {
-        updateUserView();
-        setOnListener();
-    }
-
-    private void setOnListener() {
-        getView().findViewById(R.id.view_user).setOnClickListener(this);
-        getView().findViewById(R.id.txt_album).setOnClickListener(this);
-        getView().findViewById(R.id.txt_collect).setOnClickListener(this);
-        getView().findViewById(R.id.txt_money).setOnClickListener(this);
-        getView().findViewById(R.id.txt_card).setOnClickListener(this);
-        getView().findViewById(R.id.txt_smail).setOnClickListener(this);
-        getView().findViewById(R.id.txt_setting).setOnClickListener(this);
-    }
-
-    @Subscriber(tag = UserTable.TABLE_NAME)
-    private void onDbDataChanged(DbDataEvent<UserBean> event) {
-        if (event.action == DbDataEvent.REPLACE || event.action == DbDataEvent.UPDATE) {
-            List<UserBean> updateData = event.data;
-            if (updateData != null && !updateData.isEmpty()) {
-                for (UserBean userBean : updateData) {
-                    if (userBean.getUserName().equals(curUser.getUserName())) {
-                        updateUserView();
-                    }
-                }
-            }
-        }
-    }
-
-    private void updateUserView() {
-        curUser = AccountManager.getInstance().getUser();
-        CommonViewHelper.setUserViewInfo(curUser, ivAvatar, tvNickName, ivSex, tvUserName, true);
+       getView().setVisibility(View.GONE);
 
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.view_user:
-                skip(MyProfileActivity.class);
-                break;
-            case R.id.txt_album:// 相册
-                skip(FriendCircleActivity.class);
-                break;
-            case R.id.txt_collect:// 收藏
-                skip(MyCollectActivity.class);
-                break;
-        /*case R.id.txt_money:// 钱包
-            CommonUtil.startActivity(getActivity(), PublicActivity.class,
-					new BasicNameValuePair(Constants.NAME,
-							getString(R.string.wallet)));
-			break;
-		case R.id.txt_card:// 相册
-			CommonUtil.startActivity(getActivity(), PublicActivity.class,
-					new BasicNameValuePair(Constants.NAME,
-							getString(R.string.card_bag)));
-			break;
-		case R.id.txt_smail:// 表情
-			CommonUtil.startActivity(getActivity(), PublicActivity.class,
-					new BasicNameValuePair(Constants.NAME,
-							getString(R.string.expression)));
-			break;*/
-            case R.id.txt_setting:// 设置
-                skip(SettingActivity.class);
-                break;
-            default:
-                break;
-        }
-    }
 }

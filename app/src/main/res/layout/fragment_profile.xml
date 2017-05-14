@@ -2,13 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/window_bg"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:scrollbars="none">
 
         <LinearLayout
@@ -18,122 +17,139 @@
             android:paddingBottom="20dp">
 
             <RelativeLayout
-                android:id="@+id/view_user"
+                android:id="@+id/layout_left_menu_header"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/bg_pressed_default"
+                android:layout_height="@dimen/nav_header_height"
+                android:background="@drawable/side_nav_bar"
                 android:paddingBottom="8dp"
                 android:paddingTop="8dp">
 
-                <ImageView
-                    android:id="@+id/ivAvatar"
-                    android:layout_width="70.0dip"
-                    android:layout_height="70.0dip"
-                    android:layout_marginLeft="12dp"
-                    android:layout_marginRight="12dp"
-                    android:src="@drawable/default_avatar" />
-
-                <TextView
-                    android:id="@+id/tvNickName"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:layout_toRightOf="@+id/ivAvatar"
-                    android:textSize="18.0dip" />
+                    android:layout_alignParentBottom="true"
+                    android:layout_margin="@dimen/activity_horizontal_margin"
+                    android:gravity="center_vertical">
 
-                <TextView
-                    android:id="@+id/tvUserName"
-                    style="@style/txt_ContextStyle1"
-                    android:layout_below="@+id/tvNickName"
-                    android:layout_marginTop="8dp"
-                    android:layout_toRightOf="@+id/ivAvatar"
-                    android:textSize="14.0dip" />
+                    <ImageView
+                        android:id="@+id/ivAvatar"
+                        android:layout_width="70.0dip"
+                        android:layout_height="70.0dip"
+                        android:src="@drawable/default_avatar" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="15dp"
-                    android:src="@drawable/right" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/ivSex"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="14dp"
-                    android:layout_toRightOf="@+id/tvNickName"
-                    android:src="@drawable/ic_sex_male" />
+                        <TextView
+                            android:id="@+id/tvNickName"
+                            style="@style/text_white_18sp"
+                            android:text="" />
+
+                        <TextView
+                            android:id="@+id/tvUserName"
+                            style="@style/text_white_14sp"
+                            android:layout_marginTop="8dp"
+                            android:text="" />
+                    </LinearLayout>
+
+                </LinearLayout>
             </RelativeLayout>
 
+
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:divider="@drawable/divider_common"
-                android:dividerPadding="@dimen/activity_horizontal_margin"
-                android:orientation="vertical"
-                android:showDividers="middle">
+                android:id="@+id/layout_left_menu_1"
+                style="@style/Layouts.user_info_item">
+
+                <ImageView
+                    style="@style/user_info_icon"
+                    android:src="@drawable/icon_me_photo" />
 
                 <TextView
-                    android:id="@+id/txt_album"
-                    style="@style/TxtTitle"
-                    android:drawableLeft="@drawable/icon_me_photo"
-                    android:drawableRight="@drawable/right"
-                    android:gravity="center_vertical"
-                    android:text="我的生活" />
-
-                <TextView
-                    android:id="@+id/txt_collect"
-                    style="@style/TxtTitle"
-                    android:drawableLeft="@drawable/icon_me_collect"
-                    android:drawableRight="@drawable/right"
-                    android:text="喜欢" />
-
+                    style="@style/user_info_content"
+                    android:text="我的心声" />
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:divider="@drawable/divider_common"
-                android:dividerPadding="@dimen/activity_horizontal_margin"
-                android:orientation="vertical"
-                android:showDividers="middle">
+                android:id="@+id/layout_left_menu_2"
+                style="@style/Layouts.user_info_item">
+
+                <ImageView
+                    style="@style/user_info_icon"
+                    android:src="@drawable/icon_me_collect" />
 
                 <TextView
-                    android:id="@+id/txt_money"
-                    style="@style/TxtTitle"
-                    android:background="@drawable/bg_pressed_default"
-                    android:drawableLeft="@drawable/icon_me_money"
-                    android:drawableRight="@drawable/right"
+                    style="@style/user_info_content"
+                    android:text="喜欢" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_left_menu_3"
+                style="@style/Layouts.user_info_item">
+
+                <ImageView
+                    style="@style/user_info_icon"
+                    android:src="@drawable/icon_me_money" />
+
+                <TextView
+                    style="@style/user_info_content"
                     android:text="会员服务" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_left_menu_4"
+                style="@style/Layouts.user_info_item">
+
+                <ImageView
+                    style="@style/user_info_icon"
+                    android:src="@drawable/icon_me_card" />
 
                 <TextView
-                    android:id="@+id/txt_card"
-                    style="@style/TxtTitle"
-                    android:drawableLeft="@drawable/icon_me_card"
-                    android:drawableRight="@drawable/right"
+                    style="@style/user_info_content"
                     android:text="我的认证" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/txt_smail"
-                style="@style/TxtTitle"
-                android:layout_marginTop="20dp"
-                android:drawableLeft="@drawable/icon_me_smail"
-                android:drawableRight="@drawable/right"
-                android:text="我的二维码" />
+            <LinearLayout
+                android:id="@+id/layout_left_menu_5"
+                style="@style/Layouts.user_info_item">
 
-            <TextView
-                android:id="@+id/txt_setting"
-                style="@style/TxtTitle"
-                android:layout_marginTop="20dp"
-                android:drawableLeft="@drawable/icon_me_setting"
-                android:drawableRight="@drawable/right"
-                android:text="@string/setting" />
+                <ImageView
+                    style="@style/user_info_icon"
+                    android:src="@drawable/icon_me_smail" />
+
+                <TextView
+                    style="@style/user_info_content"
+                    android:text="我的二维码" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_left_menu_6"
+                style="@style/Layouts.user_info_item">
+
+                <ImageView
+                    style="@style/user_info_icon"
+                    android:src="@drawable/icon_me_smail" />
+
+                <TextView
+                    style="@style/user_info_content"
+                    android:text="扫一扫" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_left_menu_7"
+                style="@style/Layouts.user_info_item">
+
+                <ImageView
+                    style="@style/user_info_icon"
+                    android:src="@drawable/icon_me_setting" />
+
+                <TextView
+                    style="@style/user_info_content"
+                    android:text="设置" />
+            </LinearLayout>
         </LinearLayout>
+
     </ScrollView>
 </LinearLayout>

@@ -54,7 +54,7 @@
 
                 <TextView
                     android:id="@+id/tvUserName"
-                    style="@style/txt_ContextStyle1"
+                    style="@style/text_gray_13sp"
                     android:layout_marginTop="5dp"
                     android:layout_toRightOf="@+id/iv_avatar"
                     android:text="微信号：dada20150625"
@@ -73,10 +73,10 @@
             android:src="@drawable/default_image" />
 
         <TextView
-            style="@style/txt_ContextStyle1"
+            style="@style/text_gray_13sp"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:text="扫一扫上面的二维码图案，加我微信"
+            android:text="扫一扫上面的二维码图案，加我为好友"
             android:textSize="14.0dip" />
     </LinearLayout>
 

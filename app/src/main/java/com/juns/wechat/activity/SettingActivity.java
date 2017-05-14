@@ -5,51 +5,43 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 
+import com.juns.wechat.dynamic.FriendCircleActivity;
 import com.same.city.love.R;
 import com.style.base.BaseToolbarActivity;
 import com.juns.wechat.manager.AccountManager;
 
+import butterknife.OnClick;
+
 
 //设置
-public class SettingActivity extends BaseToolbarActivity implements OnClickListener {
+public class SettingActivity extends BaseToolbarActivity {
 
-	@Override
-	public void initData() {
-		setToolbarTitle("设置");
-		setOnListener();
-	}
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        mLayoutResID = R.layout.activity_setting;
+        super.onCreate(savedInstanceState);
 
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		mLayoutResID = R.layout.activity_setting;
-		super.onCreate(savedInstanceState);
+    }
 
-	}
+    @Override
+    public void initData() {
+        setToolbarTitle("设置");
+    }
 
-	private void setOnListener() {
-		findViewById(R.id.txt_msgtip).setOnClickListener(this);
-		findViewById(R.id.txt_usersafe).setOnClickListener(this);
-		findViewById(R.id.txt_yinsi).setOnClickListener(this);
-		findViewById(R.id.txt_tongyong).setOnClickListener(this);
-		findViewById(R.id.txt_about).setOnClickListener(this);
-		findViewById(R.id.btn_exit).setOnClickListener(this);
+    @OnClick(R.id.layout_message_notify)
+    public void onClickEvent1() {
+        skip(SettingNewMessageActivity.class);
+    }
 
-	}
+    @OnClick(R.id.layout_about)
+    public void onClickEvent2() {
+        skip(AboutProductActivity.class);
+    }
 
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.txt_about:
-			skip(AboutProductActivity.class);
-			break;
+    @OnClick(R.id.btn_exit)
+    public void onClickEvent3() {
+        AccountManager.getInstance().logOut();
+        finish();
+    }
 
-		case R.id.btn_exit:
-            AccountManager.getInstance().logOut();
-            finish();
-			break;
-
-		default:
-			break;
-		}
-	}
 }

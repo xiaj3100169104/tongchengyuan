@@ -4,73 +4,152 @@ package com.juns.wechat.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Process;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.same.city.love.R;
 import com.juns.wechat.adpter.MainAdapter;
+import com.juns.wechat.bean.UserBean;
+import com.juns.wechat.chat.xmpp.event.XmppEvent;
+import com.juns.wechat.database.UserTable;
+import com.juns.wechat.database.dao.DbDataEvent;
 import com.juns.wechat.fragment.Fragment_Dicover;
 import com.juns.wechat.fragment.Fragment_Friends;
 import com.juns.wechat.fragment.Fragment_Profile;
 import com.juns.wechat.fragment.msg.Fragment_Msg;
-import com.juns.wechat.processes.Watcher;
-import com.juns.wechat.util.LogUtil;
-import com.style.base.BaseActivity;
-import com.juns.wechat.dialog.TitleMenu.ActionItem;
-import com.juns.wechat.dialog.TitleMenu.TitlePopup;
-import com.juns.wechat.dialog.TitleMenu.TitlePopup.OnItemOnClickListener;
+import com.juns.wechat.helper.CommonViewHelper;
+import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.service.XmppService;
+import com.juns.wechat.util.LogUtil;
+import com.same.city.love.R;
+
+import org.simple.eventbus.EventBus;
+import org.simple.eventbus.Subscriber;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends BaseActivity {
-    private TextView txt_title;
-    private ImageView img_right;
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+public class MainActivity extends AppCompatActivity {
     protected static final String TAG = "MainActivity";
+    @Bind(R.id.ivAvatar)
+    ImageView ivAvatar;
+    @Bind(R.id.tvNickName)
+    TextView tvNickName;
+    @Bind(R.id.tvUserName)
+    TextView tvUserName;
+    @Bind(R.id.layout_left_menu_1)
+    LinearLayout layoutLeftMenu1;
+    @Bind(R.id.layout_left_menu_2)
+    LinearLayout layoutLeftMenu2;
+    @Bind(R.id.layout_left_menu_3)
+    LinearLayout layoutLeftMenu3;
+    @Bind(R.id.layout_left_menu_4)
+    LinearLayout layoutLeftMenu4;
+    @Bind(R.id.layout_left_menu_5)
+    LinearLayout layoutLeftMenu5;
+    @Bind(R.id.layout_left_menu_6)
+    LinearLayout layoutLeftMenu6;
+    @Bind(R.id.layout_left_menu_7)
+    LinearLayout layoutLeftMenu7;
     private ViewPager vpMainContent;
-    private TitlePopup titlePopup;
     private TextView unreaMsgdLabel;// 未读消息textview
     private TextView unreadAddressLable;// 未读通讯录textview
     private TextView unreadFindLable;// 发现
     private ImageView[] imagebuttons;
     private TextView[] textviews;
     private int index;
-    private static MainActivity mInstance;
 
     private MainAdapter mainAdapter;
+    DrawerLayout drawer;
 
-    @Override
+    //@Override
     public void initData() {
-        mInstance = this;
         initView();
-        setOnClickListener();
-        initPopWindow();
         XmppService.login(this);
 
         int userId = Process.myUid();
 
-       //new Watcher(this).createAppMonitor(userId + "");
+        //new Watcher(this).createAppMonitor(userId + "");
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         LogUtil.i("i am restarted!");
-        mLayoutResID = R.layout.activity_main;
+        //mLayoutResID = R.layout.activity_main2;
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main2);
+        ButterKnife.bind(this);
+        EventBus.getDefault().register(this);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                openDrawer();
+            }
+        });
+
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        initData();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ButterKnife.unbind(this);
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main2, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
     private void initView() {
-      txt_title = (TextView) findViewById(R.id.txt_title);
-        img_right = (ImageView) findViewById(R.id.img_right);
-        img_right.setVisibility(View.VISIBLE);
-        img_right.setImageResource(R.drawable.icon_add);
 
         unreaMsgdLabel = (TextView) findViewById(R.id.tv_unread_msg_number);
         unreadAddressLable = (TextView) findViewById(R.id.unread_contact_number);
@@ -100,10 +179,11 @@ public class MainActivity extends BaseActivity {
         vpMainContent.addOnPageChangeListener(pageChangeListener);
 
         setSelectedIndex(0);
+
+        updateUserView();
     }
 
     public void onTabClicked(View view) {
-        img_right.setVisibility(View.GONE);
         switch (view.getId()) {
             case R.id.re_weixin:
                 index = 0;
@@ -122,22 +202,6 @@ public class MainActivity extends BaseActivity {
         vpMainContent.setCurrentItem(index, false);
     }
 
-    private void initPopWindow() {
-        // 实例化标题栏弹窗
-        titlePopup = new TitlePopup(this, LayoutParams.WRAP_CONTENT,
-                LayoutParams.WRAP_CONTENT);
-        titlePopup.setItemOnClickListener(onItemClick);
-        // 给标题栏弹窗添加子类
-        titlePopup.addAction(new ActionItem(this, R.string.menu_groupchat,
-                R.drawable.icon_menu_group));
-        titlePopup.addAction(new ActionItem(this, R.string.menu_addfriend,
-                R.drawable.icon_menu_addfriend));
-        titlePopup.addAction(new ActionItem(this, R.string.menu_qrcode,
-                R.drawable.icon_menu_sao));
-        titlePopup.addAction(new ActionItem(this, R.string.menu_money,
-                R.drawable.abv));
-    }
-
     private void setSelectedIndex(int index) {
         for (int i = 0; i < textviews.length; i++) {
             if (i != index) {
@@ -149,35 +213,63 @@ public class MainActivity extends BaseActivity {
             }
         }
 
-        img_right.setVisibility(View.GONE);
         switch (index) {
             case 0:
-                img_right.setVisibility(View.VISIBLE);
-                txt_title.setText(R.string.chat);
-                img_right.setImageResource(R.drawable.icon_add);
+                setToolbarTitle(R.string.chat);
                 break;
             case 1:
-                txt_title.setText(R.string.contacts);
-                img_right.setVisibility(View.VISIBLE);
-                img_right.setImageResource(R.drawable.icon_titleaddfriend);
+                setToolbarTitle(R.string.contacts);
                 break;
             case 2:
-                txt_title.setText(R.string.discover);
+                setToolbarTitle(R.string.discover);
                 break;
             case 3:
-                txt_title.setText(R.string.me);
+                setToolbarTitle(R.string.me);
                 break;
         }
     }
 
-    public static void logout() {
-        Intent service = new Intent(mInstance, XmppService.class);
-        mInstance.stopService(service);
+    public void setToolbarTitle(int resId) {
+        setTitle(resId);
+    }
 
-        Intent intent = new Intent(mInstance, LoginActivity.class);
+    @Subscriber(tag = UserTable.TABLE_NAME)
+    private void onDbDataChanged(DbDataEvent<UserBean> event) {
+        if (event.action == DbDataEvent.REPLACE || event.action == DbDataEvent.UPDATE) {
+            List<UserBean> updateData = event.data;
+            if (updateData != null && !updateData.isEmpty()) {
+                UserBean curUser = AccountManager.getInstance().getUser();
+
+                for (UserBean userBean : updateData) {
+                    if (userBean.getUserName().equals(curUser.getUserName())) {
+                        updateUserView();
+                    }
+                }
+            }
+        }
+    }
+
+    private void updateUserView() {
+        UserBean curUser = AccountManager.getInstance().getUser();
+        CommonViewHelper.setUserViewInfo(curUser, ivAvatar, tvNickName, null, tvUserName, true);
+
+    }
+
+    @Subscriber(tag = "tagLogout")
+    public void onDbDataChanged(XmppEvent event) {
+        if (event.resultCode == XmppEvent.LOGOUT) {
+            logout();
+        }
+    }
+
+    public void logout() {
+        Intent service = new Intent(this, XmppService.class);
+        stopService(service);
+
+        Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        mInstance.startActivity(intent);
-        mInstance.finish();
+        startActivity(intent);
+        finish();
     }
 
     public void setUnreadMsgLabel(int viewId, int unreadNum) {
@@ -200,42 +292,28 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    private OnItemOnClickListener onItemClick = new OnItemOnClickListener() {
-
-        @Override
-        public void onItemClick(ActionItem item, int position) {
-            // mLoadingDialog.show();
-            switch (position) {
-                case 0:// 发起群聊
-                    //skip(AddGroupChatActivity.class);
-                    break;
-                case 1:// 添加朋友
-                    skip(AddFriendActivity.class);
-                    break;
-                case 2:// 扫一扫
-                    skip(QRScanActivity.class);
-                    break;
-                case 3:// 收钱
-                    //skip(GetMoneyActivity.class);
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
-
-    private void setOnClickListener() {
-        img_right.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                titlePopup.show(findViewById(R.id.layout_bar));
-            }
-        });
-    }
-
     @Override
     public void onBackPressed() {
-        this.moveTaskToBack(true);
+        if (isDrawerOpen()) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            this.moveTaskToBack(true);
+        }
+    }
+
+    private boolean isDrawerOpen() {
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            return true;
+        }
+        return false;
+    }
+
+    private void openDrawer() {
+        drawer.openDrawer(GravityCompat.START);
+    }
+
+    private void closeDrawer() {
+        drawer.closeDrawer(GravityCompat.START);
     }
 
     private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
@@ -255,9 +333,44 @@ public class MainActivity extends BaseActivity {
         }
     };
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mInstance = null;
+    @OnClick(R.id.layout_left_menu_header)
+    public void onClickEvent() {
+        startActivity(new Intent(this, MyProfileActivity.class));
+    }
+
+    @OnClick(R.id.layout_left_menu_1)
+    public void onClickEvent1() {
+        //skip(EditBaseInfoActivity.class);
+    }
+
+    @OnClick(R.id.layout_left_menu_2)
+    public void onClickEvent2() {
+        //skip(EditBaseInfoActivity.class);
+    }
+
+    @OnClick(R.id.layout_left_menu_3)
+    public void onClickEvent3() {
+        //skip(EditBaseInfoActivity.class);
+    }
+
+    @OnClick(R.id.layout_left_menu_4)
+    public void onClickEvent4() {
+        //  skip(EditBaseInfoActivity.class);
+    }
+
+    @OnClick(R.id.layout_left_menu_5)
+    public void onClickEvent5() {
+        skip(MyQRCodeActivity.class);
+    }
+    @OnClick(R.id.layout_left_menu_6)
+    public void onClickEvent6() {
+        skip(QRScanActivity.class);
+    }
+    @OnClick(R.id.layout_left_menu_7)
+    public void onClickEvent7() {
+        skip(SettingActivity.class);
+    }
+    public void skip(Class<?> cls) {
+        startActivity(new Intent(this, cls));
     }
 }

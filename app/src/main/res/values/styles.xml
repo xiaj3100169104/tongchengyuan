@@ -1,19 +1,14 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
+
     <style name="BaseAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- toolbar（actionbar）颜色 -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <!-- 状态栏颜色 -->
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <!--按钮选中或者点击获得焦点后的颜色-->
-        <item name="colorAccent">@color/colorAccent</item>
-        <!--返回键颜色-->
-        <item name="android:textColorPrimary">@color/textColorPrimary</item>
-        <!--Button按钮正常状态颜色-->
-        <item name="colorButtonNormal">@color/colorPrimary</item>
-        <!--EditText 输入框中字体的颜色-->
-        <item name="editTextColor">@color/black_light</item>
-        <!-- 布局还没加载出来前的窗口背景颜色 -->
         <item name="android:windowBackground">@color/windowBackground</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+
+        <item name="colorButtonNormal">@color/colorButtonNormal</item>
+
         <item name="android:colorBackgroundCacheHint">@null</item>
 
         <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>
@@ -24,12 +19,14 @@
     <style name="AppTheme" parent="BaseAppTheme">
         <item name="android:windowAnimationStyle">@style/Anim_main</item>
     </style>
+
     <style name="OverflowMenuStyle" parent="Widget.AppCompat.PopupMenu.Overflow">
         <!-- 菜单是否覆盖在ToolBar上-->
         <item name="overlapAnchor">false</item>
         <item name="android:dropDownWidth">wrap_content</item>
         <item name="android:popupBackground">@color/black_light</item>
     </style>
+
     <style name="MySearchViewStyle" parent="Widget.AppCompat.SearchView">
         <!--
     Background for the search query section (e.g. EditText)
@@ -50,10 +47,7 @@
     <item name="suggestionRowLayout">...</item>
         -->
     </style>
-    <style name="MyEditText" parent="Theme.AppCompat.Light">
-        <item name="colorControlNormal">@color/black</item>
-        <item name="colorControlActivated">@color/pink</item>
-    </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
@@ -63,7 +57,7 @@
         <item name="actionMenuTextColor">@color/white</item>
         <item name="actionMenuTextAppearance">@style/TextAppearance.AppCompat.Medium</item>
     </style>
-    
+
     <style name="AppTheme.SwitchAnimation" parent="@android:style/Animation.Activity">
         <item name="android:activityOpenEnterAnimation">@anim/push_left_in</item>
         <item name="android:activityOpenExitAnimation">@anim/push_left_out</item>
@@ -80,41 +74,6 @@
         <item name="android:backgroundDimEnabled">false</item>
     </style>
 
- <!-- 标题1样式 -->
-    <style name="txt_titleStyle1">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@color/white</item>
-    </style>
-    <!-- 内容1样式 -->
-    <style name="txt_ContextStyle1">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">16sp</item>
-    </style>
-    <!-- 图片样式 -->
-    <style name="img_Style">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:contentDescription">@string/app_name</item>
-    </style>
-    
-    <style name="CustomCheckboxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
-	<item name="android:button">@drawable/checkbog_style</item>
-	</style>
-	
-    <style name="TxtTitle" parent="@style/text_black_16sp">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:minHeight">@dimen/height_normal</item>
-        <item name="android:background">@drawable/bg_pressed_default</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:paddingLeft">@dimen/activity_horizontal_margin</item>
-        <item name="android:paddingRight">@dimen/activity_horizontal_margin</item>
-        <item name="android:drawablePadding">10dp</item>
-        <item name="android:focusable">true</item>
-    </style>
     <style name="MMListCatalog">
         <item name="android:textSize">14.0dip</item>
         <item name="android:textStyle">bold</item>
@@ -128,7 +87,8 @@
         <item name="android:layout_width">fill_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
-     <style name="MMListItem">
+
+    <style name="MMListItem">
         <item name="android:gravity">center_vertical</item>
         <item name="android:orientation">horizontal</item>
         <item name="android:paddingLeft">8.0dip</item>
@@ -136,7 +96,8 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
-      <style name="MMFontTitleInList">
+
+    <style name="MMFontTitleInList">
         <item name="android:textSize">16.0dip</item>
         <item name="android:textColor">#ff595c61</item>
         <item name="android:ellipsize">end</item>
@@ -145,6 +106,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:singleLine">true</item>
     </style>
+
     <style name="MMFontTag">
         <item name="android:textSize">12.0dip</item>
         <item name="android:textColor">@color/white</item>
@@ -153,17 +115,18 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:singleLine">true</item>
-         <item name="android:paddingBottom">2dip</item>
-         <item name="android:paddingLeft">7dip</item>
-            <item name="android:paddingRight">7dip</item>
-          <item name="android:paddingTop">2dip</item>
+        <item name="android:paddingBottom">2dip</item>
+        <item name="android:paddingLeft">7dip</item>
+        <item name="android:paddingRight">7dip</item>
+        <item name="android:paddingTop">2dip</item>
     </style>
     <!-- PopWindows -->
     <style name="AnimationPreview">
         <item name="android:windowEnterAnimation">@anim/m_up_dialog</item>
         <item name="android:windowExitAnimation">@anim/m_down_dialog</item>
-         <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
+
     <style name="Transparent">
         <item name="android:windowBackground">@color/transparent2</item>
         <item name="android:windowNoTitle">true</item>

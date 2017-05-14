@@ -41,7 +41,7 @@
 		 
 		 <TextView
                 android:id="@+id/tvAdd"
-                style="@style/txt_titleStyle1"
+                style="@style/text_white_16sp"
                 android:layout_width="60dp"
                 android:layout_height="32dp"
                 android:gravity="center"
@@ -49,9 +49,8 @@
                 android:layout_marginRight="10dp"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
-                android:textColor="@color/white"
                 android:background="@drawable/btn_bg_green"
-                android:textSize="16sp" />
+			 />
 	</RelativeLayout>
 	<View
 		android:layout_width="match_parent"

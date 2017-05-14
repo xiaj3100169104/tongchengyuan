@@ -25,4 +25,17 @@
         <item name="android:layout_marginLeft">30dp</item>
         <item name="android:textColorHint">@color/text_color_hint</item>
     </style>
+    <style name="user_info_tag">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">30dp</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="lineMargin">10dp</item>
+        <item name="tagMargin">5dp</item>
+        <item name="textPaddingLeft">20dp</item>
+        <item name="textPaddingTop">6dp</item>
+        <item name="textPaddingRight">20dp</item>
+        <item name="textPaddingBottom">6dp</item>
+
+    </style>
 </resources>
