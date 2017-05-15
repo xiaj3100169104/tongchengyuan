@@ -1,7 +1,10 @@
 package com.juns.wechat.activity;
 
+import android.annotation.TargetApi;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
@@ -162,7 +165,7 @@ public class EditPersonInfoActivity extends BaseToolbarActivity {
                 }
             }
         AlertDialog singleDialog = new AlertDialog.Builder(this)
-                .setSingleChoiceItems(strings, checkedItem , new DialogInterface.OnClickListener() {
+                .setSingleChoiceItems(strings, checkedItem, new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -250,6 +253,7 @@ public class EditPersonInfoActivity extends BaseToolbarActivity {
         openMulti("电影", getResources().getStringArray(R.array.movie), tagViewInterestMovie, R.color.tag_movie, R.color.tag_movie_bg, tvInterestMovie);
     }
 
+    //@TargetApi(23)
     private void openMulti(final String title, final String[] allData, final TagView tagView, final int tagColor, final int tagColorBg, final TextView textView) {
         final boolean[] checkedItems = new boolean[allData.length];
         List<Tag> oldData = tagView.getTags();
@@ -280,8 +284,8 @@ public class EditPersonInfoActivity extends BaseToolbarActivity {
                                 Tag tag = new Tag(allData[i]);
                                 tag.radius = 10f;
                                 tag.tagTextColor = tagColor;
-                                tag.layoutColor = tagColorBg;
-                                tag.layoutColorPress = tagColorBg;
+                                tag.layoutColor = getResources().getColor(tagColorBg);
+                                tag.layoutColorPress = getResources().getColor(tagColorBg);
                                 newData.add(tag);
                             }
                         }
@@ -289,12 +293,12 @@ public class EditPersonInfoActivity extends BaseToolbarActivity {
                         if (newData.size() > 0) {
                             textView.setVisibility(View.GONE);
                             tagView.setVisibility(View.VISIBLE);
+                            tagView.isTagOnClickEnable = false;
                             tagView.addTags(newData);
                         } else {
                             tagView.setVisibility(View.GONE);
                             textView.setVisibility(View.VISIBLE);
                         }
-                        tagView.setFocusable(false);
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

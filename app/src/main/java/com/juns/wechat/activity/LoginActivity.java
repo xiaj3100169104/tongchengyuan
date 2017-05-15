@@ -18,6 +18,7 @@ import com.same.city.love.R;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.request.HttpActionImpl;
+import com.style.base.BaseActivity;
 import com.style.net.core.NetDataBeanCallback;
 import com.juns.wechat.net.response.LoginBean;
 import com.juns.wechat.util.SyncDataUtil;
@@ -29,15 +30,7 @@ import butterknife.Bind;
 /**
  * create by 王者 on 2016/7/12
  */
-public class LoginActivity extends BaseToolbarActivity implements OnClickListener {
-    @Bind(R.id.iv_base_toolbar_Return)
-    ImageView ivBaseToolbarReturn;
-    @Bind(R.id.viewDivider)
-    View viewDivider;
-    @Bind(R.id.tv_base_toolbar_title)
-    TextView tvBaseToolbarTitle;
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
+public class LoginActivity extends BaseActivity implements OnClickListener {
     @Bind(R.id.etInputName)
     EditText etInputName;
     @Bind(R.id.etPassWord)

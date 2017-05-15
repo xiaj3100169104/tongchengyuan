@@ -16,9 +16,9 @@ const char* g_userId;
 JNIEnv* g_env;
 
 //子进程有权限访问父进程的私有目录,在此建立跨进程通信的套接字文件
-static const char* PATH = "/data/data/com.juns.wechat/my.sock";
+static const char* PATH = "/data/data/com.same.city.love/my.sock";
 //服务名称
-static const char* SERVICE_NAME = "com.juns.wechat/com.juns.wechat.activity.MainActivity";
+static const char* SERVICE_NAME = "com.same.city.love/com.juns.wechat.activity.MainActivity";
 
 bool ProcessBase::create_channel( )
 {

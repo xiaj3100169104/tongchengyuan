@@ -30,6 +30,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginLeft">30dp</item>
         <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginTop">10dp</item>
         <item name="lineMargin">10dp</item>
         <item name="tagMargin">5dp</item>
         <item name="textPaddingLeft">20dp</item>

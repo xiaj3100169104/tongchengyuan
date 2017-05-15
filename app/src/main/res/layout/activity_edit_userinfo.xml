@@ -127,10 +127,10 @@
                             style="@style/text_white_12sp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="#00f"
+                            android:background="@drawable/tv_bg_age"
                             android:paddingBottom="2dp"
-                            android:paddingLeft="4dp"
-                            android:paddingRight="4dp"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
                             android:paddingTop="2dp"
                             android:text="25" />
 
@@ -139,11 +139,11 @@
                             style="@style/text_white_12sp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="3dp"
-                            android:background="#0f0"
+                            android:layout_marginLeft="5dp"
+                            android:background="@drawable/tv_bg_constellation"
                             android:paddingBottom="2dp"
-                            android:paddingLeft="4dp"
-                            android:paddingRight="4dp"
+                            android:paddingLeft="10dp"
+                            android:paddingRight="10dp"
                             android:paddingTop="2dp"
                             android:text="狮子座" />
                     </LinearLayout>
@@ -391,7 +391,7 @@
 
                             <me.kaede.tagview.TagView
                                 android:id="@+id/tag_view_interest_movie"
-                                style="@style/user_info_tag" />
+                                style="@style/user_info_tag"/>
                         </RelativeLayout>
                     </LinearLayout>
                 </LinearLayout>

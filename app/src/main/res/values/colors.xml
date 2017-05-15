@@ -37,12 +37,12 @@
     <color name="tag_my_label_bg">#50708090</color>
     <color name="tag_sport">#458B00</color>
     <color name="tag_sport_bg">#50458B00</color>
-    <color name="tag_music">#483D8B</color>
-    <color name="tag_music_bg">#50483D8B</color>
+    <color name="tag_music">#00f</color>
+    <color name="tag_music_bg">#300f</color>
     <color name="tag_food">#EE6A50</color>
     <color name="tag_food_bg">#50EE6A50</color>
-    <color name="tag_movie">#454545</color>
-    <color name="tag_movie_bg">#50454545</color>
+    <color name="tag_movie">#483D8B</color>
+    <color name="tag_movie_bg">#50483D8B</color>
 
     <!-- 粉色 -->
     <color name="pink_500">#E91E63</color>

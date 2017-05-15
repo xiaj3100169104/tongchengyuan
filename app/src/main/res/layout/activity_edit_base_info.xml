@@ -54,6 +54,6 @@
             android:id="@+id/tv_birthday"
             style="@style/text_gray_13sp"
             android:layout_marginTop="5dp"
-            android:text="91/08/09" />
+            android:text="" />
     </LinearLayout>
 </LinearLayout>
