@@ -76,7 +76,7 @@ public class MyQRCodeActivity extends BaseToolbarActivity {
     }
 
     private void initQRcode() {
-        Bitmap mBitmap = CodeUtils.createImage(String.valueOf(curUser.getUserId()), imgCode.getWidth(), imgCode.getHeight(), BitmapFactory.decodeResource(getResources(), R.drawable.icon));
+        Bitmap mBitmap = CodeUtils.createImage(String.valueOf(curUser.getUserId()), imgCode.getWidth(), imgCode.getHeight(), BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
         imgCode.setImageBitmap(mBitmap);
     }
 

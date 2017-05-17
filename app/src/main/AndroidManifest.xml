@@ -50,7 +50,7 @@
     <application
         android:name="com.juns.wechat.App"
         android:allowBackup="true"
-        android:icon="@drawable/icon"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -86,8 +86,7 @@
         <activity android:name="com.juns.wechat.chat.ShowNormalFileActivity" />
         <activity android:name="com.juns.wechat.activity.SearchActivity" />
         <activity android:name="com.juns.wechat.activity.SearchResultActivity" />
-        <activity android:name="com.juns.wechat.activity.MyProfileActivity" />
-        <activity android:name="com.juns.wechat.activity.ModifyNameActivity" />
+        <activity android:name="com.juns.wechat.activity.PersonInfoShowActivity" />
         <activity android:name="com.juns.wechat.activity.CropImageActivity" />
         <activity android:name="com.juns.wechat.activity.AddFriendFinalActivity" />
         <activity android:name="com.juns.wechat.activity.SendLocationActivity" />
@@ -100,8 +99,8 @@
         <activity android:name="com.juns.wechat.activity.AddNoteActivity" />
         <activity android:name="com.juns.wechat.activity.MyQRCodeActivity" />
         <activity android:name="com.juns.wechat.activity.QRScanActivity" />
-        <activity android:name="com.juns.wechat.activity.EditPersonInfoActivity" />
-        <activity android:name="com.juns.wechat.activity.EditBaseInfoActivity" />
+        <activity android:name="com.juns.wechat.activity.PersonInfoEditActivity" />
+        <activity android:name="com.juns.wechat.activity.PersonInfoEditBaseActivity" />
 
         <!-- 图片浏览 -->
         <activity android:name="uk.viewpager.ImagePagerActivity" />

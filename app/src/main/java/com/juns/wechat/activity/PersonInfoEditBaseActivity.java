@@ -6,12 +6,19 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
+import com.juns.wechat.bean.UserBean;
+import com.juns.wechat.manager.AccountManager;
+import com.juns.wechat.net.request.HttpActionImpl;
+import com.juns.wechat.util.NetWorkUtil;
 import com.same.city.love.R;
 import com.style.base.BaseToolbarActivity;
 import com.style.dialog.EditAlertDialog;
+import com.style.net.core.NetDataBeanCallback;
 
 import java.util.Calendar;
 
@@ -22,7 +29,7 @@ import butterknife.OnClick;
  * Created by xiajun on 2017/5/9.
  */
 
-public class EditBaseInfoActivity extends BaseToolbarActivity {
+public class PersonInfoEditBaseActivity extends BaseToolbarActivity {
 
     @Bind(R.id.tv_sex)
     TextView tvSex;
@@ -30,6 +37,8 @@ public class EditBaseInfoActivity extends BaseToolbarActivity {
     TextView tvName;
     @Bind(R.id.tv_birthday)
     TextView tvBirthday;
+
+    private UserBean curUser;
 
     private String[] sexList = {"男", "女"};
     private EditAlertDialog editAlertDialog;
@@ -43,8 +52,30 @@ public class EditBaseInfoActivity extends BaseToolbarActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.single_with_text, menu);
+        menu.getItem(0).setTitle(R.string.save);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.item_text_only:
+                //saveInfo();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void initData() {
         setToolbarTitle("个人信息");
+        curUser = AccountManager.getInstance().getUser();
+        String sex = curUser.getSex();
+        tvSex.setText(UserBean.Sex.isMan(sex) ? "男" : "女");
+        String nickName = curUser.getNickName();
+        setText(tvName, nickName == null ? "" : nickName);
     }
 
     @OnClick(R.id.layout_sex)
@@ -160,5 +191,40 @@ public class EditBaseInfoActivity extends BaseToolbarActivity {
     private void setBirthday() {
         tvBirthday.setText(strBirthday);
 
+    }
+
+    private void saveInfo(String nickName) {
+
+        HttpActionImpl.getInstance().updateUser(TAG, UserBean.NICKNAME, nickName, new NetDataBeanCallback<UserBean>(UserBean.class) {
+            @Override
+            protected void onCodeSuccess(UserBean data) {
+                dismissProgressDialog();
+                AccountManager.getInstance().setUser(data);
+                finish();
+            }
+
+            @Override
+            protected void onCodeFailure(String msg) {
+                dismissProgressDialog();
+                showToast(msg);
+            }
+        });
+    }
+
+    private void modifySexToServer(String sex) {
+        HttpActionImpl.getInstance().updateUser(TAG, UserBean.SEX, sex, new NetDataBeanCallback<UserBean>(UserBean.class) {
+            @Override
+            protected void onCodeSuccess(UserBean data) {
+                dismissProgressDialog();
+                AccountManager.getInstance().setUser(data);
+                finish();
+            }
+
+            @Override
+            protected void onCodeFailure(String msg) {
+                dismissProgressDialog();
+                showToast(msg);
+            }
+        });
     }
 }

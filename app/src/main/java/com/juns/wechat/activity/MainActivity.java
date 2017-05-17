@@ -70,7 +70,6 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager vpMainContent;
     private TextView unreaMsgdLabel;// 未读消息textview
     private TextView unreadAddressLable;// 未读通讯录textview
-    private TextView unreadFindLable;// 发现
     private ImageView[] imagebuttons;
     private TextView[] textviews;
     private int index;
@@ -153,28 +152,24 @@ public class MainActivity extends AppCompatActivity {
 
         unreaMsgdLabel = (TextView) findViewById(R.id.tv_unread_msg_number);
         unreadAddressLable = (TextView) findViewById(R.id.unread_contact_number);
-        unreadFindLable = (TextView) findViewById(R.id.unread_find_number);
 
-        imagebuttons = new ImageView[4];
+        imagebuttons = new ImageView[3];
         imagebuttons[0] = (ImageView) findViewById(R.id.ib_weixin);
         imagebuttons[1] = (ImageView) findViewById(R.id.ib_contact_list);
         imagebuttons[2] = (ImageView) findViewById(R.id.ib_find);
-        imagebuttons[3] = (ImageView) findViewById(R.id.ib_profile);
 
-        textviews = new TextView[4];
+        textviews = new TextView[3];
         textviews[0] = (TextView) findViewById(R.id.tv_weixin);
         textviews[1] = (TextView) findViewById(R.id.tv_contact_list);
         textviews[2] = (TextView) findViewById(R.id.tv_find);
-        textviews[3] = (TextView) findViewById(R.id.tv_profile);
 
         vpMainContent = (ViewPager) findViewById(R.id.vp_main_content);
         List<Fragment> fragments = new ArrayList<>();
-        fragments.add(new Fragment_Msg());
-        fragments.add(new Fragment_Friends());
         fragments.add(new Fragment_Dicover());
-        fragments.add(new Fragment_Profile());
+        fragments.add(new Fragment_Friends());
+        fragments.add(new Fragment_Msg());
         mainAdapter = new MainAdapter(getSupportFragmentManager(), fragments);
-        vpMainContent.setOffscreenPageLimit(4);
+        vpMainContent.setOffscreenPageLimit(3);
         vpMainContent.setAdapter(mainAdapter);
         vpMainContent.addOnPageChangeListener(pageChangeListener);
 
@@ -194,9 +189,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.re_find:
                 index = 2;
                 break;
-            case R.id.re_profile:
-                index = 3;
-                break;
         }
         setSelectedIndex(index);
         vpMainContent.setCurrentItem(index, false);
@@ -215,16 +207,14 @@ public class MainActivity extends AppCompatActivity {
 
         switch (index) {
             case 0:
-                setToolbarTitle(R.string.chat);
+                setToolbarTitle(R.string.discover);
                 break;
             case 1:
                 setToolbarTitle(R.string.contacts);
                 break;
             case 2:
-                setToolbarTitle(R.string.discover);
-                break;
-            case 3:
-                setToolbarTitle(R.string.me);
+                setToolbarTitle(R.string.chat);
+
                 break;
         }
     }
@@ -272,26 +262,22 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
-    public void setUnreadMsgLabel(int viewId, int unreadNum) {
-        TextView textView;
-        if (viewId == unreaMsgdLabel.getId()) {
-            textView = unreaMsgdLabel;
-        } else if (viewId == unreadAddressLable.getId()) {
-            textView = unreadAddressLable;
-        } else if (viewId == unreadFindLable.getId()) {
-            textView = unreadFindLable;
-        } else {
-            return;
-        }
-
+    public void setUnreadMsgLabel(int unreadNum) {
         if (unreadNum > 0) {
-            textView.setText(unreadNum + "");
-            textView.setVisibility(View.VISIBLE);
+            unreaMsgdLabel.setText(unreadNum + "");
+            unreaMsgdLabel.setVisibility(View.VISIBLE);
         } else {
-            textView.setVisibility(View.GONE);
+            unreaMsgdLabel.setVisibility(View.GONE);
         }
     }
-
+    public void setUnreadInviteMsgLabel(int unreadNum) {
+        if (unreadNum > 0) {
+            unreadAddressLable.setText(unreadNum + "");
+            unreadAddressLable.setVisibility(View.VISIBLE);
+        } else {
+            unreadAddressLable.setVisibility(View.GONE);
+        }
+    }
     @Override
     public void onBackPressed() {
         if (isDrawerOpen()) {
@@ -335,7 +321,7 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.layout_left_menu_header)
     public void onClickEvent() {
-        startActivity(new Intent(this, MyProfileActivity.class));
+        startActivity(new Intent(this, PersonInfoShowActivity.class));
     }
 
     @OnClick(R.id.layout_left_menu_1)
@@ -362,14 +348,17 @@ public class MainActivity extends AppCompatActivity {
     public void onClickEvent5() {
         skip(MyQRCodeActivity.class);
     }
+
     @OnClick(R.id.layout_left_menu_6)
     public void onClickEvent6() {
         skip(QRScanActivity.class);
     }
+
     @OnClick(R.id.layout_left_menu_7)
     public void onClickEvent7() {
         skip(SettingActivity.class);
     }
+
     public void skip(Class<?> cls) {
         startActivity(new Intent(this, cls));
     }

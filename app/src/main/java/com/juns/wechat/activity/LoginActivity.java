@@ -168,7 +168,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
             if (Sign2 & Sign3) {
                 btnLogin.setEnabled(true);
             } else {
-                btnLogin.setTextColor(0xFFD0EFC6);
                 btnLogin.setEnabled(false);
             }
         }

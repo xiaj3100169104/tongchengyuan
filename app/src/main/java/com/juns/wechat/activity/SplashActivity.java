@@ -3,6 +3,8 @@ package com.juns.wechat.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.same.city.love.R;
 import com.juns.wechat.bean.UserBean;
@@ -18,6 +20,11 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         mLayoutResID = R.layout.activity_start;
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void customWindowOptions(Window window) {
+        window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     @Override

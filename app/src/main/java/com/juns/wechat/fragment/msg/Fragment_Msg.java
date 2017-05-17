@@ -90,7 +90,7 @@ public class Fragment_Msg extends BaseFragment {
 
     private void setUnreadMsgNum() {
         int unreadNum = MessageDao.getInstance().getAllUnreadMsgNum(account);
-        ((MainActivity) getActivity()).setUnreadMsgLabel(R.id.tv_unread_msg_number, unreadNum);
+        ((MainActivity) getActivity()).setUnreadMsgLabel(unreadNum);
     }
 
     @Subscriber(tag = ChatTable.TABLE_NAME)

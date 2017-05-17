@@ -115,7 +115,7 @@ public class Fragment_Friends extends BaseFragment {
         unReadCount = count;
         adapter.notifyItemChanged(0);
         adapter.setUnReadCount(unReadCount);
-        ((MainActivity) getActivity()).setUnreadMsgLabel(R.id.unread_contact_number, count);
+        ((MainActivity) getActivity()).setUnreadMsgLabel(count);
     }
 
     private void setFriendData() {

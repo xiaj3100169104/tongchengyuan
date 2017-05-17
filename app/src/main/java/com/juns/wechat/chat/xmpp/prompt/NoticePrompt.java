@@ -152,7 +152,7 @@ public class NoticePrompt extends Prompt implements ISwitch {
                 noticeIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification.Builder builder = new Notification.Builder(mContext);
-        builder.setSmallIcon(R.drawable.icon);
+        builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setTicker(ticker);
         builder.setWhen(System.currentTimeMillis());
         builder.setContentIntent(pendingIntent);

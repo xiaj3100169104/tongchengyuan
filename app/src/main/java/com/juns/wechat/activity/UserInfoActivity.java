@@ -125,7 +125,7 @@ public class UserInfoActivity extends BaseToolbarActivity implements OnClickList
     @OnClick(R.id.btnSendMsg)
     public void onClick(View v) {
         if (userId == curUser.getUserId()) {
-            startActivity(new Intent(this, MyProfileActivity.class));
+            startActivity(new Intent(this, PersonInfoShowActivity.class));
             return;
         }
         if (subType == null) {

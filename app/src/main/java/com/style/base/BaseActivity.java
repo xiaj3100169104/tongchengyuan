@@ -93,6 +93,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected void customTitleOptions(View mContentView) {
+
     }
 
     @Override

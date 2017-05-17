@@ -150,12 +150,6 @@ public class ContactAdapter extends BaseRecyclerViewAdapter<FriendBean> implemen
         CustomNotifyView tvUnreadInviteMsg;
         @Bind(R.id.layout_new_friends)
         RelativeLayout layoutNewFriends;
-        @Bind(R.id.layout_chat_room)
-        RelativeLayout layoutChatRoom;
-        @Bind(R.id.layout_label)
-        RelativeLayout layoutLabel;
-        @Bind(R.id.layout_public)
-        RelativeLayout layoutPublic;
 
         public HeaderViewHolder(View itemView) {
             super(itemView);
