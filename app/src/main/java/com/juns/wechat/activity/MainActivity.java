@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
                 index = 1;
                 break;
             case R.id.re_find:
-                index = 1;
+                index = 0;
                 break;
         }
         setSelectedIndex(index);
