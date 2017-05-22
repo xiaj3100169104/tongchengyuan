@@ -2,6 +2,7 @@ package com.juns.wechat.view;
 
 import android.content.Context;
 import android.os.Handler;
+import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,7 +13,7 @@ import com.juns.wechat.chat.ui.ChatMediaPlayer;
 import com.juns.wechat.util.AudioManager;
 
 
-public class AudioRecordButton extends Button implements AudioManager.AudioStageListener {
+public class AudioRecordButton extends AppCompatButton implements AudioManager.AudioStageListener {
 
 	private static final int STATE_NORMAL = 1;
 	private static final int STATE_RECORDING = 2;
@@ -232,12 +233,10 @@ public class AudioRecordButton extends Button implements AudioManager.AudioStage
 			mCurrentState = state;
 			switch (mCurrentState) {
 			case STATE_NORMAL:
-				setBackgroundResource(R.drawable.button_recordnormal);
 				setText(R.string.normal);
 
 				break;
 			case STATE_RECORDING:
-				setBackgroundResource(R.drawable.button_recording);
 				setText(R.string.recording);
 				if (isRecording) {
 					mDialogManager.recording();
@@ -246,7 +245,6 @@ public class AudioRecordButton extends Button implements AudioManager.AudioStage
 				break;
 
 			case STATE_WANT_TO_CANCEL:
-				setBackgroundResource(R.drawable.button_recording);
 				setText(R.string.want_to_cancle);
 				// dialog want to cancel
 				mDialogManager.wantToCancel();

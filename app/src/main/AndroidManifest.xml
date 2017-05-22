@@ -110,7 +110,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
 
-        <service android:name="com.juns.wechat.view.UpdateService" />
+        <service android:name="com.juns.wechat.service.UpdateService" />
 
         <!-- 百度地图所需的service -->
         <service

@@ -24,7 +24,7 @@ public class MainAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 4;
+        return fragments.size();
     }
 
 

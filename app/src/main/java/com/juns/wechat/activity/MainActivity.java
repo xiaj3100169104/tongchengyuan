@@ -154,14 +154,14 @@ public class MainActivity extends AppCompatActivity {
         unreadAddressLable = (TextView) findViewById(R.id.unread_contact_number);
 
         imagebuttons = new ImageView[3];
-        imagebuttons[0] = (ImageView) findViewById(R.id.ib_weixin);
+        imagebuttons[2] = (ImageView) findViewById(R.id.ib_weixin);
         imagebuttons[1] = (ImageView) findViewById(R.id.ib_contact_list);
-        imagebuttons[2] = (ImageView) findViewById(R.id.ib_find);
+        imagebuttons[0] = (ImageView) findViewById(R.id.ib_find);
 
         textviews = new TextView[3];
-        textviews[0] = (TextView) findViewById(R.id.tv_weixin);
+        textviews[2] = (TextView) findViewById(R.id.tv_weixin);
         textviews[1] = (TextView) findViewById(R.id.tv_contact_list);
-        textviews[2] = (TextView) findViewById(R.id.tv_find);
+        textviews[0] = (TextView) findViewById(R.id.tv_find);
 
         vpMainContent = (ViewPager) findViewById(R.id.vp_main_content);
         List<Fragment> fragments = new ArrayList<>();
@@ -181,13 +181,13 @@ public class MainActivity extends AppCompatActivity {
     public void onTabClicked(View view) {
         switch (view.getId()) {
             case R.id.re_weixin:
-                index = 0;
+                index = 2;
                 break;
             case R.id.re_contact_list:
                 index = 1;
                 break;
             case R.id.re_find:
-                index = 2;
+                index = 1;
                 break;
         }
         setSelectedIndex(index);
@@ -197,10 +197,10 @@ public class MainActivity extends AppCompatActivity {
     private void setSelectedIndex(int index) {
         for (int i = 0; i < textviews.length; i++) {
             if (i != index) {
-                textviews[i].setTextColor(getResources().getColor(R.color.app_color_gray));
+                textviews[i].setSelected(false);
                 imagebuttons[i].setSelected(false);
             } else {
-                textviews[i].setTextColor(getResources().getColor(R.color.app_color_green));
+                textviews[i].setSelected(true);
                 imagebuttons[i].setSelected(true);
             }
         }

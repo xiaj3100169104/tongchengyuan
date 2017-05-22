@@ -46,12 +46,6 @@ import butterknife.Bind;
 
 //聊天页面
 public class ChatActivity extends BaseToolbarActivity {
-    public static final int RESULT_CODE_COPY = 1;
-    public static final int RESULT_CODE_DELETE = 2;
-    public static final int RESULT_CODE_FORWARD = 3;
-    public static final int RESULT_CODE_OPEN = 4;
-    public static final int RESULT_CODE_DWONLOAD = 5;
-    public static final int RESULT_CODE_TO_CLOUD = 6;
     public static final int RESULT_CODE_EXIT_GROUP = 7;
 
     public static final int CHATTYPE_SINGLE = 1;
@@ -177,7 +171,6 @@ public class ChatActivity extends BaseToolbarActivity {
 
         } else {
             // 群聊
-            findViewById(R.id.view_location_video).setVisibility(View.GONE);
         }
 
         String forward_msg_id = getIntent().getStringExtra("forward_msg_id");
@@ -249,7 +242,6 @@ public class ChatActivity extends BaseToolbarActivity {
      */
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        findViewById(R.id.ll_more_function_container).setVisibility(View.GONE);
         mRecyclerView.smoothScrollToPosition(mRecyclerView.getChildCount());
         if (resultCode == RESULT_CODE_EXIT_GROUP) {
             setResult(RESULT_OK);
@@ -381,9 +373,22 @@ public class ChatActivity extends BaseToolbarActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        chatInputManager.onResume();
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         ChatMediaPlayer.getInstance().release();
+    }
+
+    @Override
+    protected void onBackFinish() {
+        if (chatInputManager.isBottomContainerVisibility())
+            return;
+        super.onBackFinish();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.juns.wechat.view;
+package com.juns.wechat.service;
 
 import android.app.Service;
 import android.content.Intent;

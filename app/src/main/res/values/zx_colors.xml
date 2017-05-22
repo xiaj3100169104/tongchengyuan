@@ -7,5 +7,6 @@
     <color name="result_view">#b0000000</color>
     <color name="viewfinder_laser">#E9E9E9</color>
     <!-- end zxing -->
-    
+    <color name="scan_corner_color">#0effc2</color>
+
 </resources>

@@ -80,20 +80,22 @@
     <!-- 中灰色 -->
     <color name="gray_middle">#e3e3e3</color>
     <color name="gray_deep">#474747</color>
- 	<!-- 白色 -->
-	<color name="white">#ffffff</color> 
-     <!-- 透明 -->
-	<color name="transparent">#00000000</color>
-	<color name="transparent2">#50000000</color>
-      <!--窗体颜色 -->
-	<color name="windows_color">#F5F5F5</color>
+    <!-- 白色 -->
+    <color name="white">#ffffff</color>
+    <!-- 透明 -->
+    <color name="transparent">#00000000</color>
+    <color name="transparent2">#50000000</color>
+    <!--窗体颜色 -->
+    <color name="windows_color">#F5F5F5</color>
     <color name="bar_color">#232325</color>
-	 <color name="popbg_color">#49484A</color>
-	
-	  <color name="light_notes_color">#ff999999</color>
-	 <color name="link_color">#ff4abad7</color>
-	   <color name="font_value">#ff888271</color>
-	<color name="khbf_list_white">#fff8f8f8</color>
+    <color name="popbg_color">#49484A</color>
+
+    <color name="app_color_gray">#FF999999</color>
+    <color name="app_color_green">#FF45C01A</color>
+    <color name="light_notes_color">#ff999999</color>
+    <color name="link_color">#ff4abad7</color>
+    <color name="font_value">#ff888271</color>
+    <color name="khbf_list_white">#fff8f8f8</color>
     <color name="title_white">#fff7f7f7</color>
     <color name="deep_black">#ff000000</color>
     <color name="black">#ff000000</color>

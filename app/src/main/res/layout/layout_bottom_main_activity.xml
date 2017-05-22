@@ -18,6 +18,7 @@
         android:background="#ffffff"
         android:gravity="center_vertical"
         android:orientation="horizontal">
+
         <RelativeLayout
             android:id="@+id/re_find"
             android:layout_width="0dp"
@@ -50,7 +51,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="3dp"
                     android:text="@string/discover"
-                    android:textColor="#9A9A9A"
+                    android:textColor="@color/sel_home_tab_text"
                     android:textSize="12sp" />
 
             </RelativeLayout>
@@ -89,7 +90,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="3dp"
                     android:text="@string/contacts"
-                    android:textColor="#9A9A9A"
+                    android:textColor="@color/sel_home_tab_text"
                     android:textSize="12sp" />
 
                 <TextView
@@ -140,7 +141,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="3dp"
                     android:text="@string/chat"
-                    android:textColor="#9A9A9A"
+                    android:textColor="@color/sel_home_tab_text"
                     android:textSize="12sp" />
 
                 <TextView

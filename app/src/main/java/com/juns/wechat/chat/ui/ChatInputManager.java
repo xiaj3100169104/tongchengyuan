@@ -52,19 +52,16 @@ import java.util.List;
 public class ChatInputManager implements View.OnClickListener {
     private static final int EMOTICONS_COUNT = 59;
     private static final String EMOTION_NAME_DELETE = "f_emotion_del_normal";
-    private Button btnSetModeVoice; //输入语音按钮
-    private Button btnSetModeKeyBoard; //输入文字按钮
-    private LinearLayout llPressToSpeak; //按住说话
+    private LinearLayout layoutRecordContainer; //按住说话
     private AudioRecordButton btnRecord; //录音按钮
-    private RelativeLayout rlInputText; //输入文字区域
     private PasteEditText etInputText; //输入文本框
-    private CheckBox viewEmoticon; //表情按钮
+    private Button viewEmoticon; //表情按钮
+    private Button viewRecordAudio; //表情按钮
+
     private Button btnSend; //发送按钮
-    private CheckBox viewMore; //更多按钮
-    private LinearLayout llMore; //表情及更多功能区域
-    private LinearLayout llEmoticonContainer; //表情容器
+    private LinearLayout layoutEmoticonContainer; //表情容器
     private ViewPager emoticonsViewPager; //表情viewPager
-    private LinearLayout llMoreFunctionContainer; //图片，相册等更多功能容器
+    private RelativeLayout layoutBottomContainer; //图片，相册等更多功能容器
 
     private LRecyclerView recyclerView;  //消息列表
     private List<String> emoticonsFileNames;
@@ -78,22 +75,18 @@ public class ChatInputManager implements View.OnClickListener {
     public ChatInputManager(ChatActivity chatActivity) {
         View view = chatActivity.getWindow().getDecorView();
         mChatActivity = chatActivity;
-
-        btnSetModeVoice = (Button) view.findViewById(R.id.btn_set_mode_voice);
-        btnSetModeKeyBoard = (Button) view.findViewById(R.id.btn_set_mode_keyboard);
-        llPressToSpeak = (LinearLayout) view.findViewById(R.id.ll_press_to_speak);
-        btnRecord = (AudioRecordButton) view.findViewById(R.id.btn_record);
-
-        rlInputText = (RelativeLayout) view.findViewById(R.id.rl_input_text);
         etInputText = (PasteEditText) view.findViewById(R.id.et_input_text);
-
-        viewEmoticon = (CheckBox) view.findViewById(R.id.view_emoticon);
         btnSend = (Button) view.findViewById(R.id.btn_send);
-        viewMore = (CheckBox) view.findViewById(R.id.view_more);
-        llMore = (LinearLayout) view.findViewById(R.id.ll_more);
-        llEmoticonContainer = (LinearLayout) view.findViewById(R.id.ll_emoticon_container);
+
+        viewEmoticon = (Button) view.findViewById(R.id.view_emotion);
+        viewRecordAudio = (Button) view.findViewById(R.id.view_audio_record);
+        //viewMore = (CheckBox) view.findViewById(R.id.view_more);
+        layoutBottomContainer = (RelativeLayout) view.findViewById(R.id.layout_bottom_container);
+        layoutRecordContainer = (LinearLayout) view.findViewById(R.id.layout_record_container);
+        btnRecord = (AudioRecordButton) view.findViewById(R.id.btn_record);
+        layoutEmoticonContainer = (LinearLayout) view.findViewById(R.id.layout_emoticon_container);
         emoticonsViewPager = (ViewPager) view.findViewById(R.id.viewPager);
-        llMoreFunctionContainer = (LinearLayout) view.findViewById(R.id.ll_more_function_container);
+        closeBottomContainer();
 
         recyclerView = (LRecyclerView) view.findViewById(R.id.list);
         recyclerView.setOverScrollMode(View.OVER_SCROLL_NEVER);
@@ -125,41 +118,22 @@ public class ChatInputManager implements View.OnClickListener {
     }
 
     private void setListener() {
-        etInputText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    rlInputText.setBackgroundResource(R.drawable.input_bar_bg_active);
-                } else {
-                    rlInputText.setBackgroundResource(R.drawable.input_bar_bg_normal);
-                }
-
-            }
-        });
         etInputText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rlInputText.setBackgroundResource(R.drawable.input_bar_bg_active);
-                viewEmoticon.setChecked(false);
-                viewMore.setChecked(false);
-                llMore.setVisibility(View.GONE);
-                llEmoticonContainer.setVisibility(View.GONE);
-                llMoreFunctionContainer.setVisibility(View.GONE);
+                //viewMore.setChecked(false);
+                closeBottomContainer();
             }
         });
         // 监听文字框
         etInputText.addTextChangedListener(new TextWatcher() {
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before,
-                                      int count) {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!TextUtils.isEmpty(s)) {
-                    viewMore.setVisibility(View.GONE);
-                    btnSend.setVisibility(View.VISIBLE);
+                    btnSend.setEnabled(true);
                 } else {
-                    viewMore.setVisibility(View.VISIBLE);
-                    btnSend.setVisibility(View.GONE);
+                    btnSend.setEnabled(false);
                 }
             }
 
@@ -183,39 +157,44 @@ public class ChatInputManager implements View.OnClickListener {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                CommonUtil.hiddenSoftInput(mChatActivity);
-                llMore.setVisibility(View.GONE);
-                viewEmoticon.setChecked(false);
+                closeBottomContainer();
+                hiddenSoftInput();
                 return false;
             }
         });
 
-        btnSetModeKeyBoard.setOnClickListener(this);
-        btnSetModeVoice.setOnClickListener(this);
-        btnSend.setOnClickListener(this);
-        viewEmoticon.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                onClickFaceView(b);
-            }
-        });
 
-        viewMore.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+      /*  viewMore.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 onClickMoreView(b);
             }
-        });
+        });*/
+        btnSend.setOnClickListener(this);
 
         mChatActivity.findViewById(R.id.view_camera).setOnClickListener(this);
-        mChatActivity.findViewById(R.id.view_photo).setOnClickListener(this);
-        mChatActivity.findViewById(R.id.view_video_record).setOnClickListener(this);
+        mChatActivity.findViewById(R.id.view_picture).setOnClickListener(this);
         mChatActivity.findViewById(R.id.view_location).setOnClickListener(this);
-        mChatActivity.findViewById(R.id.view_audio).setOnClickListener(this);
-        mChatActivity.findViewById(R.id.view_file).setOnClickListener(this);
-        mChatActivity.findViewById(R.id.view_video_call).setOnClickListener(this);
+        mChatActivity.findViewById(R.id.view_emotion).setOnClickListener(this);
+        mChatActivity.findViewById(R.id.view_audio_record).setOnClickListener(this);
+
+        //mChatActivity.findViewById(R.id.view_video_record).setOnClickListener(this);
+        //mChatActivity.findViewById(R.id.view_audio).setOnClickListener(this);
+        //mChatActivity.findViewById(R.id.view_video_call).setOnClickListener(this);
     }
 
+    public boolean isBottomContainerVisibility() {
+        if (layoutBottomContainer.getVisibility() == View.VISIBLE){
+            closeBottomContainer();
+            return true;
+        }
+        return false;
+    }
+
+    public void onResume() {
+        closeBottomContainer();
+        hiddenSoftInput();
+    }
     public void onDestroy() {
         mChatActivity = null;
     }
@@ -225,47 +204,97 @@ public class ChatInputManager implements View.OnClickListener {
         String otherUserName = mChatActivity.getContactName();
         int id = view.getId();
         switch (id) {
-            case R.id.view_photo:
+            case R.id.view_picture:
                 selectPicFromLocal(); // 点击图片图标
+                hiddenSoftInput();
                 break;
             case R.id.view_camera:
                 takeCamera();         // 点击照相图标
-                break;
-            case R.id.view_video_record:
-                //mChatActivity.showToast("正在努力开发中");
-                recordVideo();       //录制视频
+                hiddenSoftInput();
                 break;
             case R.id.view_location:
                 openMap();       //点击位置图标
+                hiddenSoftInput();
                 break;
-            case R.id.view_file:
-                // selectFileFromLocal(); // 发送文件
+            case R.id.view_emotion:
+                closeRecordContainer();
+                openEmotionContainer();
                 break;
-            case R.id.view_audio:
+            case R.id.view_audio_record:
+                closeEmotionContainer();
+                openRecordContainer();
+                break;
+            /*case R.id.view_video_record:
+                //mChatActivity.showToast("正在努力开发中");
+                recordVideo();       //录制视频
+                break;
+            case R.id.view_audio_call:
                 makeAudioCall(); //语音通话
                 break;
-            case R.id.view_video_call:
-                // 视频通话
-                break;
-            case R.id.btn_set_mode_keyboard:
-                setModeKeyboard(view);
-                break;
-           /* case R.id.view_emoticon:
-                onClickFaceView();
-                break;
-            case R.id.view_more:
+            case R.id.view_video_call:// 视频通话
+                break;*/
+            /*case R.id.view_more:
                 onClickMoreView(view);
                 break;*/
-            case R.id.btn_set_mode_voice:
-                setModeVoice(view);
-                break;
             case R.id.btn_send:
                 // 点击发送按钮(发文字和表情)
                 sendText(otherUserName);
-                break;
-            default:
+                closeBottomContainer();
+                hiddenSoftInput();
                 break;
         }
+    }
+
+    private void closeBottomContainer() {
+        layoutBottomContainer.setVisibility(View.GONE);
+        closeRecordContainer();
+        closeEmotionContainer();
+    }
+
+    //先打开最外层容器
+    private void openBottomContainer() {
+        layoutBottomContainer.setVisibility(View.VISIBLE);
+        hiddenSoftInput();
+    }
+
+    private void closeEmotionContainer() {
+        layoutEmoticonContainer.setVisibility(View.GONE);
+        viewEmoticon.setSelected(false);
+    }
+
+    private void openEmotionContainer() {
+        hiddenSoftInput();
+        //先隐藏输入法,然后延迟显示
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                openBottomContainer();
+                layoutEmoticonContainer.setVisibility(View.VISIBLE);
+                viewEmoticon.setSelected(true);
+            }
+        }, 100);
+    }
+
+    private void closeRecordContainer() {
+        layoutRecordContainer.setVisibility(View.GONE);
+        viewRecordAudio.setSelected(false);
+    }
+
+    private void openRecordContainer() {
+        hiddenSoftInput();
+        //先隐藏输入法,然后延迟显示
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                openBottomContainer();
+                layoutRecordContainer.setVisibility(View.VISIBLE);
+                viewRecordAudio.setSelected(true);
+            }
+        }, 100);
+    }
+
+    public void hiddenSoftInput() {
+        CommonUtil.hiddenSoftInput(mChatActivity);
     }
 
     /**
@@ -287,47 +316,6 @@ public class ChatInputManager implements View.OnClickListener {
 
     private void openMap() {
         mChatActivity.startActivityForResult(new Intent(mChatActivity, SendLocationActivity.class), Skip.CODE_MAP);
-    }
-
-
-    /**
-     * 显示语音图标按钮
-     *
-     * @param view
-     */
-    public void setModeVoice(View view) {
-        CommonUtil.hiddenSoftInput(mChatActivity);
-        rlInputText.setVisibility(View.GONE);
-        llMore.setVisibility(View.GONE);
-        view.setVisibility(View.GONE);
-        btnSetModeKeyBoard.setVisibility(View.VISIBLE);
-        btnSend.setVisibility(View.GONE);
-        viewMore.setVisibility(View.VISIBLE);
-        llPressToSpeak.setVisibility(View.VISIBLE);
-        viewEmoticon.setChecked(false);
-        llMoreFunctionContainer.setVisibility(View.VISIBLE);
-        llEmoticonContainer.setVisibility(View.GONE);
-    }
-
-    /**
-     * 显示键盘图标
-     *
-     * @param view
-     */
-    public void setModeKeyboard(View view) {
-        rlInputText.setVisibility(View.VISIBLE);
-        llMore.setVisibility(View.GONE);
-        view.setVisibility(View.GONE);
-        btnSetModeVoice.setVisibility(View.VISIBLE);
-        etInputText.requestFocus();
-        llPressToSpeak.setVisibility(View.GONE);
-        if (TextUtils.isEmpty(etInputText.getText())) {
-            viewMore.setVisibility(View.VISIBLE);
-            btnSend.setVisibility(View.GONE);
-        } else {
-            viewMore.setVisibility(View.GONE);
-            btnSend.setVisibility(View.VISIBLE);
-        }
     }
 
     private void sendText(String otherUserName) {
@@ -420,47 +408,6 @@ public class ChatInputManager implements View.OnClickListener {
         mChatActivity.startActivity(intent);
     }
 
-
-    private void onClickFaceView(boolean isChecked) {
-        if (isChecked) {//选中表示打开对应界面
-            viewMore.setChecked(false);//让更多按钮置于未选中状态
-            CommonUtil.hiddenSoftInput(mChatActivity);
-            //先隐藏输入法,然后延迟显示
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    llMore.setVisibility(View.VISIBLE);
-                    llMoreFunctionContainer.setVisibility(View.GONE);
-                    llEmoticonContainer.setVisibility(View.VISIBLE);
-                }
-            }, 100);
-
-        } else {
-            //CommonUtil.hiddenSoftInput(mChatActivity);
-            llEmoticonContainer.setVisibility(View.GONE);
-        }
-    }
-
-    public void onClickMoreView(boolean isChecked) {
-        if (isChecked) {//选中表示打开对应界面
-            viewEmoticon.setChecked(false);//让表情按钮置于未选中状态
-            CommonUtil.hiddenSoftInput(mChatActivity);
-            //先隐藏输入法,然后延迟显示
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    llMore.setVisibility(View.VISIBLE);
-                    llMoreFunctionContainer.setVisibility(View.VISIBLE);
-                    llEmoticonContainer.setVisibility(View.GONE);
-                }
-            }, 100);
-
-        } else {
-            //CommonUtil.hiddenSoftInput(mChatActivity);
-            llMoreFunctionContainer.setVisibility(View.GONE);
-        }
-    }
-
     /**
      * 获取表情的gridview的子view
      *
@@ -496,46 +443,42 @@ public class ChatInputManager implements View.OnClickListener {
                                     int position, long id) {
                 String filename = expressionAdapter.getItem(position);
                 try {
-                    // 文字输入框可见时，才可输入表情
-                    // 按住说话可见，不让输入表情
-                    if (btnSetModeKeyBoard.getVisibility() != View.VISIBLE) {
+                    if (filename != EMOTION_NAME_DELETE) { // 不是删除键，显示表情
+                        String fieldValue = SmileUtils.getFieldValue(filename);
+                        CharSequence sequence = SmileUtils.getSmiledText(mChatActivity, fieldValue);
+                        int index = etInputText.getSelectionStart();
+                        Editable edit = etInputText.getEditableText();//获取EditText的文字
+                        edit.insert(index, sequence);//光标所在位置插入文字
+                    } else { // 删除文字或者表情
+                        if (!TextUtils.isEmpty(etInputText.getText())) {
 
-                        if (filename != EMOTION_NAME_DELETE) { // 不是删除键，显示表情
-                            String fieldValue = SmileUtils.getFieldValue(filename);
-                            CharSequence sequence = SmileUtils.getSmiledText(mChatActivity, fieldValue);
-                            int index = etInputText.getSelectionStart();
-                            Editable edit = etInputText.getEditableText();//获取EditText的文字
-                            edit.insert(index, sequence);//光标所在位置插入文字
-                        } else { // 删除文字或者表情
-                            if (!TextUtils.isEmpty(etInputText.getText())) {
-
-                                int selectionStart = etInputText.getSelectionStart();// 获取光标的位置
-                                if (selectionStart > 0) {
-                                    String body = etInputText.getText()
-                                            .toString();
-                                    String tempStr = body.substring(0,
+                            int selectionStart = etInputText.getSelectionStart();// 获取光标的位置
+                            if (selectionStart > 0) {
+                                String body = etInputText.getText()
+                                        .toString();
+                                String tempStr = body.substring(0,
+                                        selectionStart);
+                                int i = tempStr.lastIndexOf("[");// 获取最后一个表情的位置
+                                if (i != -1) {
+                                    CharSequence cs = tempStr.substring(i,
                                             selectionStart);
-                                    int i = tempStr.lastIndexOf("[");// 获取最后一个表情的位置
-                                    if (i != -1) {
-                                        CharSequence cs = tempStr.substring(i,
-                                                selectionStart);
-                                        if (SmileUtils.containsKey(cs.toString()))
-                                            etInputText.getEditableText()
-                                                    .delete(i, selectionStart);
-                                        else
-                                            etInputText.getEditableText()
-                                                    .delete(selectionStart - 1,
-                                                            selectionStart);
-                                    } else {
+                                    if (SmileUtils.containsKey(cs.toString()))
+                                        etInputText.getEditableText()
+                                                .delete(i, selectionStart);
+                                    else
                                         etInputText.getEditableText()
                                                 .delete(selectionStart - 1,
                                                         selectionStart);
-                                    }
+                                } else {
+                                    etInputText.getEditableText()
+                                            .delete(selectionStart - 1,
+                                                    selectionStart);
                                 }
                             }
-
                         }
+
                     }
+
                 } catch (Exception e) {
                 }
 
