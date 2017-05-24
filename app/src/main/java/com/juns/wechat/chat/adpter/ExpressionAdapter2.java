@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.juns.wechat.chat.utils.SmileUtils;
 import com.same.city.love.R;
 import com.style.base.BaseRecyclerViewAdapter;
 
@@ -14,9 +15,9 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class ExpressionAdapter extends BaseRecyclerViewAdapter<String> {
+public class ExpressionAdapter2 extends BaseRecyclerViewAdapter<SmileUtils.SmileBean> {
 
-    public ExpressionAdapter(Context mContext, List<String> list) {
+    public ExpressionAdapter2(Context mContext, List<SmileUtils.SmileBean> list) {
         super(mContext, list);
     }
 
@@ -29,10 +30,8 @@ public class ExpressionAdapter extends BaseRecyclerViewAdapter<String> {
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         final int pos = position;
         final ViewHolder holder = (ViewHolder) viewHolder;
-        String filename = getData(position);
-        int resId = mContext.getResources().getIdentifier(filename, "drawable", mContext.getPackageName());
-
-        holder.ivExpression.setImageResource(resId);
+        SmileUtils.SmileBean bean = getData(position);
+        holder.ivExpression.setImageResource(bean.resId);
         super.setOnItemClickListener(viewHolder, pos);
     }
 

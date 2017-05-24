@@ -20,8 +20,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 
-public class MyCollectAdapter extends BaseRecyclerViewAdapter {
-    public MyCollectAdapter(Context mContext, List list) {
+public class MyCollectAdapter extends BaseRecyclerViewAdapter<String> {
+    public MyCollectAdapter(Context mContext, List<String> list) {
         super(mContext, list);
     }
 

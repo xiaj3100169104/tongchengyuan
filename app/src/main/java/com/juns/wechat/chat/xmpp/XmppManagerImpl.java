@@ -1,5 +1,7 @@
 package com.juns.wechat.chat.xmpp;
 
+import android.text.TextUtils;
+
 import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.chat.xmpp.listener.XmppConnectionListener;
 import com.juns.wechat.chat.xmpp.listener.XmppReceivePacketFilter;
@@ -55,7 +57,7 @@ public class XmppManagerImpl implements XmppManager {
         init();
     }
 
-    private void init(){
+    private void init() {
         xmppConnection = XmppConnUtil.getXmppConnection();
         mRoster = Roster.getInstanceFor(xmppConnection);
         userName = com.juns.wechat.manager.AccountManager.getInstance().getUserName();
@@ -68,7 +70,7 @@ public class XmppManagerImpl implements XmppManager {
     }
 
     public static synchronized XmppManagerImpl getInstance() {
-        if(mInstance == null){
+        if (mInstance == null) {
             mInstance = new XmppManagerImpl();
         }
         return mInstance;
@@ -79,10 +81,10 @@ public class XmppManagerImpl implements XmppManager {
      */
     @Override
     public boolean connect() throws IOException, XMPPException, SmackException {
-        if(xmppConnection == null){
+        if (xmppConnection == null) {
             xmppConnection = XmppConnUtil.getXmppConnection();
         }
-        if(xmppConnection.isConnected()){
+        if (xmppConnection.isConnected()) {
             return true;
         }
         xmppConnection.connect();
@@ -99,17 +101,20 @@ public class XmppManagerImpl implements XmppManager {
      * 有以下几种情况会触发登录到XMPP
      * 1：用户首次进入
      * 2: 监听的广播事件触发：用户开机、网络状态发生变化（连上网）
+     *
      * @param accountName
      * @param passWord
      * @return
      */
     @Override
-    public boolean login(String accountName, String passWord){
+    public boolean login(String accountName, String passWord) {
         try {
             connect();
-            if(xmppConnection.isAuthenticated()){
+            if (xmppConnection.isAuthenticated()) {
                 return true;
             }
+            if (TextUtils.isEmpty(accountName) || TextUtils.isEmpty(passWord))
+                return false;
             xmppConnection.login(accountName, passWord);
             sendPresence();
             return true;
@@ -130,7 +135,7 @@ public class XmppManagerImpl implements XmppManager {
     }
 
     @Override
-    public void regNewUser(String accountName, String passWord){
+    public void regNewUser(String accountName, String passWord) {
         try {
             connect();
             AccountManager.getInstance(xmppConnection).createAccount(accountName, passWord);
@@ -143,7 +148,7 @@ public class XmppManagerImpl implements XmppManager {
         }
     }
 
-    public Set<RosterEntry> getRoster(String userName){
+    public Set<RosterEntry> getRoster(String userName) {
         login(userName, passWord);
         Roster roster = Roster.getInstanceFor(xmppConnection);
         return roster.getEntries();
@@ -174,14 +179,14 @@ public class XmppManagerImpl implements XmppManager {
     }
 
     @Override
-    public boolean sendPacket(Stanza packet){
+    public boolean sendPacket(Stanza packet) {
         try {
-            if(!login(userName, passWord)){
+            if (!login(userName, passWord)) {
                 return false;
             }
             xmppConnection.sendStanza(packet);
             return true;
-        }  catch (SmackException e) {
+        } catch (SmackException e) {
             XmppExceptionHandler.handleSmackException(e);
         }
         return false;
@@ -211,7 +216,7 @@ public class XmppManagerImpl implements XmppManager {
     }
 
     @Override
-    public List<SearchResult> searchUser(String search){
+    public List<SearchResult> searchUser(String search) {
         try {
             login(userName, passWord);
             UserSearchManager userSearchManager = new UserSearchManager(xmppConnection);
@@ -227,22 +232,22 @@ public class XmppManagerImpl implements XmppManager {
             List<ReportedData.Row> rows = data.getRows();
             List<SearchResult> searchResults = new ArrayList<>();
 
-            for(ReportedData.Row row : rows){
+            for (ReportedData.Row row : rows) {
                 SearchResult searchResult = new SearchResult();
-                for(ReportedData.Column column : data.getColumns()){
-                    if(column.getVariable().equalsIgnoreCase("username")){
+                for (ReportedData.Column column : data.getColumns()) {
+                    if (column.getVariable().equalsIgnoreCase("username")) {
                         List<String> values = row.getValues(column.getVariable());
-                        if(values.size() > 0){
+                        if (values.size() > 0) {
                             searchResult.userName = row.getValues(column.getVariable()).get(0);
                         }
-                    }else if(column.getVariable().equalsIgnoreCase("userName")){
+                    } else if (column.getVariable().equalsIgnoreCase("userName")) {
                         List<String> values = row.getValues(column.getVariable());
-                        if(values.size() > 0){
+                        if (values.size() > 0) {
                             searchResult.nickName = row.getValues(column.getVariable()).get(0);
                         }
-                    }else if(column.getVariable().equalsIgnoreCase("email")){
+                    } else if (column.getVariable().equalsIgnoreCase("email")) {
                         List<String> values = row.getValues(column.getVariable());
-                        if(values.size() > 0){
+                        if (values.size() > 0) {
                             searchResult.email = row.getValues(column.getVariable()).get(0);
                         }
                     }
@@ -250,7 +255,7 @@ public class XmppManagerImpl implements XmppManager {
                 searchResults.add(searchResult);
             }
             return searchResults;
-        }  catch (XMPPException e) {
+        } catch (XMPPException e) {
             XmppExceptionHandler.handleXmppExecption(e);
         } catch (SmackException e) {
             XmppExceptionHandler.handleSmackException(e);
@@ -262,7 +267,7 @@ public class XmppManagerImpl implements XmppManager {
     /**
      * 移除各种监听事件
      */
-    private void removeListener(){
+    private void removeListener() {
         xmppConnection.removeConnectionListener(connectionListener);
         xmppConnection.removeAsyncStanzaListener(packetListener);
         Roster.getInstanceFor(xmppConnection).removeRosterLoadedListener(rosterLoadedListener);

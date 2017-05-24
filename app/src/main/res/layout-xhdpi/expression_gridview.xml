@@ -4,14 +4,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.juns.wechat.chat.widght.ExpandGridView
-        android:id="@+id/gridview"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rcv_sticker"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:fadingEdge="none"
-        android:gravity="center"
-        android:listSelector="#00000000"
-        android:scrollbars="none" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>
