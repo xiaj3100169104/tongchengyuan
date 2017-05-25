@@ -16,13 +16,22 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.JsonObject;
+import com.juns.wechat.bean.UserBean;
+import com.juns.wechat.bean.UserPropertyBean;
 import com.juns.wechat.dialog.SelectPhotoDialog;
+import com.juns.wechat.manager.AccountManager;
+import com.juns.wechat.net.request.HttpActionImpl;
 import com.same.city.love.R;
 import com.style.base.BaseToolbarActivity;
 import com.style.constant.FileConfig;
 import com.style.constant.Skip;
 import com.style.dialog.EditAlertDialog;
+import com.style.net.core.NetDataBeanCallback;
 import com.style.utils.CommonUtil;
+import com.style.utils.StringUtil;
+
+import org.json.JSONArray;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -136,6 +145,7 @@ public class PersonInfoEditActivity extends BaseToolbarActivity {
         mLayoutResID = R.layout.activity_edit_userinfo;
         super.onCreate(savedInstanceState);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.single_with_text, menu);
@@ -147,11 +157,54 @@ public class PersonInfoEditActivity extends BaseToolbarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.item_text_only:
-                //saveInfo();
+                saveInfo();
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private void saveInfo() {
+        List<UserPropertyBean> list = new ArrayList<>();
+        list.add(new UserPropertyBean(UserPropertyBean.KEY_MY_LABEL, getTagStr(tagViewMyLabel)));
+        list.add(new UserPropertyBean(UserPropertyBean.KEY_INTEREST_SPORT, getTagStr(tagViewInterestSport)));
+        list.add(new UserPropertyBean(UserPropertyBean.KEY_INTEREST_MUSIC, getTagStr(tagViewInterestMusic)));
+        list.add(new UserPropertyBean(UserPropertyBean.KEY_INTEREST_FOOD, getTagStr(tagViewInterestFood)));
+        list.add(new UserPropertyBean(UserPropertyBean.KEY_INTEREST_MOVIE, getTagStr(tagViewInterestMovie)));
+
+        com.alibaba.fastjson.JSONArray jsonArray = new com.alibaba.fastjson.JSONArray();
+        jsonArray.addAll(list);
+        String value = jsonArray.toString();
+        logE(TAG, value);
+        HttpActionImpl.getInstance().updateUserProperty(TAG, value, new NetDataBeanCallback<UserBean>(UserBean.class) {
+            @Override
+            protected void onCodeSuccess(UserBean data) {
+                dismissProgressDialog();
+                //AccountManager.getInstance().setUser(data);
+                List<UserPropertyBean> userProperties = data.getUserProperties();
+
+                finish();
+            }
+
+            @Override
+            protected void onCodeFailure(String msg) {
+                dismissProgressDialog();
+                showToast(msg);
+            }
+        });
+    }
+
+    private String getTagStr(TagView tagView) {
+        List<Tag> tags = tagView.getTags();
+        StringBuilder b = new StringBuilder("");
+        for (Tag tag : tags) {
+            b.append(tag.text).append(",");
+        }
+        if (b.length() > 0)
+            b.deleteCharAt(b.length() - 1);
+        String value = b.toString();
+        return value;
+    }
+
     @Override
     protected void initData() {
         setToolbarTitle("编辑个人资料");
@@ -235,6 +288,7 @@ public class PersonInfoEditActivity extends BaseToolbarActivity {
     public void modifyInfo2() {
         openSingleSelect(getResources().getStringArray(R.array.occupations), tvWorkArea);
     }
+
     public int p = 0;
 
     private void openSingleSelect(final String[] strings, final TextView textView) {

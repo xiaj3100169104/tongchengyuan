@@ -108,6 +108,11 @@ public class HttpActionImpl {
         runTask(tag, call, callback);
     }
 
+    public void updateUserProperty(String tag, String userProperties, NetDataBeanCallback callback) {
+        Call<String> call = service.updateUserProperty(userProperties);
+        runTask(tag, call, callback);
+    }
+
     public void uploadAvatar(String tag, String filePath, NetDataBeanCallback callback) {
          File file = new File(filePath);
         RequestBody requestBody = new MultipartBody.Builder()

@@ -75,7 +75,7 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter<DynamicBean> {
                 }
             });
             //图片数据处理
-            List<String> images = StringUtil.getList(bean.getImages(), ",");
+            List<String> images = StringUtil.String2List(bean.getImages(), ",");
             holder.glImages.removeAllViews();
             if (images != null && images.size() > 0) {
                 holder.glImages.setVisibility(View.VISIBLE);

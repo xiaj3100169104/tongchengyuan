@@ -26,26 +26,6 @@ public class CommonExpressionView {
         View view = View.inflate(context, R.layout.expression_gridview, null);
         RecyclerView gv = (RecyclerView) view.findViewById(R.id.rcv_sticker);
         gv.setLayoutManager(new GridLayoutManager(context, 7));
-        List<String> list = SmileUtils.getSmileData();
-        ExpressionAdapter expressionAdapter = new ExpressionAdapter(context, list);
-        gv.setAdapter(expressionAdapter);
-        expressionAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener<String>() {
-            @Override
-            public void onItemClick(int position, String data) {
-                String fieldValue = SmileUtils.getFieldValue(data);
-                CharSequence sequence = SmileUtils.getSmiledText(context, fieldValue);
-                int index = etInputText.getSelectionStart();
-                Editable edit = etInputText.getEditableText();//获取EditText的文字
-                edit.insert(index, sequence);//光标所在位置插入文字
-            }
-        });
-        return view;
-    }
-
-    public static View getStickerView2(final Context context, final EditText etInputText) {
-        View view = View.inflate(context, R.layout.expression_gridview, null);
-        RecyclerView gv = (RecyclerView) view.findViewById(R.id.rcv_sticker);
-        gv.setLayoutManager(new GridLayoutManager(context, 7));
         List<SmileUtils.SmileBean> list = SmileUtils.getSmileData2(context);
         ExpressionAdapter2 expressionAdapter = new ExpressionAdapter2(context, list);
         gv.setAdapter(expressionAdapter);

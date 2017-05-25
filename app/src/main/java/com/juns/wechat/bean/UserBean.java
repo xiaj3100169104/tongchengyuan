@@ -1,8 +1,5 @@
 package com.juns.wechat.bean;
 
-import android.database.Cursor;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.text.TextUtils;
 
 import com.juns.wechat.database.UserTable;
@@ -12,6 +9,7 @@ import org.xutils.db.annotation.Table;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Table(name = UserTable.TABLE_NAME, onCreated = UserTable.CREATE_INDEX)
 public class UserBean implements Serializable {
@@ -58,6 +56,9 @@ public class UserBean implements Serializable {
     public Date createDate;
     @Column(name = MODIFY_DATE)
     public long modifyDate;
+
+    public List<UserPropertyBean> userProperties;
+
 
     public UserBean(){
 
@@ -206,5 +207,13 @@ public class UserBean implements Serializable {
             return nickName;
         }
         return userName;
+    }
+
+    public List<UserPropertyBean> getUserProperties() {
+        return userProperties;
+    }
+
+    public void setUserProperties(List<UserPropertyBean> userProperties) {
+        this.userProperties = userProperties;
     }
 }

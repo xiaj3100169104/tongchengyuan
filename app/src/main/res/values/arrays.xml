@@ -5,16 +5,19 @@
         <item>@string/woman</item>
     </string-array>
     <string-array name="industry">
+        <item>计算机/互联网/通信</item>
+        <item>生产/工艺/制造</item>
+        <item>医疗/护理/制药</item>
+        <item>金融/银行/投资/保险</item>
+        <item>商业/服务业/个体经营</item>
+        <item>文化/广告/传媒</item>
+        <item>娱乐/艺术/表演</item>
+        <item>律师/法务</item>
+        <item>教育/培训</item>
+        <item>公务员/行政/事业单位</item>
+        <item>模特</item>
+        <item>空姐</item>
         <item>学生</item>
-        <item>文化/艺术</item>
-        <item>影视/娱乐</item>
-        <item>金融</item>
-        <item>医药/健康</item>
-        <item>工业/制造业</item>
-        <item>IT/互联网/通信</item>
-        <item>媒体/公关</item>
-        <item>零售</item>
-        <item>教育/科研</item>
         <item>其他</item>
     </string-array>
     <string-array name="occupations">

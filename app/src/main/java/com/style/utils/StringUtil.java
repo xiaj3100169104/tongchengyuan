@@ -9,7 +9,29 @@ import java.util.List;
 import java.util.Set;
 
 public class StringUtil {
-    public static List<String> getList(String str, String tag) {
+
+    /**
+     * 字符串转数组
+     * @param str
+     * @param tag 分隔符
+     * @return
+     */
+    public static String[] String2Array(String str, String tag) {
+        if (TextUtils.isEmpty(str)) {
+            return null;
+        } else {
+            String[] s = str.split(tag);
+            return s;
+        }
+    }
+
+    /**
+     * 字符串转list
+     * @param str
+     * @param tag 字符串分隔符
+     * @return
+     */
+    public static List<String> String2List(String str, String tag) {
         if (TextUtils.isEmpty(str)) {
             return null;
         } else {
@@ -22,16 +44,23 @@ public class StringUtil {
         }
     }
 
-    public static String[] getStringArray(String str, String tag) {
-        if (TextUtils.isEmpty(str)) {
-            return null;
-        } else {
-            String[] s = str.split(tag);
-            return s;
+    /**
+     * list转字符串
+     * @param list
+     * @param tag
+     * @return
+     */
+    public static String List2String(List<String> list, String tag) {
+        StringBuilder b = new StringBuilder("");
+        for (String s : list) {
+            b.append(s).append(tag);
         }
+        if (b.length() > 0)
+            b.deleteCharAt(b.length() - 1);
+        String value = b.toString();
+        return value;
     }
-
-    public static String[] ListToStringArray(List<String> list) {
+    public static String[] List2StringArray(List<String> list) {
         String[] s = null;
         if (list != null) {
             int size = list.size();
@@ -42,7 +71,7 @@ public class StringUtil {
         }
         return s;
     }
-    public static List<String> getList(String[] s) {
+    public static List<String> Array2List(String[] s) {
         List<String> list = new ArrayList<>();
         if (s != null) {
             int size = s.length;

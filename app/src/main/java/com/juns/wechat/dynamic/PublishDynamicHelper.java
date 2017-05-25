@@ -123,11 +123,8 @@ public class PublishDynamicHelper {
 
     private void initFace() {
         List<View> views = new ArrayList<>();
-        View gv = CommonExpressionView.getStickerView2(mActivity, etContent);
-
-        View gv1 = CommonExpressionView.getStickerView(mActivity, etContent);
+        View gv = CommonExpressionView.getStickerView(mActivity, etContent);
         views.add(gv);
-        views.add(gv1);
         facePager.setAdapter(new ExpressionPagerAdapter(views));
         indicator.setViewPager(facePager);
 

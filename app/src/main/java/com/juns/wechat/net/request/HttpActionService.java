@@ -12,6 +12,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -35,6 +36,10 @@ public interface HttpActionService {
 
     @POST("updateUser") @FormUrlEncoded
     Call<String> updateUser(@FieldMap Map<String, Object> map);
+
+    @Headers({"Content-type:application/json;charset=UTF-8"})
+    @POST("updateUserProperty") @FormUrlEncoded
+    Call<String> updateUserProperty(@Field("userProperties") String userProperties);
 
     @POST("uploadAvatar")
     Call<String> uploadAvatar(@Body RequestBody requestBody);
