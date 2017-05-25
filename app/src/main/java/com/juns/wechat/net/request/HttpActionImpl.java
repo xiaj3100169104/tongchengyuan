@@ -29,10 +29,13 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
  */
 public class HttpActionImpl {
     protected String TAG = "HttpActionImpl";
-    private static String URL_BASE = ConfigUtil.REAL_API_URL;
+    private static String URL_BASE_REMOTE = ConfigUtil.REAL_API_URL;
+    private static String URL_BASE_LOCAL = ConfigUtil.LOCAL_SERVER;
 
     private static HttpActionImpl mInstance;
     private HttpActionService service;
+    private HttpActionService serviceLocal;
+
     private HttpActionManager httpActionManager;
 
     public static HttpActionImpl getInstance() {
@@ -50,11 +53,23 @@ public class HttpActionImpl {
         Retrofit retrofit = new Retrofit.Builder()
                 .client(getClient())
                 .addConverterFactory(ScalarsConverterFactory.create())
-                .baseUrl(URL_BASE)
+                .baseUrl(URL_BASE_REMOTE)
                 .build();
         service = retrofit.create(HttpActionService.class);
+        initLocalService();
         httpActionManager = HttpActionManager.getInstance();
     }
+
+    private void initLocalService() {
+        Retrofit retrofit = new Retrofit.Builder()
+                //.client(getClient())
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .baseUrl(URL_BASE_LOCAL)
+                .build();
+        serviceLocal = retrofit.create(HttpActionService.class);
+
+    }
+
     private OkHttpClient getClient() {
         OkHttpClient.Builder client = new OkHttpClient.Builder()
                 //添加请求拦截
@@ -109,7 +124,11 @@ public class HttpActionImpl {
     }
 
     public void updateUserProperty(String tag, String userProperties, NetDataBeanCallback callback) {
-        Call<String> call = service.updateUserProperty(userProperties);
+        /*RequestBody requestBody = new MultipartBody.Builder()
+                //.setType(MultipartBody.FORM)
+                .addFormDataPart("userProperties", userProperties)
+                .build();*/
+        Call<String> call = serviceLocal.updateUserProperty(userProperties);
         runTask(tag, call, callback);
     }
 

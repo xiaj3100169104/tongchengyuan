@@ -7,7 +7,7 @@ package com.juns.wechat.config;
  */
 public class ConfigUtil {
     public static final String REAL_SERVER = "http://www.wangzongwen.cn";
-    public static final String LOCAL_SERVER = "http://192.168.0.103:8080";
+    public static final String LOCAL_SERVER = "http://192.168.0.104:8080/wechat_server/";
     public static final String REAL_API_URL = REAL_SERVER + "/wechat_server/";
     //头像，朋友圈图片下载父目录
     private static final String BASE_DOWN_URL = REAL_SERVER + "/upload/";

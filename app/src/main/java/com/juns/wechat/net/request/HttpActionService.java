@@ -37,9 +37,9 @@ public interface HttpActionService {
     @POST("updateUser") @FormUrlEncoded
     Call<String> updateUser(@FieldMap Map<String, Object> map);
 
-    @Headers({"Content-type:application/json;charset=UTF-8"})
+    //@Headers({"Content-type:application/json;charset=UTF-8"})
     @POST("updateUserProperty") @FormUrlEncoded
-    Call<String> updateUserProperty(@Field("userProperties") String userProperties);
+    Call<String> updateUserProperty(@Field("userProperties")  String oldToken);
 
     @POST("uploadAvatar")
     Call<String> uploadAvatar(@Body RequestBody requestBody);
