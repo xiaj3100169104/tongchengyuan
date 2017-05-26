@@ -1,7 +1,9 @@
 package com.juns.wechat.net.request;
 
+import com.juns.wechat.bean.UserPropertyBean;
 import com.juns.wechat.net.response.LoginBean;
 
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.MultipartBody;
@@ -38,8 +40,8 @@ public interface HttpActionService {
     Call<String> updateUser(@FieldMap Map<String, Object> map);
 
     //@Headers({"Content-type:application/json;charset=UTF-8"})
-    @POST("updateUserProperty") @FormUrlEncoded
-    Call<String> updateUserProperty(@Field("userProperties")  String oldToken);
+    @POST("updateUserProperty")
+    Call<String> updateUserProperty(@Body RequestBody requestBody);
 
     @POST("uploadAvatar")
     Call<String> uploadAvatar(@Body RequestBody requestBody);
