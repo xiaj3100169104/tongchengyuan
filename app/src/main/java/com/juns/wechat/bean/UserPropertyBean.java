@@ -14,8 +14,6 @@ public class UserPropertyBean implements Serializable {
     public static final String KEY_INTEREST_FOOD = "interest_food";
     public static final String KEY_INTEREST_MOVIE = "interest_movie";
 
-    public int id;
-    public int userId;
     public String key;
     public String value;
 

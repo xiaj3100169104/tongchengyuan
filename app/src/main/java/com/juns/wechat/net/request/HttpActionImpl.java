@@ -31,7 +31,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
  */
 public class HttpActionImpl {
     protected String TAG = "HttpActionImpl";
-    private static String URL_BASE_REMOTE = ConfigUtil.REAL_API_URL;
+    private static String URL_BASE_REMOTE = ConfigUtil.REMOTE_SERVER;
     private static String URL_BASE_LOCAL = ConfigUtil.LOCAL_SERVER;
 
     private static HttpActionImpl mInstance;
@@ -58,7 +58,7 @@ public class HttpActionImpl {
                 .baseUrl(URL_BASE_REMOTE)
                 .build();
         service = retrofit.create(HttpActionService.class);
-        initLocalService();
+        //initLocalService();
         httpActionManager = HttpActionManager.getInstance();
     }
 

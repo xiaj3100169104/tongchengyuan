@@ -31,43 +31,53 @@ public class NetDataBeanCallback<T> implements Callback<String> {
 
     @Override
     public void onResponse(Call<String> call, Response<String> response) {
-        Log.e(TAG, "response.body==" + response.body());
-        NetDataBean netDataBean = JSON.parseObject(response.body(), NetDataBean.class);
-        int code = netDataBean.code;
-        String jsonData = netDataBean.data;
-        String msg = netDataBean.msg;
+        Log.e(TAG, "response-->code: " + response.code() + "  body: " + response.body());
+        if (response.code() == 200) {
+            NetDataBean netDataBean = JSON.parseObject(response.body(), NetDataBean.class);
+            if (netDataBean != null) {
+                int code = netDataBean.code;
+                String jsonData = netDataBean.data;
+                String msg = netDataBean.msg;
 
-        T data = null;
-        if (this.clazz != null)
-            data = JSON.parseObject(jsonData, this.clazz);
-        if (this.type != null)
-            data = JSON.parseObject(jsonData, this.type);
+                T data = null;
+                if (this.clazz != null)
+                    data = JSON.parseObject(jsonData, this.clazz);
+                if (this.type != null)
+                    data = JSON.parseObject(jsonData, this.type);
 
-        if (code == NetDataBean.SUCCESS) {
-            onCodeSuccess();
-            onCodeSuccess(data);
-            onCodeSuccess(data, msg);
-        } else {
-            onCodeFailure(msg);
-            onCodeFailure(code, msg);
-            onCodeFailure(code, data);
-            if (code == NetDataBean.SERVER_ERROR) {
-                ToastUtil.showToast("服务器出错了", Toast.LENGTH_SHORT);
-            } else if (code == NetDataBean.TOKEN_EXPIRED || code == NetDataBean.TOKEN_INVALID) {
-                handleTokenError();
+                if (code == NetDataBean.SUCCESS) {
+                    onCodeSuccess();
+                    onCodeSuccess(data);
+                    onCodeSuccess(data, msg);
+                } else {
+                    onCodeFailure(msg);
+                    onCodeFailure(code, msg);
+                    onCodeFailure(code, data);
+                    if (code == NetDataBean.SERVER_ERROR) {
+                        ToastUtil.showToast("服务器出错了", Toast.LENGTH_SHORT);
+                    } else if (code == NetDataBean.TOKEN_EXPIRED || code == NetDataBean.TOKEN_INVALID) {
+                        handleTokenError();
+                    }
+                }
+            } else {
+                onCodeFailure("数据解析失败");
             }
+        } else {
+            onCodeFailure("请求失败");
         }
     }
 
     @Override
     public void onFailure(Call<String> call, Throwable t) {
-        t.printStackTrace();
+        Log.e(TAG, t.toString());
         ToastUtil.showToast("请求错误", Toast.LENGTH_SHORT);
-        onCodeFailure("请求错误");
+        onCodeFailure("请求失败");
     }
+
     protected void onCodeSuccess() {
 
     }
+
     protected void onCodeSuccess(T data) {
 
     }
@@ -83,9 +93,11 @@ public class NetDataBeanCallback<T> implements Callback<String> {
     protected void onCodeFailure(int code, String msg) {
 
     }
+
     protected void onCodeFailure(int code, T data) {
 
     }
+
     private void handleTokenError() {
         AccountManager.getInstance().logOut();
     }

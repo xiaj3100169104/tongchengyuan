@@ -22,7 +22,7 @@ public class EditAlertDialog extends AlertDialog {
     private OnPromptListener listener;
     private EditText etContent;
     private String content;
-    private String hint;
+    private CharSequence hint;
 
     public EditAlertDialog(Context context) {
         super(context);
@@ -30,7 +30,7 @@ public class EditAlertDialog extends AlertDialog {
 
     }
 
-    public void setData(String content, String hint) {
+    public void setData(String content, CharSequence hint) {
         this.content = content;
         this.hint = hint;
 
@@ -93,7 +93,7 @@ public class EditAlertDialog extends AlertDialog {
         return etContent.getText().toString();
     }
 
-    public void setHint(String hint) {
+    public void setHint(CharSequence hint) {
         if (!TextUtils.isEmpty(hint))
             etContent.setHint(hint);
         else

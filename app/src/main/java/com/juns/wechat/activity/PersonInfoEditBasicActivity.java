@@ -281,7 +281,7 @@ public class PersonInfoEditBasicActivity extends BaseToolbarActivity {
     private void openEdit(final TextView textView) {
         String name = textView.getText().toString();
         final EditAlertDialog editAlertDialog = new EditAlertDialog(this);
-        editAlertDialog.setData(name, textView.getHint().toString());
+        editAlertDialog.setData(name, textView.getHint());
         editAlertDialog.show(new EditAlertDialog.OnPromptListener() {
             @Override
             public void onPositiveButton(String s) {

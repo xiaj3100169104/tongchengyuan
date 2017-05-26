@@ -25,12 +25,13 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" >
+        //菜单字体颜色
         <item name="android:textColorPrimary">@color/white</item>
 
     </style>
 
     <style name="AppTheme.Toolbar" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-
+        <item name="android:background">@color/colorPrimary</item>
     </style>
 
     <style name="AppTheme.SwitchAnimation" parent="@android:style/Animation.Activity">
