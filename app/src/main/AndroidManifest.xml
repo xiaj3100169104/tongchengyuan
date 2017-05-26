@@ -75,6 +75,12 @@
         <activity android:name="com.juns.wechat.activity.SettingActivity" />
         <activity android:name="com.juns.wechat.activity.AboutProductActivity" />
         <activity android:name="com.juns.wechat.activity.SettingNewMessageActivity" />
+        <activity android:name="com.juns.wechat.activity.PersonInfoShowActivity" />
+        <activity android:name="com.juns.wechat.activity.PersonInfoEditExtendActivity" />
+        <activity android:name="com.juns.wechat.activity.PersonInfoEditBasicActivity" />
+        <activity android:name="com.juns.wechat.activity.PersonInfoEditPhotoWallActivity" />
+        <activity android:name="com.juns.wechat.activity.CropImageActivity" />
+        <activity android:name="com.juns.wechat.activity.AddFriendFinalActivity" />
         <activity
             android:name="com.juns.wechat.chat.ui.ChatActivity"
             android:launchMode="singleTop"
@@ -86,9 +92,7 @@
         <activity android:name="com.juns.wechat.chat.ShowNormalFileActivity" />
         <activity android:name="com.juns.wechat.activity.SearchActivity" />
         <activity android:name="com.juns.wechat.activity.SearchResultActivity" />
-        <activity android:name="com.juns.wechat.activity.PersonInfoShowActivity" />
-        <activity android:name="com.juns.wechat.activity.CropImageActivity" />
-        <activity android:name="com.juns.wechat.activity.AddFriendFinalActivity" />
+
         <activity android:name="com.juns.wechat.activity.SendLocationActivity" />
         <activity android:name="com.style.album.AlbumActivity" />
         <activity android:name="com.style.album.SelectLocalPictureActivity" />
@@ -99,8 +103,6 @@
         <activity android:name="com.juns.wechat.activity.AddNoteActivity" />
         <activity android:name="com.juns.wechat.activity.MyQRCodeActivity" />
         <activity android:name="com.juns.wechat.activity.QRScanActivity" />
-        <activity android:name="com.juns.wechat.activity.PersonInfoEditActivity" />
-        <activity android:name="com.juns.wechat.activity.PersonInfoEditBaseActivity" />
 
         <!-- 图片浏览 -->
         <activity android:name="uk.viewpager.ImagePagerActivity" />

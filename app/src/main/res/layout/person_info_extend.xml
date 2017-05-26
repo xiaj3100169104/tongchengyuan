@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="15dp">
+
+        <TextView
+            style="@style/text_user_info_title"
+            android:text="我的标签" />
+
+        <LinearLayout
+            android:id="@+id/layout_my_label"
+            style="@style/Layouts.user_info_item">
+
+            <ImageView style="@style/user_info_icon" />
+
+            <RelativeLayout
+                android:id="@+id/layout_content_my_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_my_label"
+                    style="@style/user_info_content"
+                    android:hint="我的标签" />
+
+                <me.kaede.tagview.TagView
+                    android:id="@+id/tag_view_my_label"
+                    style="@style/user_info_tag" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="15dp">
+
+        <TextView
+            style="@style/text_user_info_title"
+            android:text="我的兴趣" />
+
+        <LinearLayout
+            android:id="@+id/layout_interest_sport"
+            style="@style/Layouts.user_info_item">
+
+            <ImageView
+                style="@style/user_info_icon"
+                android:src="@mipmap/interest_sports" />
+
+            <RelativeLayout
+                android:id="@+id/layout_content_interest_sport"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_interest_sport"
+                    style="@style/user_info_content"
+                    android:hint="我喜欢的运动" />
+
+                <me.kaede.tagview.TagView
+                    android:id="@+id/tag_view_interest_sport"
+                    style="@style/user_info_tag" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_interest_music"
+            style="@style/Layouts.user_info_item">
+
+            <ImageView
+                style="@style/user_info_icon"
+                android:src="@mipmap/interest_music" />
+
+            <RelativeLayout
+                android:id="@+id/layout_content_interest_music"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_interest_music"
+                    style="@style/user_info_content"
+                    android:hint="我喜欢的音乐" />
+
+                <me.kaede.tagview.TagView
+                    android:id="@+id/tag_view_interest_music"
+                    style="@style/user_info_tag" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_interest_food"
+            style="@style/Layouts.user_info_item">
+
+            <ImageView
+                style="@style/user_info_icon"
+                android:src="@mipmap/interest_food" />
+
+            <RelativeLayout
+                android:id="@+id/layout_content_interest_food"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_interest_food"
+                    style="@style/user_info_content"
+                    android:hint="我喜欢的美食" />
+
+                <me.kaede.tagview.TagView
+                    android:id="@+id/tag_view_interest_food"
+                    style="@style/user_info_tag" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_interest_movie"
+            style="@style/Layouts.user_info_item">
+
+            <ImageView
+                style="@style/user_info_icon"
+                android:src="@mipmap/interest_movies" />
+
+            <RelativeLayout
+                android:id="@+id/layout_content_interest_movie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_interest_movie"
+                    style="@style/user_info_content"
+                    android:hint="我喜欢的电影" />
+
+                <me.kaede.tagview.TagView
+                    android:id="@+id/tag_view_interest_movie"
+                    style="@style/user_info_tag" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="15dp">
+
+        <TextView
+            style="@style/text_user_info_title"
+            android:text="我的问答" />
+
+        <LinearLayout
+            android:id="@+id/layout_question"
+            style="@style/Layouts.user_info_item">
+
+            <ImageView style="@style/user_info_icon" />
+
+            <RelativeLayout
+                android:id="@+id/layout_content_question"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_question"
+                    style="@style/user_info_content"
+                    android:hint="添加你的问答" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

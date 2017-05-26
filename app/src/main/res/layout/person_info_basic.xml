@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="15dp"
+        android:visibility="visible">
+
+        <TextView
+            style="@style/text_user_info_title"
+            android:text="我的信息" />
+
+        <LinearLayout
+            android:id="@+id/layout_emotion"
+            style="@style/Layouts.user_info_item">
+
+            <ImageView style="@style/user_info_icon" />
+
+            <TextView
+                android:id="@+id/tv_emotion"
+                style="@style/user_info_content"
+                android:hint="添加我的情感状态" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_education"
+            style="@style/Layouts.user_info_item">
+
+            <ImageView style="@style/user_info_icon" />
+
+            <TextView
+                android:id="@+id/tv_education"
+                style="@style/user_info_content"
+                android:hint="添加我的教育信息" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_industry"
+            style="@style/Layouts.user_info_item">
+
+            <ImageView style="@style/user_info_icon" />
+
+            <TextView
+                android:id="@+id/tv_industry"
+                style="@style/user_info_content"
+                android:hint="添加我的行业信息" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_work_area"
+            style="@style/Layouts.user_info_item">
+
+            <ImageView style="@style/user_info_icon" />
+
+            <TextView
+                android:id="@+id/tv_work_area"
+                style="@style/user_info_content"
+                android:hint="添加我的工作领域信息" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_company_info"
+            style="@style/Layouts.user_info_item">
+
+            <ImageView style="@style/user_info_icon" />
+
+            <TextView
+                android:id="@+id/tv_company_info"
+                style="@style/user_info_content"
+                android:hint="添加我的公司信息" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_hometown_info"
+            style="@style/Layouts.user_info_item">
+
+            <ImageView style="@style/user_info_icon" />
+
+            <TextView
+                android:id="@+id/tv_hometown_info"
+                style="@style/user_info_content"
+                android:hint="添加我的家乡信息" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="15dp">
+
+        <TextView
+            style="@style/text_user_info_title"
+            android:text="内心独白" />
+
+        <LinearLayout
+            android:id="@+id/layout_my_heart"
+            style="@style/Layouts.user_info_item">
+
+            <ImageView style="@style/user_info_icon" />
+
+            <TextView
+                android:id="@+id/tv_my_heart"
+                style="@style/user_info_content"
+                android:hint="我的内心独白" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

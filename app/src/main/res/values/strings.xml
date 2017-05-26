@@ -28,6 +28,9 @@
 
     <string name="my_profile">个人信息</string>
     <string name="detail_info">详细资料</string>
+    <string name="edit_basic_info">编辑基本信息</string>
+    <string name="edit_extend_info">编辑标签信息</string>
+    <string name="edit_photo_wall">编辑照片墙</string>
 
     <string name="delete_succeed">删除成功</string>
     <string name="delete_fail">删除失败</string>
@@ -51,7 +54,7 @@
     <string name="note">笔记</string>
 
     <string name="expression2">表情</string>
-    <string name="moments">我的生活点滴</string>
+    <string name="moments">生活点滴</string>
     <string name="scan">扫一扫</string>
     <string name="shake2">摇一摇</string>
     <string name="people_nearby">附近的人</string>

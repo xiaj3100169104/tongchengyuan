@@ -1,12 +1,9 @@
 package com.juns.wechat.activity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -16,27 +13,15 @@ import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.ShowBigImage;
 import com.juns.wechat.database.dao.DbDataEvent;
 import com.juns.wechat.database.UserTable;
-import com.juns.wechat.dialog.SelectPhotoDialog;
-import com.juns.wechat.dialog.SelectSexDialog;
-import com.juns.wechat.helper.CommonViewHelper;
 import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.net.request.HttpActionImpl;
-import com.style.base.BaseToolbarBtnActivity;
-import com.style.constant.FileConfig;
-import com.style.net.core.NetDataBeanCallback;
 import com.style.base.BaseToolbarActivity;
 import com.style.constant.Skip;
-import com.style.utils.CommonUtil;
 
 import org.simple.eventbus.Subscriber;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.OnClick;
 import me.kaede.tagview.TagView;
 
 public class PersonInfoShowActivity extends BaseToolbarActivity {
@@ -128,21 +113,27 @@ public class PersonInfoShowActivity extends BaseToolbarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mLayoutResID = R.layout.activity_edit_userinfo;
+        mLayoutResID = R.layout.activity_person_info_show;
         super.onCreate(savedInstanceState);
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.single_with_text, menu);
-        menu.getItem(0).setTitle(R.string.edit);
+        getMenuInflater().inflate(R.menu.person_info_show, menu);
+        //menu.getItem(0).setTitle(R.string.edit);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.item_text_only:
-                skip(PersonInfoEditActivity.class);
+            case R.id.edit_photo_wall:
+                skip(PersonInfoEditPhotoWallActivity.class);
+                break;
+            case R.id.edit_basic_info:
+                skip(PersonInfoEditBasicActivity.class);
+                break;
+            case R.id.edit_extend_info:
+                skip(PersonInfoEditExtendActivity.class);
                 break;
         }
         return super.onOptionsItemSelected(item);
