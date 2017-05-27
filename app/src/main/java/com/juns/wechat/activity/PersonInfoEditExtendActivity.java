@@ -1,11 +1,8 @@
 package com.juns.wechat.activity;
 
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,20 +12,14 @@ import android.widget.TextView;
 
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.bean.UserPropertyBean;
-import com.juns.wechat.dialog.SelectPhotoDialog;
 import com.juns.wechat.net.request.HttpActionImpl;
 import com.same.city.love.R;
 import com.style.base.BaseToolbarActivity;
-import com.style.constant.FileConfig;
-import com.style.constant.Skip;
-import com.style.dialog.EditAlertDialog;
+import com.style.event.EventCode;
+import com.style.event.EventManager;
 import com.style.net.core.NetDataBeanCallback;
-import com.style.utils.CommonUtil;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -115,7 +106,7 @@ public class PersonInfoEditExtendActivity extends BaseToolbarActivity {
     }
 
     private void saveInfo() {
-        List<UserPropertyBean> list = new ArrayList<>();
+        final List<UserPropertyBean> list = new ArrayList<>();
         list.add(new UserPropertyBean(UserPropertyBean.KEY_MY_LABEL, getTagStr(tagViewMyLabel)));
         list.add(new UserPropertyBean(UserPropertyBean.KEY_INTEREST_SPORT, getTagStr(tagViewInterestSport)));
         list.add(new UserPropertyBean(UserPropertyBean.KEY_INTEREST_MUSIC, getTagStr(tagViewInterestMusic)));
@@ -131,8 +122,7 @@ public class PersonInfoEditExtendActivity extends BaseToolbarActivity {
             protected void onCodeSuccess(UserBean data) {
                 dismissProgressDialog();
                 //AccountManager.getInstance().setUser(data);
-                List<UserPropertyBean> userProperties = data.getUserProperties();
-
+                EventManager.getDefault().post(list, EventCode.UPDATE_USER_LABEL);
                 finish();
             }
 
