@@ -1,42 +1,27 @@
 package com.juns.wechat.activity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.same.city.love.R;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.ShowBigImage;
-import com.juns.wechat.database.dao.DbDataEvent;
 import com.juns.wechat.database.UserTable;
-import com.juns.wechat.dialog.SelectPhotoDialog;
-import com.juns.wechat.dialog.SelectSexDialog;
-import com.juns.wechat.helper.CommonViewHelper;
+import com.juns.wechat.database.dao.DbDataEvent;
 import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.net.request.HttpActionImpl;
-import com.style.base.BaseToolbarBtnActivity;
-import com.style.constant.FileConfig;
-import com.style.net.core.NetDataBeanCallback;
+import com.same.city.love.R;
 import com.style.base.BaseToolbarActivity;
 import com.style.constant.Skip;
-import com.style.utils.CommonUtil;
 
 import org.simple.eventbus.Subscriber;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.OnClick;
 import me.kaede.tagview.TagView;
 
 public class PersonInfoShowActivity extends BaseToolbarActivity {

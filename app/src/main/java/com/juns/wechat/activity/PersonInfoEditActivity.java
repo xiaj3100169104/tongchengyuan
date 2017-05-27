@@ -1,12 +1,9 @@
 package com.juns.wechat.activity;
 
-import android.annotation.TargetApi;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -16,11 +13,9 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.gson.JsonObject;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.bean.UserPropertyBean;
 import com.juns.wechat.dialog.SelectPhotoDialog;
-import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.request.HttpActionImpl;
 import com.same.city.love.R;
 import com.style.base.BaseToolbarActivity;
@@ -29,9 +24,6 @@ import com.style.constant.Skip;
 import com.style.dialog.EditAlertDialog;
 import com.style.net.core.NetDataBeanCallback;
 import com.style.utils.CommonUtil;
-import com.style.utils.StringUtil;
-
-import org.json.JSONArray;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
