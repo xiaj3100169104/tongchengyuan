@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/comm_toolbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/layout_sex"
+                style="@style/Layouts.user_info_item"
+                android:layout_height="60dp"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/text_black_15sp"
+                    android:text="性别" />
+
+                <TextView
+                    android:id="@+id/tv_sex"
+                    style="@style/text_gray_13sp"
+                    android:layout_marginTop="5dp"
+                    android:text="男" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_name"
+                style="@style/Layouts.user_info_item"
+                android:layout_height="60dp"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/text_black_15sp"
+                    android:text="姓名" />
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    style="@style/text_gray_13sp"
+                    android:layout_marginTop="5dp"
+                    android:text="google" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_birthday"
+                style="@style/Layouts.user_info_item"
+                android:layout_height="60dp"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/text_black_15sp"
+                    android:text="生日" />
+
+                <TextView
+                    android:id="@+id/tv_birthday"
+                    style="@style/text_gray_13sp"
+                    android:layout_marginTop="5dp"
+                    android:text="" />
+            </LinearLayout>
+
+            <include layout="@layout/person_info_basic" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

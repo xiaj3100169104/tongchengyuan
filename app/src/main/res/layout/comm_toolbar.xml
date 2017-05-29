@@ -7,7 +7,8 @@
     android:minHeight="48dp"
     app:contentInsetEnd="0dp"
     app:contentInsetStart="0dp"
-    android:theme="@style/AppTheme.Toolbar">
+    android:theme="@style/AppTheme.Toolbar"
+    app:popupTheme="@style/AppTheme.PopupOverlay">
 
     <include layout="@layout/comm_toolbar_layout" />
 </android.support.v7.widget.Toolbar>

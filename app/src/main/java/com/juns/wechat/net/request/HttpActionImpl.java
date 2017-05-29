@@ -1,6 +1,7 @@
 package com.juns.wechat.net.request;
 
 import com.juns.wechat.bean.CommentBean;
+import com.juns.wechat.bean.UserPropertyBean;
 import com.juns.wechat.config.ConfigUtil;
 import com.juns.wechat.manager.AccountManager;
 import com.style.net.core.HttpActionManager;
@@ -9,6 +10,7 @@ import com.style.net.core.NetDataBeanCallback;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -29,7 +31,7 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
  */
 public class HttpActionImpl {
     protected String TAG = "HttpActionImpl";
-    private static String URL_BASE_REMOTE = ConfigUtil.REAL_API_URL;
+    private static String URL_BASE_REMOTE = ConfigUtil.REMOTE_SERVER;
     private static String URL_BASE_LOCAL = ConfigUtil.LOCAL_SERVER;
 
     private static HttpActionImpl mInstance;
@@ -56,7 +58,7 @@ public class HttpActionImpl {
                 .baseUrl(URL_BASE_REMOTE)
                 .build();
         service = retrofit.create(HttpActionService.class);
-        initLocalService();
+        //initLocalService();
         httpActionManager = HttpActionManager.getInstance();
     }
 
@@ -73,7 +75,7 @@ public class HttpActionImpl {
     private OkHttpClient getClient() {
         OkHttpClient.Builder client = new OkHttpClient.Builder()
                 //添加请求拦截
-                .connectTimeout(5, TimeUnit.SECONDS)//设置超时时间
+                //.connectTimeout(5, TimeUnit.SECONDS)//设置超时时间
                 .retryOnConnectionFailure(true)
                 .addInterceptor(new Interceptor() {
                     @Override
@@ -123,12 +125,13 @@ public class HttpActionImpl {
         runTask(tag, call, callback);
     }
 
-    public void updateUserProperty(String tag, String userProperties, NetDataBeanCallback callback) {
+    public void updateUserProperty(String tag, String value, NetDataBeanCallback callback) {
         /*RequestBody requestBody = new MultipartBody.Builder()
                 //.setType(MultipartBody.FORM)
                 .addFormDataPart("userProperties", userProperties)
                 .build();*/
-        Call<String> call = serviceLocal.updateUserProperty(userProperties);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json; charset=utf-8"), value);
+        Call<String> call = service.updateUserProperty(requestBody);
         runTask(tag, call, callback);
     }
 

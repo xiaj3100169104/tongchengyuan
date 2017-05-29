@@ -6,7 +6,7 @@
     <color name="colorPrimary">@color/pink_500</color>
     <!-- 状态栏颜色 -->
     <color name="colorPrimaryDark">@color/colorPrimary</color>
-    <!-- 文本颜色 -->
+    <!-- 文本颜色、日期等对话框字体颜色 -->
     <color name="textColorPrimary">@color/text_color_black_light</color>
     <!-- 控件选中后的颜色 -->
     <color name="colorAccent">@color/colorPrimary</color>

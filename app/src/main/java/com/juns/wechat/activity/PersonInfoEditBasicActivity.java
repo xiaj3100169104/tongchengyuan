@@ -9,12 +9,12 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.request.HttpActionImpl;
-import com.juns.wechat.util.NetWorkUtil;
 import com.same.city.love.R;
 import com.style.base.BaseToolbarActivity;
 import com.style.dialog.EditAlertDialog;
@@ -29,7 +29,7 @@ import butterknife.OnClick;
  * Created by xiajun on 2017/5/9.
  */
 
-public class PersonInfoEditBaseActivity extends BaseToolbarActivity {
+public class PersonInfoEditBasicActivity extends BaseToolbarActivity {
 
     @Bind(R.id.tv_sex)
     TextView tvSex;
@@ -38,16 +38,44 @@ public class PersonInfoEditBaseActivity extends BaseToolbarActivity {
     @Bind(R.id.tv_birthday)
     TextView tvBirthday;
 
+    @Bind(R.id.tv_emotion)
+    TextView tvEmotion;
+    @Bind(R.id.layout_emotion)
+    LinearLayout layoutEmotion;
+    @Bind(R.id.tv_education)
+    TextView tvEducation;
+    @Bind(R.id.layout_education)
+    LinearLayout layoutEducation;
+    @Bind(R.id.tv_industry)
+    TextView tvIndustry;
+    @Bind(R.id.layout_industry)
+    LinearLayout layoutIndustry;
+    @Bind(R.id.tv_work_area)
+    TextView tvWorkArea;
+    @Bind(R.id.layout_work_area)
+    LinearLayout layoutWorkArea;
+    @Bind(R.id.tv_company_info)
+    TextView tvCompanyInfo;
+    @Bind(R.id.layout_company_info)
+    LinearLayout layoutCompanyInfo;
+    @Bind(R.id.tv_hometown_info)
+    TextView tvHometownInfo;
+    @Bind(R.id.layout_hometown_info)
+    LinearLayout layoutHometownInfo;
+    @Bind(R.id.tv_my_heart)
+    TextView tvMyHeart;
+    @Bind(R.id.layout_my_heart)
+    LinearLayout layoutMyHeart;
+
     private UserBean curUser;
 
     private String[] sexList = {"男", "女"};
-    private EditAlertDialog editAlertDialog;
     public int p = 0;
     private String strBirthday;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mLayoutResID = R.layout.activity_edit_base_info;
+        mLayoutResID = R.layout.activity_person_info_basic;
         super.onCreate(savedInstanceState);
     }
 
@@ -70,7 +98,7 @@ public class PersonInfoEditBaseActivity extends BaseToolbarActivity {
 
     @Override
     protected void initData() {
-        setToolbarTitle("个人信息");
+        setToolbarTitle(R.string.edit_basic_info);
         curUser = AccountManager.getInstance().getUser();
         String sex = curUser.getSex();
         tvSex.setText(UserBean.Sex.isMan(sex) ? "男" : "女");
@@ -85,7 +113,7 @@ public class PersonInfoEditBaseActivity extends BaseToolbarActivity {
 
     @OnClick(R.id.layout_name)
     public void editName() {
-        openEditName();
+        openEdit(tvName);
     }
 
 
@@ -115,25 +143,6 @@ public class PersonInfoEditBaseActivity extends BaseToolbarActivity {
                     }
                 }).create();
         alertDialog.show();
-    }
-
-    private void openEditName() {
-        String name = tvName.getText().toString();
-        editAlertDialog = new EditAlertDialog(this);
-        editAlertDialog.setData(name, "姓名");
-        editAlertDialog.show(new EditAlertDialog.OnPromptListener() {
-            @Override
-            public void onPositiveButton(String s) {
-                setText(tvName, s);
-                editAlertDialog.dismiss();
-            }
-
-            @Override
-            public void onNegativeButton() {
-                editAlertDialog.dismiss();
-            }
-        });
-
     }
 
     private void openSelectBirthday() {
@@ -192,7 +201,101 @@ public class PersonInfoEditBaseActivity extends BaseToolbarActivity {
         tvBirthday.setText(strBirthday);
 
     }
+    @OnClick(R.id.layout_emotion)
+    public void modifyInfo3() {
+        openSingleSelect(getResources().getStringArray(R.array.emotion), tvEmotion);
+    }
 
+    @OnClick(R.id.layout_education)
+    public void modifyInfo4() {
+        openSingleSelect(getResources().getStringArray(R.array.education), tvEducation);
+    }
+
+    @OnClick(R.id.layout_industry)
+    public void modifyInfo() {
+        openSingleSelect(getResources().getStringArray(R.array.industry), tvIndustry);
+    }
+
+    @OnClick(R.id.layout_work_area)
+    public void modifyInfo2() {
+        openSingleSelect(getResources().getStringArray(R.array.occupations), tvWorkArea);
+    }
+
+    public int p2 = 0;
+
+    private void openSingleSelect(final String[] strings, final TextView textView) {
+        int checkedItem = 0;
+        String value = textView.getText().toString();
+        if (!TextUtils.isEmpty(value))
+            for (int i = 0; i < strings.length; i++) {
+                if (value.endsWith(strings[i])) {
+                    checkedItem = i;
+                    break;
+                }
+            }
+        AlertDialog singleDialog = new AlertDialog.Builder(this)
+                .setSingleChoiceItems(strings, checkedItem, new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        p2 = which;
+                    }
+                })
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        textView.setText(strings[p2]);
+                    }
+                })
+                .setNeutralButton("清空", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        textView.setText("");
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).create();
+        singleDialog.show();
+    }
+
+    @OnClick(R.id.layout_company_info)
+    public void modifyInfo5() {
+        openEdit(tvCompanyInfo);
+    }
+
+    @OnClick(R.id.layout_hometown_info)
+    public void modifyInfo6() {
+        openEdit(tvHometownInfo);
+    }
+
+    @OnClick(R.id.layout_my_heart)
+    public void modifyInfo7() {
+        openEdit(tvMyHeart);
+    }
+
+    private void openEdit(final TextView textView) {
+        String name = textView.getText().toString();
+        final EditAlertDialog editAlertDialog = new EditAlertDialog(this);
+        editAlertDialog.setData(name, textView.getHint());
+        editAlertDialog.show(new EditAlertDialog.OnPromptListener() {
+            @Override
+            public void onPositiveButton(String s) {
+                setText(textView, s);
+                editAlertDialog.dismiss();
+            }
+
+            @Override
+            public void onNegativeButton() {
+                editAlertDialog.dismiss();
+            }
+        });
+
+    }
     private void saveInfo(String nickName) {
 
         HttpActionImpl.getInstance().updateUser(TAG, UserBean.NICKNAME, nickName, new NetDataBeanCallback<UserBean>(UserBean.class) {

@@ -6,14 +6,9 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textColorPrimary">@color/textColorPrimary</item>
-
         <item name="colorButtonNormal">@color/colorButtonNormal</item>
-
         <item name="android:colorBackgroundCacheHint">@null</item>
-
         <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>
-        <!-- SearchView -->
-        <item name="searchViewStyle">@style/MySearchViewStyle</item>
     </style>
 
     <style name="AppTheme" parent="BaseAppTheme">
@@ -27,35 +22,16 @@
         <item name="android:popupBackground">@color/black_light</item>
     </style>
 
-    <style name="MySearchViewStyle" parent="Widget.AppCompat.SearchView">
-        <!--
-    Background for the search query section (e.g. EditText)
-    <item name="queryBackground">...</item>
-    Background for the actions section (e.g. voice, submit)
-    <item name="submitBackground">...</item>
-    Close button icon
-    <item name="closeIcon">...</item>
-    Search button icon
-    <item name="searchIcon">...</item>
-    Go/commit button icon
-    <item name="goIcon">...</item>
-    Voice search button icon
-    <item name="voiceIcon">...</item>
-    Commit icon shown in the query suggestion row
-    <item name="commitIcon">...</item>
-    Layout for query suggestion rows
-    <item name="suggestionRowLayout">...</item>
-        -->
-    </style>
-
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" >
+        //菜单字体颜色
+        <item name="android:textColorPrimary">@color/white</item>
+
+    </style>
 
     <style name="AppTheme.Toolbar" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:background">@color/colorPrimary</item>
-        <item name="actionMenuTextColor">@color/white</item>
-        <item name="actionMenuTextAppearance">@style/TextAppearance.AppCompat.Medium</item>
     </style>
 
     <style name="AppTheme.SwitchAnimation" parent="@android:style/Animation.Activity">
