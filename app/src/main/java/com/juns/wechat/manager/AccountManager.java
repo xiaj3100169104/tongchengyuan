@@ -12,6 +12,7 @@ import com.juns.wechat.chat.xmpp.event.XmppEvent;
 import com.juns.wechat.database.dao.UserDao;
 import com.juns.wechat.util.SharedPreferencesUtil;
 import com.juns.wechat.chat.xmpp.XmppManagerImpl;
+import com.style.constant.Skip;
 
 import org.simple.eventbus.EventBus;
 import org.xutils.db.sqlite.WhereBuilder;
@@ -84,6 +85,7 @@ public class AccountManager {
         XmppManagerImpl.getInstance().shutDownConn();
 
         EventBus.getDefault().post(new XmppEvent(XmppEvent.LOGOUT), "tagLogout");
+
     }
 
     public boolean isLogin() {

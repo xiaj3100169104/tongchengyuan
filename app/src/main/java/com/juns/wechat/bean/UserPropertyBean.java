@@ -17,6 +17,9 @@ public class UserPropertyBean implements Serializable {
     public String key;
     public String value;
 
+    public UserPropertyBean() {
+    }
+
     public UserPropertyBean(String key, String value) {
         this.key = key;
         this.value = value;

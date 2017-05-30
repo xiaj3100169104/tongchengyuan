@@ -3,6 +3,7 @@ package com.juns.wechat.activity;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,12 +13,15 @@ import android.widget.TextView;
 
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.bean.UserPropertyBean;
+import com.juns.wechat.helper.CacheDataHelper;
+import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.request.HttpActionImpl;
 import com.same.city.love.R;
 import com.style.base.BaseToolbarActivity;
 import com.style.event.EventCode;
 import com.style.event.EventManager;
 import com.style.net.core.NetDataBeanCallback;
+import com.style.utils.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,6 +85,8 @@ public class PersonInfoEditExtendActivity extends BaseToolbarActivity {
     @Bind(R.id.tag_view_interest_movie)
     TagView tagViewInterestMovie;
 
+    private UserBean curUser;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +111,13 @@ public class PersonInfoEditExtendActivity extends BaseToolbarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void initData() {
+        setToolbarTitle(R.string.edit_extend_info);
+        curUser = AccountManager.getInstance().getUser();
+        setExtendInfo(CacheDataHelper.getUserLabelCache(curUser.getUserId()));
+    }
+
     private void saveInfo() {
         final List<UserPropertyBean> list = new ArrayList<>();
         list.add(new UserPropertyBean(UserPropertyBean.KEY_MY_LABEL, getTagStr(tagViewMyLabel)));
@@ -122,6 +135,7 @@ public class PersonInfoEditExtendActivity extends BaseToolbarActivity {
             protected void onCodeSuccess(UserBean data) {
                 dismissProgressDialog();
                 //AccountManager.getInstance().setUser(data);
+                CacheDataHelper.putUserLabelCache(curUser.getUserId(), list);
                 EventManager.getDefault().post(list, EventCode.UPDATE_USER_LABEL);
                 finish();
             }
@@ -146,10 +160,28 @@ public class PersonInfoEditExtendActivity extends BaseToolbarActivity {
         return value;
     }
 
-    @Override
-    protected void initData() {
-        setToolbarTitle(R.string.edit_extend_info);
+    public void setExtendInfo(List<UserPropertyBean> extendInfo) {
+        for (UserPropertyBean u : extendInfo) {
+            List<String> list = StringUtil.String2List(u.value, ",");
 
+            switch (u.key) {
+                case UserPropertyBean.KEY_MY_LABEL:
+                    setLabelData(tagViewMyLabel, list, R.color.tag_my_label, R.color.tag_my_label_bg, tvMyLabel);
+                    break;
+                case UserPropertyBean.KEY_INTEREST_SPORT:
+                    setLabelData(tagViewInterestSport, list, R.color.tag_sport, R.color.tag_sport_bg, tvInterestSport);
+                    break;
+                case UserPropertyBean.KEY_INTEREST_MUSIC:
+                    setLabelData(tagViewInterestMusic, list, R.color.tag_music, R.color.tag_music_bg, tvInterestMusic);
+                    break;
+                case UserPropertyBean.KEY_INTEREST_FOOD:
+                    setLabelData(tagViewInterestFood, list, R.color.tag_food, R.color.tag_food_bg, tvInterestFood);
+                    break;
+                case UserPropertyBean.KEY_INTEREST_MOVIE:
+                    setLabelData(tagViewInterestMovie, list, R.color.tag_movie, R.color.tag_movie_bg, tvInterestMovie);
+                    break;
+            }
+        }
     }
 
     @OnClick(R.id.layout_my_label)
@@ -177,7 +209,6 @@ public class PersonInfoEditExtendActivity extends BaseToolbarActivity {
         openMulti("电影", getResources().getStringArray(R.array.movie), tagViewInterestMovie, R.color.tag_movie, R.color.tag_movie_bg, tvInterestMovie);
     }
 
-    //@TargetApi(23)
     private void openMulti(final String title, final String[] allData, final TagView tagView, final int tagColor, final int tagColorBg, final TextView textView) {
         final boolean[] checkedItems = new boolean[allData.length];
         List<Tag> oldData = tagView.getTags();
@@ -202,27 +233,13 @@ public class PersonInfoEditExtendActivity extends BaseToolbarActivity {
                 .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        ArrayList<Tag> newData = new ArrayList<Tag>();
+                        List<String> newData = new ArrayList<>();
                         for (int i = 0; i < checkedItems.length; i++) {
                             if (checkedItems[i]) {
-                                Tag tag = new Tag(allData[i]);
-                                tag.radius = 10f;
-                                tag.tagTextColor = tagColor;
-                                tag.layoutColor = getResources().getColor(tagColorBg);
-                                tag.layoutColorPress = getResources().getColor(tagColorBg);
-                                newData.add(tag);
+                                newData.add(allData[i]);
                             }
                         }
-                        tagView.removeAllTags();
-                        if (newData.size() > 0) {
-                            textView.setVisibility(View.GONE);
-                            tagView.setVisibility(View.VISIBLE);
-                            tagView.isTagOnClickEnable = false;
-                            tagView.addTags(newData);
-                        } else {
-                            tagView.setVisibility(View.GONE);
-                            textView.setVisibility(View.VISIBLE);
-                        }
+                        setLabelData(tagView, newData, tagColor, tagColorBg, textView);
                     }
                 })
                 .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -232,5 +249,29 @@ public class PersonInfoEditExtendActivity extends BaseToolbarActivity {
                     }
                 }).create();
         multiDialog.show();
+    }
+
+    private void setLabelData(TagView tagView,  List<String> list, int tagColor, int tagColorBg, TextView textView) {
+        List<Tag> newData = new ArrayList<>();
+        for (String s : list) {
+            if (!TextUtils.isEmpty(s)) {
+                Tag tag = new Tag(s);
+                tag.radius = 10f;
+                tag.tagTextColor = tagColor;
+                tag.layoutColor = getResources().getColor(tagColorBg);
+                tag.layoutColorPress = getResources().getColor(tagColorBg);
+                newData.add(tag);
+            }
+        }
+        tagView.removeAllTags();
+        if (newData.size() > 0) {
+            textView.setVisibility(View.GONE);
+            tagView.setVisibility(View.VISIBLE);
+            tagView.isTagOnClickEnable = false;
+            tagView.addTags(newData);
+        } else {
+            tagView.setVisibility(View.GONE);
+            textView.setVisibility(View.VISIBLE);
+        }
     }
 }

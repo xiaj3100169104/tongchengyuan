@@ -12,6 +12,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.juns.wechat.bean.UserPropertyBean;
+import com.juns.wechat.helper.CacheDataHelper;
 import com.juns.wechat.net.request.HttpActionImpl;
 import com.same.city.love.R;
 import com.juns.wechat.bean.UserBean;
@@ -142,24 +143,30 @@ public class PersonInfoShowActivity extends BaseToolbarActivity {
     public void initData() {
         setToolbarTitle(R.string.my_profile);
         //getToolbarRightView().setText("编辑");
-        setData();
+        setUserBasicInfo();
+        getUserDetailInfo();
     }
 
-    private void setData() {
+    private void setUserBasicInfo() {
         curUser = AccountManager.getInstance().getUser();
         setText(tvName, curUser.getNickName());
         //CommonViewHelper.setUserViewInfo(curUser, ivAvatar, tvNickName, null, tvUserName, false);
 
         String sex = curUser.getSex();
         //setText(UserBean.Sex.isMan(sex) ? "男" : "女");
+        setExtendInfo(CacheDataHelper.getUserLabelCache(curUser.getUserId()));
+
+    }
+
+    public void getUserDetailInfo() {
         HttpActionImpl.getInstance().queryUserData(TAG, curUser.getUserId(), new NetDataBeanCallback<UserBean>(UserBean.class) {
             @Override
             protected void onCodeSuccess(UserBean data) {
                 dismissProgressDialog();
                 //AccountManager.getInstance().setUser(data);
                 List<UserPropertyBean> userProperties = data.getUserProperties();
-
-                //finish();
+                CacheDataHelper.putUserLabelCache(curUser.getUserId(), userProperties);
+                setExtendInfo(userProperties);
             }
 
             @Override
@@ -177,34 +184,43 @@ public class PersonInfoShowActivity extends BaseToolbarActivity {
         startActivity(intent);
     }
 
-    @Subscriber(tag = UserTable.TABLE_NAME)
-    private void onDbDataChanged(DbDataEvent<UserBean> event) {
-        if (event.action == DbDataEvent.REPLACE || event.action == DbDataEvent.UPDATE) {
-            List<UserBean> updateData = event.data;
-            if (updateData != null && !updateData.isEmpty()) {
-                for (UserBean userBean : updateData) {
-                    if (userBean.getUserName().equals(curUser.getUserName())) {
-                        setData();
-                    }
-                }
-            }
-        }
+    @Subscriber(tag = EventCode.UPDATE_USER_LABEL)
+    private void onDataChanged(UserBean data) {
+        setUserBasicInfo();
+
     }
 
     @Subscriber(tag = EventCode.UPDATE_USER_LABEL)
-    private void onDbDataChanged(List<UserPropertyBean> event) {
-        for (UserPropertyBean u : event) {
+    private void onDataChanged2(List<UserPropertyBean> data) {
+        setExtendInfo(data);
+
+    }
+
+    public void setExtendInfo(List<UserPropertyBean> extendInfo) {
+        for (UserPropertyBean u : extendInfo) {
+            List<String> list = StringUtil.String2List(u.value, ",");
             switch (u.key) {
                 case UserPropertyBean.KEY_MY_LABEL:
-                    setLabelData(layoutMyLabel, tagViewMyLabel, u.value, R.color.tag_movie, R.color.tag_movie_bg, tvMyLabel);
+                    setLabelData(layoutMyLabel, tagViewMyLabel, list, R.color.tag_my_label, R.color.tag_my_label_bg, tvMyLabel);
+                    break;
+                case UserPropertyBean.KEY_INTEREST_SPORT:
+                    setLabelData(layoutInterestSport, tagViewInterestSport, list, R.color.tag_sport, R.color.tag_sport_bg, tvInterestSport);
+                    break;
+                case UserPropertyBean.KEY_INTEREST_MUSIC:
+                    setLabelData(layoutInterestMusic, tagViewInterestMusic, list, R.color.tag_music, R.color.tag_music_bg, tvInterestMusic);
+                    break;
+                case UserPropertyBean.KEY_INTEREST_FOOD:
+                    setLabelData(layoutInterestFood, tagViewInterestFood, list, R.color.tag_food, R.color.tag_food_bg, tvInterestFood);
+                    break;
+                case UserPropertyBean.KEY_INTEREST_MOVIE:
+                    setLabelData(layoutInterestMovie, tagViewInterestMovie, list, R.color.tag_movie, R.color.tag_movie_bg, tvInterestMovie);
                     break;
             }
         }
     }
 
-    private void setLabelData(ViewGroup layout, TagView tagView, String value, int tagColor, int tagColorBg,TextView textView) {
+    private void setLabelData(ViewGroup layout, TagView tagView, List<String> list, int tagColor, int tagColorBg, TextView textView) {
         List<Tag> newData = new ArrayList<>();
-        List<String> list = StringUtil.String2List(value, ",");
         for (String s : list) {
             if (!TextUtils.isEmpty(s)) {
                 Tag tag = new Tag(s);
@@ -226,4 +242,5 @@ public class PersonInfoShowActivity extends BaseToolbarActivity {
             layout.setVisibility(View.GONE);
         }
     }
+
 }
