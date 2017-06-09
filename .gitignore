@@ -2,5 +2,11 @@
 .idea/
 build/
 *.iml
+/androidTest
+/test
+.DS_Store
+/build
+/captures
+.externalNativeBuild
 local.properties
 *.jks
