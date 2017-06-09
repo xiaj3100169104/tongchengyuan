@@ -15,7 +15,9 @@ import android.os.Process;
 import android.text.TextUtils;
 
 
+import com.alibaba.fastjson.JSON;
 import com.baidu.mapapi.SDKInitializer;
+import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.config.ConfigUtil;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.request.HttpActionImpl;
@@ -24,6 +26,8 @@ import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 import org.xutils.x;
 
 import cn.smssdk.SMSSDK;
+
+import static com.style.manager.LogManager.logE;
 
 public class App extends Application {
 

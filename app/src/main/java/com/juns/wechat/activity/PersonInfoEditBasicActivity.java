@@ -12,15 +12,23 @@ import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.google.gson.JsonObject;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.request.HttpActionImpl;
+import com.juns.wechat.util.JsonUtil;
 import com.same.city.love.R;
 import com.style.base.BaseToolbarActivity;
 import com.style.dialog.EditAlertDialog;
+import com.style.event.EventCode;
+import com.style.event.EventManager;
 import com.style.net.core.NetDataBeanCallback;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -70,7 +78,6 @@ public class PersonInfoEditBasicActivity extends BaseToolbarActivity {
     private UserBean curUser;
 
     private String[] sexList = {"男", "女"};
-    public int p = 0;
     private String strBirthday;
 
     @Override
@@ -90,7 +97,7 @@ public class PersonInfoEditBasicActivity extends BaseToolbarActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.item_text_only:
-                //saveInfo();
+                saveInfo();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -100,10 +107,11 @@ public class PersonInfoEditBasicActivity extends BaseToolbarActivity {
     protected void initData() {
         setToolbarTitle(R.string.edit_basic_info);
         curUser = AccountManager.getInstance().getUser();
-        String sex = curUser.getSex();
-        tvSex.setText(UserBean.Sex.isMan(sex) ? "男" : "女");
+
         String nickName = curUser.getNickName();
         setText(tvName, nickName == null ? "" : nickName);
+        String sex = curUser.getSex();
+        tvSex.setText(UserBean.Sex.isMan(sex) ? "男" : "女");
     }
 
     @OnClick(R.id.layout_sex)
@@ -122,6 +130,7 @@ public class PersonInfoEditBasicActivity extends BaseToolbarActivity {
         openSelectBirthday();
     }
 
+
     private void openSelectSex(final String[] strings, final TextView textView) {
         int checkedItem = 0;
         String value = textView.getText().toString();
@@ -136,8 +145,7 @@ public class PersonInfoEditBasicActivity extends BaseToolbarActivity {
                 .setSingleChoiceItems(sexList, checkedItem, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //if (which == -1)
-                        p = which;
+                        int p = which;
                         textView.setText(strings[p]);
                         dialog.dismiss();
                     }
@@ -201,6 +209,7 @@ public class PersonInfoEditBasicActivity extends BaseToolbarActivity {
         tvBirthday.setText(strBirthday);
 
     }
+
     @OnClick(R.id.layout_emotion)
     public void modifyInfo3() {
         openSingleSelect(getResources().getStringArray(R.array.emotion), tvEmotion);
@@ -296,13 +305,35 @@ public class PersonInfoEditBasicActivity extends BaseToolbarActivity {
         });
 
     }
-    private void saveInfo(String nickName) {
 
-        HttpActionImpl.getInstance().updateUser(TAG, UserBean.NICKNAME, nickName, new NetDataBeanCallback<UserBean>(UserBean.class) {
+    private void saveInfo() {
+
+        String name = tvName.getText().toString();
+        String sex = tvSex.getText().toString();
+        String birthday = tvBirthday.getText().toString();
+        String education = tvEducation.getText().toString();
+        String emotion = tvEmotion.getText().toString();
+        String industry = tvIndustry.getText().toString();
+        String workArea = tvWorkArea.getText().toString();
+        String companyInfo = tvCompanyInfo.getText().toString();
+        String hometownInfo = tvHometownInfo.getText().toString();
+        String myHeart = tvMyHeart.getText().toString();
+        Map<String, Object> param = new HashMap<>();
+        if (!name.equals(curUser.getNickName()))
+            param.put(UserBean.NICKNAME, name);
+        if (!sex.equals(curUser.getSex()))
+            param.put(UserBean.NICKNAME, name);
+        UserBean u = new UserBean();
+        u.setNickName(name);
+        u.setSex(sex);
+        String s = JSON.toJSONString(u);
+        logE(TAG, s);
+        /*HttpActionImpl.getInstance().updateUser(TAG, UserBean.NICKNAME, nickName, new NetDataBeanCallback<UserBean>(UserBean.class) {
             @Override
             protected void onCodeSuccess(UserBean data) {
                 dismissProgressDialog();
                 AccountManager.getInstance().setUser(data);
+                EventManager.getDefault().post(data, EventCode.UPDATE_USER_BASIC);
                 finish();
             }
 
@@ -311,23 +342,7 @@ public class PersonInfoEditBasicActivity extends BaseToolbarActivity {
                 dismissProgressDialog();
                 showToast(msg);
             }
-        });
+        });*/
     }
 
-    private void modifySexToServer(String sex) {
-        HttpActionImpl.getInstance().updateUser(TAG, UserBean.SEX, sex, new NetDataBeanCallback<UserBean>(UserBean.class) {
-            @Override
-            protected void onCodeSuccess(UserBean data) {
-                dismissProgressDialog();
-                AccountManager.getInstance().setUser(data);
-                finish();
-            }
-
-            @Override
-            protected void onCodeFailure(String msg) {
-                dismissProgressDialog();
-                showToast(msg);
-            }
-        });
-    }
 }

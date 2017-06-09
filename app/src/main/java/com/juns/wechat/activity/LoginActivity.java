@@ -47,18 +47,17 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
     private UserBean userBean = AccountManager.getInstance().getUser();
 
     @Override
-    public void initData() {
-        initControl();
-        setListener();
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         mLayoutResID = R.layout.activity_login;
         super.onCreate(savedInstanceState);
 
     }
 
+    @Override
+    public void initData() {
+        initControl();
+        setListener();
+    }
     protected void initControl() {
         if (userBean != null) {
             etInputName.setText(userBean.getUserName());
