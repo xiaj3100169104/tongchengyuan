@@ -161,25 +161,27 @@ public class PersonInfoEditExtendActivity extends BaseToolbarActivity {
     }
 
     public void setExtendInfo(List<UserPropertyBean> extendInfo) {
-        for (UserPropertyBean u : extendInfo) {
-            List<String> list = StringUtil.String2List(u.value, ",");
+        if (extendInfo != null) {
+            for (UserPropertyBean u : extendInfo) {
+                List<String> list = StringUtil.String2List(u.value, ",");
 
-            switch (u.key) {
-                case UserPropertyBean.KEY_MY_LABEL:
-                    setLabelData(tagViewMyLabel, list, R.color.tag_my_label, R.color.tag_my_label_bg, tvMyLabel);
-                    break;
-                case UserPropertyBean.KEY_INTEREST_SPORT:
-                    setLabelData(tagViewInterestSport, list, R.color.tag_sport, R.color.tag_sport_bg, tvInterestSport);
-                    break;
-                case UserPropertyBean.KEY_INTEREST_MUSIC:
-                    setLabelData(tagViewInterestMusic, list, R.color.tag_music, R.color.tag_music_bg, tvInterestMusic);
-                    break;
-                case UserPropertyBean.KEY_INTEREST_FOOD:
-                    setLabelData(tagViewInterestFood, list, R.color.tag_food, R.color.tag_food_bg, tvInterestFood);
-                    break;
-                case UserPropertyBean.KEY_INTEREST_MOVIE:
-                    setLabelData(tagViewInterestMovie, list, R.color.tag_movie, R.color.tag_movie_bg, tvInterestMovie);
-                    break;
+                switch (u.key) {
+                    case UserPropertyBean.KEY_MY_LABEL:
+                        setLabelData(tagViewMyLabel, list, R.color.tag_my_label, R.color.tag_my_label_bg, tvMyLabel);
+                        break;
+                    case UserPropertyBean.KEY_INTEREST_SPORT:
+                        setLabelData(tagViewInterestSport, list, R.color.tag_sport, R.color.tag_sport_bg, tvInterestSport);
+                        break;
+                    case UserPropertyBean.KEY_INTEREST_MUSIC:
+                        setLabelData(tagViewInterestMusic, list, R.color.tag_music, R.color.tag_music_bg, tvInterestMusic);
+                        break;
+                    case UserPropertyBean.KEY_INTEREST_FOOD:
+                        setLabelData(tagViewInterestFood, list, R.color.tag_food, R.color.tag_food_bg, tvInterestFood);
+                        break;
+                    case UserPropertyBean.KEY_INTEREST_MOVIE:
+                        setLabelData(tagViewInterestMovie, list, R.color.tag_movie, R.color.tag_movie_bg, tvInterestMovie);
+                        break;
+                }
             }
         }
     }
@@ -251,7 +253,7 @@ public class PersonInfoEditExtendActivity extends BaseToolbarActivity {
         multiDialog.show();
     }
 
-    private void setLabelData(TagView tagView,  List<String> list, int tagColor, int tagColorBg, TextView textView) {
+    private void setLabelData(TagView tagView, List<String> list, int tagColor, int tagColorBg, TextView textView) {
         List<Tag> newData = new ArrayList<>();
         for (String s : list) {
             if (!TextUtils.isEmpty(s)) {

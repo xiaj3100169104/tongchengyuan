@@ -197,24 +197,26 @@ public class PersonInfoShowActivity extends BaseToolbarActivity {
     }
 
     public void setExtendInfo(List<UserPropertyBean> extendInfo) {
-        for (UserPropertyBean u : extendInfo) {
-            List<String> list = StringUtil.String2List(u.value, ",");
-            switch (u.key) {
-                case UserPropertyBean.KEY_MY_LABEL:
-                    setLabelData(layoutMyLabel, tagViewMyLabel, list, R.color.tag_my_label, R.color.tag_my_label_bg, tvMyLabel);
-                    break;
-                case UserPropertyBean.KEY_INTEREST_SPORT:
-                    setLabelData(layoutInterestSport, tagViewInterestSport, list, R.color.tag_sport, R.color.tag_sport_bg, tvInterestSport);
-                    break;
-                case UserPropertyBean.KEY_INTEREST_MUSIC:
-                    setLabelData(layoutInterestMusic, tagViewInterestMusic, list, R.color.tag_music, R.color.tag_music_bg, tvInterestMusic);
-                    break;
-                case UserPropertyBean.KEY_INTEREST_FOOD:
-                    setLabelData(layoutInterestFood, tagViewInterestFood, list, R.color.tag_food, R.color.tag_food_bg, tvInterestFood);
-                    break;
-                case UserPropertyBean.KEY_INTEREST_MOVIE:
-                    setLabelData(layoutInterestMovie, tagViewInterestMovie, list, R.color.tag_movie, R.color.tag_movie_bg, tvInterestMovie);
-                    break;
+        if (extendInfo != null) {
+            for (UserPropertyBean u : extendInfo) {
+                List<String> list = StringUtil.String2List(u.value, ",");
+                switch (u.key) {
+                    case UserPropertyBean.KEY_MY_LABEL:
+                        setLabelData(layoutMyLabel, tagViewMyLabel, list, R.color.tag_my_label, R.color.tag_my_label_bg, tvMyLabel);
+                        break;
+                    case UserPropertyBean.KEY_INTEREST_SPORT:
+                        setLabelData(layoutInterestSport, tagViewInterestSport, list, R.color.tag_sport, R.color.tag_sport_bg, tvInterestSport);
+                        break;
+                    case UserPropertyBean.KEY_INTEREST_MUSIC:
+                        setLabelData(layoutInterestMusic, tagViewInterestMusic, list, R.color.tag_music, R.color.tag_music_bg, tvInterestMusic);
+                        break;
+                    case UserPropertyBean.KEY_INTEREST_FOOD:
+                        setLabelData(layoutInterestFood, tagViewInterestFood, list, R.color.tag_food, R.color.tag_food_bg, tvInterestFood);
+                        break;
+                    case UserPropertyBean.KEY_INTEREST_MOVIE:
+                        setLabelData(layoutInterestMovie, tagViewInterestMovie, list, R.color.tag_movie, R.color.tag_movie_bg, tvInterestMovie);
+                        break;
+                }
             }
         }
     }
