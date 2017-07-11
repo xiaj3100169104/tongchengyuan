@@ -1,7 +1,6 @@
 package com.juns.wechat.net.request;
 
 import com.juns.wechat.bean.CommentBean;
-import com.juns.wechat.bean.UserPropertyBean;
 import com.juns.wechat.config.ConfigUtil;
 import com.juns.wechat.manager.AccountManager;
 import com.style.net.core.HttpActionManager;
@@ -9,12 +8,7 @@ import com.style.net.core.NetDataBeanCallback;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
-import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
