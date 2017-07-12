@@ -14,6 +14,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.juns.wechat.bean.FriendBean;
+import com.juns.wechat.database.dao.FriendDao;
+import com.juns.wechat.database.dao.UserDao;
 import com.same.city.love.R;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.manager.AccountManager;
@@ -24,6 +27,9 @@ import com.juns.wechat.net.response.LoginBean;
 import com.juns.wechat.util.SyncDataUtil;
 import com.style.base.BaseToolbarActivity;
 import com.style.utils.CommonUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 
@@ -58,6 +64,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
         initControl();
         setListener();
     }
+
     protected void initControl() {
         if (userBean != null) {
             etInputName.setText(userBean.getUserName());
@@ -80,10 +87,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_wenti:
-            /*CommonUtil.startActivity(LoginActivity.this, WebViewActivity.class,
-                    new BasicNameValuePair(Constants.Title, "帮助"),
-					new BasicNameValuePair(Constants.URL,
-							"http://weixin.qq.com/"));*/
                 break;
             case R.id.btn_register:
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
@@ -113,8 +116,35 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
             return;
         }
         showProgressDialog("正在登录。。。");
-        //UserRequest.login(userName, password, loginCallBack);
-        HttpActionImpl.getInstance().login(TAG, userName, password, new NetDataBeanCallback<LoginBean>(LoginBean.class) {
+        LoginBean data = new LoginBean();
+        UserBean u = new UserBean();
+        u.setUserId(1);
+        u.setUserName(userName);
+        u.setNickName("style");
+        data.setUserBean(u);
+        data.setToken("dfhfoqfhqiuhfreuierhngjh");
+        AccountManager.getInstance().setUser(data.userBean);
+        AccountManager.getInstance().setToken(data.token);
+        AccountManager.getInstance().setUserPassWord(password);
+        List<FriendBean> friendBeanList = new ArrayList<>();
+        for (int i = 2; i < 10; i++) {
+            FriendBean f = new FriendBean();
+            f.setOwnerId(1);
+            f.setContactId(i);
+            f.setRemark("好友" + i);
+        }
+        FriendDao.getInstance().save(friendBeanList);
+        List<UserBean> list = new ArrayList<>();
+        for (int i = 2; i < 10; i++) {
+            UserBean u2 = new UserBean();
+            u2.setUserId(i);
+            u2.setUserName(1820282300 + i + "");
+            u2.setNickName("用户=" + i);
+        }
+        UserDao.getInstance().save(list);
+        skip(MainActivity.class);
+        finish();
+        /*HttpActionImpl.getInstance().login(TAG, userName, password, new NetDataBeanCallback<LoginBean>(LoginBean.class) {
             @Override
             protected void onCodeSuccess(LoginBean data) {
                 dismissProgressDialog();
@@ -142,7 +172,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
                 dismissProgressDialog();
                 showToast(msg);
             }
-        });
+        });*/
     }
 
     // EditText监听器

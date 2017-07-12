@@ -27,12 +27,12 @@ public class SyncDataUtil {
         return mInstance;
     }
     public void syncData() {
-        syncFriendData("");
+        //syncFriendData("");
     }
 
     public void syncData(String tag, Callback callback) {
-        this.callback = callback;
-        syncFriendData(tag);
+        //this.callback = callback;
+        //syncFriendData(tag);
     }
 
     private void syncFriendData(final String tag) {

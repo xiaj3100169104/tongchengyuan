@@ -31,7 +31,8 @@ public class SplashActivity extends BaseActivity {
     protected void initData() {
         UserBean userBean = AccountManager.getInstance().getUser();
         if (userBean != null) {
-            SyncDataUtil.getInstance().syncData(TAG, new SyncDataUtil.Callback() {
+            pageToHome();
+            /*SyncDataUtil.getInstance().syncData(TAG, new SyncDataUtil.Callback() {
                 @Override
                 public void onSuccess() {
                     pageToHome();
@@ -41,7 +42,7 @@ public class SplashActivity extends BaseActivity {
                 public void onFailure() {
                     pageToHome();
                 }
-            });
+            });*/
         } else {
             pageToLogin();
         }
