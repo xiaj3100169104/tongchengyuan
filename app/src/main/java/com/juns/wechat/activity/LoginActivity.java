@@ -126,14 +126,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
         AccountManager.getInstance().setUser(data.userBean);
         AccountManager.getInstance().setToken(data.token);
         AccountManager.getInstance().setUserPassWord(password);
-        List<FriendBean> friendBeanList = new ArrayList<>();
-        for (int i = 2; i < 10; i++) {
-            FriendBean f = new FriendBean();
-            f.setOwnerId(1);
-            f.setContactId(i);
-            f.setRemark("好友" + i);
-        }
-        FriendDao.getInstance().save(friendBeanList);
+
         List<UserBean> list = new ArrayList<>();
         for (int i = 2; i < 10; i++) {
             UserBean u2 = new UserBean();
@@ -142,6 +135,15 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
             u2.setNickName("用户=" + i);
         }
         UserDao.getInstance().save(list);
+
+        List<FriendBean> friendBeanList = new ArrayList<>();
+        for (int i = 2; i < 10; i++) {
+            FriendBean f = new FriendBean();
+            f.setOwnerId(1);
+            f.setContactId(i);
+            f.setRemark("好友" + i);
+        }
+        FriendDao.getInstance().save(friendBeanList);
         skip(MainActivity.class);
         finish();
         /*HttpActionImpl.getInstance().login(TAG, userName, password, new NetDataBeanCallback<LoginBean>(LoginBean.class) {
