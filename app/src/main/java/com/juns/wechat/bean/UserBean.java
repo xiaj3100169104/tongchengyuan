@@ -64,6 +64,12 @@ public class UserBean implements Serializable {
 
     }
 
+    public UserBean(int userId, String nickName, String headUrl) {
+        this.userId = userId;
+        this.nickName = nickName;
+        this.headUrl = headUrl;
+    }
+
     public enum Sex{
         MAN("M"), WOMAN("W");
 
@@ -215,5 +221,26 @@ public class UserBean implements Serializable {
 
     public void setUserProperties(List<UserPropertyBean> userProperties) {
         this.userProperties = userProperties;
+    }
+
+    @Override
+    public String toString() {
+        return "UserBean{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", userName='" + userName + '\'' +
+                ", nickName='" + nickName + '\'' +
+                ", passWord='" + passWord + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", headUrl='" + headUrl + '\'' +
+                ", signature='" + signature + '\'' +
+                ", sex='" + sex + '\'' +
+                ", location='" + location + '\'' +
+                ", birthday='" + birthday + '\'' +
+                ", type='" + type + '\'' +
+                ", createDate=" + createDate +
+                ", modifyDate=" + modifyDate +
+                ", userProperties=" + userProperties +
+                '}';
     }
 }

@@ -13,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,10 +22,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.juns.wechat.adpter.MainAdapter;
+import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.xmpp.event.XmppEvent;
 import com.juns.wechat.database.UserTable;
 import com.juns.wechat.database.dao.DbDataEvent;
+import com.juns.wechat.database.dao.FriendDao;
+import com.juns.wechat.database.dao.UserDao;
 import com.juns.wechat.fragment.Fragment_Discover;
 import com.juns.wechat.fragment.Fragment_Friends;
 import com.juns.wechat.fragment.Fragment_Profile;
@@ -37,6 +41,7 @@ import com.same.city.love.R;
 
 import org.simple.eventbus.EventBus;
 import org.simple.eventbus.Subscriber;
+import org.xutils.db.sqlite.WhereBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,6 +114,15 @@ public class MainActivity extends AppCompatActivity {
         toggle.syncState();
 
         initData();
+
+       /* List<FriendBean> friendBeanList = FriendDao.getInstance().findAllByParams(WhereBuilder.b());
+        for (FriendBean f : friendBeanList) {
+            Log.e(TAG, f.toString());
+        }*/
+        List<UserBean> userList = UserDao.getInstance().findAllByParams(WhereBuilder.b());
+        for (UserBean u : userList) {
+            Log.e(TAG, u.toString());
+        }
     }
 
     @Override
@@ -268,6 +282,7 @@ public class MainActivity extends AppCompatActivity {
             unreaMsgdLabel.setVisibility(View.GONE);
         }
     }
+
     public void setUnreadInviteMsgLabel(int unreadNum) {
         if (unreadNum > 0) {
             unreadAddressLable.setText(unreadNum + "");
@@ -276,6 +291,7 @@ public class MainActivity extends AppCompatActivity {
             unreadAddressLable.setVisibility(View.GONE);
         }
     }
+
     @Override
     public void onBackPressed() {
         if (isDrawerOpen()) {

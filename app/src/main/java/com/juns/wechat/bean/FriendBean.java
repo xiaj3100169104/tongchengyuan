@@ -47,6 +47,12 @@ public class FriendBean {
 
     }
 
+    public FriendBean(int ownerId, int contactId, String subType) {
+        this.ownerId = ownerId;
+        this.contactId = contactId;
+        this.subType = subType;
+    }
+
     public int getId() {
         return id;
     }
@@ -120,5 +126,20 @@ public class FriendBean {
             contactUser = UserDao.getInstance().findByUserId(contactId);
         return contactUser;
 
+    }
+
+    @Override
+    public String toString() {
+        return "FriendBean{" +
+                "id=" + id +
+                ", ownerId=" + ownerId +
+                ", contactId=" + contactId +
+                ", subType='" + subType + '\'' +
+                ", remark='" + remark + '\'' +
+                ", flag=" + flag +
+                ", modifyDate=" + modifyDate +
+                ", sortLetters='" + sortLetters + '\'' +
+                ", contactUser=" + contactUser +
+                '}';
     }
 }

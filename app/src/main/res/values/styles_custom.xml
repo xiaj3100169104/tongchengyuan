@@ -40,4 +40,9 @@
         <item name="textPaddingBottom">6dp</item>
 
     </style>
+    <style name="normal_title_content" parent="text_black_15sp">
+        <item name="android:layout_marginLeft">16dp</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:textColorHint">@color/text_color_hint</item>
+    </style>
 </resources>

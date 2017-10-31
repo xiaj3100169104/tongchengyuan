@@ -118,7 +118,7 @@ public class FriendCircleActivity extends BaseToolbarActivity {
         mRecyclerView.setArrowImageView(R.drawable.ic_pulltorefresh_arrow);
         mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallPulse);
         //设置头部加载颜色
-        mRecyclerView.setHeaderViewColor(R.color.white, android.R.color.white, R.color.black);
+        mRecyclerView.setHeaderViewColor(R.color.white, android.R.color.white, R.color.bg_refresh_view);
         //设置底部加载颜色
         mRecyclerView.setFooterViewColor(R.color.gray, android.R.color.darker_gray, R.color.white);
         //设置底部加载文字提示

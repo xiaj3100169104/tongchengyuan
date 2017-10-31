@@ -18,9 +18,6 @@ import butterknife.OnClick;
 
 public class Fragment_Discover extends BaseFragment {
 
-    @Bind(R.id.txt_pengyouquan)
-    TextView txtPengyouquan;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mLayoutResID = R.layout.fragment_dicover;
@@ -32,7 +29,7 @@ public class Fragment_Discover extends BaseFragment {
 
     }
 
-    @OnClick(R.id.txt_pengyouquan) // 朋友圈
+    @OnClick(R.id.layout_discovery_dynamic) // 朋友圈
     public void friendCircle() {
         skip(FriendCircleActivity.class);
     }

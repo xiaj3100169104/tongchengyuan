@@ -44,8 +44,10 @@ public class ConversationAdapter extends BaseRecyclerViewAdapter {
         MsgItem msgItem = (MsgItem) getData(position);
         FriendBean f = msgItem.friendBean;
         UserBean u = msgItem.user;
-        if (u != null)
+        if (u != null) {
+            logE(TAG, u.getHeadUrl());
             ImageLoader.loadAvatar(mContext, holder.ivAvatar, u.getHeadUrl());
+        }
         if (f != null && u != null) {
             String showName = !TextUtils.isEmpty(f.getRemark()) ? f.getRemark() : u.getShowName();
             setText(holder.tvTitle, showName);

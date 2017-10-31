@@ -55,11 +55,8 @@ public class Fragment_Friends extends BaseFragment {
     private int unReadCount = 0;
     private List<FriendBean> dataList;
     private LinearLayoutManager layoutManager;
-
     private ContactAdapter adapter;
-
-    private String account = AccountManager.getInstance().getUserName();
-    private int accountId = AccountManager.getInstance().getUserId();
+    private UserBean curUser = AccountManager.getInstance().getUser();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -80,7 +77,7 @@ public class Fragment_Friends extends BaseFragment {
         adapter.setOnHeaderItemClickListener(new ContactAdapter.OnHeaderItemClickListener() {
             @Override
             public void onClickNewFriend() {
-                MessageDao.getInstance().markAsRead(account, MsgType.MSG_TYPE_SEND_INVITE);
+                MessageDao.getInstance().markAsRead(curUser.getUserName(), MsgType.MSG_TYPE_SEND_INVITE);
                 startActivity(new Intent(getActivity(), NewFriendsListActivity.class));
             }
         });
@@ -111,7 +108,7 @@ public class Fragment_Friends extends BaseFragment {
     }
 
     private void setUnreadInviteMsgData() {
-        int count = MessageDao.getInstance().getUnreadInviteMsgCount(account);
+        int count = MessageDao.getInstance().getUnreadInviteMsgCount(curUser.getUserName());
         unReadCount = count;
         adapter.notifyItemChanged(0);
         adapter.setUnReadCount(unReadCount);
@@ -119,14 +116,16 @@ public class Fragment_Friends extends BaseFragment {
     }
 
     private void setFriendData() {
-        Log.e(TAG, "setFriendData");
-        List<FriendBean> list = friendDao.getMyFriends(accountId);
+        Log.e(TAG, "setFriendData.ownerId=" + curUser.getUserId());
+        List<FriendBean> list = friendDao.getMyFriends(curUser.getUserId());
         if (null != list) {
             int size = list.size();
             for (FriendBean f : list) {
                 String hanzi = !TextUtils.isEmpty(f.getRemark()) ? f.getRemark() : f.getContactUser().getShowName();
                 String sortLetter = HanyuToPinyin.hanziToCapital(hanzi);
                 f.setSortLetters(sortLetter);
+                //Log.e(TAG, f.toString());
+
             }
             // 根据a-z进行排序源数据
             Collections.sort(list, new UploadPhoneComparator());
