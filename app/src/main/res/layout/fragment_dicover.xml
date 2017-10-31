@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@color/window_bg"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
@@ -16,14 +15,16 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txt_pengyouquan"
-                style="@style/text_black_15sp"
-                android:layout_marginTop="20dp"
-                android:drawableLeft="@drawable/ic_friends_circle"
-                android:drawableRight="@drawable/right"
-                android:text="@string/moments" />
+            <RelativeLayout style="@style/Layouts.normal_RelativeLayout">
 
+                <TextView
+                    android:id="@+id/txt_pengyouquan"
+                    style="@style/text_black_15sp"
+                    android:layout_centerVertical="true"
+                    android:drawableLeft="@drawable/ic_friends_circle"
+                    android:gravity="center_vertical"
+                    android:text="@string/moments" />
+            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

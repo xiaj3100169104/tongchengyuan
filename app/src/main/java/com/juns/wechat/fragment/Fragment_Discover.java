@@ -16,7 +16,7 @@ import com.style.base.BaseFragment;
 import butterknife.Bind;
 import butterknife.OnClick;
 
-public class Fragment_Dicover extends BaseFragment {
+public class Fragment_Discover extends BaseFragment {
 
     @Bind(R.id.txt_pengyouquan)
     TextView txtPengyouquan;

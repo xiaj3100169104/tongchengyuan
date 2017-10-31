@@ -65,7 +65,7 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter<DynamicBean> {
             }
             CommonViewHelper.setUserViewInfo(user, holder.ivAvatar, holder.tvNike, null, null, false);
 
-            holder.tvContent.setText(SmileUtils.getSmiledText(mContext, bean.getContent()));
+            holder.tvContent.setText(SmileUtils.getInstance().getSmiledText(bean.getContent()));
             holder.tvTime.setText(MyDateUtil.getTimeFromNow(bean.getCreateDate(), MyDateUtil.FORMAT_yyyy_MM_dd_HH_mm_ss));
 
             holder.ivDiscuss.setOnClickListener(new OnClickListener() {

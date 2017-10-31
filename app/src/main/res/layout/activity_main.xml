@@ -8,6 +8,7 @@
         android:id="@+id/fragment_container"
         android:layout_width="fill_parent"
         android:layout_height="0dip"
+        android:background="@color/bg_color"
         android:layout_weight="1">
 
         <android.support.v4.view.ViewPager

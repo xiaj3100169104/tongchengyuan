@@ -20,19 +20,19 @@ import java.util.List;
  */
 
 public class CommonExpressionView {
-    private static final String TAG = "CommonExpressionHelper";
+    private static final String TAG = "CommonExpressionView";
 
     public static View getStickerView(final Context context, final EditText etInputText) {
         View view = View.inflate(context, R.layout.expression_gridview, null);
         RecyclerView gv = (RecyclerView) view.findViewById(R.id.rcv_sticker);
         gv.setLayoutManager(new GridLayoutManager(context, 7));
-        List<SmileUtils.SmileBean> list = SmileUtils.getSmileData2(context);
+        List<SmileUtils.SmileBean> list = SmileUtils.getInstance().getSmileData2(context);
         ExpressionAdapter2 expressionAdapter = new ExpressionAdapter2(context, list);
         gv.setAdapter(expressionAdapter);
         expressionAdapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener<SmileUtils.SmileBean>() {
             @Override
             public void onItemClick(int position, SmileUtils.SmileBean data) {
-                CharSequence sequence = SmileUtils.getSmiledText(context, data.key);
+                CharSequence sequence = SmileUtils.getInstance().getSmiledText(data.key);
                 int index = etInputText.getSelectionStart();
                 Editable edit = etInputText.getEditableText();//获取EditText的文字
                 edit.insert(index, sequence);//光标所在位置插入文字

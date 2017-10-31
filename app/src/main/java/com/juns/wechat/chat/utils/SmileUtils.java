@@ -20,42 +20,54 @@ import com.same.city.love.R;
 //表情
 public class SmileUtils {
 
-    private static List<SmileBean> emoticonsNames2;
+    private static List<SmileBean> emoticonsNames2 = new ArrayList<>();
+    private static Map<Pattern, Integer> emoticons = new HashMap<>();
 
     private static final Factory spannableFactory = Spannable.Factory.getInstance();
 
-    private static Map<Pattern, Integer> emoticons = new HashMap<>();
+    private static SmileUtils instance;
+    private Context context;
 
-    private static void addPattern(String smile, int resource) {
+    public synchronized static SmileUtils getInstance() {
+        if (instance == null) {
+            instance = new SmileUtils();
+        }
+        return instance;
+    }
+
+    public void init(Context context) {
+        this.context = context;
+
+        for (int x = 1; x <= 43; x++) {
+            String name = "e_" + x;
+            int resId = context.getResources().getIdentifier(name, "drawable", context.getPackageName());
+            String key = "[(A" + x + ")]";
+            emoticonsNames2.add(new SmileBean(key, resId));
+            addPattern(key, resId);
+        }
+        for (int x = 0; x <= 62; x++) {
+            String name = "f_static_0" + x;
+            int resId = context.getResources().getIdentifier(name, "drawable", context.getPackageName());
+            String key = "[(B" + x + ")]";
+            emoticonsNames2.add(new SmileBean(key, resId));
+            addPattern(key, resId);
+        }
+        for (int x = 44; x <= 64; x++) {
+            String name = "e_" + x;
+            int resId = context.getResources().getIdentifier(name, "drawable", context.getPackageName());
+            String key = "[(A" + x + ")]";
+            emoticonsNames2.add(new SmileBean(key, resId));
+            addPattern(key, resId);
+        }
+    }
+
+    private void addPattern(String smile, int resource) {
         emoticons.put(Pattern.compile(Pattern.quote(smile)), resource);
     }
 
-    public static List<SmileBean> getSmileData2(Context context) {
+    public List<SmileBean> getSmileData2(Context context) {
         if (emoticonsNames2 == null) {
-            emoticonsNames2 = new ArrayList<>();
-            emoticons = new HashMap<>();
-
-            for (int x = 1; x <= 43; x++) {
-                String name = "e_" + x;
-                int resId = context.getResources().getIdentifier(name, "drawable", context.getPackageName());
-                String key = "[(A" + x + ")]";
-                emoticonsNames2.add(new SmileBean(key, resId));
-                addPattern(key, resId);
-            }
-            for (int x = 0; x <= 62; x++) {
-                String name = "f_static_0" + x;
-                int resId = context.getResources().getIdentifier(name, "drawable", context.getPackageName());
-                String key = "[(B" + x + ")]";
-                emoticonsNames2.add(new SmileBean(key, resId));
-                addPattern(key, resId);
-            }
-            for (int x = 44; x <= 64; x++) {
-                String name = "e_" + x;
-                int resId = context.getResources().getIdentifier(name, "drawable", context.getPackageName());
-                String key = "[(A" + x + ")]";
-                emoticonsNames2.add(new SmileBean(key, resId));
-                addPattern(key, resId);
-            }
+            init(context);
         }
         return emoticonsNames2;
     }
@@ -63,11 +75,10 @@ public class SmileUtils {
     /**
      * replace existing spannable with smiles
      *
-     * @param context
      * @param spannable
      * @return
      */
-    public static boolean addSmiles(Context context, Spannable spannable) {
+    private boolean addSmiles(Spannable spannable) {
         boolean hasChanges = false;
         for (Entry<Pattern, Integer> entry : emoticons.entrySet()) {
             Matcher matcher = entry.getKey().matcher(spannable);
@@ -92,9 +103,9 @@ public class SmileUtils {
         return hasChanges;
     }
 
-    public static Spannable getSmiledText(Context context, String sequence) {
+    public Spannable getSmiledText(String sequence) {
         Spannable spannable = spannableFactory.newSpannable(sequence);
-        addSmiles(context, spannable);
+        addSmiles(spannable);
         return spannable;
     }
 

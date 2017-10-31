@@ -57,7 +57,7 @@ public class ConversationAdapter extends BaseRecyclerViewAdapter {
             holder.tvUnreadMsgNumber.setVisibility(View.VISIBLE);
             holder.tvUnreadMsgNumber.setText(unreadMsgCount + "");
         }
-        setText(holder.tvContent, SmileUtils.getSmiledText(mContext, msgItem.msg.getTypeDesc()));
+        setText(holder.tvContent, SmileUtils.getInstance().getSmiledText(msgItem.msg.getTypeDesc()));
         setText(holder.tvTime, TimeUtil.getRecentTime(msgItem.msg.getDate()));
         super.setOnItemClickListener(holder, position);
 

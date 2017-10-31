@@ -42,7 +42,7 @@ public class CommentAdapter extends BaseRecyclerViewAdapter {
         CommentBean commentBean = (CommentBean) getData(position);
         String user1 = commentBean.getCommentUserName();
         String user2 = commentBean.getReplyUserName();
-        CharSequence content = SmileUtils.getSmiledText(mContext, commentBean.getContent());
+        CharSequence content = SmileUtils.getInstance().getSmiledText(commentBean.getContent());
         SpannableStringBuilder builder;
         if (TextUtils.isEmpty(user2))
             builder = addClickablePart(user1, content);

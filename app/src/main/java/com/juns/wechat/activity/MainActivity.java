@@ -25,7 +25,7 @@ import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.xmpp.event.XmppEvent;
 import com.juns.wechat.database.UserTable;
 import com.juns.wechat.database.dao.DbDataEvent;
-import com.juns.wechat.fragment.Fragment_Dicover;
+import com.juns.wechat.fragment.Fragment_Discover;
 import com.juns.wechat.fragment.Fragment_Friends;
 import com.juns.wechat.fragment.Fragment_Profile;
 import com.juns.wechat.fragment.msg.Fragment_Msg;
@@ -76,6 +76,9 @@ public class MainActivity extends AppCompatActivity {
 
     private MainAdapter mainAdapter;
     DrawerLayout drawer;
+    private Fragment_Msg fragmentMsg;
+    private Fragment_Friends fragmentFriends;
+    private Fragment_Discover fragmentDicover;
 
     //@Override
     public void initData() {
@@ -98,16 +101,6 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-                openDrawer();
-            }
-        });
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -154,20 +147,24 @@ public class MainActivity extends AppCompatActivity {
         unreadAddressLable = (TextView) findViewById(R.id.unread_contact_number);
 
         imagebuttons = new ImageView[3];
-        imagebuttons[2] = (ImageView) findViewById(R.id.ib_weixin);
+        imagebuttons[0] = (ImageView) findViewById(R.id.ib_weixin);
         imagebuttons[1] = (ImageView) findViewById(R.id.ib_contact_list);
-        imagebuttons[0] = (ImageView) findViewById(R.id.ib_find);
+        imagebuttons[2] = (ImageView) findViewById(R.id.ib_find);
 
         textviews = new TextView[3];
-        textviews[2] = (TextView) findViewById(R.id.tv_weixin);
+        textviews[0] = (TextView) findViewById(R.id.tv_weixin);
         textviews[1] = (TextView) findViewById(R.id.tv_contact_list);
-        textviews[0] = (TextView) findViewById(R.id.tv_find);
+        textviews[2] = (TextView) findViewById(R.id.tv_find);
 
         vpMainContent = (ViewPager) findViewById(R.id.vp_main_content);
         List<Fragment> fragments = new ArrayList<>();
-        fragments.add(new Fragment_Dicover());
-        fragments.add(new Fragment_Friends());
-        fragments.add(new Fragment_Msg());
+        fragmentMsg = new Fragment_Msg();
+        fragmentFriends = new Fragment_Friends();
+        fragmentDicover = new Fragment_Discover();
+        fragments.add(fragmentMsg);
+        fragments.add(fragmentFriends);
+        fragments.add(fragmentDicover);
+
         mainAdapter = new MainAdapter(getSupportFragmentManager(), fragments);
         vpMainContent.setOffscreenPageLimit(3);
         vpMainContent.setAdapter(mainAdapter);
@@ -181,13 +178,13 @@ public class MainActivity extends AppCompatActivity {
     public void onTabClicked(View view) {
         switch (view.getId()) {
             case R.id.re_weixin:
-                index = 2;
+                index = 0;
                 break;
             case R.id.re_contact_list:
                 index = 1;
                 break;
             case R.id.re_find:
-                index = 0;
+                index = 2;
                 break;
         }
         setSelectedIndex(index);
@@ -207,13 +204,14 @@ public class MainActivity extends AppCompatActivity {
 
         switch (index) {
             case 0:
-                setToolbarTitle(R.string.discover);
+                setToolbarTitle(R.string.chat);
+
                 break;
             case 1:
                 setToolbarTitle(R.string.contacts);
                 break;
             case 2:
-                setToolbarTitle(R.string.chat);
+                setToolbarTitle(R.string.discover);
 
                 break;
         }

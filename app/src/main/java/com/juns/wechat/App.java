@@ -18,6 +18,7 @@ import android.text.TextUtils;
 import com.alibaba.fastjson.JSON;
 import com.baidu.mapapi.SDKInitializer;
 import com.juns.wechat.bean.UserBean;
+import com.juns.wechat.chat.utils.SmileUtils;
 import com.juns.wechat.config.ConfigUtil;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.request.HttpActionImpl;
@@ -48,6 +49,7 @@ public class App extends Application {
 		ZXingLibrary.initDisplayOpinion(this);
         AccountManager.getInstance().init(mContext);
 		HttpActionImpl.getInstance().init();
+		SmileUtils.getInstance().init(mContext);
         /*// 设置拍摄视频缓存路径
 		VCamera.setVideoCachePath(FileConfig.DIR_CACHE);
 		// 开启log输出,ffmpeg输出到logcat

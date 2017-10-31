@@ -21,13 +21,14 @@ import org.xutils.db.sqlite.WhereBuilder;
  * Created by 王宗文 on 2016/6/8.
  */
 public class AccountManager {
-    private static AccountManager instance;
     private UserBean user;
     private Context context;
     private UserDao userDao;
 
     private static final String CURRENT_LOGIN_USER_NAME = "current_login_username";
     private static final String CURRENT_LOGIN_USER_ID = "current_login_user_id";
+
+    private static AccountManager instance;
 
     public synchronized static AccountManager getInstance() {
         if (instance == null) {
