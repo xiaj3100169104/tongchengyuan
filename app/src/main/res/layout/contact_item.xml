@@ -22,7 +22,8 @@
             android:layout_width="36dip"
             android:layout_height="36dip"
             android:layout_marginLeft="4dp"
-            android:src="@mipmap/empty_photo"/>
+            android:src="@mipmap/empty_photo"
+            android:scaleType="centerCrop"/>
 
         <RelativeLayout
             android:layout_width="match_parent"

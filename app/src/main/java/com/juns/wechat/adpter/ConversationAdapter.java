@@ -18,6 +18,7 @@ import com.juns.wechat.util.TimeUtil;
 import com.juns.wechat.widget.swipe.SwipeLayout;
 import com.style.base.BaseRecyclerViewAdapter;
 import com.style.manager.ImageLoader;
+import com.style.utils.MyDateUtil;
 
 import java.util.List;
 
@@ -60,7 +61,7 @@ public class ConversationAdapter extends BaseRecyclerViewAdapter {
             holder.tvUnreadMsgNumber.setText(unreadMsgCount + "");
         }
         setText(holder.tvContent, SmileUtils.getInstance().getSmiledText(msgItem.msg.getTypeDesc()));
-        setText(holder.tvTime, TimeUtil.getRecentTime(msgItem.msg.getDate()));
+        setText(holder.tvTime, MyDateUtil.getTimeConversationString(msgItem.msg.getDate().getTime()));
         super.setOnItemClickListener(holder, position);
 
     }

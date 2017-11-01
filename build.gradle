@@ -5,6 +5,8 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.1'
+        classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2' // add plugin
+
     }
 }
 
@@ -14,6 +16,8 @@ allprojects {
         maven {
             url 'https://oss.sonatype.org/content/repositories/snapshots'
         }
+        //greendao数据库升级依赖包仓库
+        maven { url "https://jitpack.io" }
         mavenCentral()
     }
 }

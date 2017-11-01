@@ -13,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,22 +23,27 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.juns.wechat.adpter.MainAdapter;
+import com.juns.wechat.bean.DynamicBean;
 import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.bean.UserBean;
+import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.chat.xmpp.event.XmppEvent;
 import com.juns.wechat.database.UserTable;
 import com.juns.wechat.database.dao.DbDataEvent;
 import com.juns.wechat.database.dao.FriendDao;
+import com.juns.wechat.database.dao.MessageDao;
 import com.juns.wechat.database.dao.UserDao;
 import com.juns.wechat.fragment.Fragment_Discover;
 import com.juns.wechat.fragment.Fragment_Friends;
 import com.juns.wechat.fragment.Fragment_Profile;
 import com.juns.wechat.fragment.msg.Fragment_Msg;
+import com.juns.wechat.greendao.dao.GreenDaoManager;
 import com.juns.wechat.helper.CommonViewHelper;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.service.XmppService;
 import com.juns.wechat.util.LogUtil;
 import com.same.city.love.R;
+import com.style.utils.StringUtil;
 
 import org.simple.eventbus.EventBus;
 import org.simple.eventbus.Subscriber;
@@ -113,16 +119,31 @@ public class MainActivity extends AppCompatActivity {
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        initData();
-
+        /*List<MessageBean> friendBeanList = MessageDao.getInstance().findAllByParams(WhereBuilder.b());
+        for (MessageBean f : friendBeanList) {
+            Log.e(TAG, f.toString());
+            if (TextUtils.isEmpty(f.getOtherName())){
+                MessageDao.getInstance().deleteOne(f);
+            }
+        }*/
        /* List<FriendBean> friendBeanList = FriendDao.getInstance().findAllByParams(WhereBuilder.b());
         for (FriendBean f : friendBeanList) {
             Log.e(TAG, f.toString());
         }*/
-        List<UserBean> userList = UserDao.getInstance().findAllByParams(WhereBuilder.b());
+      /*  List<UserBean> userList = UserDao.getInstance().findAllByParams(WhereBuilder.b());
+
+        long i = 18202820000l;
         for (UserBean u : userList) {
             Log.e(TAG, u.toString());
-        }
+            if (TextUtils.isEmpty(u.getUserName())) {
+                u.setUserName(i + "");
+            }
+            UserDao.getInstance().update(u);
+            i++;
+
+        }*/
+        initData();
+
     }
 
     @Override

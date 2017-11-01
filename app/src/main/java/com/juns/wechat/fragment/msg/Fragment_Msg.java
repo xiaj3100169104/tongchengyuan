@@ -29,6 +29,8 @@ import com.style.view.DividerItemDecoration;
 import org.simple.eventbus.Subscriber;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.Bind;
@@ -46,6 +48,7 @@ public class Fragment_Msg extends BaseFragment {
     private String account = AccountManager.getInstance().getUserName();
     private List<MsgItem> dataList;
     private ConversationAdapter adapter;
+    private UserBean curUser = AccountManager.getInstance().getUser();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -76,7 +79,7 @@ public class Fragment_Msg extends BaseFragment {
     }
 
     private void refreshData() {
-        List<MsgItem> msgItems = MessageDao.getInstance().getLastMessageWithEveryFriend(account);
+        List<MsgItem> msgItems = MessageDao.getInstance().getLastMessageWithEveryFriend(curUser.getUserId(), account);
         if (msgItems == null || msgItems.isEmpty()) {
             txtNochat.setVisibility(View.VISIBLE);
         } else {
@@ -85,6 +88,7 @@ public class Fragment_Msg extends BaseFragment {
 
             }*/
             txtNochat.setVisibility(View.GONE);
+            Collections.sort(msgItems, new MsgItemComparator());
             dataList.clear();
             dataList.addAll(msgItems);
             adapter.notifyDataSetChanged();
@@ -108,4 +112,11 @@ public class Fragment_Msg extends BaseFragment {
             refreshData(); //重新加载数据
         }
     }
+
+    public class MsgItemComparator implements Comparator<MsgItem> {
+        public int compare(MsgItem o1, MsgItem o2) {
+            return o2.msg.getDate().compareTo(o1.msg.getDate());
+        }
+    }
+
 }

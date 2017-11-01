@@ -1,104 +1,133 @@
 package com.juns.wechat.bean;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Transient;
+
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.List;
 
-public class DynamicBean implements Serializable{
+import org.greenrobot.greendao.annotation.Generated;
 
-	private Integer dynamicId;// Id
-	private Integer publisherId;// 发表人
-	private String content;// 动态内容
-	private String images;// 图片
-	private String createDate; //创建日期
-	private BigInteger modifyDate;///修改信息日期
-	private String  publisherName;
-	private UserBean user;//发布者
-	private List<CommentBean> supportList; //点赞列表
-	private List<CommentBean> commentList;//评论列表
+@Entity
+public class DynamicBean implements Serializable {
+    //不支持BigInteger类型，当改变数据结构时删除自动生成的有注解的构造函数，重新make project
+    private static final long serialVersionUID = 1L;
 
-    public DynamicBean(){
+    @Id
+    private String dynamicId;// Id
+    private Integer publisherId;// 发表人
+    private String content;// 动态内容
+    private String images;// 图片
+    private String createDate; //创建日期
+    private String publisherName;
+    @Transient
+    private UserBean user;//发布者
+    @Transient
+    private List<CommentBean> supportList; //点赞列表
+    @Transient
+    private List<CommentBean> commentList;//评论列表
+
+    public DynamicBean() {
 
     }
 
-	public Integer getDynamicId() {
-		return dynamicId;
-	}
+    @Generated(hash = 837157471)
+    public DynamicBean(String dynamicId, Integer publisherId, String content,
+            String images, String createDate, String publisherName) {
+        this.dynamicId = dynamicId;
+        this.publisherId = publisherId;
+        this.content = content;
+        this.images = images;
+        this.createDate = createDate;
+        this.publisherName = publisherName;
+    }
 
-	public void setDynamicId(Integer dynamicId) {
-		this.dynamicId = dynamicId;
-	}
+    public String getDynamicId() {
+        return dynamicId;
+    }
 
-	public Integer getPublisherId() {
-		return publisherId;
-	}
+    public void setDynamicId(String dynamicId) {
+        this.dynamicId = dynamicId;
+    }
 
-	public void setPublisherId(Integer publisherId) {
-		this.publisherId = publisherId;
-	}
+    public Integer getPublisherId() {
+        return publisherId;
+    }
 
-	public String getContent() {
-		return content;
-	}
+    public void setPublisherId(Integer publisherId) {
+        this.publisherId = publisherId;
+    }
 
-	public void setContent(String content) {
-		this.content = content;
-	}
+    public String getContent() {
+        return content;
+    }
 
-	public String getImages() {
-		return images;
-	}
+    public void setContent(String content) {
+        this.content = content;
+    }
 
-	public void setImages(String images) {
-		this.images = images;
-	}
+    public String getImages() {
+        return images;
+    }
 
-	public String getCreateDate() {
-		return createDate;
-	}
+    public void setImages(String images) {
+        this.images = images;
+    }
 
-	public void setCreateDate(String createDate) {
-		this.createDate = createDate;
-	}
+    public String getCreateDate() {
+        return createDate;
+    }
 
-	public BigInteger getModifyDate() {
-		return modifyDate;
-	}
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
+    }
 
-	public void setModifyDate(BigInteger modifyDate) {
-		this.modifyDate = modifyDate;
-	}
+    public String getPublisherName() {
+        return publisherName;
+    }
 
-	public String getPublisherName() {
-		return publisherName;
-	}
+    public void setPublisherName(String publisherName) {
+        this.publisherName = publisherName;
+    }
 
-	public void setPublisherName(String publisherName) {
-		this.publisherName = publisherName;
-	}
+    public UserBean getUser() {
+        return user;
+    }
 
-	public UserBean getUser() {
-		return user;
-	}
+    public void setUser(UserBean user) {
+        this.user = user;
+    }
 
-	public void setUser(UserBean user) {
-		this.user = user;
-	}
+    public List<CommentBean> getSupportList() {
+        return supportList;
+    }
 
-	public List<CommentBean> getSupportList() {
-		return supportList;
-	}
+    public void setSupportList(List<CommentBean> supportList) {
+        this.supportList = supportList;
+    }
 
-	public void setSupportList(List<CommentBean> supportList) {
-		this.supportList = supportList;
-	}
+    public List<CommentBean> getCommentList() {
+        return commentList;
+    }
 
-	public List<CommentBean> getCommentList() {
-		return commentList;
-	}
+    public void setCommentList(List<CommentBean> commentList) {
+        this.commentList = commentList;
+    }
 
-	public void setCommentList(List<CommentBean> commentList) {
-		this.commentList = commentList;
-	}
-
+    @Override
+    public String toString() {
+        return "DynamicBean{" +
+                ", dynamicId=" + dynamicId +
+                ", publisherId=" + publisherId +
+                ", content='" + content + '\'' +
+                ", images='" + images + '\'' +
+                ", createDate='" + createDate + '\'' +
+                ", publisherName='" + publisherName + '\'' +
+                ", user=" + user +
+                ", supportList=" + supportList +
+                ", commentList=" + commentList +
+                '}';
+    }
 }

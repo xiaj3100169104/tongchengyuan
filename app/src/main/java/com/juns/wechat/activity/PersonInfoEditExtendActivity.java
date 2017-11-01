@@ -11,8 +11,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.juns.wechat.bean.UserBean;
+import com.juns.wechat.bean.UserExtendInfo;
 import com.juns.wechat.bean.UserPropertyBean;
+import com.juns.wechat.greendao.dao.GreenDaoManager;
 import com.juns.wechat.helper.CacheDataHelper;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.request.HttpActionImpl;
@@ -21,6 +25,7 @@ import com.style.base.BaseToolbarActivity;
 import com.style.event.EventCode;
 import com.style.event.EventManager;
 import com.style.net.core.NetDataBeanCallback;
+import com.style.utils.CommonUtil;
 import com.style.utils.StringUtil;
 
 import java.util.ArrayList;
@@ -86,6 +91,7 @@ public class PersonInfoEditExtendActivity extends BaseToolbarActivity {
     TagView tagViewInterestMovie;
 
     private UserBean curUser;
+    private UserExtendInfo userExtendInfo;
 
 
     @Override
@@ -115,11 +121,22 @@ public class PersonInfoEditExtendActivity extends BaseToolbarActivity {
     protected void initData() {
         setToolbarTitle(R.string.edit_extend_info);
         curUser = AccountManager.getInstance().getUser();
-        setExtendInfo(CacheDataHelper.getUserLabelCache(curUser.getUserId()));
+        //setExtendInfo(CacheDataHelper.getUserLabelCache(curUser.getUserId()));
+        userExtendInfo = GreenDaoManager.getInstance().queryUserProperty(curUser.getUserId());
+        if (userExtendInfo != null) {
+            List<UserPropertyBean> userProperties = JSON.parseObject(userExtendInfo.getData(), new TypeReference<List<UserPropertyBean>>() {
+            });
+            setExtendInfo(userProperties);
+        }
     }
 
     private void saveInfo() {
-        final List<UserPropertyBean> list = new ArrayList<>();
+        if (userExtendInfo == null) {
+            userExtendInfo = new UserExtendInfo();
+            userExtendInfo.setUserExtendId(CommonUtil.getUUID());
+            userExtendInfo.setUserId(curUser.getUserId());
+        }
+        List<UserPropertyBean> list = new ArrayList<>();
         list.add(new UserPropertyBean(UserPropertyBean.KEY_MY_LABEL, getTagStr(tagViewMyLabel)));
         list.add(new UserPropertyBean(UserPropertyBean.KEY_INTEREST_SPORT, getTagStr(tagViewInterestSport)));
         list.add(new UserPropertyBean(UserPropertyBean.KEY_INTEREST_MUSIC, getTagStr(tagViewInterestMusic)));
@@ -129,8 +146,15 @@ public class PersonInfoEditExtendActivity extends BaseToolbarActivity {
         com.alibaba.fastjson.JSONArray jsonArray = new com.alibaba.fastjson.JSONArray();
         jsonArray.addAll(list);
         String value = jsonArray.toString();
+        userExtendInfo.setData(value);
         logE(TAG, value);
-        HttpActionImpl.getInstance().updateUserProperty(TAG, value, new NetDataBeanCallback<UserBean>(UserBean.class) {
+
+        dismissProgressDialog();
+        GreenDaoManager.getInstance().save(userExtendInfo);
+        //CacheDataHelper.putUserLabelCache(curUser.getUserId(), list);
+        EventManager.getDefault().post(list, EventCode.UPDATE_USER_LABEL);
+        finish();
+        /*HttpActionImpl.getInstance().updateUserProperty(TAG, value, new NetDataBeanCallback<UserBean>(UserBean.class) {
             @Override
             protected void onCodeSuccess(UserBean data) {
                 dismissProgressDialog();
@@ -145,7 +169,7 @@ public class PersonInfoEditExtendActivity extends BaseToolbarActivity {
                 dismissProgressDialog();
                 showToast(msg);
             }
-        });
+        });*/
     }
 
     private String getTagStr(TagView tagView) {
@@ -255,14 +279,16 @@ public class PersonInfoEditExtendActivity extends BaseToolbarActivity {
 
     private void setLabelData(TagView tagView, List<String> list, int tagColor, int tagColorBg, TextView textView) {
         List<Tag> newData = new ArrayList<>();
-        for (String s : list) {
-            if (!TextUtils.isEmpty(s)) {
-                Tag tag = new Tag(s);
-                tag.radius = 10f;
-                tag.tagTextColor = tagColor;
-                tag.layoutColor = getResources().getColor(tagColorBg);
-                tag.layoutColorPress = getResources().getColor(tagColorBg);
-                newData.add(tag);
+        if (list != null) {
+            for (String s : list) {
+                if (!TextUtils.isEmpty(s)) {
+                    Tag tag = new Tag(s);
+                    tag.radius = 10f;
+                    tag.tagTextColor = tagColor;
+                    tag.layoutColor = getResources().getColor(tagColorBg);
+                    tag.layoutColorPress = getResources().getColor(tagColorBg);
+                    newData.add(tag);
+                }
             }
         }
         tagView.removeAllTags();

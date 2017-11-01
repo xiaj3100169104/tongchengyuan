@@ -35,7 +35,8 @@
                         android:id="@+id/ivAvatar"
                         android:layout_width="70.0dip"
                         android:layout_height="70.0dip"
-                        android:src="@drawable/default_avatar" />
+                        android:src="@drawable/default_avatar"
+                        android:scaleType="centerCrop"/>
 
                     <LinearLayout
                         android:layout_width="match_parent"

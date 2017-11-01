@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
+import com.juns.wechat.greendao.dao.GreenDaoManager;
 import com.same.city.love.R;
 import com.juns.wechat.bean.DynamicBean;
 import com.juns.wechat.bean.UserBean;
@@ -28,6 +29,7 @@ import com.style.rxAndroid.RXTaskManager;
 import com.style.rxAndroid.callback.RXTaskCallBack;
 import com.style.utils.BitmapUtil;
 import com.style.utils.CommonUtil;
+import com.style.utils.MyDateUtil;
 import com.style.utils.PictureUtils;
 
 import java.io.File;
@@ -190,9 +192,9 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
         });
     }
 
-    private void startSend(File[] files) {
+    private void startSend(File[] fileList) {
         String content = etContent.getText().toString();
-        HttpActionImpl.getInstance().addDynamic(TAG, content, files, new NetDataBeanCallback<DynamicBean>(DynamicBean.class) {
+        /*HttpActionImpl.getInstance().addDynamic(TAG, content, files, new NetDataBeanCallback<DynamicBean>(DynamicBean.class) {
             @Override
             protected void onCodeSuccess(DynamicBean data) {
                 dismissProgressDialog();
@@ -205,8 +207,32 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
             protected void onCodeFailure(String msg) {
                 dismissProgressDialog();
             }
-        });
+        });*/
+        DynamicBean data = new DynamicBean();
+        data.setDynamicId(CommonUtil.getUUID());
+        data.setPublisherId(curUser.getUserId());
+        data.setCreateDate(MyDateUtil.longToString(System.currentTimeMillis(), MyDateUtil.FORMAT_yyyy_MM_dd_HH_mm_ss));
+        data.setContent(content);
+
+        StringBuilder b = new StringBuilder("");
+        if (fileList != null && fileList.length > 0) {
+            for (int i = 0; i < fileList.length; i++) {
+                File file = fileList[i];
+               b.append(file.getName()).append(",");
+            }
+        }
+        if (b.length() > 0)
+            b.deleteCharAt(b.length() - 1);
+        String value = b.toString();
+        data.setImages(value);
+        GreenDaoManager.getInstance().insert(data);
+        dismissProgressDialog();
+        data.setUser(curUser);
+        setResult(RESULT_OK, new Intent().putExtra("sendDynamic", data));
+        finish();
     }
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

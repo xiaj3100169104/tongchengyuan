@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
+    android:background="@color/bg_color"
     android:orientation="vertical">
 
     <include layout="@layout/comm_toolbar" />
@@ -17,7 +17,9 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <include layout="@layout/person_info_photo_wall" />
+            <include
+                layout="@layout/person_info_photo_wall"
+                android:visibility="visible" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -28,62 +30,64 @@
                 android:paddingTop="10dp"
                 android:showDividers="middle|end">
 
-                <LinearLayout
-                    android:id="@+id/layout_base_info"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_pressed_default"
-                    android:orientation="vertical"
-                    android:padding="15dp"
-                    android:visibility="visible">
+                    android:layout_height="94dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/white"
+                    android:padding="15dp">
 
-                    <TextView
-                        android:id="@+id/tv_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Style"
-                        android:textColor="@color/black_light" />
+                    <ImageView
+                        android:id="@+id/ivAvatar"
+                        android:layout_width="64dp"
+                        android:layout_height="64dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:src="@drawable/default_avatar"
+                        android:scaleType="centerCrop"/>
 
                     <LinearLayout
+                        android:id="@+id/ll_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp">
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_toRightOf="@id/ivAvatar"
+                        android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/tv_age"
-                            style="@style/text_white_12sp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/tv_bg_age"
-                            android:paddingBottom="2dp"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
-                            android:paddingTop="2dp"
-                            android:text="25" />
+                            android:id="@+id/tvNickName"
+                            style="@style/text_black_15sp"
+                            android:text="备注" />
 
-                        <TextView
-                            android:id="@+id/tv_constellation"
-                            style="@style/text_white_12sp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:background="@drawable/tv_bg_constellation"
-                            android:paddingBottom="2dp"
-                            android:paddingLeft="10dp"
-                            android:paddingRight="10dp"
-                            android:paddingTop="2dp"
-                            android:text="狮子座" />
+                        <ImageView
+                            android:id="@+id/ivSex"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginLeft="8dp"
+                            android:src="@drawable/ic_sex_male" />
                     </LinearLayout>
 
                     <TextView
-                        style="@style/text_gray_light_13sp"
+                        android:id="@+id/tvUserName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:text="点击编辑个人信息(如姓名、年龄、性别)" />
-                </LinearLayout>
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_toRightOf="@id/ivAvatar"
+                        android:text="微信号:"
+                        android:textColor="#AAAAAA"
+                        android:textSize="13sp" />
 
+                </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp">
                 <include layout="@layout/person_info_basic" />
+                </RelativeLayout>
 
                 <include layout="@layout/person_info_extend" />
 

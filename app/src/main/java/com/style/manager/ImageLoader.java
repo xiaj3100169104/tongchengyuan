@@ -13,24 +13,29 @@ import com.same.city.love.R;
 import com.juns.wechat.config.ConfigUtil;
 import com.juns.wechat.util.BitmapUtil;
 import com.juns.wechat.util.DisplayUtil;
+import com.style.constant.FileConfig;
 
 import org.xutils.cache.LruCache;
 
 public class ImageLoader {
     private static final String TAG = "ImageLoader";
 
-    private static CharSequence getUrl(String fileName) {
+    private static CharSequence getLocalUrl(String fileName) {
+        return FileConfig.DIR_CACHE + "/" + fileName;
+    }
+
+    private static CharSequence getRemoteUrl(String fileName) {
         return ConfigUtil.getDownUrl(fileName);
     }
 
     public static void loadAvatar(Context context, ImageView imageView, String fileName) {
         if (!TextUtils.isEmpty(fileName))
-        Glide.with(context).load(getUrl(fileName)).placeholder(R.drawable.default_avatar).error(R.drawable.default_avatar).into(imageView);
+            Glide.with(context).load(getLocalUrl(fileName)).placeholder(R.drawable.default_avatar).error(R.drawable.default_avatar).into(imageView);
     }
 
     public static void loadPictureByName(Context context, ImageView imageView, String fileName) {
         if (!TextUtils.isEmpty(fileName))
-        Glide.with(context).load(getUrl(fileName)).placeholder(R.mipmap.empty_photo).error(R.mipmap.image_fail).into(imageView);
+            Glide.with(context).load(getLocalUrl(fileName)).placeholder(R.mipmap.empty_photo).error(R.mipmap.image_fail).into(imageView);
     }
 
     public static void loadPictureByUrl(Context context, ImageView imageView, String url) {
@@ -40,7 +45,7 @@ public class ImageLoader {
 
     public static void loadBigPicture(Context context, ImageView imageView, String url) {
         if (!TextUtils.isEmpty(url))
-        Glide.with(context).load(url).error(R.mipmap.image_fail).into(imageView);
+            Glide.with(context).load(url).error(R.mipmap.image_fail).into(imageView);
     }
 
     private static LruCache<String, Bitmap> bitmapCache;

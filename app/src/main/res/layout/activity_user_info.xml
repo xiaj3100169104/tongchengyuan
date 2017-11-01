@@ -28,7 +28,8 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:src="@drawable/default_avatar" />
+                android:src="@drawable/default_avatar"
+                android:scaleType="centerCrop"/>
 
             <LinearLayout
                 android:id="@+id/ll_name"

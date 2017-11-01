@@ -45,11 +45,14 @@ public class ImagePagerActivity extends BaseActivity {
         ArrayList<String> urls = getIntent().getStringArrayListExtra(EXTRA_IMAGE_URLS);
         List<Fragment> dataList = new ArrayList<>();
         for (String url : urls) {
+            logE(TAG, "url=" + url);
             ImageDetailFragment f = ImageDetailFragment.newInstance(url);
             dataList.add(f);
         }
         ImagePagerAdapter mAdapter = new ImagePagerAdapter(getSupportFragmentManager(), dataList);
         mPager.setAdapter(mAdapter);
+        //如果不设置将导致超过3页后原fragment被销毁，数据丢失
+        mPager.setOffscreenPageLimit(9);
         CharSequence text = getString(R.string.viewpager_indicator, 1, mPager.getAdapter().getCount());
         indicator.setText(text);
 

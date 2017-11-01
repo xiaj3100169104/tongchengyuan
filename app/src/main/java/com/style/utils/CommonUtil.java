@@ -44,6 +44,7 @@ import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
+import java.nio.charset.Charset;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -53,6 +54,11 @@ import java.util.List;
 
 public class CommonUtil {
     private static final String TAG = "CommonUtil";
+
+    public static String getUUID() {
+        String UUID = java.util.UUID.randomUUID().toString();
+        return new String(UUID.getBytes(), Charset.forName("UTF-8"));
+    }
 
     public static String md5(final String c) {
         MessageDigest md = null;

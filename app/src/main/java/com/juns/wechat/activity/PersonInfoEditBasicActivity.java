@@ -15,7 +15,11 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.JsonObject;
+import com.juns.wechat.bean.UserBasicInfo;
 import com.juns.wechat.bean.UserBean;
+import com.juns.wechat.database.dao.UserDao;
+import com.juns.wechat.greendao.dao.GreenDaoManager;
+import com.juns.wechat.greendao.dao.UserBasicInfoDao;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.request.HttpActionImpl;
 import com.juns.wechat.util.JsonUtil;
@@ -25,6 +29,7 @@ import com.style.dialog.EditAlertDialog;
 import com.style.event.EventCode;
 import com.style.event.EventManager;
 import com.style.net.core.NetDataBeanCallback;
+import com.style.utils.CommonUtil;
 
 import java.util.Calendar;
 import java.util.HashMap;
@@ -79,6 +84,7 @@ public class PersonInfoEditBasicActivity extends BaseToolbarActivity {
 
     private String[] sexList = {"男", "女"};
     private String strBirthday;
+    private UserBasicInfo userBasicInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +118,23 @@ public class PersonInfoEditBasicActivity extends BaseToolbarActivity {
         setText(tvName, nickName == null ? "" : nickName);
         String sex = curUser.getSex();
         tvSex.setText(UserBean.Sex.isMan(sex) ? "男" : "女");
+        setText(tvBirthday, curUser.getBirthday());
+
+        userBasicInfo = GreenDaoManager.getInstance().queryUserBasic(curUser.getUserId());
+        setUserBasicInfo(userBasicInfo);
+
+    }
+
+    private void setUserBasicInfo(UserBasicInfo u) {
+        if (u != null) {
+            setText(tvEmotion, u.getEmotion());
+            setText(tvEducation, u.getEducation());
+            setText(tvIndustry, u.getIndustry());
+            setText(tvWorkArea, u.getWorkArea());
+            setText(tvCompanyInfo, u.getCompanyInfo());
+            setText(tvHometownInfo, u.getHometownInfo());
+            setText(tvMyHeart, u.getMyHeart());
+        }
     }
 
     @OnClick(R.id.layout_sex)
@@ -318,16 +341,25 @@ public class PersonInfoEditBasicActivity extends BaseToolbarActivity {
         String companyInfo = tvCompanyInfo.getText().toString();
         String hometownInfo = tvHometownInfo.getText().toString();
         String myHeart = tvMyHeart.getText().toString();
-        Map<String, Object> param = new HashMap<>();
-        if (!name.equals(curUser.getNickName()))
-            param.put(UserBean.NICKNAME, name);
-        if (!sex.equals(curUser.getSex()))
-            param.put(UserBean.NICKNAME, name);
-        UserBean u = new UserBean();
-        u.setNickName(name);
-        u.setSex(sex);
+
+        curUser.setNickName(name);
+        curUser.setSex(sex);
+        curUser.setBirthday(birthday);
+        UserDao.getInstance().update(curUser);
+        if (userBasicInfo == null)
+            userBasicInfo = new UserBasicInfo(CommonUtil.getUUID(), curUser.getUserId(), education, emotion, industry, workArea, companyInfo, hometownInfo, myHeart);
+        else
+            userBasicInfo.setData(education, emotion, industry, workArea, companyInfo, hometownInfo, myHeart);
+        GreenDaoManager.getInstance().save(userBasicInfo);
+        dismissProgressDialog();
+        AccountManager.getInstance().setUser(curUser);
+        EventManager.getDefault().post(curUser, EventCode.UPDATE_USER_HEAD);
+        EventManager.getDefault().post(userBasicInfo, EventCode.UPDATE_USER_BASIC);
+
+        finish();
+        /*curUser.set
         String s = JSON.toJSONString(u);
-        logE(TAG, s);
+        logE(TAG, s);*/
         /*HttpActionImpl.getInstance().updateUser(TAG, UserBean.NICKNAME, nickName, new NetDataBeanCallback<UserBean>(UserBean.class) {
             @Override
             protected void onCodeSuccess(UserBean data) {

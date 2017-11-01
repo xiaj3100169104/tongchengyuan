@@ -18,6 +18,7 @@ import com.github.jdsjlzx.interfaces.OnRefreshListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.github.jdsjlzx.recyclerview.ProgressStyle;
+import com.juns.wechat.greendao.dao.GreenDaoManager;
 import com.same.city.love.R;
 import com.juns.wechat.bean.CommentBean;
 import com.juns.wechat.bean.DynamicBean;
@@ -184,11 +185,11 @@ public class FriendCircleActivity extends BaseToolbarActivity {
             }
         });
 
-        if (cacheList != null) {
+       /* if (cacheList != null) {
             mRecyclerView.setLoadMoreEnabled(true);
             dataList.addAll(cacheList);
             mDataAdapter.notifyDataSetChanged();
-        }
+        }*/
 
         //先加载缓存，再延迟刷新
         handler.postDelayed(new Runnable() {
@@ -235,7 +236,7 @@ public class FriendCircleActivity extends BaseToolbarActivity {
     }
 
     private void getData() {
-        int dynamicId = 0;
+        String dynamicId = null;
         if (action == ACTION_LOAD_MORE) {
             if (dataList.size() > 1) {
                 DynamicBean dynamicBean = dataList.get(dataList.size() - 1);
@@ -269,13 +270,28 @@ public class FriendCircleActivity extends BaseToolbarActivity {
                 showToast(msg);
             }
         });
+        List<DynamicBean> data = GreenDaoManager.getInstance().queryByPage(dataList.size(), 5, curUser.getUserId());
+        mRecyclerView.refreshComplete(5);
+        if (data != null && data.size() > 0) {
+            mRecyclerView.setLoadMoreEnabled(true);
+
+            if (action == ACTION_REFRESH) {
+                dataList.clear();
+                setFirstPageCacheData(data);
+            }
+            dataList.addAll(data);
+            mDataAdapter.notifyDataSetChanged();
+        } else {
+            //the end
+            mRecyclerView.setNoMore(true);
+        }
     }
 
     private void setFirstPageCacheData(List<DynamicBean> data) {
-        if (cacheList == null)
+        /*if (cacheList == null)
             cacheList = new ArrayList<>();
         cacheList.clear();
-        cacheList.addAll(data);
+        cacheList.addAll(data);*/
     }
 
     @Override

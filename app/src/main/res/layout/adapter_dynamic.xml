@@ -21,8 +21,8 @@
 
                 <ImageView
                     android:id="@+id/iv_avatar"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/default_avatar"/>
 
@@ -45,11 +45,12 @@
 
                             <TextView
                                 android:id="@+id/tv_nike"
-                                style="@style/text_black_15sp"
+                                style="@style/text_black_14sp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:singleLine="true"
-                                android:text="昵称" />
+                                android:text="昵称"
+                                android:textColor="@color/blue2"/>
 
                         </LinearLayout>
 
@@ -57,14 +58,15 @@
 
 
                     <RelativeLayout
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp">
 
                         <TextView
                             android:id="@+id/tv_content"
-                            style="@style/text_black_15sp"
-                            android:layout_width="fill_parent"
+                            style="@style/text_black_14sp"
+                            android:singleLine="false"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:lineSpacingExtra="@dimen/line_Spacing_Extra"
                             android:maxLines="6"
@@ -102,7 +104,7 @@
 
                             <TextView
                                 android:id="@+id/tv_time"
-                                style="@style/text_gray_13sp"
+                                style="@style/text_gray_12sp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
@@ -143,6 +145,11 @@
                         android:orientation="vertical"
                         android:padding="5dp">
 
+                        <android.support.v7.widget.RecyclerView
+                            android:id="@+id/recyclerView"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
                         <TextView
                             android:id="@+id/tv_support_list"
                             style="@style/text_black_14sp"
@@ -155,10 +162,6 @@
                             android:textColor="@color/blue"
                             android:visibility="gone"/>
 
-                        <android.support.v7.widget.RecyclerView
-                            android:id="@+id/recyclerView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>

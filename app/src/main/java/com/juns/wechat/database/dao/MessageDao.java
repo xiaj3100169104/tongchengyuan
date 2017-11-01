@@ -68,7 +68,7 @@ public class MessageDao extends BaseDao<MessageBean>{
      * 获取每一个用户与这个用户聊天的最近的一条消息
      * @param userName
      */
-    public List<MsgItem> getLastMessageWithEveryFriend(String userName){
+    public List<MsgItem> getLastMessageWithEveryFriend(Integer userId, String userName){
         SqlInfo sqlInfo = new SqlInfo("select * from wcMessage where myselfName = ? and flag != -1 and type < ? group by otherName order by date");
         sqlInfo.addBindArg(new KeyValue(UserBean.USERNAME, userName));
         sqlInfo.addBindArg(new KeyValue("key2", MsgType.MSG_TYPE_SEND_INVITE));
@@ -78,7 +78,7 @@ public class MessageDao extends BaseDao<MessageBean>{
             while (cursor.moveToNext()){
                 MsgItem msgItem = new MsgItem();
                 MessageBean msg = CursorUtil.fromCursor(cursor, MessageBean.class);
-                FriendBean friendBean = FriendDao.getInstance().findByOwnerAndContactName(AccountManager.getInstance().getUser().userId, msg.getOtherName());
+                FriendBean friendBean = FriendDao.getInstance().findByOwnerAndContactName(userId, msg.getOtherName());
                 UserBean userBean = UserDao.getInstance().findByName(msg.getOtherName());
                 int unreadMsgCount = MessageDao.getInstance().getUnreadMsgNum(msg.getMyselfName(), msg.getOtherName());
                 msgItem.msg = msg;

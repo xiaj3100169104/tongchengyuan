@@ -80,11 +80,6 @@ public class MessageBean {
         }
     }
 
-    @Override
-    public String toString() {
-        return "[id: " + id + "]";
-    }
-
     public int getId() {
         return id;
     }
@@ -176,5 +171,22 @@ public class MessageBean {
             msgObj = Msg.fromJson(msg, type);
         }
         return msgObj;
+    }
+
+    @Override
+    public String toString() {
+        return "MessageBean{" +
+                "id=" + id +
+                ", myselfName='" + myselfName + '\'' +
+                ", otherName='" + otherName + '\'' +
+                ", msg='" + msg + '\'' +
+                ", type=" + type +
+                ", packetId='" + packetId + '\'' +
+                ", date=" + date +
+                ", direction=" + direction +
+                ", state=" + state +
+                ", flag=" + flag +
+                ", msgObj=" + msgObj +
+                '}';
     }
 }

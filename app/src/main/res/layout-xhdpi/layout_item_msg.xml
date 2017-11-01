@@ -47,7 +47,8 @@
                     android:id="@+id/iv_avatar"
                     android:layout_width="50.0dip"
                     android:layout_height="50.0dip"
-                    android:src="@drawable/default_avatar" />
+                    android:src="@drawable/default_avatar"
+                    android:scaleType="centerCrop"/>
 
                 <TextView
                     android:id="@+id/tv_unread_msg_number"
@@ -92,7 +93,7 @@
                     android:layout_toRightOf="@+id/txt_state"
                     android:singleLine="true"
                     android:textColor="@color/black1"
-                    android:textSize="14sp" />
+                    android:textSize="13sp" />
             </RelativeLayout>
 
             <TextView

@@ -7,18 +7,22 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
+import com.juns.wechat.bean.UserBasicInfo;
+import com.juns.wechat.bean.UserExtendInfo;
 import com.juns.wechat.bean.UserPropertyBean;
+import com.juns.wechat.greendao.dao.GreenDaoManager;
 import com.juns.wechat.helper.CacheDataHelper;
+import com.juns.wechat.helper.CommonViewHelper;
 import com.juns.wechat.net.request.HttpActionImpl;
 import com.same.city.love.R;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.ShowBigImage;
-import com.juns.wechat.database.dao.DbDataEvent;
-import com.juns.wechat.database.UserTable;
 import com.juns.wechat.manager.AccountManager;
 import com.style.base.BaseToolbarActivity;
 import com.style.constant.Skip;
@@ -36,14 +40,14 @@ import me.kaede.tagview.Tag;
 import me.kaede.tagview.TagView;
 
 public class PersonInfoShowActivity extends BaseToolbarActivity {
-    @Bind(R.id.layout_base_info)
-    LinearLayout layoutBaseInfo;
-    @Bind(R.id.tv_name)
-    TextView tvName;
-    @Bind(R.id.tv_age)
-    TextView tvAge;
-    @Bind(R.id.tv_constellation)
-    TextView tvConstellation;
+    @Bind(R.id.ivAvatar)
+    ImageView ivAvatar;
+    @Bind(R.id.tvNickName)
+    TextView tvNickName;
+    @Bind(R.id.ivSex)
+    ImageView ivSex;
+    @Bind(R.id.tvUserName)
+    TextView tvUserName;
     @Bind(R.id.tv_industry)
     TextView tvIndustry;
     @Bind(R.id.layout_industry)
@@ -109,6 +113,7 @@ public class PersonInfoShowActivity extends BaseToolbarActivity {
     TagView tagViewInterestMovie;
 
     private UserBean curUser;
+    private UserBasicInfo userBasicInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -143,19 +148,35 @@ public class PersonInfoShowActivity extends BaseToolbarActivity {
     public void initData() {
         setToolbarTitle(R.string.my_profile);
         //getToolbarRightView().setText("编辑");
-        setUserBasicInfo();
-        getUserDetailInfo();
+        curUser = AccountManager.getInstance().getUser();
+        userBasicInfo = GreenDaoManager.getInstance().queryUserBasic(curUser.getUserId());
+        setUserHeadInfo(curUser);
+        setUserBasicInfo(userBasicInfo);
+        UserExtendInfo userExtendInfo = GreenDaoManager.getInstance().queryUserProperty(curUser.getUserId());
+        if (userExtendInfo != null) {
+            List<UserPropertyBean> userProperties = JSON.parseObject(userExtendInfo.getData(), new TypeReference<List<UserPropertyBean>>() {
+            });
+            setExtendInfo(userProperties);
+        }
+        //getUserDetailInfo();
     }
 
-    private void setUserBasicInfo() {
-        curUser = AccountManager.getInstance().getUser();
-        setText(tvName, curUser.getNickName());
-        //CommonViewHelper.setUserViewInfo(curUser, ivAvatar, tvNickName, null, tvUserName, false);
+    private void setUserHeadInfo(UserBean userBean) {
+        CommonViewHelper.setUserViewInfo(userBean, ivAvatar, tvNickName, ivSex, tvUserName, true);
 
-        String sex = curUser.getSex();
-        //setText(UserBean.Sex.isMan(sex) ? "男" : "女");
-        setExtendInfo(CacheDataHelper.getUserLabelCache(curUser.getUserId()));
+    }
 
+    private void setUserBasicInfo(UserBasicInfo u) {
+        if (u != null) {
+            this.userBasicInfo = u;
+            setText(tvEmotion, u.getEmotion());
+            setText(tvEducation, u.getEducation());
+            setText(tvIndustry, u.getIndustry());
+            setText(tvWorkArea, u.getWorkArea());
+            setText(tvCompanyInfo, u.getCompanyInfo());
+            setText(tvHometownInfo, u.getHometownInfo());
+            setText(tvMyHeart, u.getMyHeart());
+        }
     }
 
     public void getUserDetailInfo() {
@@ -184,9 +205,15 @@ public class PersonInfoShowActivity extends BaseToolbarActivity {
         startActivity(intent);
     }
 
-    @Subscriber(tag = EventCode.UPDATE_USER_LABEL)
+    @Subscriber(tag = EventCode.UPDATE_USER_HEAD)
     private void onDataChanged(UserBean data) {
-        setUserBasicInfo();
+        setUserHeadInfo(data);
+
+    }
+
+    @Subscriber(tag = EventCode.UPDATE_USER_BASIC)
+    private void onDataChanged1(UserBasicInfo data) {
+        setUserBasicInfo(data);
 
     }
 
@@ -223,14 +250,16 @@ public class PersonInfoShowActivity extends BaseToolbarActivity {
 
     private void setLabelData(ViewGroup layout, TagView tagView, List<String> list, int tagColor, int tagColorBg, TextView textView) {
         List<Tag> newData = new ArrayList<>();
-        for (String s : list) {
-            if (!TextUtils.isEmpty(s)) {
-                Tag tag = new Tag(s);
-                tag.radius = 10f;
-                tag.tagTextColor = tagColor;
-                tag.layoutColor = getResources().getColor(tagColorBg);
-                tag.layoutColorPress = getResources().getColor(tagColorBg);
-                newData.add(tag);
+        if (list != null) {
+            for (String s : list) {
+                if (!TextUtils.isEmpty(s)) {
+                    Tag tag = new Tag(s);
+                    tag.radius = 10f;
+                    tag.tagTextColor = tagColor;
+                    tag.layoutColor = getResources().getColor(tagColorBg);
+                    tag.layoutColorPress = getResources().getColor(tagColorBg);
+                    newData.add(tag);
+                }
             }
         }
         tagView.removeAllTags();

@@ -33,6 +33,7 @@ public class ImageDetailFragment extends BaseFragment {
         ImageDetailFragment newFragment = new ImageDetailFragment();
         Bundle bundle = new Bundle();
         bundle.putString("imgName", imgName);
+        newFragment.setArguments(bundle);
         return newFragment;
 
     }
@@ -45,10 +46,19 @@ public class ImageDetailFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+
+        progressBar.setVisibility(View.GONE);
+        tvPercent.setVisibility(View.GONE);
         Bundle args = getArguments();
-        if (args != null)
+        if (args != null) {
+            logE(TAG, "args不为空");
             imgName = args.getString("imgName");
-        String path = FileConfig.DIR_CACHE + "/" + imgName;
+        }
+        logE(TAG, "文件名" + imgName);
+        ImageLoader.loadPictureByName(mContext, image, imgName);
+        return;
+
+       /* String path = FileConfig.DIR_CACHE + "/" + imgName;
         if (FileUtil.isExist(path)) {
             fileExist(path);
             return;
@@ -84,7 +94,7 @@ public class ImageDetailFragment extends BaseFragment {
                 showToast(error);
             }
         });
-
+*/
     }
 
     private void fileExist(String path) {

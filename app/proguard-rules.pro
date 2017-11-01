@@ -83,3 +83,14 @@
 -keep class * implements android.os.Parcelable {         # 保持 Parcelable 不被混淆
     public static final android.os.Parcelable$Creator *;
 }
+
+### greenDAO 3
+-keepclassmembers class * extends org.greenrobot.greendao.AbstractDao {
+public static java.lang.String TABLENAME;
+}
+-keep class **$Properties
+
+# If you do not use SQLCipher:
+-dontwarn org.greenrobot.greendao.database.**
+# If you do not use RxJava:
+-dontwarn rx.**

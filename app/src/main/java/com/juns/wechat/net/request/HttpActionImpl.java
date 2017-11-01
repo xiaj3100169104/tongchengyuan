@@ -221,7 +221,7 @@ public class HttpActionImpl {
      * @param content     内容
      * @param callback
      */
-    public void addComment2Dynamic(String tag, int dynamicId, int replyUserId, String content, NetDataBeanCallback callback) {
+    public void addComment2Dynamic(String tag, String dynamicId, int replyUserId, String content, NetDataBeanCallback callback) {
         TokenRequestParams params = new TokenRequestParams();
         params.addParameter("dynamicId", String.valueOf(dynamicId));
         if (replyUserId != -1)
@@ -238,7 +238,7 @@ public class HttpActionImpl {
      * @param limit     当前页条数
      * @param callback
      */
-    public void getFriendCircleDynamic(String tag, int action, int dynamicId, int limit, NetDataBeanCallback callback) {
+    public void getFriendCircleDynamic(String tag, int action, String dynamicId, int limit, NetDataBeanCallback callback) {
         TokenRequestParams params = new TokenRequestParams();
         params.addParameter("action", action);
         if (action == 1)

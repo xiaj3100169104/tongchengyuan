@@ -25,6 +25,7 @@ import com.juns.wechat.chat.utils.SmileUtils;
 import com.juns.wechat.config.ConfigUtil;
 import com.juns.wechat.database.dao.FriendDao;
 import com.juns.wechat.database.dao.UserDao;
+import com.juns.wechat.greendao.dao.GreenDaoManager;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.request.HttpActionImpl;
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
@@ -55,6 +56,7 @@ public class App extends Application {
         AccountManager.getInstance().init(mContext);
         HttpActionImpl.getInstance().init();
         SmileUtils.getInstance().init(mContext);
+        GreenDaoManager.getInstance().initialize(mContext);
         /*// 设置拍摄视频缓存路径
         VCamera.setVideoCachePath(FileConfig.DIR_CACHE);
 		// 开启log输出,ffmpeg输出到logcat
