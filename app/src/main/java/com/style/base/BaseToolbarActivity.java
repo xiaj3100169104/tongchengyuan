@@ -8,20 +8,11 @@ import android.widget.TextView;
 
 
 import com.same.city.love.R;
-import com.style.event.EventManager;
 
 public abstract class BaseToolbarActivity extends BaseActivity {
     private Toolbar toolbar;
     private TextView tvTitleBase;
     private ImageView ivBaseToolbarReturn;
-
-    @Override
-    protected void onCreate(Bundle arg0) {
-        super.onCreate(arg0);
-        if (registerEventBus()) {
-            EventManager.getDefault().register(this);
-        }
-    }
 
     protected void customTitleOptions(View mContentView) {
         toolbar = (Toolbar) mContentView.findViewById(R.id.toolbar);
@@ -63,15 +54,5 @@ public abstract class BaseToolbarActivity extends BaseActivity {
         setText(tvTitleBase, resId);
     }
 
-    protected boolean registerEventBus() {
-        return true;
-    }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (registerEventBus()) {
-            EventManager.getDefault().unRegister(this);
-        }
-    }
 }

@@ -19,7 +19,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.juns.wechat.adpter.MainAdapter;
+import com.juns.wechat.bean.DynamicBean;
+import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.bean.UserBean;
+import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.chat.xmpp.event.XmppEvent;
 import com.juns.wechat.fragment.Fragment_Discover;
 import com.juns.wechat.fragment.Fragment_Friends;
@@ -30,6 +33,8 @@ import com.juns.wechat.service.XmppService;
 import com.juns.wechat.util.LogUtil;
 import com.same.city.love.R;
 import com.style.event.EventCode;
+import com.style.base.BaseActivity;
+import com.style.utils.StringUtil;
 
 import org.simple.eventbus.EventBus;
 import org.simple.eventbus.Subscriber;
@@ -41,8 +46,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity {
-    protected static final String TAG = "MainActivity";
+public class MainActivity extends BaseActivity {
     @Bind(R.id.ivAvatar)
     ImageView ivAvatar;
     @Bind(R.id.tvNickName)
@@ -76,33 +80,16 @@ public class MainActivity extends AppCompatActivity {
     private Fragment_Friends fragmentFriends;
     private Fragment_Discover fragmentDicover;
 
-    //@Override
-    public void initData() {
-        initView();
-        XmppService.login(this);
-
-        int userId = Process.myUid();
-
-        //new Watcher(this).createAppMonitor(userId + "");
+    @Override
+    protected boolean isWrapContentView() {
+        return false;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        LogUtil.i("i am restarted!");
-        //mLayoutResID = R.layout.activity_main2;
+        mLayoutResID = R.layout.activity_main2;
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
-        ButterKnife.bind(this);
-        EventBus.getDefault().register(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
 
         /*List<MessageBean> friendBeanList = MessageDao.getInstance().findAllByParams(WhereBuilder.b());
         for (MessageBean f : friendBeanList) {
@@ -127,15 +114,30 @@ public class MainActivity extends AppCompatActivity {
             i++;
 
         }*/
-        initData();
 
+    }
+
+    @Override
+    public void initData() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        initView();
+        XmppService.login(this);
+
+        int userId = Process.myUid();
+
+        //new Watcher(this).createAppMonitor(userId + "");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
-        EventBus.getDefault().unregister(this);
     }
 
     @Override

@@ -6,23 +6,35 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import android.app.Application;
 import android.content.Context;
 import android.os.Environment;
+import android.os.Process;
 import android.text.TextUtils;
 
 
+import com.alibaba.fastjson.JSON;
 import com.baidu.mapapi.SDKInitializer;
+import com.juns.wechat.bean.DynamicBean;
+import com.juns.wechat.bean.FriendBean;
+import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.utils.SmileUtils;
 import com.juns.wechat.config.ConfigUtil;
 import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.request.HttpActionImpl;
+import com.juns.wechat.util.AppUtil;
+import com.style.constant.FileConfig;
+import com.style.utils.FileUtil;
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
 import cn.smssdk.SMSSDK;
+
+import static com.style.manager.LogManager.logE;
 
 public class App extends Application {
 
@@ -49,6 +61,19 @@ public class App extends Application {
 		VCamera.setDebugMode(true);
 		// 初始化拍摄SDK，必须
 		VCamera.initialize(this);*/
+        List<UserBean> list = UserDao.getInstance().findAllByParams(WhereBuilder.b());
+        List<FriendBean> list2 = FriendDao.getInstance().findAllByParams(WhereBuilder.b());
+        List<DynamicBean> list3 = GreenDaoManager.getInstance().queryAll();
+        String s = JSON.toJSONString(list);
+        String s2 = JSON.toJSONString(list2);
+        String s3 = JSON.toJSONString(list3);
+        logE("userList", s);
+        logE("friendList", s2);
+        logE("dynamicList", s3);
+        AppUtil.backupData(s, FileConfig.DIR_BACKUP + "/" + "userTableBackup.txt");
+        AppUtil.backupData(s2, FileConfig.DIR_BACKUP + "/" + "friendTableBackup.txt");
+        AppUtil.backupData(s3, FileConfig.DIR_BACKUP + "/" + "dynamicTableBackup.txt");
+
 
     }
 

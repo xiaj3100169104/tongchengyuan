@@ -33,4 +33,8 @@ public class FileConfig {
      * 文件缓存目录
      */
     public static final String DIR_CACHE = DIR_APP + "/cache";
+    /**
+     * 数据备份目录
+     */
+    public static final String DIR_BACKUP = DIR_APP + "/backup";
 }

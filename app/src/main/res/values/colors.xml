@@ -186,4 +186,5 @@
     <color name="commonReminder">#ffbdbab5</color>
     <color name="gray">#ff808080</color>
     <color name="gray2">#ffeef2fb</color>
+    <color name="dynamic_content">#607B8B</color>
 </resources>

@@ -6,4 +6,4 @@
     android:layout_alignParentRight="true"
     android:layout_marginRight="@dimen/margin_chat_activity"
     android:background="@drawable/default_avatar"
-    android:scaleType="fitXY" />
+    android:scaleType="centerCrop" />

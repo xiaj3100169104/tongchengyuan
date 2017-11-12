@@ -34,4 +34,8 @@ public class Fragment_Discover extends BaseFragment {
         skip(FriendCircleActivity.class);
     }
 
+    @OnClick(R.id.layout_left_menu_6)
+    public void onClickEvent6() {
+        skip(QRScanActivity.class);
+    }
 }

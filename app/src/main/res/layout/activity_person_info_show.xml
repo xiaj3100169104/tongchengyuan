@@ -19,7 +19,7 @@
 
             <include
                 layout="@layout/person_info_photo_wall"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="match_parent"

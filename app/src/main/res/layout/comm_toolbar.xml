@@ -1,14 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/toolbar"
     android:layout_width="match_parent"
-    android:layout_height="48dp"
-    android:minHeight="48dp"
-    app:contentInsetEnd="0dp"
-    app:contentInsetStart="0dp"
-    android:theme="@style/AppTheme.Toolbar"
-    app:popupTheme="@style/AppTheme.PopupOverlay">
+    android:layout_height="wrap_content"
+    android:theme="@style/AppTheme.AppBarOverlay">
 
-    <include layout="@layout/comm_toolbar_layout" />
-</android.support.v7.widget.Toolbar>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="?attr/colorPrimary"
+        android:minHeight="48dp"
+        app:contentInsetEnd="0dp"
+        app:contentInsetStart="0dp"
+        app:popupTheme="@style/AppTheme.PopupOverlay">
+        <!--
+            app:popupTheme="@style/AppTheme.PopupOverlay"
+        -->
+
+        <include layout="@layout/comm_toolbar_layout" />
+    </android.support.v7.widget.Toolbar>
+</android.support.design.widget.AppBarLayout>

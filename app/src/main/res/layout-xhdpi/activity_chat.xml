@@ -8,9 +8,7 @@
     android:keepScreenOn="true"
     android:orientation="vertical">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/comm_toolbar" />
+    <include layout="@layout/comm_toolbar" />
 
     <RelativeLayout
         android:layout_width="match_parent"
