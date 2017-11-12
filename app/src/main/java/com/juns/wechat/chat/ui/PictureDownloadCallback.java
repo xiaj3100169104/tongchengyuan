@@ -2,10 +2,8 @@ package com.juns.wechat.chat.ui;
 
 import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.chat.bean.PictureMsg;
-import com.juns.wechat.chat.xmpp.util.FileTransferManager;
-import com.juns.wechat.database.dao.DbDataEvent;
-import com.juns.wechat.database.dao.MessageDao;
-import com.style.constant.FileConfig;
+import com.style.event.EventCode;
+import com.style.event.EventManager;
 import com.style.net.image.FileDownloadCallback;
 
 /**
@@ -38,6 +36,6 @@ public class PictureDownloadCallback extends FileDownloadCallback {
     private void updateMessage(int progress) {
         pictureMsg.progress = progress;
         messageBean.setMsg(pictureMsg.toJson());
-        MessageDao.getInstance().postDataChangedEvent(DbDataEvent.UPDATE, messageBean);
+        EventManager.getDefault().post(EventCode.REFRESH_ONE_MESSAGE, messageBean);
     }
 }

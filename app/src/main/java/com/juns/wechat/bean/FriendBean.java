@@ -1,79 +1,74 @@
 package com.juns.wechat.bean;
 
-import android.text.TextUtils;
+import com.juns.wechat.greendao.mydao.GreenDaoManager;
 
-import com.juns.wechat.database.DbUtil;
-import com.juns.wechat.database.FriendTable;
-import com.juns.wechat.database.dao.UserDao;
-import com.juns.wechat.exception.UserNotFoundException;
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Transient;
+import org.greenrobot.greendao.annotation.Generated;
 
-import org.xutils.db.annotation.Column;
-import org.xutils.db.annotation.Table;
-import org.xutils.ex.DbException;
 
-/**
- * Created by 王宗文 on 2016/6/20.
- */
-
-@Table(name = FriendTable.TABLE_NAME, onCreated = FriendTable.CREATE_INDEX)
+@Entity
 public class FriendBean {
-    public static final String ID = "id";
-    public static final String OWNER_ID = "ownerId";
-    public static final String CONTACT_ID = "contactId";
-    public static final String SUB_TYPE = "subType";
-    public static final String REMARK = "remark";
-    public static final String FLAG = "flag";
-    public static final String MODIFY_DATE = "modifyDate";
 
-    @Column(name = ID, isId = true)
-    private int id;
-    @Column(name = OWNER_ID)
-    private int ownerId;
-    @Column(name = CONTACT_ID)
-    private int contactId;
-    @Column(name = SUB_TYPE)
-    private String subType;
-    @Column(name = REMARK)
-    private String remark;
-    @Column(name = FLAG)
-    private int flag;
-    @Column(name = MODIFY_DATE)
-    private long modifyDate;
+    @Id
+    public String id;
+    public String ownerId;
+    public String contactId;
+    public String subType;
+    public String remark;
+    public int flag;
+    public long modifyDate;
 
+    @Transient
     public String sortLetters;
+    @Transient
     public UserBean contactUser;
 
     public FriendBean() {
 
     }
 
-    public FriendBean(int ownerId, int contactId, String subType) {
+    public FriendBean(String ownerId, String contactId, String subType) {
         this.ownerId = ownerId;
         this.contactId = contactId;
         this.subType = subType;
     }
 
-    public int getId() {
+    @Generated(hash = 1282100691)
+    public FriendBean(String id, String ownerId, String contactId, String subType,
+            String remark, int flag, long modifyDate) {
+        this.id = id;
+        this.ownerId = ownerId;
+        this.contactId = contactId;
+        this.subType = subType;
+        this.remark = remark;
+        this.flag = flag;
+        this.modifyDate = modifyDate;
+    }
+
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public int getOwnerId() {
+    public String getOwnerId() {
         return ownerId;
     }
 
-    public void setOwnerId(int ownerId) {
+    public void setOwnerId(String ownerId) {
         this.ownerId = ownerId;
     }
 
-    public int getContactId() {
+    public String getContactId() {
         return contactId;
     }
 
-    public void setContactId(int contactId) {
+    public void setContactId(String contactId) {
         this.contactId = contactId;
     }
 
@@ -123,7 +118,7 @@ public class FriendBean {
 
     public UserBean getContactUser() {
         if (contactUser == null)
-            contactUser = UserDao.getInstance().findByUserId(contactId);
+            contactUser = GreenDaoManager.getInstance().findByUserId(contactId);
         return contactUser;
 
     }

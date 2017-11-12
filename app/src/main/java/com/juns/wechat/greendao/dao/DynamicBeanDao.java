@@ -25,7 +25,7 @@ public class DynamicBeanDao extends AbstractDao<DynamicBean, String> {
      */
     public static class Properties {
         public final static Property DynamicId = new Property(0, String.class, "dynamicId", true, "DYNAMIC_ID");
-        public final static Property PublisherId = new Property(1, Integer.class, "publisherId", false, "PUBLISHER_ID");
+        public final static Property PublisherId = new Property(1, String.class, "publisherId", false, "PUBLISHER_ID");
         public final static Property Content = new Property(2, String.class, "content", false, "CONTENT");
         public final static Property Images = new Property(3, String.class, "images", false, "IMAGES");
         public final static Property CreateDate = new Property(4, String.class, "createDate", false, "CREATE_DATE");
@@ -46,7 +46,7 @@ public class DynamicBeanDao extends AbstractDao<DynamicBean, String> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"DYNAMIC_BEAN\" (" + //
                 "\"DYNAMIC_ID\" TEXT PRIMARY KEY NOT NULL ," + // 0: dynamicId
-                "\"PUBLISHER_ID\" INTEGER," + // 1: publisherId
+                "\"PUBLISHER_ID\" TEXT," + // 1: publisherId
                 "\"CONTENT\" TEXT," + // 2: content
                 "\"IMAGES\" TEXT," + // 3: images
                 "\"CREATE_DATE\" TEXT," + // 4: createDate
@@ -68,9 +68,9 @@ public class DynamicBeanDao extends AbstractDao<DynamicBean, String> {
             stmt.bindString(1, dynamicId);
         }
  
-        Integer publisherId = entity.getPublisherId();
+        String publisherId = entity.getPublisherId();
         if (publisherId != null) {
-            stmt.bindLong(2, publisherId);
+            stmt.bindString(2, publisherId);
         }
  
         String content = entity.getContent();
@@ -103,9 +103,9 @@ public class DynamicBeanDao extends AbstractDao<DynamicBean, String> {
             stmt.bindString(1, dynamicId);
         }
  
-        Integer publisherId = entity.getPublisherId();
+        String publisherId = entity.getPublisherId();
         if (publisherId != null) {
-            stmt.bindLong(2, publisherId);
+            stmt.bindString(2, publisherId);
         }
  
         String content = entity.getContent();
@@ -138,7 +138,7 @@ public class DynamicBeanDao extends AbstractDao<DynamicBean, String> {
     public DynamicBean readEntity(Cursor cursor, int offset) {
         DynamicBean entity = new DynamicBean( //
             cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // dynamicId
-            cursor.isNull(offset + 1) ? null : cursor.getInt(offset + 1), // publisherId
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // publisherId
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // content
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // images
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // createDate
@@ -150,7 +150,7 @@ public class DynamicBeanDao extends AbstractDao<DynamicBean, String> {
     @Override
     public void readEntity(Cursor cursor, DynamicBean entity, int offset) {
         entity.setDynamicId(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
-        entity.setPublisherId(cursor.isNull(offset + 1) ? null : cursor.getInt(offset + 1));
+        entity.setPublisherId(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setContent(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setImages(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setCreateDate(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));

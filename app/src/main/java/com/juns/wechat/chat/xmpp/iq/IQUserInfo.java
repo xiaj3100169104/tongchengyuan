@@ -23,7 +23,7 @@ public class IQUserInfo extends IQ{
     protected IQChildElementXmlStringBuilder getIQChildElementBuilder(IQChildElementXmlStringBuilder xml) {
         if(userBean != null){
             if(getType() == Type.get){
-                xml.attribute(UserBean.USERNAME, userBean.getUserName() == null ? "" : userBean.getUserName());
+                xml.attribute("userName", userBean.getUserName() == null ? "" : userBean.getUserName());
             }
         }
         xml.rightAngleBracket();

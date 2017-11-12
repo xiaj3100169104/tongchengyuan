@@ -193,11 +193,11 @@ public class RegisterActivity extends BaseToolbarActivity implements OnClickList
 			protected void onCodeFailure(int code,RegisterBean data) {
 				dismissProgressDialog();
 				if(code == 1){  //参数错误
-					if(data.errField.equalsIgnoreCase(UserBean.USERNAME)){
+				/*	if(data.errField.equalsIgnoreCase(UserBean.USERNAME)){
 						showToast("用户名不合法");
 					}else if(data.errField.equalsIgnoreCase(UserBean.PASSWORD)){
 						showToast("密码长度不能小于6位");
-					}
+					}*/
 				}else if(code == 2){
 					showToast("该用户已注册，可以直接登录");
 				}

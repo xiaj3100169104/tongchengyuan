@@ -32,13 +32,17 @@ public class EventManager {
         EventBus.getDefault().register(subscriber);
     }
 
+    public void unRegister(Object subscriber) {
+        EventBus.getDefault().unregister(subscriber);
+    }
+
     /**
      * 发布事件
      *
      * @param event 要发布的事件
-     * @param tag 事件的tag, 类似于BroadcastReceiver的action
+     * @param tag   事件的tag, 类似于BroadcastReceiver的action
      */
-    public void post(Object event, String tag) {
+    public void post(String tag, Object event) {
         EventBus.getDefault().post(event, tag);
     }
 }

@@ -17,7 +17,7 @@ public class DynamicBean implements Serializable {
 
     @Id
     private String dynamicId;// Id
-    private Integer publisherId;// 发表人
+    private String publisherId;// 发表人
     private String content;// 动态内容
     private String images;// 图片
     private String createDate; //创建日期
@@ -33,8 +33,10 @@ public class DynamicBean implements Serializable {
 
     }
 
-    @Generated(hash = 837157471)
-    public DynamicBean(String dynamicId, Integer publisherId, String content,
+
+
+    @Generated(hash = 392734704)
+    public DynamicBean(String dynamicId, String publisherId, String content,
             String images, String createDate, String publisherName) {
         this.dynamicId = dynamicId;
         this.publisherId = publisherId;
@@ -44,6 +46,8 @@ public class DynamicBean implements Serializable {
         this.publisherName = publisherName;
     }
 
+
+
     public String getDynamicId() {
         return dynamicId;
     }
@@ -52,11 +56,11 @@ public class DynamicBean implements Serializable {
         this.dynamicId = dynamicId;
     }
 
-    public Integer getPublisherId() {
+    public String getPublisherId() {
         return publisherId;
     }
 
-    public void setPublisherId(Integer publisherId) {
+    public void setPublisherId(String publisherId) {
         this.publisherId = publisherId;
     }
 

@@ -2,8 +2,7 @@ package com.juns.wechat.chat.ui;
 
 import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.database.dao.DbDataEvent;
-import com.juns.wechat.database.dao.MessageDao;
+import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.util.ThreadPoolUtil;
 
@@ -19,18 +18,19 @@ public class ChatActivityHelper {
     private static final int SIZE = 10;  //一次最多查询10条数据
 
     private String myselfName;
-    private MessageDao messageDao;
+    private GreenDaoManager messageDao;
     private String otherName;
     private int mQueryIndex; //从该位置开始查询
 
     private UserBean account = AccountManager.getInstance().getUser();
+    private int position;
 
 
     public ChatActivityHelper(ChatActivity chatActivity) {
         this.chatActivity = chatActivity;
-        this.myselfName = account.getUserName();
-        this.otherName = chatActivity.getContactName();
-        messageDao = MessageDao.getInstance();
+        this.myselfName = account.getUserId();
+        this.otherName = chatActivity.getContactUserId();
+        messageDao = GreenDaoManager.getInstance();
     }
 
     public void onCreate() {
@@ -82,43 +82,46 @@ public class ChatActivityHelper {
         msgViewModels.add(entity);
     }
 
+    public int getPosition(List<MessageBean> msgViewModels, MessageBean entity) {
+        int position = -1;
+        for (int i = 0; i < msgViewModels.size(); i++) {
+            MessageBean viewModel = msgViewModels.get(i);
+            if (entity.getPacketId().equals(viewModel.getPacketId())) {
+                position = i;
+                break;
+            }
+        }
+        return position;
+    }
+
     /**
      * 处理一条消息，在观察到一条数据变化时调用。下拉刷新出来的数据不应该调用此方法
      *
      * @param entity
      */
-    public void processOneMessage(List<MessageBean> msgViewModels, MessageBean entity, int action) {
-        int position = -1;
-        for (int i = 0; i < msgViewModels.size(); i++) {
-            MessageBean viewModel = msgViewModels.get(i);
-            if (entity.getId() == viewModel.getId()) {
-                position = i;
-                break;
-            }
+    public void OnMessageBeforeSendSuccess(List<MessageBean> msgViewModels, MessageBean entity) {
+        int position = getPosition(msgViewModels, entity);
+        addEntityToViewModel(msgViewModels, entity);
+        Collections.sort(msgViewModels, new MessageBeanComparator());
+        chatActivity.refreshOneData(true);
+    }
+
+    public void onMessageRefreshOne(List<MessageBean> msgViewModels, MessageBean entity) {
+        int position = getPosition(msgViewModels, entity);
+        if (position != -1) {
+            msgViewModels.remove(position);
         }
-        switch (action) {
-            case DbDataEvent.SAVE:
-                addEntityToViewModel(msgViewModels, entity);
-                Collections.sort(msgViewModels, new MessageBeanComparator());
-                chatActivity.refreshOneData(true);
-                break;
-            case DbDataEvent.UPDATE:
-                if (position != -1) {
-                    msgViewModels.remove(position);
-                }
-                addEntityToViewModel(msgViewModels, entity);
-                Collections.sort(msgViewModels, new MessageBeanComparator());
-                chatActivity.refreshOneData(true);
-                break;
-            case DbDataEvent.DELETE_ONE:
-                if (position != -1) {
-                    msgViewModels.remove(position);
-                }
-                chatActivity.refreshOneData(false);
-                break;
-            default:
-                break;
+        addEntityToViewModel(msgViewModels, entity);
+        Collections.sort(msgViewModels, new MessageBeanComparator());
+        chatActivity.refreshOneData(true);
+    }
+
+    public void onMessageDeleteOne(List<MessageBean> msgViewModels, MessageBean entity) {
+        int position = getPosition(msgViewModels, entity);
+        if (position != -1) {
+            msgViewModels.remove(position);
         }
+        chatActivity.refreshOneData(false);
     }
 
     /**
@@ -146,4 +149,5 @@ public class ChatActivityHelper {
     public void setQueryIndex(int mQueryIndex) {
         this.mQueryIndex = mQueryIndex;
     }
+
 }

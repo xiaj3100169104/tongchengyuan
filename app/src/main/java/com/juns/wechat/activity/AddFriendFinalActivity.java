@@ -21,7 +21,7 @@ public class AddFriendFinalActivity extends BaseToolbarActivity {
 
     @Override
     public void initData() {
-        wantToAddUser = getIntent().getStringExtra(Skip.KEY_USER_NAME);
+        wantToAddUser = getIntent().getStringExtra(Skip.KEY_USER_ID);
     }
 
     @Override
@@ -29,6 +29,7 @@ public class AddFriendFinalActivity extends BaseToolbarActivity {
         mLayoutResID = R.layout.activity_add_friend_final;
         super.onCreate(savedInstanceState);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.single_with_text, menu);

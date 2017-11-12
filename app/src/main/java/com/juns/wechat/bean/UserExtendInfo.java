@@ -14,30 +14,25 @@ public class UserExtendInfo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    private String UserExtendId;
-    private Integer userId;
+    private String userExtendId;
+    private String userId;
     private String data;
 
-    @Generated(hash = 1915352593)
-    public UserExtendInfo(String UserExtendId, Integer userId, String data) {
-        this.UserExtendId = UserExtendId;
-        this.userId = userId;
-        this.data = data;
-    }
     @Generated(hash = 467904249)
     public UserExtendInfo() {
     }
 
-    public String getUserExtendId() {
-        return this.UserExtendId;
+    @Generated(hash = 1945461388)
+    public UserExtendInfo(String userExtendId, String userId, String data) {
+        this.userExtendId = userExtendId;
+        this.userId = userId;
+        this.data = data;
     }
-    public void setUserExtendId(String UserExtendId) {
-        this.UserExtendId = UserExtendId;
-    }
-    public Integer getUserId() {
+
+     public String getUserId() {
         return this.userId;
     }
-    public void setUserId(Integer userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
     public String getData() {
@@ -45,6 +40,14 @@ public class UserExtendInfo implements Serializable {
     }
     public void setData(String data) {
         this.data = data;
+    }
+
+    public String getUserExtendId() {
+        return this.userExtendId;
+    }
+
+    public void setUserExtendId(String userExtendId) {
+        this.userExtendId = userExtendId;
     }
 
 }

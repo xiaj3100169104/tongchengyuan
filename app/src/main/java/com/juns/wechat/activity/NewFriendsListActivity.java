@@ -4,11 +4,11 @@ package com.juns.wechat.activity;
 import android.os.Bundle;
 import android.widget.ListView;
 
+import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.same.city.love.R;
 import com.juns.wechat.adpter.NewFriendsAdapter;
 import com.juns.wechat.chat.bean.MessageBean;
 import com.style.base.BaseToolbarActivity;
-import com.juns.wechat.database.dao.MessageDao;
 import com.juns.wechat.manager.AccountManager;
 
 import java.util.List;
@@ -34,7 +34,7 @@ public class NewFriendsListActivity extends BaseToolbarActivity {
 
     protected void initControl() {
         String myselfName = AccountManager.getInstance().getUserName();
-        List<MessageBean> list = MessageDao.getInstance().getMyReceivedInviteMessages(myselfName);
+        List<MessageBean> list = GreenDaoManager.getInstance().getMyReceivedInviteMessages(myselfName);
         if (list != null)
             lvNewFriends.setAdapter(new NewFriendsAdapter(this, list));
     }

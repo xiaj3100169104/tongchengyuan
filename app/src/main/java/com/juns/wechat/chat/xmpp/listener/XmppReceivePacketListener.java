@@ -3,14 +3,10 @@ package com.juns.wechat.chat.xmpp.listener;
 
 import com.juns.wechat.App;
 import com.juns.wechat.chat.bean.MessageBean;
-import com.juns.wechat.chat.xmpp.process.IQRouter;
-import com.juns.wechat.config.ConfigUtil;
-import com.juns.wechat.config.MsgType;
-import com.juns.wechat.database.dao.MessageDao;
-import com.juns.wechat.util.LogUtil;
 import com.juns.wechat.chat.xmpp.XmppManagerUtil;
 import com.juns.wechat.chat.xmpp.extensionelement.TimeElement;
 import com.juns.wechat.chat.xmpp.iq.MarkAsReadIQ;
+import com.juns.wechat.chat.xmpp.process.IQRouter;
 import com.juns.wechat.chat.xmpp.process.InviteMessageProcess;
 import com.juns.wechat.chat.xmpp.process.MessageProcess;
 import com.juns.wechat.chat.xmpp.process.OfflineVideoMessageProcess;
@@ -20,6 +16,10 @@ import com.juns.wechat.chat.xmpp.process.TextMessageProcess;
 import com.juns.wechat.chat.xmpp.process.UnknownTypeMessageProcess;
 import com.juns.wechat.chat.xmpp.process.VoiceMessageProcess;
 import com.juns.wechat.chat.xmpp.util.ConvertUtil;
+import com.juns.wechat.config.ConfigUtil;
+import com.juns.wechat.config.MsgType;
+import com.juns.wechat.greendao.mydao.GreenDaoManager;
+import com.juns.wechat.util.LogUtil;
 
 import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.StanzaListener;
@@ -92,7 +92,7 @@ public class XmppReceivePacketListener implements StanzaListener {
         if(("receipt." + ConfigUtil.getXmppDomain()).equals(message.getFrom())){
             TimeElement timeElement = TimeElement.from(message);
 
-            MessageDao.getInstance().updateMessageState(message.getStanzaId(),
+            GreenDaoManager.getInstance().updateMessageState(message.getStanzaId(),
                     MessageBean.State.SEND_SUCCESS.value, timeElement.getTime());
         }
     }

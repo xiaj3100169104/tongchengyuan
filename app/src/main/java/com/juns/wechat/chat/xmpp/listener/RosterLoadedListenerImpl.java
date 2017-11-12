@@ -1,6 +1,6 @@
 package com.juns.wechat.chat.xmpp.listener;
 
-import com.juns.wechat.database.dao.FriendDao;
+import com.juns.wechat.greendao.mydao.GreenDaoManager;
 
 import org.jivesoftware.smack.roster.Roster;
 import org.jivesoftware.smack.roster.RosterLoadedListener;
@@ -10,7 +10,7 @@ import org.jivesoftware.smack.roster.RosterLoadedListener;
  */
 public class RosterLoadedListenerImpl implements RosterLoadedListener {
 
-    private FriendDao rosterDao = FriendDao.getInstance();
+    private GreenDaoManager rosterDao = GreenDaoManager.getInstance();
 
     @Override
     public void onRosterLoaded(Roster roster) {

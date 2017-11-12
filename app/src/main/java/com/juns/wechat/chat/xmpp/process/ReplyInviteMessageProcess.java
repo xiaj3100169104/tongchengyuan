@@ -7,8 +7,7 @@ import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.bean.InviteMsg;
 import com.juns.wechat.chat.bean.TextMsg;
 import com.juns.wechat.config.MsgType;
-import com.juns.wechat.database.dao.MessageDao;
-import com.juns.wechat.database.dao.UserDao;
+import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.juns.wechat.net.request.HttpActionImpl;
 import com.style.net.core.NetDataBeanCallback;
 
@@ -30,11 +29,11 @@ public class ReplyInviteMessageProcess extends MessageProcess {
     public void processMessage(final MessageBean messageBean) {
         inviteMsg = (InviteMsg) messageBean.getMsgObj();
         if(inviteMsg.reply != InviteMsg.Reply.ACCEPT.value) return;  //非法状态
-        HttpActionImpl.getInstance().queryPhone("process", messageBean.getOtherName(), new NetDataBeanCallback<UserBean>(UserBean.class) {
+        HttpActionImpl.getInstance().queryUserData("process", messageBean.getOtherUserId(), new NetDataBeanCallback<UserBean>(UserBean.class) {
             @Override
             protected void onCodeSuccess(UserBean data) {
                 if (data != null) {
-                    UserDao.getInstance().replace(data);
+                    GreenDaoManager.getInstance().save(data);
                     saveMessageToDB(messageBean);
                     noticeShow(messageBean, null);
                 }
@@ -55,8 +54,8 @@ public class ReplyInviteMessageProcess extends MessageProcess {
     protected void saveMessageToDB(MessageBean messageBean) {
         super.saveMessageToDB(messageBean);
         MessageBean textMessage = new MessageBean();
-        textMessage.setMyselfName(messageBean.getMyselfName());
-        textMessage.setOtherName(messageBean.getOtherName());
+        textMessage.setMyUserId(messageBean.getMyUserId());
+        textMessage.setOtherUserId(messageBean.getOtherUserId());
 
         TextMsg textMsg = new TextMsg();
         textMsg.content = inviteMsg.reason;
@@ -69,7 +68,7 @@ public class ReplyInviteMessageProcess extends MessageProcess {
         textMessage.setState(MessageBean.State.SEND_SUCCESS.value);
         textMessage.setDirection(MessageBean.Direction.INCOMING.value);
 
-        MessageDao.getInstance().save(textMessage);
+        GreenDaoManager.getInstance().save(textMessage);
     }
 
     @Override

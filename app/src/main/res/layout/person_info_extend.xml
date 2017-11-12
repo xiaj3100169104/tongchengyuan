@@ -67,7 +67,8 @@
 
                 <me.kaede.tagview.TagView
                     android:id="@+id/tag_view_interest_sport"
-                    style="@style/user_info_tag" />
+                    style="@style/user_info_tag"
+                    />
             </RelativeLayout>
         </LinearLayout>
 

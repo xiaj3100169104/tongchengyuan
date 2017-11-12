@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.juns.wechat.activity.UserInfoActivity;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.bean.MessageBean;
-import com.juns.wechat.database.dao.UserDao;
+import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.juns.wechat.util.TimeUtil;
 import com.same.city.love.R;
 import com.style.constant.Skip;
@@ -72,11 +72,11 @@ public abstract class BaseMsgViewHolder extends RecyclerView.ViewHolder {
     public void setData(MessageBean data, List list, final int position) {
         this.messageBean = data;
         this.position = position;
-        String userName;
+        String userId;
         if (isLeftLayout())
-            userName = messageBean.getOtherName();
-        else userName = messageBean.getMyselfName();
-        this.user = UserDao.getInstance().findByName(userName);
+            userId = messageBean.getOtherUserId();
+        else userId = messageBean.getMyUserId();
+        this.user = GreenDaoManager.getInstance().findByUserId(userId);
 
         if (isShowTime(list, position, messageBean)) {
             tvDate.setVisibility(View.VISIBLE);

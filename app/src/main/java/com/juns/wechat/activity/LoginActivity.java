@@ -3,7 +3,6 @@ package com.juns.wechat.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -11,21 +10,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.juns.wechat.bean.FriendBean;
-import com.juns.wechat.database.dao.FriendDao;
-import com.juns.wechat.database.dao.UserDao;
-import com.same.city.love.R;
 import com.juns.wechat.bean.UserBean;
+import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.net.request.HttpActionImpl;
-import com.style.base.BaseActivity;
-import com.style.net.core.NetDataBeanCallback;
 import com.juns.wechat.net.response.LoginBean;
-import com.juns.wechat.util.SyncDataUtil;
-import com.style.base.BaseToolbarActivity;
+import com.same.city.love.R;
+import com.style.base.BaseActivity;
 import com.style.utils.CommonUtil;
 
 import java.util.ArrayList;
@@ -50,7 +43,6 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
     @Bind(R.id.btn_register)
     Button btnRegister;
     private String userName, password;
-    private UserBean userBean = AccountManager.getInstance().getUser();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,14 +58,13 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
     }
 
     protected void initControl() {
-        if (userBean != null) {
-            etInputName.setText(userBean.getUserName());
-            etPassWord.setText(userBean.getPassWord());
-            userName = userBean.getUserName();
-            password = userBean.getPassWord();
-            btnLogin.setEnabled(true);
-        }
+        userName = AccountManager.getInstance().getUserName();
+        password = AccountManager.getInstance().getUserPassWord();
+        setText(etInputName, userName);
+        setText(etPassWord, password);
+        btnLogin.setEnabled(true);
     }
+
 
     protected void setListener() {
         btnLogin.setOnClickListener(this);
@@ -118,7 +109,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
         showProgressDialog("正在登录。。。");
         LoginBean data = new LoginBean();
         UserBean u = new UserBean();
-        u.setUserId(1);
+        u.setUserId("8");
         u.setUserName(userName);
         u.setNickName("style");
         data.setUserBean(u);
@@ -127,14 +118,14 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
         AccountManager.getInstance().setToken(data.token);
         AccountManager.getInstance().setUserPassWord(password);
 
-        List<UserBean> list = new ArrayList<>();
+       /* List<UserBean> list = new ArrayList<>();
         for (int i = 2; i < 10; i++) {
             UserBean u2 = new UserBean();
             u2.setUserId(i);
             u2.setUserName(1820282300 + i + "");
             u2.setNickName("用户=" + i);
         }
-        UserDao.getInstance().save(list);
+        GreenDaoManager.getInstance().saveUserList(list);
 
         List<FriendBean> friendBeanList = new ArrayList<>();
         for (int i = 2; i < 10; i++) {
@@ -143,7 +134,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
             f.setContactId(i);
             f.setRemark("好友" + i);
         }
-        FriendDao.getInstance().save(friendBeanList);
+        GreenDaoManager.getInstance().saveFriends(friendBeanList);*/
         skip(MainActivity.class);
         finish();
         /*HttpActionImpl.getInstance().login(TAG, userName, password, new NetDataBeanCallback<LoginBean>(LoginBean.class) {
@@ -177,31 +168,31 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
         });*/
     }
 
-    // EditText监听器
-    class TextChange implements TextWatcher {
+// EditText监听器
+class TextChange implements TextWatcher {
 
-        @Override
-        public void afterTextChanged(Editable arg0) {
+    @Override
+    public void afterTextChanged(Editable arg0) {
 
-        }
+    }
 
-        @Override
-        public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
-                                      int arg3) {
+    @Override
+    public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+                                  int arg3) {
 
-        }
+    }
 
-        @Override
-        public void onTextChanged(CharSequence cs, int start, int before,
-                                  int count) {
-            boolean Sign2 = etInputName.getText().length() > 0;
-            boolean Sign3 = etPassWord.getText().length() > 4;
-            if (Sign2 & Sign3) {
-                btnLogin.setEnabled(true);
-            } else {
-                btnLogin.setEnabled(false);
-            }
+    @Override
+    public void onTextChanged(CharSequence cs, int start, int before,
+                              int count) {
+        boolean Sign2 = etInputName.getText().length() > 0;
+        boolean Sign3 = etPassWord.getText().length() > 4;
+        if (Sign2 & Sign3) {
+            btnLogin.setEnabled(true);
+        } else {
+            btnLogin.setEnabled(false);
         }
     }
+}
 
 }

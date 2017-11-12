@@ -1,9 +1,12 @@
-package com.juns.wechat.greendao.dao;
+package com.juns.wechat.greendao.mydao;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.github.yuweiguocn.library.greendao.MigrationHelper;
+import com.juns.wechat.greendao.dao.DaoMaster;
+import com.juns.wechat.greendao.dao.DynamicBeanDao;
+import com.juns.wechat.greendao.dao.UserBasicInfoDao;
 
 import org.greenrobot.greendao.database.Database;
 

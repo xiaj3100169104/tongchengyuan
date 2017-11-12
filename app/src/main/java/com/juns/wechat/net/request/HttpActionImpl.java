@@ -166,7 +166,7 @@ public class HttpActionImpl {
         runTask(tag, call, callback);
     }
 
-    public void queryUserData(String tag, int userId, NetDataBeanCallback callback) {
+    public void queryUserData(String tag, String userId, NetDataBeanCallback callback) {
         TokenRequestParams params = new TokenRequestParams();
         params.addParameter("userId", userId);
         Call<String> call = service.queryUserData(params.map);
@@ -189,7 +189,7 @@ public class HttpActionImpl {
         runTask(tag, call, callback);
     }
 
-    public void addFriend(String tag, int contactName, NetDataBeanCallback callback) {
+    public void addFriend(String tag, String contactName, NetDataBeanCallback callback) {
         TokenRequestParams params = new TokenRequestParams();
         params.addParameter("contactName", contactName);
         Call<String> call = service.addFriend(params.map);
@@ -221,10 +221,10 @@ public class HttpActionImpl {
      * @param content     内容
      * @param callback
      */
-    public void addComment2Dynamic(String tag, String dynamicId, int replyUserId, String content, NetDataBeanCallback callback) {
+    public void addComment2Dynamic(String tag, String dynamicId, String replyUserId, String content, NetDataBeanCallback callback) {
         TokenRequestParams params = new TokenRequestParams();
         params.addParameter("dynamicId", String.valueOf(dynamicId));
-        if (replyUserId != -1)
+        if (replyUserId != null)
             params.addParameter("replyUserId", String.valueOf(replyUserId));
         params.addParameter("type", CommentBean.SubType.COMMENT.toString());
         params.addParameter("content", content);

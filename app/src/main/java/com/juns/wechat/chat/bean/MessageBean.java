@@ -1,63 +1,61 @@
 package com.juns.wechat.chat.bean;
 
-import com.juns.wechat.chat.bean.Msg;
-import com.juns.wechat.config.MsgType;
-import com.juns.wechat.database.ChatTable;
-
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Transient;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.xutils.db.annotation.Column;
-import org.xutils.db.annotation.Table;
 
 import java.util.Date;
+import org.greenrobot.greendao.annotation.Generated;
 
 /*******************************************************
  * Created by 王宗文 on 2015/11/16
  *******************************************************/
 
-@Table(name = ChatTable.TABLE_NAME, onCreated = ChatTable.CREATE_INDEX)
+@Entity
 public class MessageBean {
-    public static final String ID = "id";
-    public static final String MYSELF_NAME = "myselfName";
-    public static final String OTHER_NAME = "otherName";
-    public static final String MSG = "msg";
-    public static final String TYPE = "type";
-    public static final String PACKET_ID = "packetId";
-    public static final String DATE = "date";
-    public static final String DIRECTION = "direction"; //消息方向，是发出去还是接受到的
-    public static final String STATE = "state";
-    public static final String FLAG = "flag";
 
-    @Column(name = ID, isId = true)
-    private int id; //主键，子增长
-    @Column(name = MYSELF_NAME)
-    private String myselfName; //自己;
-    @Column(name = OTHER_NAME)
-    private String otherName; //对方;
-    @Column(name = MSG)
-    private String msg; //对应表中msg字段
-    @Column(name = TYPE)
-    private int type; //消息类型
-    @Column(name = PACKET_ID)
-    private String packetId; //每一条消息在网络上发送时都表现为一个消息包，这个packetId与每条消息的消息Id是一致的
-    @Column(name = DATE)
-    private Date date; //发送消息时间
-    @Column(name = DIRECTION)
-    private int direction; // 发出去还是收到了消息
-    @Column(name = STATE)
-    private int state; //判断消息是否已发送或者已读
-    @Column(name = FLAG)
-    private int flag; //判断消息是否有效
+    @Id
+    public String packetId; //每一条消息在网络上发送时都表现为一个消息包，这个packetId与每条消息的消息Id是一致的
+    public String myUserId; //自己;
+    public String otherUserId; //对方;
+    public String msg; //对应表中msg字段
+    public int type; //消息类型
+    public Date date; //发送消息时间
+    public int direction; // 发出去还是收到了消息
+    public int state; //判断消息是否已发送或者已读
+    public int flag; //判断消息是否有效
+    @Transient
     private Msg msgObj; //msg字段对应的对象
 
     public MessageBean() {
     }
 
 
+
+
+    @Generated(hash = 914378335)
+    public MessageBean(String packetId, String myUserId, String otherUserId,
+            String msg, int type, Date date, int direction, int state, int flag) {
+        this.packetId = packetId;
+        this.myUserId = myUserId;
+        this.otherUserId = otherUserId;
+        this.msg = msg;
+        this.type = type;
+        this.date = date;
+        this.direction = direction;
+        this.state = state;
+        this.flag = flag;
+    }
+
+
+
+
     public String toSendJson() throws JSONException {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put(MSG, getMsgObj().toSendJsonObject());
-        jsonObject.put(TYPE, type);
+        jsonObject.put("MSG", getMsgObj().toSendJsonObject());
+        jsonObject.put("TYPE", type);
         return jsonObject.toString();
     }
 
@@ -80,28 +78,12 @@ public class MessageBean {
         }
     }
 
-    public int getId() {
-        return id;
+    public String getPacketId() {
+        return packetId;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getMyselfName() {
-        return myselfName;
-    }
-
-    public void setMyselfName(String myselfName) {
-        this.myselfName = myselfName;
-    }
-
-    public String getOtherName() {
-        return otherName;
-    }
-
-    public void setOtherName(String otherName) {
-        this.otherName = otherName;
+    public void setPacketId(String packetId) {
+        this.packetId = packetId;
     }
 
     public String getMsg() {
@@ -120,14 +102,6 @@ public class MessageBean {
 
     public void setType(int type) {
         this.type = type;
-    }
-
-    public String getPacketId() {
-        return packetId;
-    }
-
-    public void setPacketId(String packetId) {
-        this.packetId = packetId;
     }
 
     public Date getDate() {
@@ -176,17 +150,36 @@ public class MessageBean {
     @Override
     public String toString() {
         return "MessageBean{" +
-                "id=" + id +
-                ", myselfName='" + myselfName + '\'' +
-                ", otherName='" + otherName + '\'' +
+                ", packetId='" + packetId + '\'' +
+                ", myUserId=" + myUserId +
+                ", otherUserId=" + otherUserId +
                 ", msg='" + msg + '\'' +
                 ", type=" + type +
-                ", packetId='" + packetId + '\'' +
                 ", date=" + date +
                 ", direction=" + direction +
                 ", state=" + state +
                 ", flag=" + flag +
                 ", msgObj=" + msgObj +
                 '}';
+    }
+
+
+    public String getMyUserId() {
+        return this.myUserId;
+    }
+
+
+    public void setMyUserId(String myUserId) {
+        this.myUserId = myUserId;
+    }
+
+
+    public String getOtherUserId() {
+        return this.otherUserId;
+    }
+
+
+    public void setOtherUserId(String otherUserId) {
+        this.otherUserId = otherUserId;
     }
 }

@@ -1,21 +1,17 @@
 package com.juns.wechat.manager;
 
-import android.app.usage.UsageEvents;
 import android.content.Context;
 import android.text.TextUtils;
 
 import com.juns.wechat.App;
 import com.juns.wechat.Constants;
-import com.juns.wechat.activity.MainActivity;
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.chat.xmpp.event.XmppEvent;
-import com.juns.wechat.database.dao.UserDao;
-import com.juns.wechat.util.SharedPreferencesUtil;
 import com.juns.wechat.chat.xmpp.XmppManagerImpl;
-import com.style.constant.Skip;
+import com.juns.wechat.chat.xmpp.event.XmppEvent;
+import com.juns.wechat.greendao.mydao.GreenDaoManager;
+import com.juns.wechat.util.SharedPreferencesUtil;
 
 import org.simple.eventbus.EventBus;
-import org.xutils.db.sqlite.WhereBuilder;
 
 /**
  * Created by 王宗文 on 2016/6/8.
@@ -23,10 +19,10 @@ import org.xutils.db.sqlite.WhereBuilder;
 public class AccountManager {
     private UserBean user;
     private Context context;
-    private UserDao userDao;
 
     private static final String CURRENT_LOGIN_USER_NAME = "current_login_username";
     private static final String CURRENT_LOGIN_USER_ID = "current_login_user_id";
+    private static final String CURRENT_LOGIN_PWD = "PWD";
 
     private static AccountManager instance;
 
@@ -39,30 +35,21 @@ public class AccountManager {
 
     public void init(Context mContext) {
         this.context = mContext;
-        initUser();
-    }
-
-    private void initUser() {
-        userDao = UserDao.getInstance();
-        String userName = getUserName();
-        WhereBuilder whereBuilder = WhereBuilder.b(UserBean.USERNAME, "=", userName);
-        user = userDao.findByParams(whereBuilder);
     }
 
     public void setUser(UserBean userBean) {
-        if (userDao.replace(userBean)) {
-            setLogin(true);
-            setUserId(userBean.getUserId());
-            setUserName(userBean.getUserName());
-            user = userBean;
-        }
+        GreenDaoManager.getInstance().save(userBean);
+        setLogin(true);
+        setUserId(userBean.getUserId());
+        setUserName(userBean.getUserName());
+        user = userBean;
     }
 
     public UserBean getUser() {
         if (user == null) {
             String token = getToken();
             if (!TextUtils.isEmpty(token)) {
-                initUser();
+                user = GreenDaoManager.getInstance().findByUserId(getUserId());
                 if (user != null) {
                     String userName = user.getUserName();
                     String password = user.getPassWord();
@@ -97,12 +84,12 @@ public class AccountManager {
         SharedPreferencesUtil.putBooleanValue(context, Constants.LoginState, login);
     }
 
-    public void setUserId(int userId) {
-        SharedPreferencesUtil.putIntValue(context, CURRENT_LOGIN_USER_ID, userId);
+    public void setUserId(String userId) {
+        SharedPreferencesUtil.putValue(context, CURRENT_LOGIN_USER_ID, userId);
     }
 
-    public int getUserId() {
-        return SharedPreferencesUtil.getIntValue(context, CURRENT_LOGIN_USER_ID);
+    public String getUserId() {
+        return SharedPreferencesUtil.getValue(context, CURRENT_LOGIN_USER_ID);
     }
 
     public void setUserName(String userName) {
@@ -114,11 +101,11 @@ public class AccountManager {
     }
 
     public void setUserPassWord(String passWord) {
-        SharedPreferencesUtil.putValue(context, Constants.PWD, passWord);
+        SharedPreferencesUtil.putValue(context, CURRENT_LOGIN_PWD, passWord);
     }
 
     public String getUserPassWord() {
-        return SharedPreferencesUtil.getValue(context, Constants.PWD);
+        return SharedPreferencesUtil.getValue(context, CURRENT_LOGIN_PWD);
     }
 
     public void setToken(String token) {
@@ -137,14 +124,4 @@ public class AccountManager {
     public long getTokenRefreshTime() {
         return SharedPreferencesUtil.getLongValue(context, "token_refresh_time", 0);
     }
-
-    public void setHeadUrl(String headUrl) {
-        user.setHeadUrl(headUrl);
-        userDao.replace(user);
-    }
-
-    public String getHeadUrl() {
-        return user.getHeadUrl();
-    }
-
 }

@@ -33,7 +33,7 @@ import java.util.Map;
  * *****************************************************
  */
 public class NoticePrompt extends Prompt implements ISwitch {
-    public final static String NOTICE_PROMPT= "notice_prompt";
+    public final static String NOTICE_PROMPT = "notice_prompt";
     public final static String VIBRATIONNOTIFY = "vibration_list";
     public final static String TICKER = "ticker";
 
@@ -48,7 +48,7 @@ public class NoticePrompt extends Prompt implements ISwitch {
     private Notification mNotification;
     private int mLastNotificationId = 2;
 
-    public NoticePrompt(Context context){
+    public NoticePrompt(Context context) {
         super(context);
         mContext = context;
         mVibrator = (Vibrator) mContext.getSystemService(Context.VIBRATOR_SERVICE);
@@ -58,17 +58,17 @@ public class NoticePrompt extends Prompt implements ISwitch {
     }
 
     @Override
-    public final void switchOn(){
+    public final void switchOn() {
         SharedPreferencesUtil.putBooleanValue(App.getInstance(), NOTICE_PROMPT, true);
     }
 
     @Override
-    public final void switchOff(){
+    public final void switchOff() {
         SharedPreferencesUtil.putBooleanValue(App.getInstance(), NOTICE_PROMPT, false);
     }
 
     @Override
-    public final boolean isSwitchOn(){
+    public final boolean isSwitchOn() {
         return SharedPreferencesUtil.getBooleanValue(App.getInstance(), NOTICE_PROMPT, true);
     }
 
@@ -81,10 +81,10 @@ public class NoticePrompt extends Prompt implements ISwitch {
 
 
     public final void notifyClient(String fromUserName, String message, Intent noticeIntent) {
-        if (!isSwitchOn()){
+        if (!isSwitchOn()) {
             return;
         }
-        if (isOnForeGround()){
+        if (isOnForeGround()) {
             return;
         }
 

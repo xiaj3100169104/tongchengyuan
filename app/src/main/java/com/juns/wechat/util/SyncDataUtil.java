@@ -4,8 +4,7 @@ package com.juns.wechat.util;
 import com.alibaba.fastjson.TypeReference;
 import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.database.dao.FriendDao;
-import com.juns.wechat.database.dao.UserDao;
+import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.request.HttpActionImpl;
 import com.style.net.core.NetDataBeanCallback;
@@ -19,6 +18,7 @@ public class SyncDataUtil {
 
     private static SyncDataUtil mInstance;
     private Callback callback;
+    private GreenDaoManager greenDao = GreenDaoManager.getInstance();
 
     public static SyncDataUtil getInstance() {
         if (mInstance == null) {
@@ -36,14 +36,14 @@ public class SyncDataUtil {
     }
 
     private void syncFriendData(final String tag) {
-        long lastModifyDate = FriendDao.getInstance().getLastModifyDate(AccountManager.getInstance().getUserId());
+        long lastModifyDate = greenDao.getLastModifyDate(AccountManager.getInstance().getUserId());
         HttpActionImpl.getInstance().syncFriendData("syncFriendData", lastModifyDate, new NetDataBeanCallback<List<FriendBean>>(new TypeReference<List<FriendBean>>() {
         }) {
             @Override
             protected void onCodeSuccess(List<FriendBean> data) {
                 List<FriendBean> friendBeen = data;
                 if (friendBeen != null && !friendBeen.isEmpty()) {
-                    FriendDao.getInstance().replace(friendBeen);
+                    greenDao.saveFriends(friendBeen);
                 }
                 syncUserData(tag);
             }
@@ -59,15 +59,15 @@ public class SyncDataUtil {
     }
 
     private void syncUserData(String tag) {
-        Integer[] userIds = FriendDao.getInstance().getNotExistUsersInFriend(AccountManager.getInstance().getUser().getUserId());
-        long lastModifyDate = UserDao.getInstance().getLastModifyDate(AccountManager.getInstance().getUserId());
+        Integer[] userIds = greenDao.getNotExistUsersInFriend(AccountManager.getInstance().getUser().getUserId());
+        long lastModifyDate = greenDao.getInstance().getLastModifyDate(AccountManager.getInstance().getUserId());
         HttpActionImpl.getInstance().syncUserData("syncUserData", userIds, lastModifyDate, new NetDataBeanCallback<List<UserBean>>(new TypeReference<List<UserBean>>() {
         }) {
             @Override
             protected void onCodeSuccess(List<UserBean> data) {
                 List<UserBean> userBeen = data;
                 if (userBeen != null && !userBeen.isEmpty()) {
-                    UserDao.getInstance().replace(userBeen);
+                    greenDao.saveUserList(userBeen);
                 }
                 if (callback != null) {
                     callback.onSuccess();

@@ -18,7 +18,7 @@ import com.github.jdsjlzx.interfaces.OnRefreshListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.github.jdsjlzx.recyclerview.ProgressStyle;
-import com.juns.wechat.greendao.dao.GreenDaoManager;
+import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.same.city.love.R;
 import com.juns.wechat.bean.CommentBean;
 import com.juns.wechat.bean.DynamicBean;
@@ -202,7 +202,7 @@ public class FriendCircleActivity extends BaseToolbarActivity {
 
     private void addComment2Dynamic(final String content) {
         final DynamicBean dynamicBean = dataList.get(curDynamicPosition);
-        int replyUserId = -1;//表示直接评论动态
+        String replyUserId = null;//表示直接评论动态
         if (tag == REPLY) {
             replyUserId = dynamicBean.getCommentList().get(curCommentPosition).getCommenterId();
         }
@@ -243,7 +243,7 @@ public class FriendCircleActivity extends BaseToolbarActivity {
                 dynamicId = dynamicBean.getDynamicId();
             }
         }
-        HttpActionImpl.getInstance().getFriendCircleDynamic(TAG, action, dynamicId, 6, new NetDataBeanCallback<List<DynamicBean>>(new TypeReference<List<DynamicBean>>() {
+       /* HttpActionImpl.getInstance().getFriendCircleDynamic(TAG, action, dynamicId, 6, new NetDataBeanCallback<List<DynamicBean>>(new TypeReference<List<DynamicBean>>() {
         }) {
             @Override
             protected void onCodeSuccess(List<DynamicBean> data) {
@@ -269,8 +269,14 @@ public class FriendCircleActivity extends BaseToolbarActivity {
                 mRecyclerView.refreshComplete(5);
                 showToast(msg);
             }
-        });
-        List<DynamicBean> data = GreenDaoManager.getInstance().queryByPage(dataList.size(), 5, curUser.getUserId());
+        });*/
+        int offset = 0;
+        if (action == ACTION_REFRESH) {
+            offset = 0;
+        } else {
+            offset = dataList.size();
+        }
+        List<DynamicBean> data = GreenDaoManager.getInstance().queryByPage(offset, 5, curUser.getUserId());
         mRecyclerView.refreshComplete(5);
         if (data != null && data.size() > 0) {
             mRecyclerView.setLoadMoreEnabled(true);

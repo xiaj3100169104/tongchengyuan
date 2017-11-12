@@ -16,7 +16,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.juns.wechat.bean.UserBasicInfo;
 import com.juns.wechat.bean.UserExtendInfo;
 import com.juns.wechat.bean.UserPropertyBean;
-import com.juns.wechat.greendao.dao.GreenDaoManager;
+import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.juns.wechat.helper.CacheDataHelper;
 import com.juns.wechat.helper.CommonViewHelper;
 import com.juns.wechat.net.request.HttpActionImpl;
@@ -212,13 +212,13 @@ public class PersonInfoShowActivity extends BaseToolbarActivity {
     }
 
     @Subscriber(tag = EventCode.UPDATE_USER_BASIC)
-    private void onDataChanged1(UserBasicInfo data) {
+    private void onDataChanged(UserBasicInfo data) {
         setUserBasicInfo(data);
 
     }
 
     @Subscriber(tag = EventCode.UPDATE_USER_LABEL)
-    private void onDataChanged2(List<UserPropertyBean> data) {
+    private void onDataChanged(List<UserPropertyBean> data) {
         setExtendInfo(data);
 
     }

@@ -16,16 +16,16 @@ public class ConvertUtil {
 
     public static MessageBean convertToMessageBean(Message message) throws JSONException {
         MessageBean messageBean = new MessageBean();
-        messageBean.setMyselfName(ConfigUtil.getUserName(message.getTo()));
-        messageBean.setOtherName(ConfigUtil.getUserName(message.getFrom()));
+        messageBean.setMyUserId(ConfigUtil.getUserName(message.getTo()));
+        messageBean.setOtherUserId(ConfigUtil.getUserName(message.getFrom()));
         TimeElement time = TimeElement.from(message);
         messageBean.setDate(time.getTime());
         messageBean.setDirection(MessageBean.Direction.INCOMING.value);
         messageBean.setPacketId(message.getStanzaId());
 
         JSONObject jsonObject = new JSONObject(message.getBody());
-        String msg = jsonObject.optString(MessageBean.MSG);
-        int type = jsonObject.optInt(MessageBean.TYPE);
+        String msg = jsonObject.optString("MSG");
+        int type = jsonObject.optInt("TYPE");
         messageBean.setMsg(msg);
         messageBean.setType(type);
         return messageBean;

@@ -10,14 +10,12 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
-import com.juns.wechat.greendao.dao.GreenDaoManager;
+import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.same.city.love.R;
 import com.juns.wechat.bean.DynamicBean;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.net.request.HttpActionImpl;
 import com.style.dialog.PromptDialog;
-import com.style.net.core.NetDataBeanCallback;
 import com.style.album.AlbumActivity;
 import com.style.album.DynamicPublishImageAdapter;
 import com.style.base.BaseRecyclerViewAdapter;

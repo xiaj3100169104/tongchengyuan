@@ -8,8 +8,7 @@ import android.widget.TextView;
 
 
 import com.same.city.love.R;
-
-import org.simple.eventbus.EventBus;
+import com.style.event.EventManager;
 
 public abstract class BaseToolbarActivity extends BaseActivity {
     private Toolbar toolbar;
@@ -20,7 +19,7 @@ public abstract class BaseToolbarActivity extends BaseActivity {
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
         if (registerEventBus()) {
-            EventBus.getDefault().register(this);
+            EventManager.getDefault().register(this);
         }
     }
 
@@ -72,7 +71,7 @@ public abstract class BaseToolbarActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         if (registerEventBus()) {
-            EventBus.getDefault().unregister(this);
+            EventManager.getDefault().unRegister(this);
         }
     }
 }

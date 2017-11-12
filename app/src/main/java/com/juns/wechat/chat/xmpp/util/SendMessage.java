@@ -4,9 +4,9 @@ package com.juns.wechat.chat.xmpp.util;
 import android.widget.Toast;
 
 import com.juns.wechat.App;
+import com.juns.wechat.chat.bean.InviteMsg;
 import com.juns.wechat.chat.bean.LocationMsg;
 import com.juns.wechat.chat.bean.MessageBean;
-import com.juns.wechat.chat.bean.InviteMsg;
 import com.juns.wechat.chat.bean.OfflineVideoMsg;
 import com.juns.wechat.chat.bean.PictureMsg;
 import com.juns.wechat.chat.bean.TextMsg;
@@ -14,17 +14,14 @@ import com.juns.wechat.chat.bean.VoiceMsg;
 import com.juns.wechat.chat.xmpp.XmppManagerImpl;
 import com.juns.wechat.common.BASE64;
 import com.juns.wechat.config.MsgType;
-import com.juns.wechat.database.dao.MessageDao;
+import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.util.ThreadPoolUtil;
 import com.juns.wechat.util.ToastUtil;
 import com.style.constant.FileConfig;
 import com.style.manager.ToastManager;
 
-
 import org.jivesoftware.smack.packet.id.StanzaIdUtil;
-import org.xutils.common.util.KeyValue;
-import org.xutils.db.sqlite.WhereBuilder;
 
 import java.io.File;
 import java.util.Date;
@@ -37,14 +34,14 @@ import java.util.Date;
  * Created by 王宗文 on 2015/11/19
  *******************************************************/
 public class SendMessage {
-    private static MessageDao messageDao = MessageDao.getInstance();
+    private static GreenDaoManager messageDao = GreenDaoManager.getInstance();
     private static BASE64 base64 = new BASE64();
 
     /**
      * 发送普通的文字消息
      * @param content
      */
-    public static void sendTextMsg(final String otherName, final String content) {
+    public static void sendTextMsg(final String otherUserId, final String content) {
         ThreadPoolUtil.execute(new Runnable() {
             @Override
             public void run() {
@@ -52,7 +49,7 @@ public class SendMessage {
                 TextMsg textMsg = new TextMsg();
                 textMsg.content = content;
                 messageBean.setMsg(textMsg.toJson());
-                messageBean.setOtherName(otherName);
+                messageBean.setOtherUserId(otherUserId);
                 messageBean.setType(MsgType.MSG_TYPE_TEXT);
                 sendMsg(messageBean);
 
@@ -62,7 +59,7 @@ public class SendMessage {
     /**
      * 发送地理位置消息
      */
-    public static void sendLocationMsg(final String otherName, final double latitude, final double longitude, final String address) {
+    public static void sendLocationMsg(final String otherUserId, final double latitude, final double longitude, final String address) {
         ThreadPoolUtil.execute(new Runnable() {
             @Override
             public void run() {
@@ -72,7 +69,7 @@ public class SendMessage {
                 msg.longitude = longitude;
                 msg.address = address;
                 messageBean.setMsg(msg.toJson());
-                messageBean.setOtherName(otherName);
+                messageBean.setOtherUserId(otherUserId);
                 messageBean.setType(MsgType.MSG_TYPE_LOCATION);
                 sendMsg(messageBean);
 
@@ -80,7 +77,7 @@ public class SendMessage {
         });
     }
     @SuppressWarnings("unchecked")
-    public static void sendPictureMsg(final String otherName, final String path, final int width, final int height) {
+    public static void sendPictureMsg(final String otherUserId, final String path, final int width, final int height) {
         ThreadPoolUtil.execute(new Runnable() {
             @Override
             public void run() {
@@ -100,7 +97,7 @@ public class SendMessage {
 
                 final MessageBean messageBean = new MessageBean();
                 messageBean.setMsg(pictureMsg.toJson());
-                messageBean.setOtherName(otherName);
+                messageBean.setOtherUserId(otherUserId);
                 messageBean.setType(MsgType.MSG_TYPE_PICTURE);
                 completeMessageEntityInfo(messageBean);
                 addMessageToDB(messageBean);
@@ -124,14 +121,14 @@ public class SendMessage {
         }
 
         FileTransferManager fileTransferManager = new FileTransferManager();
-        fileTransferManager.sendFile(file, messageBean.getOtherName(), new FileTransferManager.ProgressListener() {
+        fileTransferManager.sendFile(file, messageBean.getOtherUserId(), new FileTransferManager.ProgressListener() {
             @Override
             public void progressUpdated(int progress) {
                 pictureMsg.progress = progress;
-                messageBean.setMsg(pictureMsg.toJson());
+              /*  messageBean.setMsg(pictureMsg.toJson());
                 WhereBuilder whereBuilder = WhereBuilder.b(MessageBean.PACKET_ID, "=", messageBean.getPacketId());
                 KeyValue keyValue = new KeyValue(MessageBean.MSG, messageBean.getMsg());
-                messageDao.update(whereBuilder, keyValue);
+                messageDao.update(whereBuilder, keyValue);*/
             }
 
             @Override
@@ -146,7 +143,7 @@ public class SendMessage {
         });
     }
 
-    public static void sendOfflineVideoMsg(final String otherName, final File file, final int width, final int height) {
+    public static void sendOfflineVideoMsg(final String otherUserId, final File file, final int width, final int height) {
         ThreadPoolUtil.execute(new Runnable() {
             @Override
             public void run() {
@@ -162,7 +159,7 @@ public class SendMessage {
 
                 final MessageBean messageBean = new MessageBean();
                 messageBean.setMsg(contentMsg.toJson());
-                messageBean.setOtherName(otherName);
+                messageBean.setOtherUserId(otherUserId);
                 messageBean.setType(MsgType.MSG_TYPE_OFFLINE_VIDEO);
                 completeMessageEntityInfo(messageBean);
                 addMessageToDB(messageBean);
@@ -174,14 +171,14 @@ public class SendMessage {
 
                 FileTransferManager fileTransferManager = new FileTransferManager();
 
-                fileTransferManager.sendFile(file, otherName, new FileTransferManager.ProgressListener() {
+                fileTransferManager.sendFile(file, otherUserId, new FileTransferManager.ProgressListener() {
                     @Override
                     public void progressUpdated(int progress) {
-                        contentMsg.progress = progress;
+                     /*   contentMsg.progress = progress;
                         messageBean.setMsg(contentMsg.toJson());
                         WhereBuilder whereBuilder = WhereBuilder.b(MessageBean.PACKET_ID, "=", messageBean.getPacketId());
                         KeyValue keyValue = new KeyValue(MessageBean.MSG, messageBean.getMsg());
-                        messageDao.update(whereBuilder, keyValue);
+                        messageDao.update(whereBuilder, keyValue);*/
                     }
 
                     @Override
@@ -198,7 +195,7 @@ public class SendMessage {
         });
     }
 
-    public static void sendVoiceMsg(final String otherName, final int seconds, final String filePath) {
+    public static void sendVoiceMsg(final String otherUserId, final int seconds, final String filePath) {
         ThreadPoolUtil.execute(new Runnable() {
             @Override
             public void run() {
@@ -209,7 +206,7 @@ public class SendMessage {
                 voiceMsg.encodeStr = new MsgCode().encode(filePath);
 
                 messageBean.setMsg(voiceMsg.toJson());
-                messageBean.setOtherName(otherName);
+                messageBean.setOtherUserId(otherUserId);
                 messageBean.setType(MsgType.MSG_TYPE_VOICE);
                 sendMsg(messageBean);
             }
@@ -221,7 +218,7 @@ public class SendMessage {
      *
      * @param reason
      */
-    public static void sendInviteMsg(final String otherName, final String reason) {
+    public static void sendInviteMsg(final String otherUserId, final String reason) {
         ThreadPoolUtil.execute(new Runnable() {
             @Override
             public void run() {
@@ -231,7 +228,7 @@ public class SendMessage {
                 inviteMsg.reason = reason;
                 try {
                     messageBean.setMsg(inviteMsg.toJson());
-                    messageBean.setOtherName(otherName);
+                    messageBean.setOtherUserId(otherUserId);
                     messageBean.setType(MsgType.MSG_TYPE_SEND_INVITE);
                     sendMsg(messageBean);
                 } catch (Exception e) {
@@ -245,7 +242,7 @@ public class SendMessage {
     /**
      * 回复添加好友消息
      */
-    public static void sendReplyInviteMsg(final String otherName, final int reply, final String reason) {
+    public static void sendReplyInviteMsg(final String otherUserId, final int reply, final String reason) {
         ThreadPoolUtil.execute(new Runnable() {
             @Override
             public void run() {
@@ -256,7 +253,7 @@ public class SendMessage {
                 inviteMsg.reply = reply;
                 try {
                     messageBean.setMsg(inviteMsg.toJson());
-                    messageBean.setOtherName(otherName);
+                    messageBean.setOtherUserId(otherUserId);
                     messageBean.setType(MsgType.MSG_TYPE_REPLY_INVITE);
                     sendMsg(messageBean);
                 } catch (Exception e) {
@@ -298,8 +295,8 @@ public class SendMessage {
     }
 
     public static void completeMessageEntityInfo(MessageBean message) {
-        String myselfName = AccountManager.getInstance().getUserName();
-        message.setMyselfName(myselfName);
+        String myselfName = AccountManager.getInstance().getUserId();
+        message.setMyUserId(myselfName);
         String packetId = StanzaIdUtil.newStanzaId();
         message.setPacketId(packetId);
         message.setDate(new Date());
@@ -313,7 +310,7 @@ public class SendMessage {
      * @return
      */
     private static void addMessageToDB(MessageBean messageBean) {
-        messageDao.save(messageBean);
+        GreenDaoManager.getInstance().save(messageBean);
     }
 
     public static void sendMsgDirect(MessageBean message) {

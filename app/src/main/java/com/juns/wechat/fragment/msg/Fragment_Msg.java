@@ -11,19 +11,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.juns.wechat.activity.MainActivity;
-import com.same.city.love.R;
-import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.chat.ui.ChatActivity;
 import com.juns.wechat.adpter.ConversationAdapter;
+import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.bean.MessageBean;
-import com.style.base.BaseFragment;
-import com.juns.wechat.database.dao.DbDataEvent;
-import com.juns.wechat.database.dao.MessageDao;
-import com.juns.wechat.database.ChatTable;
-import com.juns.wechat.database.UserTable;
+import com.juns.wechat.chat.ui.ChatActivity;
+import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.juns.wechat.manager.AccountManager;
+import com.same.city.love.R;
+import com.style.base.BaseFragment;
 import com.style.base.BaseRecyclerViewAdapter;
 import com.style.constant.Skip;
+import com.style.event.EventCode;
 import com.style.view.DividerItemDecoration;
 
 import org.simple.eventbus.Subscriber;
@@ -79,7 +77,7 @@ public class Fragment_Msg extends BaseFragment {
     }
 
     private void refreshData() {
-        List<MsgItem> msgItems = MessageDao.getInstance().getLastMessageWithEveryFriend(curUser.getUserId(), account);
+        List<MsgItem> msgItems = GreenDaoManager.getInstance().getLastMessageWithEveryFriend(curUser.getUserId());
         if (msgItems == null || msgItems.isEmpty()) {
             txtNochat.setVisibility(View.VISIBLE);
         } else {
@@ -97,20 +95,13 @@ public class Fragment_Msg extends BaseFragment {
     }
 
     private void setUnreadMsgNum() {
-        int unreadNum = MessageDao.getInstance().getAllUnreadMsgNum(account);
+        int unreadNum = GreenDaoManager.getInstance().getAllUnreadMsgNum(account);
         ((MainActivity) getActivity()).setUnreadMsgLabel(unreadNum);
     }
 
-    @Subscriber(tag = ChatTable.TABLE_NAME)
-    private void onMessageDataChanged(DbDataEvent<MessageBean> event) {
+    @Subscriber(tag = EventCode.REFRESH_CONVERSATION_LIST)
+    private void onMessageDataChanged(Object event) {
         refreshData(); //重新加载数据
-    }
-
-    @Subscriber(tag = UserTable.TABLE_NAME)
-    private void onUserDataChanged(DbDataEvent<MessageBean> event) {
-        if (event.action == DbDataEvent.UPDATE && event.action == DbDataEvent.REPLACE) {
-            refreshData(); //重新加载数据
-        }
     }
 
     public class MsgItemComparator implements Comparator<MsgItem> {

@@ -10,13 +10,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.same.city.love.R;
 import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.ui.ChatActivity;
-import com.juns.wechat.database.dao.FriendDao;
-import com.juns.wechat.database.dao.UserDao;
-import com.juns.wechat.exception.UserNotFoundException;
 import com.juns.wechat.helper.CommonViewHelper;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.request.HttpActionImpl;
@@ -43,7 +41,7 @@ public class UserInfoActivity extends BaseToolbarActivity implements OnClickList
     @Bind(R.id.btnSendMsg)
     Button btnSendMsg;
 
-    private int userId;
+    private String userId;
 
     private UserBean curUser = AccountManager.getInstance().getUser();
     private FriendBean friendBean;
@@ -75,18 +73,18 @@ public class UserInfoActivity extends BaseToolbarActivity implements OnClickList
 
     public void initData() {
         setToolbarTitle("详细资料");
-        userId = getIntent().getIntExtra(Skip.KEY_USER_ID, 0);
+        userId = getIntent().getStringExtra(Skip.KEY_USER_ID);
         if (userId == curUser.getUserId()) {  //查看自己的信息
             userBean = curUser;
             setData();
             return;
         }
 
-        friendBean = FriendDao.getInstance().findByOwnerAndContactName(curUser.getUserId(), userId);
+        friendBean = GreenDaoManager.getInstance().findByOwnerAndContactName(curUser.getUserId(), userId);
         if (friendBean != null) {  //不是好友关系
             subType = friendBean.getSubType();
         }
-        userBean = UserDao.getInstance().findByUserId(userId);
+        userBean = GreenDaoManager.getInstance().findByUserId(userId);
         if (userBean != null) {
             setData();
             return;
@@ -96,7 +94,7 @@ public class UserInfoActivity extends BaseToolbarActivity implements OnClickList
             protected void onCodeSuccess(UserBean data) {
                 if (data != null) {
                     userBean = data;
-                    UserDao.getInstance().replace(data);
+                    GreenDaoManager.getInstance().save(data);
                     setData();
                 }
             }
@@ -130,7 +128,7 @@ public class UserInfoActivity extends BaseToolbarActivity implements OnClickList
         }
         if (subType == null) {
             Intent intent = new Intent(UserInfoActivity.this, AddFriendFinalActivity.class);
-            intent.putExtra(Skip.KEY_USER_NAME, userBean.getUserName());
+            intent.putExtra(Skip.KEY_USER_ID, userBean.getUserId());
             startActivity(intent);
         } else {
             Intent intent = new Intent(UserInfoActivity.this, ChatActivity.class);

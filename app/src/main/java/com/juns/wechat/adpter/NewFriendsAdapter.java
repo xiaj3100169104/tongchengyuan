@@ -10,14 +10,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.same.city.love.R;
 import com.juns.wechat.activity.UserInfoActivity;
 import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.bean.InviteMsg;
 import com.juns.wechat.common.ViewHolder;
-import com.juns.wechat.database.dao.MessageDao;
-import com.juns.wechat.database.dao.UserDao;
 import com.juns.wechat.net.request.HttpActionImpl;
 import com.style.net.core.NetDataBeanCallback;
 import com.juns.wechat.util.SyncDataUtil;
@@ -30,7 +29,7 @@ import java.util.List;
 public class NewFriendsAdapter extends BaseAdapter {
     protected Context context;
     private List<MessageBean> inviteMessages;
-    private UserDao userDao = UserDao.getInstance();
+    private GreenDaoManager userDao = GreenDaoManager.getInstance();
 
     public NewFriendsAdapter(Context ctx, List<MessageBean> inviteMessages) {
         context = ctx;
@@ -69,14 +68,14 @@ public class NewFriendsAdapter extends BaseAdapter {
         final TextView txt_add = ViewHolder.get(convertView, R.id.tvAdd);
 
         final MessageBean messageBean = inviteMessages.get(position);
-        final UserBean userBean = userDao.findByName(messageBean.getOtherName());
+        final UserBean userBean = userDao.findByUserId(messageBean.getOtherUserId());
         if (userBean == null) {
             //UserRequest.queryUserData(messageBean.getOtherName(), queryUserCallBack);
-            HttpActionImpl.getInstance().queryPhone("queryPhone", messageBean.getOtherName(), new NetDataBeanCallback<UserBean>(UserBean.class) {
+            HttpActionImpl.getInstance().queryUserData("queryUserData", messageBean.getOtherUserId(), new NetDataBeanCallback<UserBean>(UserBean.class) {
                 @Override
                 protected void onCodeSuccess(UserBean data) {
                     if (data != null) {
-                        UserDao.getInstance().replace(data);
+                        GreenDaoManager.getInstance().save(data);
                         notifyDataSetChanged();
                     }
                 }
@@ -135,7 +134,7 @@ public class NewFriendsAdapter extends BaseAdapter {
 
     private void addFriend(final MessageBean message) {
         final MessageBean messageBean = message;
-        UserBean userBean = userDao.getInstance().findByName(messageBean.getOtherName());
+        UserBean userBean = userDao.getInstance().findByUserId(messageBean.getOtherUserId());
         HttpActionImpl.getInstance().addFriend("addFriend", userBean.userId, new NetDataBeanCallback() {
             @Override
             protected void onCodeSuccess() {
@@ -143,9 +142,9 @@ public class NewFriendsAdapter extends BaseAdapter {
                 int reply = InviteMsg.Reply.ACCEPT.value;
                 inviteMsg.reply = reply;
                 messageBean.setMsg(inviteMsg.toJson());
-                MessageDao.getInstance().update(messageBean);
+                GreenDaoManager.getInstance().save(messageBean);
                 notifyDataSetChanged();
-                sendMessageToOther(messageBean.getOtherName(), reply);
+                sendMessageToOther(messageBean.getOtherUserId(), reply);
 
                 SyncDataUtil.getInstance().syncData();
             }
@@ -157,15 +156,15 @@ public class NewFriendsAdapter extends BaseAdapter {
         });
     }
 
-    private void sendMessageToOther(String otherName, int reply) {
+    private void sendMessageToOther(String otherUserId, int reply) {
         String reason = "我同意了你的添加好友的请求";
         InviteMsg inviteMsg = new InviteMsg();
-        UserBean userBean = userDao.findByName(otherName);
+        UserBean userBean = userDao.findByUserId(otherUserId);
         if (userBean != null) {
             inviteMsg.userName = userBean.getShowName();
         }
 
-        SendMessage.sendReplyInviteMsg(otherName, reply, reason);
+        SendMessage.sendReplyInviteMsg(otherUserId, reply, reason);
     }
 
 }

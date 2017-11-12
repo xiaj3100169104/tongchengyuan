@@ -6,7 +6,6 @@ public interface Constants {
 
 	// 聊天
 	String LoginState = "LoginState";
-	String PWD = "PWD";
 	String TYPE = "COLUMN_TYPE";
 	// JSON status
 

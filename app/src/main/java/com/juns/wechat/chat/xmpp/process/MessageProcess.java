@@ -8,7 +8,7 @@ import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.chat.ui.ChatActivity;
 import com.juns.wechat.chat.xmpp.prompt.NoticePrompt;
 import com.juns.wechat.chat.xmpp.prompt.SoundPrompt;
-import com.juns.wechat.database.dao.MessageDao;
+import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.util.LogUtil;
 
@@ -16,7 +16,7 @@ import com.juns.wechat.util.LogUtil;
  * Created by 王宗文 on 2015/11/27
  *******************************************************/
 public abstract class MessageProcess {
-    private MessageDao messageDao;
+    private GreenDaoManager messageDao;
     /**
      * 声音提示
      */
@@ -29,7 +29,7 @@ public abstract class MessageProcess {
 
     public MessageProcess(Context context){
         mContext = context;
-        messageDao = MessageDao.getInstance();
+        messageDao = GreenDaoManager.getInstance();
         mSoundPrompt = new SoundPrompt(mContext);
         mNoticePrompt = new NoticePrompt(mContext);
     }
@@ -55,7 +55,7 @@ public abstract class MessageProcess {
 
     protected final boolean isMsgExist(String packetId){
         String myselfName = AccountManager.getInstance().getUserName();
-        boolean isMsgExist = messageDao.findByPacketId(myselfName, packetId) != null;
+        boolean isMsgExist = messageDao.findByPacketId(packetId) != null;
         LogUtil.i("isMsgExist:"  + isMsgExist);
         return isMsgExist;
     }
@@ -76,6 +76,6 @@ public abstract class MessageProcess {
         }
 
         Intent noticeIntent = new Intent(mContext, ChatActivity.class);
-        mNoticePrompt.notifyClient(entity.getOtherName(), notice, noticeIntent);
+        mNoticePrompt.notifyClient(entity.getOtherUserId()+"", notice, noticeIntent);
     }
 }

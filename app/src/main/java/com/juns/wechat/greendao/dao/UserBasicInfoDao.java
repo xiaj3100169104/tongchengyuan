@@ -25,7 +25,7 @@ public class UserBasicInfoDao extends AbstractDao<UserBasicInfo, String> {
      */
     public static class Properties {
         public final static Property UserBasicId = new Property(0, String.class, "userBasicId", true, "USER_BASIC_ID");
-        public final static Property UserId = new Property(1, Integer.class, "userId", false, "USER_ID");
+        public final static Property UserId = new Property(1, String.class, "userId", false, "USER_ID");
         public final static Property Education = new Property(2, String.class, "education", false, "EDUCATION");
         public final static Property Emotion = new Property(3, String.class, "emotion", false, "EMOTION");
         public final static Property Industry = new Property(4, String.class, "industry", false, "INDUSTRY");
@@ -49,7 +49,7 @@ public class UserBasicInfoDao extends AbstractDao<UserBasicInfo, String> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"USER_BASIC_INFO\" (" + //
                 "\"USER_BASIC_ID\" TEXT PRIMARY KEY NOT NULL ," + // 0: userBasicId
-                "\"USER_ID\" INTEGER," + // 1: userId
+                "\"USER_ID\" TEXT," + // 1: userId
                 "\"EDUCATION\" TEXT," + // 2: education
                 "\"EMOTION\" TEXT," + // 3: emotion
                 "\"INDUSTRY\" TEXT," + // 4: industry
@@ -74,9 +74,9 @@ public class UserBasicInfoDao extends AbstractDao<UserBasicInfo, String> {
             stmt.bindString(1, userBasicId);
         }
  
-        Integer userId = entity.getUserId();
+        String userId = entity.getUserId();
         if (userId != null) {
-            stmt.bindLong(2, userId);
+            stmt.bindString(2, userId);
         }
  
         String education = entity.getEducation();
@@ -124,9 +124,9 @@ public class UserBasicInfoDao extends AbstractDao<UserBasicInfo, String> {
             stmt.bindString(1, userBasicId);
         }
  
-        Integer userId = entity.getUserId();
+        String userId = entity.getUserId();
         if (userId != null) {
-            stmt.bindLong(2, userId);
+            stmt.bindString(2, userId);
         }
  
         String education = entity.getEducation();
@@ -174,7 +174,7 @@ public class UserBasicInfoDao extends AbstractDao<UserBasicInfo, String> {
     public UserBasicInfo readEntity(Cursor cursor, int offset) {
         UserBasicInfo entity = new UserBasicInfo( //
             cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // userBasicId
-            cursor.isNull(offset + 1) ? null : cursor.getInt(offset + 1), // userId
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // userId
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // education
             cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // emotion
             cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // industry
@@ -189,7 +189,7 @@ public class UserBasicInfoDao extends AbstractDao<UserBasicInfo, String> {
     @Override
     public void readEntity(Cursor cursor, UserBasicInfo entity, int offset) {
         entity.setUserBasicId(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
-        entity.setUserId(cursor.isNull(offset + 1) ? null : cursor.getInt(offset + 1));
+        entity.setUserId(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setEducation(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setEmotion(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
         entity.setIndustry(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));

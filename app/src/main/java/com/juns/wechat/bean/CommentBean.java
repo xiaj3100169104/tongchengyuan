@@ -20,10 +20,10 @@ public class CommentBean implements Serializable{
 		}
 	}
 
-	private Integer commentId;// 评论id
-	private Integer commenterId;// 评论人或者点赞人id
-	private Integer dynamicId;// 动态id
-	private Integer replyUserId;//被评论人用户id
+	private String commentId;// 评论id
+	private String commenterId;// 评论人或者点赞人id
+	private String dynamicId;// 动态id
+	private String replyUserId;//被评论人用户id
 	private String subType;//  类型
 	private String content;// 评论内容
     private long createDate; //创建日期
@@ -35,35 +35,35 @@ public class CommentBean implements Serializable{
 
     }
 
-	public Integer getCommentId() {
+	public String getCommentId() {
 		return commentId;
 	}
 
-	public void setCommentId(Integer commentId) {
+	public void setCommentId(String commentId) {
 		this.commentId = commentId;
 	}
 
-	public Integer getCommenterId() {
+	public String getCommenterId() {
 		return commenterId;
 	}
 
-	public void setCommenterId(Integer commenterId) {
+	public void setCommenterId(String commenterId) {
 		this.commenterId = commenterId;
 	}
 
-	public Integer getDynamicId() {
+	public String getDynamicId() {
 		return dynamicId;
 	}
 
-	public void setDynamicId(Integer dynamicId) {
+	public void setDynamicId(String dynamicId) {
 		this.dynamicId = dynamicId;
 	}
 
-	public Integer getReplyUserId() {
+	public String getReplyUserId() {
 		return replyUserId;
 	}
 
-	public void setReplyUserId(Integer replyUserId) {
+	public void setReplyUserId(String replyUserId) {
 		this.replyUserId = replyUserId;
 	}
 

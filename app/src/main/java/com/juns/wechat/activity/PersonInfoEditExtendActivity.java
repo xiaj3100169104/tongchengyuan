@@ -16,15 +16,12 @@ import com.alibaba.fastjson.TypeReference;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.bean.UserExtendInfo;
 import com.juns.wechat.bean.UserPropertyBean;
-import com.juns.wechat.greendao.dao.GreenDaoManager;
-import com.juns.wechat.helper.CacheDataHelper;
+import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.net.request.HttpActionImpl;
 import com.same.city.love.R;
 import com.style.base.BaseToolbarActivity;
 import com.style.event.EventCode;
 import com.style.event.EventManager;
-import com.style.net.core.NetDataBeanCallback;
 import com.style.utils.CommonUtil;
 import com.style.utils.StringUtil;
 
@@ -152,7 +149,7 @@ public class PersonInfoEditExtendActivity extends BaseToolbarActivity {
         dismissProgressDialog();
         GreenDaoManager.getInstance().save(userExtendInfo);
         //CacheDataHelper.putUserLabelCache(curUser.getUserId(), list);
-        EventManager.getDefault().post(list, EventCode.UPDATE_USER_LABEL);
+        EventManager.getDefault().post(EventCode.UPDATE_USER_LABEL, list);
         finish();
         /*HttpActionImpl.getInstance().updateUserProperty(TAG, value, new NetDataBeanCallback<UserBean>(UserBean.class) {
             @Override

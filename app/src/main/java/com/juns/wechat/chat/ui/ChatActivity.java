@@ -18,23 +18,18 @@ import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.github.jdsjlzx.recyclerview.ProgressStyle;
 import com.juns.wechat.Constants;
+import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.same.city.love.R;
 import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.xmpp.util.SendMessage;
-import com.juns.wechat.database.dao.DbDataEvent;
-import com.juns.wechat.database.dao.FriendDao;
-import com.juns.wechat.database.ChatTable;
-import com.juns.wechat.database.dao.MessageDao;
-import com.juns.wechat.database.dao.UserDao;
-import com.juns.wechat.exception.UserNotFoundException;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.util.LogUtil;
-import com.juns.wechat.util.ThreadPoolUtil;
 import com.style.base.BaseToolbarActivity;
 import com.style.constant.Skip;
 import com.style.dialog.PromptDialog;
+import com.style.event.EventCode;
 
 import org.simple.eventbus.Subscriber;
 
@@ -72,8 +67,8 @@ public class ChatActivity extends BaseToolbarActivity {
     private int chatType;
     public File cameraFile;
     public String playMsgId;
-    private int contactId;
-    private String contactName;
+    private String contactId;
+    private String contactUserId;
 
     private PromptDialog reSendDialog;
     private PromptDialog deleteDialog;
@@ -108,15 +103,15 @@ public class ChatActivity extends BaseToolbarActivity {
     }
 
     public void initData() {
-        contactId = getIntent().getIntExtra(Skip.KEY_USER_ID, 0);
-        friendBean = FriendDao.getInstance().findByOwnerAndContactName(account.getUserId(), contactId);
-        contactUser = UserDao.getInstance().findByUserId(friendBean.getContactId());
+        contactId = getIntent().getStringExtra(Skip.KEY_USER_ID);
+        friendBean = GreenDaoManager.getInstance().findByOwnerAndContactName(account.getUserId(), contactId);
+        contactUser = GreenDaoManager.getInstance().findByUserId(friendBean.getContactId());
         if (contactUser == null) {
             finish();
             return;
         }
 
-        contactName = contactUser.getUserName();
+        contactUserId = contactUser.getUserId();
         String showName = !TextUtils.isEmpty(friendBean.getRemark()) ? friendBean.getRemark() : contactUser.getShowName();
 
         setToolbarTitle(showName);
@@ -180,8 +175,8 @@ public class ChatActivity extends BaseToolbarActivity {
 
     }
 
-    public String getContactName() {
-        return contactName;
+    public String getContactUserId() {
+        return contactUserId;
     }
 
     public UserBean getContactUser() {
@@ -225,16 +220,38 @@ public class ChatActivity extends BaseToolbarActivity {
 
     /***
      * 监听数据库中消息表数据的变化
-     *
-     * @param event
-     * @see ChatActivityHelper#processOneMessage(List, MessageBean, int)
      */
-    @Subscriber(tag = ChatTable.TABLE_NAME)
-    private void onDdDataChanged(DbDataEvent<MessageBean> event) {
-        if (event.data == null || event.data.isEmpty()) return;
-        LogUtil.i("data: " + event.data.toString() + "action: " + event.action);
-        MessageBean messageBean = event.data.get(0);
-        chatActivityHelper.processOneMessage(msgViewModels, messageBean, event.action);
+    @Subscriber(tag = EventCode.BEFORE_SEND_SUCCESS)
+    private void onDdDataChanged(MessageBean data) {
+        if (data == null)
+            return;
+        //MessageBean messageBean = (MessageBean) data;
+        LogUtil.i("data: " + data.toString());
+        chatActivityHelper.OnMessageBeforeSendSuccess(msgViewModels, data);
+    }
+
+    /***
+     * 监听数据库中消息表数据的变化
+     */
+    @Subscriber(tag = EventCode.REFRESH_ONE_MESSAGE)
+    private void onDdDataChanged2(MessageBean data) {
+        if (data == null)
+            return;
+        //MessageBean messageBean = (MessageBean) data;
+        LogUtil.i("data: " + data.toString());
+        chatActivityHelper.onMessageRefreshOne(msgViewModels, data);
+    }
+
+    /***
+     * 监听数据库中消息表数据的变化
+     */
+    @Subscriber(tag = EventCode.DELETE_ONE_MESSAGE)
+    private void onDdDataChanged3(MessageBean data) {
+        if (data == null)
+            return;
+        //MessageBean messageBean = (MessageBean) data;
+        LogUtil.i("data: " + data.toString());
+        chatActivityHelper.onMessageDeleteOne(msgViewModels, data);
     }
 
     /**
@@ -312,14 +329,14 @@ public class ChatActivity extends BaseToolbarActivity {
      * @param filePaths
      */
     private void sendPicture(ArrayList<String> filePaths) {
-        chatInputManager.sendPicture(contactName, filePaths);
+        chatInputManager.sendPicture(contactUserId, filePaths);
     }
 
     /**
      * 发送视频消息
      */
     private void sendOfflineVideo(String filePath) {
-        chatInputManager.sendOfflineVideo(contactName, filePath);
+        chatInputManager.sendOfflineVideo(contactUserId, filePath);
     }
 
     /**
@@ -330,7 +347,7 @@ public class ChatActivity extends BaseToolbarActivity {
      * @param address
      */
     private void sendLocationMsg(double latitude, double longitude, String address) {
-        chatInputManager.sendLocation(contactName, latitude, longitude, address);
+        chatInputManager.sendLocation(contactUserId, latitude, longitude, address);
     }
 
     /**
@@ -421,7 +438,7 @@ public class ChatActivity extends BaseToolbarActivity {
         deleteDialog.setListener(new PromptDialog.OnPromptListener() {
             @Override
             public void onPositiveButton() {
-                MessageDao.getInstance().deleteOne(messageBean);
+                GreenDaoManager.getInstance().delete(messageBean);
 
             }
 

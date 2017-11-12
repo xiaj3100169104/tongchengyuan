@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.LruCache;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -14,8 +15,6 @@ import com.juns.wechat.config.ConfigUtil;
 import com.juns.wechat.util.BitmapUtil;
 import com.juns.wechat.util.DisplayUtil;
 import com.style.constant.FileConfig;
-
-import org.xutils.cache.LruCache;
 
 public class ImageLoader {
     private static final String TAG = "ImageLoader";

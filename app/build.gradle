@@ -85,7 +85,6 @@ dependencies {
     compile 'org.igniterealtime.smack:smack-tcp:4.1.0'
     compile 'com.makeramen:roundedimageview:2.3.0'
     compile 'org.simple:androideventbus:1.0.5.1'
-    compile 'org.xutils:xutils:3.3.36'
     compile 'com.google.code.gson:gson:2.3.1'
     compile 'cn.yipianfengye.android:zxing-library:2.1'
 

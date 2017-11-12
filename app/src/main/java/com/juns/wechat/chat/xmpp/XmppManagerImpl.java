@@ -195,9 +195,9 @@ public class XmppManagerImpl implements XmppManager {
     @Override
     public boolean sendMessage(MessageBean messageBean) {
         Message message = new Message();
-        message.setFrom(ConfigUtil.getXmppJid(messageBean.getMyselfName()));
+        message.setFrom(ConfigUtil.getXmppJid(messageBean.getMyUserId()));
         message.setType(Message.Type.chat);
-        String toJid = ConfigUtil.getXmppJid(messageBean.getOtherName());
+        String toJid = ConfigUtil.getXmppJid(messageBean.getOtherUserId());
         message.setTo(toJid);
         message.setStanzaId(messageBean.getPacketId());
         try {

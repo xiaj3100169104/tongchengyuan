@@ -1,64 +1,51 @@
 package com.juns.wechat.database;
 
 import android.database.Cursor;
+import android.text.TextUtils;
 
-import com.juns.wechat.util.TimeUtil;
-
-import org.xutils.db.annotation.Column;
-import org.xutils.db.annotation.Table;
+import com.juns.wechat.bean.FriendBean;
+import com.juns.wechat.chat.bean.MessageBean;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by 王者 on 2016/8/7.
  */
 public class CursorUtil {
 
-    public static <T> T fromCursor(Cursor cursor, Class<T> clazz){
-        Table table = clazz.getAnnotation(Table.class);
-        if(table == null){
-            throw new IllegalArgumentException("clazz type is not accepted!");
+    public static FriendBean fromCursor(Cursor cursor) {
+        FriendBean f = null;
+        while (cursor.moveToNext()) {
+            f = new FriendBean();
+            f.id = cursor.getString(cursor.getColumnIndexOrThrow("ID"));
+            f.ownerId = cursor.getString(cursor.getColumnIndexOrThrow("OWNER_ID"));
+            f.contactId = cursor.getString(cursor.getColumnIndexOrThrow("CONTACT_ID"));
+            f.subType = cursor.getString(cursor.getColumnIndexOrThrow("SUB_TYPE"));
+            f.remark = cursor.getString(cursor.getColumnIndexOrThrow("REMARK"));
+            f.flag = cursor.getInt(cursor.getColumnIndexOrThrow("FLAG"));
+            f.modifyDate = cursor.getLong(cursor.getColumnIndexOrThrow("MODIFY_DATE"));
         }
-        try {
-            T t = clazz.newInstance();
-            Field[] fields = clazz.getDeclaredFields();
-            for(Field field : fields){
-                field.setAccessible(true);
-                Column column = field.getAnnotation(Column.class);
-                if(column == null) continue;
-                Object value = getCursorValue(cursor, field, column.name());
-                field.set(t, value);
-            }
-            return t;
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return null;
+        return f;
     }
 
-    private static Object getCursorValue(Cursor cursor, Field field, String columnName){
-        Class<?> fieldType = field.getType();
+    public static MessageBean getMessageBean(Cursor cursor) {
+        MessageBean f = null;
+        while (cursor.moveToNext()) {
+            f = new MessageBean();
+            f.packetId = cursor.getString(cursor.getColumnIndexOrThrow("PACKET_ID"));
+            f.myUserId = cursor.getString(cursor.getColumnIndexOrThrow("MY_USER_ID"));
+            f.otherUserId = cursor.getString(cursor.getColumnIndexOrThrow("OTHER_USER_ID"));
+            f.msg = cursor.getString(cursor.getColumnIndexOrThrow("MSG"));
+            f.type = cursor.getInt(cursor.getColumnIndexOrThrow("TYPE"));
+            f.date = new Date(cursor.getLong(cursor.getColumnIndexOrThrow("DATE")));
+            f.direction = cursor.getInt(cursor.getColumnIndexOrThrow("DIRECTION"));
+            f.state = cursor.getInt(cursor.getColumnIndexOrThrow("STATE"));
+            f.flag = cursor.getInt(cursor.getColumnIndexOrThrow("FLAG"));
 
-        if(fieldType.equals(int.class) || field.equals(Integer.class)){
-            return cursor.getInt(cursor.getColumnIndex(columnName));
-        }else if(fieldType.equals(String.class)){
-           return cursor.getString(cursor.getColumnIndex(columnName));
-        }else if(fieldType.equals(long.class) || field.equals(Long.class)){
-           return cursor.getLong(cursor.getColumnIndex(columnName));
-        }else if(fieldType.equals(float.class) || field.equals(Float.class)){
-           return cursor.getFloat(cursor.getColumnIndex(columnName));
-        }else if(fieldType.equals(double.class) || field.equals(Double.class)){
-           return cursor.getDouble(cursor.getColumnIndex(columnName));
-        }else if(fieldType.equals(long.class) || field.equals(Long.class)){
-           return cursor.getLong(cursor.getColumnIndex(columnName));
-        }else if(fieldType.equals(Date.class)){
-            long time  = cursor.getLong(cursor.getColumnIndex(columnName));
-            Date date = new Date(time);
-            return date;
         }
-        return cursor.getString(cursor.getColumnIndex(columnName));
+        return f;
     }
 }

@@ -3,7 +3,7 @@ package com.juns.wechat.chat.xmpp.listener;
 
 import android.text.TextUtils;
 
-import com.juns.wechat.database.dao.MessageDao;
+import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.util.LogUtil;
 
@@ -38,7 +38,7 @@ public class XmppConnectionListener implements ConnectionListener {
             LogUtil.i("connectionClose!OnError : " + e.getMessage());
         }
 
-        MessageDao.getInstance().markAsSendFailed(AccountManager.getInstance().getUserName());
+        GreenDaoManager.getInstance().markAsSendFailed(AccountManager.getInstance().getUserName());
 
         if(e instanceof XMPPException.StreamErrorException){
             XMPPException.StreamErrorException exception = (XMPPException.StreamErrorException) e;

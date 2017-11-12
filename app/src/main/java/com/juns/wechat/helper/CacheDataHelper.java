@@ -11,15 +11,15 @@ import java.util.Map;
  */
 
 public class CacheDataHelper {
-    static Map<Integer, List<UserPropertyBean>> userLabels = new HashMap<>();
+    static Map<String, List<UserPropertyBean>> userLabels = new HashMap<>();
 
-    public static List<UserPropertyBean> getUserLabelCache(int userId) {
+    public static List<UserPropertyBean> getUserLabelCache(String userId) {
         if (userLabels.containsKey(userId))
             return userLabels.get(userId);
         return null;
     }
 
-    public static void putUserLabelCache(int userId, List<UserPropertyBean> list) {
+    public static void putUserLabelCache(String userId, List<UserPropertyBean> list) {
        userLabels.put(userId, list);
     }
 }

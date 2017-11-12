@@ -10,25 +10,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.same.city.love.R;
 import com.juns.wechat.activity.MainActivity;
 import com.juns.wechat.activity.NewFriendsListActivity;
 import com.juns.wechat.activity.UserInfoActivity;
 import com.juns.wechat.adpter.ContactAdapter;
 import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.config.MsgType;
-import com.juns.wechat.database.dao.DbDataEvent;
-import com.juns.wechat.database.dao.FriendDao;
-import com.juns.wechat.database.dao.MessageDao;
-import com.juns.wechat.database.ChatTable;
-import com.juns.wechat.database.FriendTable;
-import com.juns.wechat.database.UserTable;
+import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.juns.wechat.manager.AccountManager;
+import com.same.city.love.R;
 import com.style.base.BaseFragment;
 import com.style.base.BaseRecyclerViewAdapter;
 import com.style.constant.Skip;
+import com.style.event.EventCode;
 import com.style.utils.HanyuToPinyin;
 import com.style.view.DividerItemDecoration;
 import com.style.view.SideBar;
@@ -51,7 +46,7 @@ public class Fragment_Friends extends BaseFragment {
     RecyclerView recyclerView;
     @Bind(R.id.sideBar)
     SideBar sideBar;
-    private FriendDao friendDao = FriendDao.getInstance();
+    private GreenDaoManager greenDao = GreenDaoManager.getInstance();
     private int unReadCount = 0;
     private List<FriendBean> dataList;
     private LinearLayoutManager layoutManager;
@@ -77,7 +72,7 @@ public class Fragment_Friends extends BaseFragment {
         adapter.setOnHeaderItemClickListener(new ContactAdapter.OnHeaderItemClickListener() {
             @Override
             public void onClickNewFriend() {
-                MessageDao.getInstance().markAsRead(curUser.getUserName(), MsgType.MSG_TYPE_SEND_INVITE);
+                greenDao.markAsRead(curUser.getUserName(), MsgType.MSG_TYPE_SEND_INVITE);
                 startActivity(new Intent(getActivity(), NewFriendsListActivity.class));
             }
         });
@@ -108,7 +103,7 @@ public class Fragment_Friends extends BaseFragment {
     }
 
     private void setUnreadInviteMsgData() {
-        int count = MessageDao.getInstance().getUnreadInviteMsgCount(curUser.getUserName());
+        int count = greenDao.getUnreadInviteMsgCount(curUser.getUserName());
         unReadCount = count;
         adapter.notifyItemChanged(0);
         adapter.setUnReadCount(unReadCount);
@@ -117,7 +112,7 @@ public class Fragment_Friends extends BaseFragment {
 
     private void setFriendData() {
         Log.e(TAG, "setFriendData.ownerId=" + curUser.getUserId());
-        List<FriendBean> list = friendDao.getMyFriends(curUser.getUserId());
+        List<FriendBean> list = greenDao.getMyFriends(curUser.getUserId());
         if (null != list) {
             int size = list.size();
             for (FriendBean f : list) {
@@ -135,26 +130,14 @@ public class Fragment_Friends extends BaseFragment {
         }
     }
 
-    @Subscriber(tag = FriendTable.TABLE_NAME)
-    private void onFriendDataChanged(DbDataEvent<FriendBean> event) {
+    @Subscriber(tag = EventCode.REFRESH_FRIEND_LIST)
+    private void onFriendDataChanged(Object data) {
         setFriendData(); //重新加载一次数据
     }
 
-    @Subscriber(tag = UserTable.TABLE_NAME)
-    private void onUserDataChanged(DbDataEvent<UserBean> event) {
-        if (event.action == DbDataEvent.UPDATE || event.action == DbDataEvent.REPLACE) {
-            setFriendData(); //重新加载数据
-        }
-    }
-
-    @Subscriber(tag = ChatTable.TABLE_NAME)
-    private void onMessageDataChaned(DbDataEvent<MessageBean> event) {
-        if (event.data != null && !event.data.isEmpty()) {
-            MessageBean messageBean = event.data.get(0);
-            if (messageBean.getType() == MsgType.MSG_TYPE_SEND_INVITE) {
-                setUnreadInviteMsgData();
-            }
-        }
+    @Subscriber(tag = EventCode.REFRESH_NEW_FRIEND_REQUEST)
+    private void onMessageDataChaned(Object data) {
+        setUnreadInviteMsgData();
     }
 
     @Override
@@ -163,16 +146,16 @@ public class Fragment_Friends extends BaseFragment {
         ButterKnife.unbind(this);
     }
 
-    public class UploadPhoneComparator implements Comparator<FriendBean> {
-        public int compare(FriendBean o1, FriendBean o2) {
-            if ("#".equals(o2.getSortLetters())) {
-                return -1;// o1 < o2
-            } else if ("#".equals(o1.getSortLetters())) {
-                return 1;// o1 > o2
-            } else {
-                return o1.getSortLetters().compareTo(o2.getSortLetters());
-            }
+public class UploadPhoneComparator implements Comparator<FriendBean> {
+    public int compare(FriendBean o1, FriendBean o2) {
+        if ("#".equals(o2.getSortLetters())) {
+            return -1;// o1 < o2
+        } else if ("#".equals(o1.getSortLetters())) {
+            return 1;// o1 > o2
+        } else {
+            return o1.getSortLetters().compareTo(o2.getSortLetters());
         }
     }
+}
 
 }

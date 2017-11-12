@@ -12,28 +12,18 @@ import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.google.gson.JsonObject;
 import com.juns.wechat.bean.UserBasicInfo;
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.database.dao.UserDao;
-import com.juns.wechat.greendao.dao.GreenDaoManager;
-import com.juns.wechat.greendao.dao.UserBasicInfoDao;
+import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.net.request.HttpActionImpl;
-import com.juns.wechat.util.JsonUtil;
 import com.same.city.love.R;
 import com.style.base.BaseToolbarActivity;
 import com.style.dialog.EditAlertDialog;
 import com.style.event.EventCode;
 import com.style.event.EventManager;
-import com.style.net.core.NetDataBeanCallback;
 import com.style.utils.CommonUtil;
 
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -345,16 +335,16 @@ public class PersonInfoEditBasicActivity extends BaseToolbarActivity {
         curUser.setNickName(name);
         curUser.setSex(sex);
         curUser.setBirthday(birthday);
-        UserDao.getInstance().update(curUser);
+        AccountManager.getInstance().setUser(curUser);
+        EventManager.getDefault().post(EventCode.UPDATE_USER_HEAD, curUser);
+
         if (userBasicInfo == null)
             userBasicInfo = new UserBasicInfo(CommonUtil.getUUID(), curUser.getUserId(), education, emotion, industry, workArea, companyInfo, hometownInfo, myHeart);
         else
             userBasicInfo.setData(education, emotion, industry, workArea, companyInfo, hometownInfo, myHeart);
         GreenDaoManager.getInstance().save(userBasicInfo);
+        EventManager.getDefault().post(EventCode.UPDATE_USER_BASIC, userBasicInfo);
         dismissProgressDialog();
-        AccountManager.getInstance().setUser(curUser);
-        EventManager.getDefault().post(curUser, EventCode.UPDATE_USER_HEAD);
-        EventManager.getDefault().post(userBasicInfo, EventCode.UPDATE_USER_BASIC);
 
         finish();
         /*curUser.set

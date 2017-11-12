@@ -12,13 +12,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.same.city.love.R;
 import com.juns.wechat.bean.CommentBean;
 import com.juns.wechat.bean.DynamicBean;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.utils.SmileUtils;
-import com.juns.wechat.database.dao.UserDao;
+import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.juns.wechat.helper.CommonViewHelper;
+import com.same.city.love.R;
 import com.style.base.BaseRecyclerViewAdapter;
 import com.style.manager.ImageLoader;
 import com.style.utils.MyDateUtil;
@@ -39,7 +39,7 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter<DynamicBean> {
     private CommentPopupWindow menuWindow;
     private OnClickDiscussListener mDiscussListener;
     private OnClickImageListener mImageListener;
-    private Map<Integer, UserBean> userMap = new HashMap<>();
+    private Map<String, UserBean> userMap = new HashMap<>();
 
     public DynamicAdapter(Context mContext, List<DynamicBean> list) {
         super(mContext, list);
@@ -60,7 +60,7 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter<DynamicBean> {
             if (userMap.containsKey(bean.getPublisherId()))
                 user = userMap.get(bean.getPublisherId());
             else {
-                user = UserDao.getInstance().findByUserId(bean.getPublisherId());
+                user = GreenDaoManager.getInstance().findByUserId(bean.getPublisherId());
                 userMap.put(bean.getPublisherId(), user);
             }
             CommonViewHelper.setUserViewInfo(user, holder.ivAvatar, holder.tvNike, null, null, false);

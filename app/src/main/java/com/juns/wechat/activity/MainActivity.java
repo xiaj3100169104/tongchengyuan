@@ -4,8 +4,6 @@ package com.juns.wechat.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Process;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
@@ -13,8 +11,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,31 +19,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.juns.wechat.adpter.MainAdapter;
-import com.juns.wechat.bean.DynamicBean;
-import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.chat.xmpp.event.XmppEvent;
-import com.juns.wechat.database.UserTable;
-import com.juns.wechat.database.dao.DbDataEvent;
-import com.juns.wechat.database.dao.FriendDao;
-import com.juns.wechat.database.dao.MessageDao;
-import com.juns.wechat.database.dao.UserDao;
 import com.juns.wechat.fragment.Fragment_Discover;
 import com.juns.wechat.fragment.Fragment_Friends;
-import com.juns.wechat.fragment.Fragment_Profile;
 import com.juns.wechat.fragment.msg.Fragment_Msg;
-import com.juns.wechat.greendao.dao.GreenDaoManager;
 import com.juns.wechat.helper.CommonViewHelper;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.service.XmppService;
 import com.juns.wechat.util.LogUtil;
 import com.same.city.love.R;
-import com.style.utils.StringUtil;
+import com.style.event.EventCode;
 
 import org.simple.eventbus.EventBus;
 import org.simple.eventbus.Subscriber;
-import org.xutils.db.sqlite.WhereBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -256,20 +241,9 @@ public class MainActivity extends AppCompatActivity {
         setTitle(resId);
     }
 
-    @Subscriber(tag = UserTable.TABLE_NAME)
-    private void onDbDataChanged(DbDataEvent<UserBean> event) {
-        if (event.action == DbDataEvent.REPLACE || event.action == DbDataEvent.UPDATE) {
-            List<UserBean> updateData = event.data;
-            if (updateData != null && !updateData.isEmpty()) {
-                UserBean curUser = AccountManager.getInstance().getUser();
-
-                for (UserBean userBean : updateData) {
-                    if (userBean.getUserName().equals(curUser.getUserName())) {
-                        updateUserView();
-                    }
-                }
-            }
-        }
+    @Subscriber(tag = EventCode.UPDATE_USER_HEAD)
+    private void onDbDataChanged(UserBean event) {
+        updateUserView();
     }
 
     private void updateUserView() {

@@ -16,7 +16,7 @@ public class UserBasicInfo implements Serializable {
 
     @Id
     private String userBasicId;// Id
-    private Integer userId;// 发表人
+    private String userId;// 发表人
     String education;
     String emotion;
     String industry;
@@ -25,20 +25,6 @@ public class UserBasicInfo implements Serializable {
     String hometownInfo;
     String myHeart;
 
-    @Generated(hash = 1882368570)
-    public UserBasicInfo(String userBasicId, Integer userId, String education,
-                         String emotion, String industry, String workArea, String companyInfo,
-                         String hometownInfo, String myHeart) {
-        this.userBasicId = userBasicId;
-        this.userId = userId;
-        this.education = education;
-        this.emotion = emotion;
-        this.industry = industry;
-        this.workArea = workArea;
-        this.companyInfo = companyInfo;
-        this.hometownInfo = hometownInfo;
-        this.myHeart = myHeart;
-    }
 
     public void setData(String education,
                         String emotion, String industry, String workArea, String companyInfo,
@@ -56,6 +42,21 @@ public class UserBasicInfo implements Serializable {
     public UserBasicInfo() {
     }
 
+    @Generated(hash = 204873187)
+    public UserBasicInfo(String userBasicId, String userId, String education, String emotion,
+            String industry, String workArea, String companyInfo, String hometownInfo,
+            String myHeart) {
+        this.userBasicId = userBasicId;
+        this.userId = userId;
+        this.education = education;
+        this.emotion = emotion;
+        this.industry = industry;
+        this.workArea = workArea;
+        this.companyInfo = companyInfo;
+        this.hometownInfo = hometownInfo;
+        this.myHeart = myHeart;
+    }
+
     public String getUserBasicId() {
         return this.userBasicId;
     }
@@ -64,11 +65,11 @@ public class UserBasicInfo implements Serializable {
         this.userBasicId = userBasicId;
     }
 
-    public Integer getUserId() {
+    public String getUserId() {
         return this.userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 

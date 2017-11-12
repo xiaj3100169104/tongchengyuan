@@ -40,7 +40,7 @@ public class FileTransferManager {
 
             byte[] fromData = ConfigUtil.getXmppJid(account).getBytes();
             fromData = Arrays.copyOf(fromData, 32);
-            byte[] toData = ConfigUtil.getXmppJid(otherName).getBytes();
+            byte[] toData = ConfigUtil.getXmppJid(otherName + "").getBytes();
             toData = Arrays.copyOf(toData, 32);
             out.write(fromData);
             out.write(toData);

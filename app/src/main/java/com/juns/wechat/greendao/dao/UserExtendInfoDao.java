@@ -24,8 +24,8 @@ public class UserExtendInfoDao extends AbstractDao<UserExtendInfo, String> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property UserExtendId = new Property(0, String.class, "UserExtendId", true, "USER_EXTEND_ID");
-        public final static Property UserId = new Property(1, Integer.class, "userId", false, "USER_ID");
+        public final static Property UserExtendId = new Property(0, String.class, "userExtendId", true, "USER_EXTEND_ID");
+        public final static Property UserId = new Property(1, String.class, "userId", false, "USER_ID");
         public final static Property Data = new Property(2, String.class, "data", false, "DATA");
     }
 
@@ -42,8 +42,8 @@ public class UserExtendInfoDao extends AbstractDao<UserExtendInfo, String> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"USER_EXTEND_INFO\" (" + //
-                "\"USER_EXTEND_ID\" TEXT PRIMARY KEY NOT NULL ," + // 0: UserExtendId
-                "\"USER_ID\" INTEGER," + // 1: userId
+                "\"USER_EXTEND_ID\" TEXT PRIMARY KEY NOT NULL ," + // 0: userExtendId
+                "\"USER_ID\" TEXT," + // 1: userId
                 "\"DATA\" TEXT);"); // 2: data
     }
 
@@ -57,14 +57,14 @@ public class UserExtendInfoDao extends AbstractDao<UserExtendInfo, String> {
     protected final void bindValues(DatabaseStatement stmt, UserExtendInfo entity) {
         stmt.clearBindings();
  
-        String UserExtendId = entity.getUserExtendId();
-        if (UserExtendId != null) {
-            stmt.bindString(1, UserExtendId);
+        String userExtendId = entity.getUserExtendId();
+        if (userExtendId != null) {
+            stmt.bindString(1, userExtendId);
         }
  
-        Integer userId = entity.getUserId();
+        String userId = entity.getUserId();
         if (userId != null) {
-            stmt.bindLong(2, userId);
+            stmt.bindString(2, userId);
         }
  
         String data = entity.getData();
@@ -77,14 +77,14 @@ public class UserExtendInfoDao extends AbstractDao<UserExtendInfo, String> {
     protected final void bindValues(SQLiteStatement stmt, UserExtendInfo entity) {
         stmt.clearBindings();
  
-        String UserExtendId = entity.getUserExtendId();
-        if (UserExtendId != null) {
-            stmt.bindString(1, UserExtendId);
+        String userExtendId = entity.getUserExtendId();
+        if (userExtendId != null) {
+            stmt.bindString(1, userExtendId);
         }
  
-        Integer userId = entity.getUserId();
+        String userId = entity.getUserId();
         if (userId != null) {
-            stmt.bindLong(2, userId);
+            stmt.bindString(2, userId);
         }
  
         String data = entity.getData();
@@ -101,8 +101,8 @@ public class UserExtendInfoDao extends AbstractDao<UserExtendInfo, String> {
     @Override
     public UserExtendInfo readEntity(Cursor cursor, int offset) {
         UserExtendInfo entity = new UserExtendInfo( //
-            cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // UserExtendId
-            cursor.isNull(offset + 1) ? null : cursor.getInt(offset + 1), // userId
+            cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // userExtendId
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // userId
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2) // data
         );
         return entity;
@@ -111,7 +111,7 @@ public class UserExtendInfoDao extends AbstractDao<UserExtendInfo, String> {
     @Override
     public void readEntity(Cursor cursor, UserExtendInfo entity, int offset) {
         entity.setUserExtendId(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
-        entity.setUserId(cursor.isNull(offset + 1) ? null : cursor.getInt(offset + 1));
+        entity.setUserId(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
         entity.setData(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
      }
     

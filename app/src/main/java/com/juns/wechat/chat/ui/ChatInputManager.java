@@ -129,7 +129,7 @@ public class ChatInputManager implements View.OnClickListener {
         btnRecord.setAudioFinishRecorderListener(new AudioRecordButton.AudioFinishRecorderListener() {
             @Override
             public void onFinished(float seconds, String filePath) {
-                sendVoice(mChatActivity.getContactName(), (int) seconds, filePath);
+                sendVoice(mChatActivity.getContactUserId(), (int) seconds, filePath);
             }
         });
 
@@ -175,7 +175,7 @@ public class ChatInputManager implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        String otherUserName = mChatActivity.getContactName();
+        String otherUserName = mChatActivity.getContactUserId();
         int id = view.getId();
         switch (id) {
             case R.id.view_picture:
@@ -381,7 +381,7 @@ public class ChatInputManager implements View.OnClickListener {
      */
     private void makeAudioCall() {
         Intent intent = new Intent(mChatActivity, CallVoiceBaseActivity.class);
-        intent.putExtra(Skip.KEY_USER_NAME, mChatActivity.getContactName());
+        intent.putExtra(Skip.KEY_USER_NAME, mChatActivity.getContactUserId());
         mChatActivity.startActivity(intent);
     }
 

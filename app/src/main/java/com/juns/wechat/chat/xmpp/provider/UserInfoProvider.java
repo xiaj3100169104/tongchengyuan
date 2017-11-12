@@ -25,7 +25,7 @@ public class UserInfoProvider extends IQProvider<IQUserInfo> {
             if(eventType == XmlPullParser.START_TAG){
                 if(parser.getNamespace().equals(IQUserInfo.NAME_SPACE)){
                     userBean = new UserBean();
-                    userBean.setUserName(parser.getAttributeValue(null, UserBean.USERNAME));
+/*                    userBean.setUserName(parser.getAttributeValue(null, UserBean.USERNAME));
                     userBean.setNickName(parser.getAttributeValue(null, UserBean.NICKNAME));
                     userBean.setHeadUrl(parser.getAttributeValue(null, UserBean.HEADURL));
                     userBean.setBirthday(parser.getAttributeValue(null, UserBean.BIRTHDAY));
@@ -33,7 +33,7 @@ public class UserInfoProvider extends IQProvider<IQUserInfo> {
                     userBean.setSex( parser.getAttributeValue(null, UserBean.SEX));
                     userBean.setSignature(parser.getAttributeValue(null, UserBean.SIGNATURE));
                     userBean.setTelephone(parser.getAttributeValue(null, UserBean.TELEPHONE));
-                    userBean.setType(parser.getAttributeValue(null, UserBean.TYPE));
+                    userBean.setType(parser.getAttributeValue(null, UserBean.TYPE));*/
                 }else if(parser.getName().equals("error")){
                     int errorCode = Integer.parseInt(parser.getAttributeValue(null, "code"));
                     String errorDetail = parser.nextText();
