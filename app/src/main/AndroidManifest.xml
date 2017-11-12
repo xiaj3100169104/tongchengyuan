@@ -64,8 +64,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.juns.wechat.activity.MainActivity"
-            android:theme="@style/AppTheme.TranslucentStatus"/>
+        <activity android:name="com.juns.wechat.activity.MainActivity"/>
         <activity
             android:name="com.juns.wechat.activity.LoginActivity"
             android:launchMode="singleTop" />

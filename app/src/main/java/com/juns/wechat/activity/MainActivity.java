@@ -43,6 +43,7 @@ import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.service.XmppService;
 import com.juns.wechat.util.LogUtil;
 import com.same.city.love.R;
+import com.style.base.BaseActivity;
 import com.style.utils.StringUtil;
 
 import org.simple.eventbus.EventBus;
@@ -56,7 +57,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     protected static final String TAG = "MainActivity";
     @Bind(R.id.ivAvatar)
     ImageView ivAvatar;
@@ -91,33 +92,16 @@ public class MainActivity extends AppCompatActivity {
     private Fragment_Friends fragmentFriends;
     private Fragment_Discover fragmentDicover;
 
-    //@Override
-    public void initData() {
-        initView();
-        XmppService.login(this);
-
-        int userId = Process.myUid();
-
-        //new Watcher(this).createAppMonitor(userId + "");
+    @Override
+    protected boolean isWrapContentView() {
+        return false;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        LogUtil.i("i am restarted!");
-        //mLayoutResID = R.layout.activity_main2;
+        mLayoutResID = R.layout.activity_main2;
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main2);
-        ButterKnife.bind(this);
-        EventBus.getDefault().register(this);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
 
         /*List<MessageBean> friendBeanList = MessageDao.getInstance().findAllByParams(WhereBuilder.b());
         for (MessageBean f : friendBeanList) {
@@ -142,15 +126,30 @@ public class MainActivity extends AppCompatActivity {
             i++;
 
         }*/
-        initData();
 
+    }
+
+    @Override
+    public void initData() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        initView();
+        XmppService.login(this);
+
+        int userId = Process.myUid();
+
+        //new Watcher(this).createAppMonitor(userId + "");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        ButterKnife.unbind(this);
-        EventBus.getDefault().unregister(this);
     }
 
     @Override

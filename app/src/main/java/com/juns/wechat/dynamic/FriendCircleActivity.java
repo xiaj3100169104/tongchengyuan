@@ -270,12 +270,40 @@ public class FriendCircleActivity extends BaseToolbarActivity {
                 showToast(msg);
             }
         });
-        List<DynamicBean> data = GreenDaoManager.getInstance().queryByPage(dataList.size(), 5, curUser.getUserId());
+        int offset = 0;
+        if (action == ACTION_REFRESH) {
+            offset = 0;
+        } else {
+            offset = dataList.size();
+        }
+        List<DynamicBean> data = GreenDaoManager.getInstance().queryByPage(offset, 5, curUser.getUserId());
         mRecyclerView.refreshComplete(5);
         if (data != null && data.size() > 0) {
             mRecyclerView.setLoadMoreEnabled(true);
 
             if (action == ACTION_REFRESH) {
+                List<CommentBean> commentList = new ArrayList<>();
+                CommentBean comment0 = new CommentBean("你瞅啥？", "杜磊", "");
+                CommentBean comment1 = new CommentBean("瞅你咋滴?", "Style2", "杜磊");
+                CommentBean comment2 = new CommentBean("你再瞅一个试试？", "杜磊", "Style2");
+                CommentBean comment3 = new CommentBean("试试就试试[(A1)]", "Style2", "杜磊");
+                commentList.add(comment0);
+                commentList.add(comment1);
+                commentList.add(comment2);
+                commentList.add(comment3);
+                data.get(0).setCommentList(commentList);
+
+                List<CommentBean> commentList2 = new ArrayList<>();
+                CommentBean comment20 = new CommentBean("从前有座山[(B2)][(B2)]", "任虹锦", "");
+                CommentBean comment21 = new CommentBean("山里有座庙", "石皓", "任虹锦");
+                CommentBean comment22 = new CommentBean("庙里住着一个老和尚和一个小和尚", "任虹锦", "石皓");
+                CommentBean comment23 = new CommentBean("老和尚对小和尚说", "石皓", "任虹锦");
+                commentList2.add(comment20);
+                commentList2.add(comment21);
+                commentList2.add(comment22);
+                commentList2.add(comment23);
+                data.get(1).setCommentList(commentList2);
+
                 dataList.clear();
                 setFirstPageCacheData(data);
             }

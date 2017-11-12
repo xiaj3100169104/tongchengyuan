@@ -19,9 +19,7 @@ public abstract class BaseToolbarActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
-        if (registerEventBus()) {
-            EventBus.getDefault().register(this);
-        }
+
     }
 
     protected void customTitleOptions(View mContentView) {
@@ -64,15 +62,5 @@ public abstract class BaseToolbarActivity extends BaseActivity {
         setText(tvTitleBase, resId);
     }
 
-    protected boolean registerEventBus() {
-        return true;
-    }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (registerEventBus()) {
-            EventBus.getDefault().unregister(this);
-        }
-    }
 }

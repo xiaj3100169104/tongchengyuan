@@ -35,6 +35,12 @@ public class CommentBean implements Serializable{
 
     }
 
+	public CommentBean(String content, String commentUserName, String replyUserName) {
+		this.content = content;
+		this.commentUserName = commentUserName;
+		this.replyUserName = replyUserName;
+	}
+
 	public Integer getCommentId() {
 		return commentId;
 	}

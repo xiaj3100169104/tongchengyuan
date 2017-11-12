@@ -6,7 +6,9 @@
 
     <TextView
         android:id="@+id/tv_comment"
+        style="@style/text_black_13sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="小司机回复老司机:赶快上车啦,没时间解释啦" />
+        android:text="小司机回复老司机:赶快上车啦,没时间解释啦"
+        android:singleLine="false"/>
 </LinearLayout>

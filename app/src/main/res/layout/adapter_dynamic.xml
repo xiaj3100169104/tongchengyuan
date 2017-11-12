@@ -50,7 +50,7 @@
                                 android:layout_height="wrap_content"
                                 android:singleLine="true"
                                 android:text="昵称"
-                                android:textColor="@color/blue2"/>
+                                android:textColor="@color/dynamic_content"/>
 
                         </LinearLayout>
 

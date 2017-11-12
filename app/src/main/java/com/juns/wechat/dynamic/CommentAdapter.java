@@ -98,7 +98,7 @@ public class CommentAdapter extends BaseRecyclerViewAdapter {
             @Override
             public void updateDrawState(TextPaint ds) {
                 super.updateDrawState(ds);
-                int nikeColoer = mContext.getResources().getColor(R.color.blue);
+                int nikeColoer = mContext.getResources().getColor(R.color.dynamic_content);
                 ds.setColor(nikeColoer); // 设置文本颜色
                 // 去掉下划线
                 ds.setUnderlineText(false);
