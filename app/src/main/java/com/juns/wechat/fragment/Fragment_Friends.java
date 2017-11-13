@@ -116,7 +116,7 @@ public class Fragment_Friends extends BaseFragment {
         if (null != list) {
             int size = list.size();
             for (FriendBean f : list) {
-                String hanzi = !TextUtils.isEmpty(f.getRemark()) ? f.getRemark() : f.getContactUser().getShowName();
+                String hanzi = !TextUtils.isEmpty(f.getRemark()) ? f.getRemark() : f.nickName;
                 String sortLetter = HanyuToPinyin.hanziToCapital(hanzi);
                 f.setSortLetters(sortLetter);
                 //Log.e(TAG, f.toString());

@@ -23,7 +23,9 @@ public class FriendBean {
     @Transient
     public String sortLetters;
     @Transient
-    public UserBean contactUser;
+    public String nickName;
+    @Transient
+    public String headUrl;
 
     public FriendBean() {
 
@@ -112,17 +114,6 @@ public class FriendBean {
         this.sortLetters = sortLetters;
     }
 
-    public void setContactUser(UserBean userBean) {
-        this.contactUser = userBean;
-    }
-
-    public UserBean getContactUser() {
-        if (contactUser == null)
-            contactUser = GreenDaoManager.getInstance().findByUserId(contactId);
-        return contactUser;
-
-    }
-
     @Override
     public String toString() {
         return "FriendBean{" +
@@ -134,7 +125,7 @@ public class FriendBean {
                 ", flag=" + flag +
                 ", modifyDate=" + modifyDate +
                 ", sortLetters='" + sortLetters + '\'' +
-                ", contactUser=" + contactUser +
+                ", nickName=" + nickName +
                 '}';
     }
 }

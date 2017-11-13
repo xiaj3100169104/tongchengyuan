@@ -223,7 +223,7 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
             b.deleteCharAt(b.length() - 1);
         String value = b.toString();
         data.setImages(value);
-        GreenDaoManager.getInstance().insert(data);
+        GreenDaoManager.getInstance().saveDynamic(data);
         dismissProgressDialog();
         data.setUser(curUser);
         setResult(RESULT_OK, new Intent().putExtra("sendDynamic", data));

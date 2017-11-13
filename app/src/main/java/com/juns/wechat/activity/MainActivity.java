@@ -89,32 +89,6 @@ public class MainActivity extends BaseActivity {
     public void onCreate(Bundle savedInstanceState) {
         mLayoutResID = R.layout.activity_main2;
         super.onCreate(savedInstanceState);
-
-
-        /*List<MessageBean> friendBeanList = MessageDao.getInstance().findAllByParams(WhereBuilder.b());
-        for (MessageBean f : friendBeanList) {
-            Log.e(TAG, f.toString());
-            if (TextUtils.isEmpty(f.getOtherName())){
-                MessageDao.getInstance().deleteOne(f);
-            }
-        }*/
-       /* List<FriendBean> friendBeanList = FriendDao.getInstance().findAllByParams(WhereBuilder.b());
-        for (FriendBean f : friendBeanList) {
-            Log.e(TAG, f.toString());
-        }*/
-      /*  List<UserBean> userList = UserDao.getInstance().findAllByParams(WhereBuilder.b());
-
-        long i = 18202820000l;
-        for (UserBean u : userList) {
-            Log.e(TAG, u.toString());
-            if (TextUtils.isEmpty(u.getUserName())) {
-                u.setUserName(i + "");
-            }
-            UserDao.getInstance().update(u);
-            i++;
-
-        }*/
-
     }
 
     @Override

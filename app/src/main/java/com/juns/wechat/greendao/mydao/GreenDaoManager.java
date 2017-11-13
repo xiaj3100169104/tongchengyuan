@@ -2,6 +2,7 @@ package com.juns.wechat.greendao.mydao;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.juns.wechat.bean.DynamicBean;
@@ -12,7 +13,6 @@ import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.bean.UserExtendInfo;
 import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.config.MsgType;
-import com.juns.wechat.database.CursorUtil;
 import com.juns.wechat.fragment.msg.MsgItem;
 import com.juns.wechat.greendao.dao.DaoMaster;
 import com.juns.wechat.greendao.dao.DaoSession;
@@ -84,12 +84,12 @@ public class GreenDaoManager {
     }
 
 
-    public void insert(DynamicBean o) {
+    public void saveDynamic(DynamicBean o) {
         dynamicBeanDao.insertOrReplace(o);
     }
 
 
-    public void insert(List<DynamicBean> list) {
+    public void saveDynamic(List<DynamicBean> list) {
         dynamicBeanDao.insertOrReplaceInTx(list);
     }
 
@@ -188,28 +188,29 @@ public class GreenDaoManager {
     private static final String SELECT_NOT_EXIST_USER_IN_FRIEND =
             "select CONTACT_ID from FRIEND_BEAN where CONTACT_ID = ? and CONTACT_ID not in (select USER_ID from USER_BEAN)";
 
-    private static final String QUERY_MY_FRIENDS =
-            "select * from FRIEND_BEAN f where OWNER_ID = ? and " +
-                    "(f.SUB_TYPE = 'both' or f.SUB_TYPE = 'from') and FLAG != -1";
-
     public void saveFriends(List<FriendBean> data) {
         friendBeanDao.insertOrReplaceInTx(data);
     }
 
+    public List<FriendBean> queryAllFriend() {
+        List<FriendBean> list = friendBeanDao.loadAll();
+        return list;
+    }
+
     public List<FriendBean> getMyFriends(String ownerId) {
+        String QUERY_MY_FRIENDS = "select * from FRIEND_BEAN f inner join USER_BEAN u where f.OWNER_ID = ? and " +
+                "f.CONTACT_ID = U.USER_ID and (f.SUB_TYPE = 'both' or f.SUB_TYPE = 'from') and FLAG != -1";
         String[] selectionArgs = {ownerId};
-        List<FriendBean> friendBeen = new ArrayList<>();
+        List<FriendBean> list = new ArrayList<>();
         Cursor cursor = getDatabase().rawQuery(QUERY_MY_FRIENDS, selectionArgs);
         while (cursor.moveToNext()) {
-            FriendBean friendBean = CursorUtil.fromCursor(cursor);
-            UserBean userBean = findByUserId(friendBean.getContactId());
-            if (userBean != null) {
-                friendBean.setContactUser(userBean);
-                friendBeen.add(friendBean);
-            }
+            FriendBean f = CursorUtil.fromCursor(cursor);
+            f.nickName = cursor.getString(cursor.getColumnIndexOrThrow("NICK_NAME"));
+            f.headUrl = cursor.getString(cursor.getColumnIndexOrThrow("HEAD_URL"));
+            list.add(f);
         }
         closeCursor(cursor);
-        return friendBeen;
+        return list;
     }
 
     public FriendBean findByOwnerAndContactName(String ownerId, String contactId) {
@@ -261,9 +262,6 @@ public class GreenDaoManager {
                     "(r.OWNER_ID = ? and u.USER_ID = r.CONTACT_ID) and (r.SUB_TYPE = 'both' or r.SUB_TYPE = 'from')) t1" +
                     " UNION SELECT u.* from USER_BEAN u WHERE u.USER_ID = ?) t";
 
-    private static final String QUERY_MY_FRIENDS_USER =
-            "select * from USER_BEAN u, FRIEND_BEAN f where f.OWNER_ID = ? and f.CONTACT_ID = u.USER_ID";
-
     public void save(UserBean u) {
         userBeanDao.insertOrReplace(u);
     }
@@ -280,6 +278,11 @@ public class GreenDaoManager {
         if (list != null && list.size() > 0)
             return list.get(0);
         return null;
+    }
+
+    public List<UserBean> queryAllUser() {
+        List<UserBean> list = userBeanDao.loadAll();
+        return list;
     }
 
     public long getUserLastModifyDate(String userId) {
@@ -299,8 +302,8 @@ public class GreenDaoManager {
 
     private static final String SELECT_MESSAGES_BY_PAGING =
             "select * from MESSAGE_BEAN where MY_USER_ID = ? and OTHER_USER_ID = ? and TYPE < ? and FLAG != -1 limit ? offset ?";
-    private static final String SELECT_MESSAGE_COUNT_BETWEEN_TWO_USER =
-            "select count(id) as count from MESSAGE_BEAN where MY_USER_ID = ? and OTHER_USER_ID = ? and TYPE < ? and FLAG != -1";
+    private static final String COUNT_OF_TWO_USER =
+            "select count(PACKET_ID) as count from MESSAGE_BEAN where MY_USER_ID = ? and OTHER_USER_ID = ? and TYPE < ? and FLAG != -1";
 
     public void save(MessageBean u) {
         messageBeanDao.insertOrReplace(u);
@@ -315,13 +318,13 @@ public class GreenDaoManager {
      * @return
      */
     public void updateMessageState(String packetId, int state, Date date) {
-        String sql = "UPDATE user SET STATE=?" + " WHERE PACKET_ID=?";
+        String sql = "UPDATE MESSAGE_BEAN SET STATE=?" + " WHERE PACKET_ID=?";
         if (date == null) {
             getDatabase().execSQL(sql, new String[]{String.valueOf(state)});
             return;
         }
-        String sql2 = "UPDATE user SET STATE=?,date=?" + " WHERE PACKET_ID=?";
-        Object[] s = {state, date};
+        String sql2 = "UPDATE MESSAGE_BEAN SET STATE=?,DATE=?" + " WHERE PACKET_ID=?";
+        Object[] s = {state, date.getTime()};
         getDatabase().execSQL(sql2, s);
     }
 
@@ -467,7 +470,7 @@ public class GreenDaoManager {
         String v2 = otherUserId;
         String v3 = String.valueOf(MsgType.MSG_TYPE_SEND_INVITE);
         String[] s = {v1, v2, v3};
-        Cursor cursor = getDatabase().rawQuery(SELECT_MESSAGE_COUNT_BETWEEN_TWO_USER, s);
+        Cursor cursor = getDatabase().rawQuery(COUNT_OF_TWO_USER, s);
         if (cursor.moveToNext()) {
             count = cursor.getInt(cursor.getColumnIndex("count"));
         }
@@ -479,6 +482,18 @@ public class GreenDaoManager {
         String sql = "update MESSAGE_BEAN set STATE = ? where MY_USER_ID = ? " +
                 "and OTHER_USER_ID = ? and FLAG != ? and STATE = ? and DIRECTION = ?";
         Object[] s = {MessageBean.State.READ.value, myUserId, otherUserId, Flag.INVALID.value(), MessageBean.State.NEW.value, MessageBean.Direction.INCOMING.value};
+        getDatabase().execSQL(sql, s);
+    }
+
+    /**
+     * 将某一用户的所有消息标为已读
+     *
+     * @param myUserId
+     */
+    public void markAsRead2All(String myUserId) {
+        String sql = "update MESSAGE_BEAN set STATE = ? where MY_USER_ID = ? " +
+                "and FLAG != ? and STATE = ? and DIRECTION = ?";
+        Object[] s = {MessageBean.State.READ.value, myUserId, Flag.INVALID.value(), MessageBean.State.NEW.value, MessageBean.Direction.INCOMING.value};
         getDatabase().execSQL(sql, s);
     }
 
@@ -515,19 +530,18 @@ public class GreenDaoManager {
         KeyValue keyValue = new KeyValue(MessageBean.STATE, MessageBean.State.SEND_FAILED.value);
         update(whereBuilder, keyValue);*/
     }
-
-    public boolean delete(MessageBean t) {
-        /*try {
-            dbManager.saveOrUpdate(t);
-            postDataChangedEvent(DbDataEvent.UPDATE, t);
-            return true;
-        } catch (DbException e) {
-            e.printStackTrace();
-        }*/
-        return false;
+    /**
+     * 将某一用户发送的所有消息标为发送成功
+     *
+     * @param myUserId
+     */
+    public void markAsSendSucceed(String myUserId) {
+        String sql = "update MESSAGE_BEAN set STATE = ? where MY_USER_ID = ? " +
+                "and DIRECTION = ?";
+        Object[] s = {MessageBean.State.SEND_SUCCESS.value, myUserId, MessageBean.Direction.OUTGOING.value};
+        getDatabase().execSQL(sql, s);
     }
-
-    public void postDataChangedEvent(String tag, Object data) {
-        EventBus.getDefault().post(data, tag);
+    public void delete(MessageBean t) {
+        messageBeanDao.delete(t);
     }
 }

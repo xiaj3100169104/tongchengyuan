@@ -30,6 +30,7 @@ import com.style.base.BaseToolbarActivity;
 import com.style.constant.Skip;
 import com.style.dialog.PromptDialog;
 import com.style.event.EventCode;
+import com.style.event.EventManager;
 
 import org.simple.eventbus.Subscriber;
 
@@ -439,7 +440,7 @@ public class ChatActivity extends BaseToolbarActivity {
             @Override
             public void onPositiveButton() {
                 GreenDaoManager.getInstance().delete(messageBean);
-
+                EventManager.getDefault().post(EventCode.DELETE_ONE_MESSAGE, messageBean);
             }
 
             @Override

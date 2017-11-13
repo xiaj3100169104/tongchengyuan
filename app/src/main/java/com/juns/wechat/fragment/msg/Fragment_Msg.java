@@ -81,10 +81,6 @@ public class Fragment_Msg extends BaseFragment {
         if (msgItems == null || msgItems.isEmpty()) {
             txtNochat.setVisibility(View.VISIBLE);
         } else {
-           /* for (:
-                 ) {
-
-            }*/
             txtNochat.setVisibility(View.GONE);
             Collections.sort(msgItems, new MsgItemComparator());
             dataList.clear();

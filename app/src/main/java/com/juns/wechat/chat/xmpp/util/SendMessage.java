@@ -19,6 +19,8 @@ import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.util.ThreadPoolUtil;
 import com.juns.wechat.util.ToastUtil;
 import com.style.constant.FileConfig;
+import com.style.event.EventCode;
+import com.style.event.EventManager;
 import com.style.manager.ToastManager;
 
 import org.jivesoftware.smack.packet.id.StanzaIdUtil;
@@ -101,8 +103,8 @@ public class SendMessage {
                 messageBean.setType(MsgType.MSG_TYPE_PICTURE);
                 completeMessageEntityInfo(messageBean);
                 addMessageToDB(messageBean);
-
-                uploadPicture(messageBean);
+                sendMsgDirect(messageBean);
+                //uploadPicture(messageBean);
             }
         });
     }
@@ -125,10 +127,6 @@ public class SendMessage {
             @Override
             public void progressUpdated(int progress) {
                 pictureMsg.progress = progress;
-              /*  messageBean.setMsg(pictureMsg.toJson());
-                WhereBuilder whereBuilder = WhereBuilder.b(MessageBean.PACKET_ID, "=", messageBean.getPacketId());
-                KeyValue keyValue = new KeyValue(MessageBean.MSG, messageBean.getMsg());
-                messageDao.update(whereBuilder, keyValue);*/
             }
 
             @Override
@@ -163,8 +161,9 @@ public class SendMessage {
                 messageBean.setType(MsgType.MSG_TYPE_OFFLINE_VIDEO);
                 completeMessageEntityInfo(messageBean);
                 addMessageToDB(messageBean);
+                sendMsgDirect(messageBean);
 
-                if (!XmppManagerImpl.getInstance().login()) {
+                /*if (!XmppManagerImpl.getInstance().login()) {
                     updateMessageState(messageBean.getPacketId(), MessageBean.State.SEND_FAILED.value);
                     return;
                 }
@@ -174,11 +173,6 @@ public class SendMessage {
                 fileTransferManager.sendFile(file, otherUserId, new FileTransferManager.ProgressListener() {
                     @Override
                     public void progressUpdated(int progress) {
-                     /*   contentMsg.progress = progress;
-                        messageBean.setMsg(contentMsg.toJson());
-                        WhereBuilder whereBuilder = WhereBuilder.b(MessageBean.PACKET_ID, "=", messageBean.getPacketId());
-                        KeyValue keyValue = new KeyValue(MessageBean.MSG, messageBean.getMsg());
-                        messageDao.update(whereBuilder, keyValue);*/
                     }
 
                     @Override
@@ -190,7 +184,7 @@ public class SendMessage {
                     public void onFailed() {
                         updateMessageState(messageBean.getPacketId(), MessageBean.State.SEND_FAILED.value);
                     }
-                });
+                });*/
             }
         });
     }
@@ -282,7 +276,7 @@ public class SendMessage {
             public void run() {
                 switch (message.getType()) {
                     case MsgType.MSG_TYPE_PICTURE:
-                        uploadPicture(message);
+                        //uploadPicture(message);
                         break;
                     case MsgType.MSG_TYPE_OFFLINE_VIDEO:
                         break;
@@ -310,14 +304,18 @@ public class SendMessage {
      * @return
      */
     private static void addMessageToDB(MessageBean messageBean) {
+        messageBean.state = MessageBean.State.SEND_SUCCESS.value;
         GreenDaoManager.getInstance().save(messageBean);
+        EventManager.getDefault().post(EventCode.BEFORE_SEND_SUCCESS, messageBean);
+        EventManager.getDefault().post(EventCode.REFRESH_CONVERSATION_LIST, messageBean);
+
     }
 
     public static void sendMsgDirect(MessageBean message) {
-        boolean send = XmppManagerImpl.getInstance().sendMessage(message);
+       /* boolean send = XmppManagerImpl.getInstance().sendMessage(message);
         if (!send) {  //如果未成功发送,
             updateMessageState(message.getPacketId(), MessageBean.State.SEND_FAILED.value);
-        }
+        }*/
     }
 
     /**
@@ -326,7 +324,7 @@ public class SendMessage {
      * @param state
      */
     private static void updateMessageState(String packetId, int state) {
-        messageDao.updateMessageState(packetId, state, null);
+        messageDao.updateMessageState(packetId, state, new Date());
     }
 
 }

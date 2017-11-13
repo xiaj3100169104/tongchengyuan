@@ -18,6 +18,7 @@ import android.text.TextUtils;
 
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.baidu.mapapi.SDKInitializer;
 import com.juns.wechat.bean.DynamicBean;
 import com.juns.wechat.bean.FriendBean;
@@ -61,19 +62,26 @@ public class App extends Application {
 		VCamera.setDebugMode(true);
 		// 初始化拍摄SDK，必须
 		VCamera.initialize(this);*/
-        List<UserBean> list = UserDao.getInstance().findAllByParams(WhereBuilder.b());
-        List<FriendBean> list2 = FriendDao.getInstance().findAllByParams(WhereBuilder.b());
+       /* List<UserBean> list = GreenDaoManager.getInstance().queryAllUser();
+        List<FriendBean> list2 = GreenDaoManager.getInstance().queryAllFriend();
         List<DynamicBean> list3 = GreenDaoManager.getInstance().queryAll();
-        String s = JSON.toJSONString(list);
-        String s2 = JSON.toJSONString(list2);
+        //String s = JSON.toJSONString(list);
+        //String s2 = JSON.toJSONString(list2);
         String s3 = JSON.toJSONString(list3);
-        logE("userList", s);
-        logE("friendList", s2);
+        //logE("userList", s);
+        //logE("friendList", s2);
         logE("dynamicList", s3);
-        AppUtil.backupData(s, FileConfig.DIR_BACKUP + "/" + "userTableBackup.txt");
-        AppUtil.backupData(s2, FileConfig.DIR_BACKUP + "/" + "friendTableBackup.txt");
-        AppUtil.backupData(s3, FileConfig.DIR_BACKUP + "/" + "dynamicTableBackup.txt");
+        String data = AppUtil.backupDataResume(FileConfig.DIR_BACKUP + "/" + "dynamicTableBackup.txt");
+        List<DynamicBean> l1 = JSON.parseObject(data, new TypeReference<List<DynamicBean>>() {
+        });
+        GreenDaoManager.getInstance().saveDynamic(l1);
+        List<FriendBean> l12 = GreenDaoManager.getInstance().queryAllFriend();
 
+        for (FriendBean u : l12) {
+        }*/
+        /*AppUtil.backupData(s2, FileConfig.DIR_BACKUP + "/" + "friendTableBackup.txt");
+        AppUtil.backupData(s3, FileConfig.DIR_BACKUP + "/" + "dynamicTableBackup.txt");
+*/
 
     }
 

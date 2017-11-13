@@ -83,19 +83,18 @@ public class ContactAdapter extends BaseRecyclerViewAdapter<FriendBean> implemen
         } else {
             ViewHolder holder = (ViewHolder) viewHolder;
             int position = layoutPosition - 1;
-            FriendBean friendBean = getData(position);
+            FriendBean f = getData(position);
             // 根据position获取分类的首字母的Char ascii值
             int section = getSectionForPosition(position);
             // 如果当前位置等于该分类首字母的Char的位置 ，则认为是第一次出现
             if (position == getPositionForSection(section)) {
                 holder.tvCatalog.setVisibility(View.VISIBLE);
-                holder.tvCatalog.setText(friendBean.getSortLetters());
+                holder.tvCatalog.setText(f.getSortLetters());
             } else {
                 holder.tvCatalog.setVisibility(View.GONE);
             }
-            UserBean u = friendBean.contactUser;
-            ImageLoader.loadAvatar(mContext, holder.ivAvatar, u.getHeadUrl());
-            String showName = !TextUtils.isEmpty(friendBean.getRemark()) ? friendBean.getRemark() : u.getShowName();
+            ImageLoader.loadAvatar(mContext, holder.ivAvatar, f.headUrl);
+            String showName = !TextUtils.isEmpty(f.getRemark()) ? f.getRemark() : f.nickName;
             setText(holder.tvNick, showName);
 
             super.setOnItemClickListener(holder, position);

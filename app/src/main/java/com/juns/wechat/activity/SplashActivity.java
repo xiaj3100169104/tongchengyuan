@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.same.city.love.R;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.manager.AccountManager;
@@ -31,18 +32,8 @@ public class SplashActivity extends BaseActivity {
     protected void initData() {
         UserBean userBean = AccountManager.getInstance().getUser();
         if (userBean != null) {
+            //GreenDaoManager.getInstance().markAsSendSucceed(userBean.userId);
             pageToHome();
-            /*SyncDataUtil.getInstance().syncData(TAG, new SyncDataUtil.Callback() {
-                @Override
-                public void onSuccess() {
-                    pageToHome();
-                }
-
-                @Override
-                public void onFailure() {
-                    pageToHome();
-                }
-            });*/
         } else {
             pageToLogin();
         }

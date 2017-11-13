@@ -7,9 +7,13 @@ import android.content.res.Resources;
 
 import com.style.constant.FileConfig;
 
+import java.io.BufferedReader;
+import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 
 /*******************************************************
@@ -36,21 +40,61 @@ public class AppUtil {
         return "";
     }
 
-    public static void backupData(String s, String filePath) {
+    public static void backupData(String data, String filePath) {
         File userBack = new File(filePath);
+        FileOutputStream fos = null;
         if (userBack.exists())
             userBack.delete();
         if (!userBack.getParentFile().exists())
             userBack.mkdirs();
         try {
-            FileOutputStream fos = new FileOutputStream(userBack);
-            fos.write(s.getBytes());
-            fos.close();
-
+            fos = new FileOutputStream(userBack);
+            fos.write(data.getBytes());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
+    }
+
+    public static String backupDataResume(String filePath) {
+        StringBuilder result = new StringBuilder();
+        File userBack = new File(filePath);
+        BufferedReader br = null;
+        if (userBack.exists()) {
+            try {
+                br = new BufferedReader(new FileReader(userBack));//构造一个BufferedReader类来读取文件
+                String s = null;
+                int line = 1;
+                while ((s = br.readLine()) != null) {//使用readLine方法，一次读一行
+                    if (line != 1)//第一行不加换行符
+                        result.append(System.lineSeparator());
+                    result.append(s);
+                    line++;
+                }
+                br.close();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (br != null) {
+                    try {
+                        br.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        return result.toString();
     }
 }
