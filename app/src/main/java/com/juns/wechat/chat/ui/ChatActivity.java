@@ -13,6 +13,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.dmcbig.mediapicker.PickerConfig;
+import com.dmcbig.mediapicker.entity.Media;
 import com.github.jdsjlzx.interfaces.OnRefreshListener;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
@@ -277,7 +279,7 @@ public class ChatActivity extends BaseToolbarActivity {
 						.getMessage());
 				break;
 		}*/
-        if (resultCode == RESULT_OK) {
+        if (resultCode == RESULT_OK || resultCode == PickerConfig.RESULT_CODE) {
             switch (requestCode) {
                 case Skip.CODE_EMPTY_HISTORY:// 清空会话
                     break;
@@ -285,9 +287,19 @@ public class ChatActivity extends BaseToolbarActivity {
                     if (cameraFile != null && cameraFile.exists())
                         sendPicture(cameraFile.getAbsolutePath());
                     break;
-                case Skip.CODE_TAKE_ALBUM://发送本地图片
-                    ArrayList<String> selectedPhotos = data.getStringArrayListExtra("paths");
-                    sendPicture(selectedPhotos);
+                //发送本地图片
+                case PickerConfig.CODE_TAKE_ALBUM:
+                    if (data != null) {
+                        ArrayList<Media> newPaths = data.getParcelableArrayListExtra(PickerConfig.EXTRA_RESULT);
+                        if (newPaths != null) {
+                            ArrayList<String> selectedPhotos = new ArrayList<>();
+                            for (Media m : newPaths) {
+                                selectedPhotos.add(m.path);
+                            }
+                            sendPicture(selectedPhotos);
+                        }
+                    }
+
                     break;
                 case Skip.CODE_RECORD_VIDEO:
                     if (data != null) {

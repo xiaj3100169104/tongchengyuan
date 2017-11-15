@@ -6,6 +6,9 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.dmcbig.mediapicker.PickerActivity;
+import com.dmcbig.mediapicker.PickerConfig;
+import com.dmcbig.mediapicker.entity.Media;
 import com.same.city.love.R;
 import com.style.base.BaseToolbarActivity;
 import com.style.base.BaseRecyclerViewAdapter;
@@ -27,10 +30,10 @@ public class SelectLocalPictureActivity extends BaseToolbarActivity {
     @Bind(R.id.recyclerView)
     RecyclerView recyclerView;
 
-    private static final String TAG_ADD = "addTag";
+    private Media TAG_ADD;
 
     private DynamicPublishImageAdapter adapter;
-    private List<String> paths;
+    private List<Media> paths;
     protected File photoFile;
     private SelAvatarDialog dialog;
 
@@ -45,17 +48,17 @@ public class SelectLocalPictureActivity extends BaseToolbarActivity {
     @Override
     public void initData() {
         setToolbarTitle("本地图片选择");
-        paths = null;
         paths = new ArrayList<>();
+        TAG_ADD = new Media();
         paths.add(TAG_ADD);
         adapter = new DynamicPublishImageAdapter(this, paths);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4);
         gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener<Media>() {
             @Override
-            public void onItemClick(int position, Object data) {
+            public void onItemClick(int position, Media data) {
                 showSelPicPopupWindow(position);
             }
         });
@@ -74,11 +77,11 @@ public class SelectLocalPictureActivity extends BaseToolbarActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
+        if (resultCode == RESULT_OK || resultCode == PickerConfig.RESULT_CODE) {
             switch (requestCode) {
-                case Skip.CODE_TAKE_ALBUM:
+                case PickerConfig.CODE_TAKE_ALBUM:
                     if (data != null) {
-                        ArrayList<String> newPaths = data.getStringArrayListExtra("paths");
+                        ArrayList<Media> newPaths = data.getParcelableArrayListExtra(PickerConfig.EXTRA_RESULT);
                         paths.clear();
                         paths.addAll(newPaths);
                         paths.add(TAG_ADD);
@@ -96,7 +99,10 @@ public class SelectLocalPictureActivity extends BaseToolbarActivity {
                             int location = 0;
                             if (size >= 1)
                                 location = size - 1;
-                            paths.add(location, filePath);
+                            Media media = new Media();
+                            media.path = filePath;
+                            media.size = photoFile.length();
+                            paths.add(location, media);
                             adapter.notifyDataSetChanged();
                         }
                     } else {
@@ -130,17 +136,21 @@ public class SelectLocalPictureActivity extends BaseToolbarActivity {
 
                     @Override
                     public void OnClickPhoto() {
-                        Intent intent = new Intent(SelectLocalPictureActivity.this, AlbumActivity.class);
                         int newCount = adapter.getItemCount();
-                        ArrayList<String> cacheList = new ArrayList<>();
+                        ArrayList<Media> cacheList = new ArrayList<>();
                         if (newCount > 1) {
                             for (int i = 0; i < newCount - 1; i++) {
                                 cacheList.add(paths.get(i));
                             }
                         }
-                        intent.putStringArrayListExtra("paths", cacheList);
-                        intent.putExtra("maxNum", 9);
-                        startActivityForResult(intent, Skip.CODE_TAKE_ALBUM);
+
+                        Intent intent = new Intent(SelectLocalPictureActivity.this, PickerActivity.class);
+                        intent.putExtra(PickerConfig.SELECT_MODE, PickerConfig.PICKER_IMAGE);//default image and video (Optional)
+                        long maxSize = 188743680L;//long long long
+                        intent.putExtra(PickerConfig.MAX_SELECT_SIZE, maxSize); //default 180MB (Optional)
+                        intent.putExtra(PickerConfig.MAX_SELECT_COUNT, 9);  //default 40 (Optional)
+                        intent.putExtra(PickerConfig.DEFAULT_SELECTED_LIST, cacheList); // (Optional)
+                        SelectLocalPictureActivity.this.startActivityForResult(intent, PickerConfig.CODE_TAKE_ALBUM);
                     }
 
                     @Override

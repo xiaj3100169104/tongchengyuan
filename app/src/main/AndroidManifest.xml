@@ -93,7 +93,6 @@
         <activity android:name="com.juns.wechat.activity.SearchResultActivity" />
 
         <activity android:name="com.juns.wechat.activity.SendLocationActivity" />
-        <activity android:name="com.style.album.AlbumActivity" />
         <activity android:name="com.style.album.SelectLocalPictureActivity" />
         <activity android:name="com.juns.wechat.chat.voice.CallVoiceBaseActivity" />
         <activity android:name="com.juns.wechat.dynamic.FriendCircleActivity" />

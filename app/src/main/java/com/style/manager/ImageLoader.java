@@ -9,6 +9,8 @@ import android.util.LruCache;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.Priority;
+import com.bumptech.glide.request.RequestOptions;
 import com.juns.wechat.App;
 import com.same.city.love.R;
 import com.juns.wechat.config.ConfigUtil;
@@ -18,6 +20,9 @@ import com.style.constant.FileConfig;
 
 public class ImageLoader {
     private static final String TAG = "ImageLoader";
+    private static RequestOptions defaultRequestOptions;
+    private static RequestOptions bigPictureOptions;
+    private static RequestOptions defaultAvatarOptions;
 
     private static CharSequence getLocalUrl(String fileName) {
         return FileConfig.DIR_CACHE + "/" + fileName;
@@ -27,24 +32,51 @@ public class ImageLoader {
         return ConfigUtil.getDownUrl(fileName);
     }
 
+    public static RequestOptions getDefaultRequestOptions() {
+        if (defaultRequestOptions == null) {
+            defaultRequestOptions = new RequestOptions().centerCrop().placeholder(R.mipmap.empty_photo)
+                    .error(R.mipmap.image_fail)
+                    .priority(Priority.HIGH);
+        }
+        return defaultRequestOptions;
+    }
+
+    public static RequestOptions getDefaultBigPictureOptions() {
+        if (bigPictureOptions == null) {
+            bigPictureOptions = new RequestOptions().centerCrop().error(R.mipmap.image_fail)
+                    .priority(Priority.HIGH);
+        }
+        return bigPictureOptions;
+    }
+
+    public static RequestOptions getDefaultAvatarOptions() {
+        if (defaultAvatarOptions == null) {
+            defaultAvatarOptions = new RequestOptions().centerCrop().placeholder(R.drawable.default_avatar)
+                    .error(R.drawable.default_avatar)
+                    .priority(Priority.HIGH);
+        }
+        return defaultAvatarOptions;
+    }
+
     public static void loadAvatar(Context context, ImageView imageView, String fileName) {
-        if (!TextUtils.isEmpty(fileName))
-            Glide.with(context).load(getLocalUrl(fileName)).placeholder(R.drawable.default_avatar).error(R.drawable.default_avatar).into(imageView);
+        if (!TextUtils.isEmpty(fileName)) {
+            Glide.with(context).load(getLocalUrl(fileName)).apply(getDefaultAvatarOptions()).into(imageView);
+        }
     }
 
     public static void loadPictureByName(Context context, ImageView imageView, String fileName) {
         if (!TextUtils.isEmpty(fileName))
-            Glide.with(context).load(getLocalUrl(fileName)).placeholder(R.mipmap.empty_photo).error(R.mipmap.image_fail).into(imageView);
+            Glide.with(context).load(getLocalUrl(fileName)).apply(getDefaultRequestOptions()).into(imageView);
     }
 
     public static void loadPictureByUrl(Context context, ImageView imageView, String url) {
         if (!TextUtils.isEmpty(url))
-            Glide.with(context).load(url).placeholder(R.mipmap.empty_photo).error(R.mipmap.image_fail).into(imageView);
+            Glide.with(context).load(url).apply(getDefaultRequestOptions()).into(imageView);
     }
 
     public static void loadBigPicture(Context context, ImageView imageView, String url) {
         if (!TextUtils.isEmpty(url))
-            Glide.with(context).load(url).error(R.mipmap.image_fail).into(imageView);
+            Glide.with(context).load(url).apply(getDefaultBigPictureOptions()).into(imageView);
     }
 
     private static LruCache<String, Bitmap> bitmapCache;

@@ -12,13 +12,13 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="wrap_content">
 
         <com.github.jdsjlzx.recyclerview.LRecyclerView
             android:id="@+id/list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/bar_bottom"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
@@ -26,15 +26,16 @@
             android:divider="@null"
             android:fadingEdge="none"
             android:scrollbars="none" />
+
+        <LinearLayout
+            android:id="@+id/bar_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical">
+
+            <include layout="@layout/layout_chat_tool" />
+        </LinearLayout>
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/bar_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <include layout="@layout/layout_chat_tool" />
-
-    </LinearLayout>
 </LinearLayout>

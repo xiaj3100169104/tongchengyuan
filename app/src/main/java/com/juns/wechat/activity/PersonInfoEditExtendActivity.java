@@ -2,6 +2,7 @@ package com.juns.wechat.activity;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -181,30 +182,35 @@ public class PersonInfoEditExtendActivity extends BaseToolbarActivity {
         return value;
     }
 
-    public void setExtendInfo(List<UserPropertyBean> extendInfo) {
-        if (extendInfo != null) {
-            for (UserPropertyBean u : extendInfo) {
-                List<String> list = StringUtil.String2List(u.value, ",");
+    public void setExtendInfo(final List<UserPropertyBean> extendInfo) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (extendInfo != null) {
+                    for (UserPropertyBean u : extendInfo) {
+                        List<String> list = StringUtil.String2List(u.value, ",");
 
-                switch (u.key) {
-                    case UserPropertyBean.KEY_MY_LABEL:
-                        setLabelData(tagViewMyLabel, list, R.color.tag_my_label, R.color.tag_my_label_bg, tvMyLabel);
-                        break;
-                    case UserPropertyBean.KEY_INTEREST_SPORT:
-                        setLabelData(tagViewInterestSport, list, R.color.tag_sport, R.color.tag_sport_bg, tvInterestSport);
-                        break;
-                    case UserPropertyBean.KEY_INTEREST_MUSIC:
-                        setLabelData(tagViewInterestMusic, list, R.color.tag_music, R.color.tag_music_bg, tvInterestMusic);
-                        break;
-                    case UserPropertyBean.KEY_INTEREST_FOOD:
-                        setLabelData(tagViewInterestFood, list, R.color.tag_food, R.color.tag_food_bg, tvInterestFood);
-                        break;
-                    case UserPropertyBean.KEY_INTEREST_MOVIE:
-                        setLabelData(tagViewInterestMovie, list, R.color.tag_movie, R.color.tag_movie_bg, tvInterestMovie);
-                        break;
+                        switch (u.key) {
+                            case UserPropertyBean.KEY_MY_LABEL:
+                                setLabelData(tagViewMyLabel, list, R.color.tag_my_label, R.color.tag_my_label_bg, tvMyLabel);
+                                break;
+                            case UserPropertyBean.KEY_INTEREST_SPORT:
+                                setLabelData(tagViewInterestSport, list, R.color.tag_sport, R.color.tag_sport_bg, tvInterestSport);
+                                break;
+                            case UserPropertyBean.KEY_INTEREST_MUSIC:
+                                setLabelData(tagViewInterestMusic, list, R.color.tag_music, R.color.tag_music_bg, tvInterestMusic);
+                                break;
+                            case UserPropertyBean.KEY_INTEREST_FOOD:
+                                setLabelData(tagViewInterestFood, list, R.color.tag_food, R.color.tag_food_bg, tvInterestFood);
+                                break;
+                            case UserPropertyBean.KEY_INTEREST_MOVIE:
+                                setLabelData(tagViewInterestMovie, list, R.color.tag_movie, R.color.tag_movie_bg, tvInterestMovie);
+                                break;
+                        }
+                    }
                 }
             }
-        }
+        }, 200);
     }
 
     @OnClick(R.id.layout_my_label)
@@ -245,7 +251,7 @@ public class PersonInfoEditExtendActivity extends BaseToolbarActivity {
             }
         }
 
-        AlertDialog multiDialog = new AlertDialog.Builder(this)
+        AlertDialog multiDialog = new AlertDialog.Builder(this, R.style.Dialog_alert)
                 .setTitle(title)
                 .setMultiChoiceItems(allData, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override

@@ -10,13 +10,16 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
+import com.dmcbig.mediapicker.PickerActivity;
+import com.dmcbig.mediapicker.PickerConfig;
+import com.dmcbig.mediapicker.entity.Media;
 import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.same.city.love.R;
 import com.juns.wechat.bean.DynamicBean;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.manager.AccountManager;
+import com.style.album.SelectLocalPictureActivity;
 import com.style.dialog.PromptDialog;
-import com.style.album.AlbumActivity;
 import com.style.album.DynamicPublishImageAdapter;
 import com.style.base.BaseRecyclerViewAdapter;
 import com.style.base.BaseToolbarBtnActivity;
@@ -39,7 +42,7 @@ import butterknife.Bind;
 
 
 public class DynamicPublishActivity extends BaseToolbarBtnActivity {
-    private static final String TAG_ADD = "addTag";
+    private Media TAG_ADD;
 
     @Bind(R.id.et_content)
     EditText etContent;
@@ -49,7 +52,7 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
     private PublishDynamicHelper facehelper;
 
     private DynamicPublishImageAdapter adapter;
-    private List<String> paths;
+    private List<Media> paths;
     protected boolean haveContent;
     private boolean haveImg;
     protected File photoFile;
@@ -73,17 +76,17 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
         setToolbarTitle("");
         facehelper = new PublishDynamicHelper(this, etContent);
         facehelper.onCreate();
-        paths = null;
         paths = new ArrayList<>();
+        TAG_ADD = new Media();
         paths.add(TAG_ADD);
         adapter = new DynamicPublishImageAdapter(DynamicPublishActivity.this, paths);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4);
         gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(adapter);
-        adapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener<Media>() {
             @Override
-            public void onItemClick(int position, Object data) {
+            public void onItemClick(int position, Media data) {
                 showSelPicPopupWindow(position);
             }
         });
@@ -216,7 +219,7 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
         if (fileList != null && fileList.length > 0) {
             for (int i = 0; i < fileList.length; i++) {
                 File file = fileList[i];
-               b.append(file.getName()).append(",");
+                b.append(file.getName()).append(",");
             }
         }
         if (b.length() > 0)
@@ -231,15 +234,14 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
     }
 
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
+        if (resultCode == RESULT_OK || resultCode == PickerConfig.RESULT_CODE) {
             switch (requestCode) {
-                case Skip.CODE_TAKE_ALBUM:
+                case PickerConfig.CODE_TAKE_ALBUM:
                     if (data != null) {
-                        ArrayList<String> newPaths = data.getStringArrayListExtra("paths");
+                        ArrayList<Media> newPaths = data.getParcelableArrayListExtra(PickerConfig.EXTRA_RESULT);
                         paths.clear();
                         paths.addAll(newPaths);
                         paths.add(TAG_ADD);
@@ -257,7 +259,10 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
                             int location = 0;
                             if (size >= 1)
                                 location = size - 1;
-                            paths.add(location, filePath);
+                            Media media = new Media();
+                            media.path = filePath;
+                            media.size = photoFile.length();
+                            paths.add(location, media);
                             adapter.notifyDataSetChanged();
                         }
                     } else {
@@ -275,7 +280,7 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
         if (num > 0) {
             files = new File[num];
             for (int i = 0; i < num; i++) {
-                String path = (String) adapter.getData(i);
+                String path = (String) adapter.getData(i).path;
                 if (path != null) {
                     int degree = PictureUtils.readPictureDegree(path);
                     logE("degree", degree + "");
@@ -312,17 +317,22 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
 
                     @Override
                     public void OnClickPhoto() {
-                        Intent intent = new Intent(DynamicPublishActivity.this, AlbumActivity.class);
                         int newCount = adapter.getItemCount();
-                        ArrayList<String> cacheList = new ArrayList<>();
+                        ArrayList<Media> cacheList = new ArrayList<>();
                         if (newCount > 1) {
                             for (int i = 0; i < newCount - 1; i++) {
                                 cacheList.add(paths.get(i));
                             }
                         }
-                        intent.putStringArrayListExtra("paths", cacheList);
-                        intent.putExtra("maxNum", 9);
-                        startActivityForResult(intent, Skip.CODE_TAKE_ALBUM);
+
+                        Intent intent = new Intent(DynamicPublishActivity.this, PickerActivity.class);
+                        intent.putExtra(PickerConfig.SELECT_MODE, PickerConfig.PICKER_IMAGE);//default image and video (Optional)
+                        long maxSize = 188743680L;//long long long
+                        intent.putExtra(PickerConfig.MAX_SELECT_SIZE, maxSize); //default 180MB (Optional)
+                        intent.putExtra(PickerConfig.MAX_SELECT_COUNT, 9);  //default 40 (Optional)
+                        intent.putExtra(PickerConfig.DEFAULT_SELECTED_LIST, cacheList); // (Optional)
+                        startActivityForResult(intent, PickerConfig.CODE_TAKE_ALBUM);
+
                     }
 
                     @Override

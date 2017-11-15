@@ -15,6 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.dmcbig.mediapicker.PickerActivity;
+import com.dmcbig.mediapicker.PickerConfig;
 import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.same.city.love.R;
 import com.juns.wechat.activity.SendLocationActivity;
@@ -27,7 +29,6 @@ import com.juns.wechat.util.ThreadPoolUtil;
 import com.juns.wechat.util.ToastUtil;
 import com.juns.wechat.view.AudioRecordButton;
 import com.juns.wechat.chat.xmpp.util.SendMessage;
-import com.style.album.AlbumActivity;
 import com.style.constant.FileConfig;
 import com.style.constant.Skip;
 import com.style.lib.media.camera2video.CameraActivity;
@@ -278,9 +279,14 @@ public class ChatInputManager implements View.OnClickListener {
      * 从图库获取图片
      */
     private void selectPicFromLocal() {
-        Intent intent = new Intent(mChatActivity, AlbumActivity.class);
-        intent.putExtra("maxNum", 9);
-        mChatActivity.startActivityForResult(intent, Skip.CODE_TAKE_ALBUM);
+        Intent intent = new Intent(mChatActivity, PickerActivity.class);
+        intent.putExtra(PickerConfig.SELECT_MODE, PickerConfig.PICKER_IMAGE);//default image and video (Optional)
+        long maxSize = 188743680L;//long long long
+        intent.putExtra(PickerConfig.MAX_SELECT_SIZE, maxSize); //default 180MB (Optional)
+        intent.putExtra(PickerConfig.MAX_SELECT_COUNT, 9);  //default 40 (Optional)
+        //intent.putExtra(PickerConfig.DEFAULT_SELECTED_LIST, null); // (Optional)
+        mChatActivity.startActivityForResult(intent, PickerConfig.CODE_TAKE_ALBUM);
+
     }
 
     private void takeCamera() {

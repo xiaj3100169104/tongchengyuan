@@ -8,4 +8,20 @@
 
         <item name="android:windowTranslucentStatus">true</item>
     </style>
+
+    <!-- 注意属性一定要加前缀android:，不然没作用-->
+    <style name="Dialog_alert" parent="android:Theme.Material.Light.Dialog.Alert">
+        <!--按钮文字颜色-->
+        <item name="android:colorAccent">@color/black_light</item>
+        <!--单选框未选中时颜色-->
+        <item name="android:colorControlNormal">#f00</item>
+        <!--单选框选中时颜色-->
+        <item name="android:colorControlActivated">#0f0</item>
+        <!--单选框所在行点击时背景颜色-->
+        <item name="android:colorControlHighlight">#0ff</item>
+        <!--没发现-->
+        <item name="android:colorButtonNormal">@color/pink_500</item>
+        <item name="android:windowNoTitle">true</item>
+
+    </style>
 </resources>

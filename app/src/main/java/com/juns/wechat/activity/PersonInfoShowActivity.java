@@ -2,6 +2,7 @@ package com.juns.wechat.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -220,32 +221,36 @@ public class PersonInfoShowActivity extends BaseToolbarActivity {
     @Subscriber(tag = EventCode.UPDATE_USER_LABEL)
     private void onDataChanged(List<UserPropertyBean> data) {
         setExtendInfo(data);
-
     }
 
-    public void setExtendInfo(List<UserPropertyBean> extendInfo) {
-        if (extendInfo != null) {
-            for (UserPropertyBean u : extendInfo) {
-                List<String> list = StringUtil.String2List(u.value, ",");
-                switch (u.key) {
-                    case UserPropertyBean.KEY_MY_LABEL:
-                        setLabelData(layoutMyLabel, tagViewMyLabel, list, R.color.tag_my_label, R.color.tag_my_label_bg, tvMyLabel);
-                        break;
-                    case UserPropertyBean.KEY_INTEREST_SPORT:
-                        setLabelData(layoutInterestSport, tagViewInterestSport, list, R.color.tag_sport, R.color.tag_sport_bg, tvInterestSport);
-                        break;
-                    case UserPropertyBean.KEY_INTEREST_MUSIC:
-                        setLabelData(layoutInterestMusic, tagViewInterestMusic, list, R.color.tag_music, R.color.tag_music_bg, tvInterestMusic);
-                        break;
-                    case UserPropertyBean.KEY_INTEREST_FOOD:
-                        setLabelData(layoutInterestFood, tagViewInterestFood, list, R.color.tag_food, R.color.tag_food_bg, tvInterestFood);
-                        break;
-                    case UserPropertyBean.KEY_INTEREST_MOVIE:
-                        setLabelData(layoutInterestMovie, tagViewInterestMovie, list, R.color.tag_movie, R.color.tag_movie_bg, tvInterestMovie);
-                        break;
+    public void setExtendInfo(final List<UserPropertyBean> extendInfo) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (extendInfo != null) {
+                    for (UserPropertyBean u : extendInfo) {
+                        List<String> list = StringUtil.String2List(u.value, ",");
+                        switch (u.key) {
+                            case UserPropertyBean.KEY_MY_LABEL:
+                                setLabelData(layoutMyLabel, tagViewMyLabel, list, R.color.tag_my_label, R.color.tag_my_label_bg, tvMyLabel);
+                                break;
+                            case UserPropertyBean.KEY_INTEREST_SPORT:
+                                setLabelData(layoutInterestSport, tagViewInterestSport, list, R.color.tag_sport, R.color.tag_sport_bg, tvInterestSport);
+                                break;
+                            case UserPropertyBean.KEY_INTEREST_MUSIC:
+                                setLabelData(layoutInterestMusic, tagViewInterestMusic, list, R.color.tag_music, R.color.tag_music_bg, tvInterestMusic);
+                                break;
+                            case UserPropertyBean.KEY_INTEREST_FOOD:
+                                setLabelData(layoutInterestFood, tagViewInterestFood, list, R.color.tag_food, R.color.tag_food_bg, tvInterestFood);
+                                break;
+                            case UserPropertyBean.KEY_INTEREST_MOVIE:
+                                setLabelData(layoutInterestMovie, tagViewInterestMovie, list, R.color.tag_movie, R.color.tag_movie_bg, tvInterestMovie);
+                                break;
+                        }
+                    }
                 }
             }
-        }
+        }, 500);
     }
 
     private void setLabelData(ViewGroup layout, TagView tagView, List<String> list, int tagColor, int tagColorBg, TextView textView) {

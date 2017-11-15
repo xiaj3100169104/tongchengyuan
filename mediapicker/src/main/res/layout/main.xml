@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#161c1e"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/top"
+        layout="@layout/picker_actionbar" />
+
+    <RelativeLayout
+        android:id="@+id/footer"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignParentBottom="true"
+        android:background="#21282C"
+        android:clickable="true">
+
+
+        <Button
+            android:id="@+id/preview"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:minHeight="1dp"
+            android:minWidth="1dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="@string/preview"
+            android:textColor="@color/default_text_color"
+            android:textSize="15sp"
+            android:visibility="visible" />
+
+        <Button
+            android:id="@+id/category_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:drawablePadding="5dp"
+            android:drawableRight="@drawable/text_indicator"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:paddingLeft="14dp"
+            android:paddingRight="14dp"
+            android:text="@string/all_dir_name"
+            android:textColor="@color/default_text_color"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/footer"
+        android:layout_below="@+id/top" />
+
+</RelativeLayout>

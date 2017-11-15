@@ -3,7 +3,7 @@
     <!-- 布局还没加载出来前的窗口背景颜色 -->
     <color name="windowBackground">@color/white</color>
     <!-- appbar颜色 -->
-    <color name="colorPrimary">@color/pink_500</color>
+    <color name="colorPrimary">@color/actionbar</color>
     <!-- 状态栏颜色 -->
     <color name="colorPrimaryDark">@color/colorPrimary</color>
     <!-- 文本颜色、日期等对话框字体颜色 -->

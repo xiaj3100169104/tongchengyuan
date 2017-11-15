@@ -67,10 +67,10 @@ public class ConversationAdapter extends BaseRecyclerViewAdapter {
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.txt_del)
+       /* @Bind(R.id.txt_del)
         TextView txtDel;
         @Bind(R.id.layout_back)
-        LinearLayout layoutBack;
+        LinearLayout layoutBack;*/
         @Bind(R.id.iv_avatar)
         ImageView ivAvatar;
         @Bind(R.id.tv_unread_msg_number)
@@ -87,8 +87,8 @@ public class ConversationAdapter extends BaseRecyclerViewAdapter {
         TextView tvTime;
         @Bind(R.id.contact_item_layout)
         LinearLayout contactItemLayout;
-        @Bind(R.id.swipe)
-        SwipeLayout swipe;
+        //@Bind(R.id.swipe)
+        //SwipeLayout swipe;
 
         ViewHolder(View view) {
             super(view);

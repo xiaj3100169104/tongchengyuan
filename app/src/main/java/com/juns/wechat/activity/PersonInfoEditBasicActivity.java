@@ -255,7 +255,7 @@ public class PersonInfoEditBasicActivity extends BaseToolbarActivity {
                     break;
                 }
             }
-        AlertDialog singleDialog = new AlertDialog.Builder(this)
+        AlertDialog singleDialog = new AlertDialog.Builder(this, R.style.Dialog_alert)
                 .setSingleChoiceItems(strings, checkedItem, new DialogInterface.OnClickListener() {
 
                     @Override
