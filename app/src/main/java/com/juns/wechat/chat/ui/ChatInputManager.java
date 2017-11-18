@@ -194,10 +194,13 @@ public class ChatInputManager implements View.OnClickListener {
             case R.id.view_emotion:
                 closeRecordContainer();
                 openEmotionContainer();
+                mChatActivity.scrollToBottom(true);
                 break;
             case R.id.view_audio_record:
                 closeEmotionContainer();
                 openRecordContainer();
+                mChatActivity.scrollToBottom(true);
+
                 break;
             /*case R.id.view_video_record:
                 //mChatActivity.showToast("正在努力开发中");

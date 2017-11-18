@@ -9,9 +9,11 @@ import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.ClipboardManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.dmcbig.mediapicker.PickerConfig;
 import com.dmcbig.mediapicker.entity.Media;
@@ -44,6 +46,10 @@ import butterknife.Bind;
 
 //聊天页面
 public class ChatActivity extends BaseToolbarActivity {
+    //屏幕高度
+    private int screenHeight = 0;
+    //软件盘弹起后所占高度阀值
+    private int keyHeight = 0;
     public static final int RESULT_CODE_EXIT_GROUP = 7;
 
     public static final int CHATTYPE_SINGLE = 1;
@@ -51,6 +57,8 @@ public class ChatActivity extends BaseToolbarActivity {
     public static final String COPY_IMAGE = "EASEMOBIMG";
 
     private static final int SIZE = 10;
+    @Bind(R.id.layout_root)
+    LinearLayout layoutRoot;
     @Bind(R.id.list)
     LRecyclerView mRecyclerView;
 
@@ -156,7 +164,37 @@ public class ChatActivity extends BaseToolbarActivity {
 
         setUpView();
         chatActivityHelper.loadMessagesFromDb();
+        setLayoutListener();
 
+    }
+
+    private void setLayoutListener() {
+        //获取屏幕高度
+        screenHeight = getWindowManager().getDefaultDisplay().getHeight();
+        //阀值设置为屏幕高度的1/3
+        keyHeight = screenHeight / 3;
+        //添加layout大小发生改变监听器,前提是windowSoftInputMode="adjustResize" 并且布局确实会发生大小变化
+        layoutRoot.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                //现在认为只要控件将Activity向上推的高度超过了1/3屏幕高，就认为软键盘弹起
+                if (oldBottom != 0 && bottom != 0 && (oldBottom - bottom > keyHeight)) {
+                    Log.e(TAG, "监听到软键盘弹起");
+                    scrollToBottom(false);
+                } else if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > keyHeight)) {
+                    Log.e(TAG, "监听到软件盘关闭");
+                    //如果是切换到表情面板而隐藏流量输入法，需要延迟判断表情面板是否显示，如果表情面板是关闭的，操作栏也关闭
+                    /**
+                     * Convenience method to scroll to a certain position.
+                     *
+                     * RecyclerView does not implement scrolling logic, rather forwards the call to
+                     * {@link android.support.v7.widget.RecyclerView.LayoutManager#scrollToPosition(int)}
+                     * @param position Scroll to this adapter position
+                     * @see android.support.v7.widget.RecyclerView.LayoutManager#scrollToPosition(int)
+                     */
+                }
+            }
+        });
     }
 
     private void setUpView() {
@@ -196,7 +234,7 @@ public class ChatActivity extends BaseToolbarActivity {
         }
         //第一次加载数据，listView要滚动到底部，下拉刷新加载出来的数据，不用滚动到底部
         if (mFirstLoad) {
-            scrollListViewToBottom();
+            scrollToBottomSmooth();
             mFirstLoad = false;
         }
     }
@@ -204,7 +242,7 @@ public class ChatActivity extends BaseToolbarActivity {
     public void refreshOneData(boolean scroll2bottom) {
         mDataAdapter.notifyDataSetChanged();
         if (scroll2bottom) {
-            scrollListViewToBottom();
+            scrollToBottomSmooth();
         }
     }
 
@@ -212,13 +250,26 @@ public class ChatActivity extends BaseToolbarActivity {
         return msgViewModels;
     }
 
-    private void scrollListViewToBottom() {
-        mHandler.post(new Runnable() {
-            @Override
-            public void run() {
-                mRecyclerView.smoothScrollToPosition(mDataAdapter.getItemCount());
-            }
-        });
+    /**
+     * 直接滚动到最后一条数据（比如弹起输入法、表情界面、语音录制界面）
+     *
+     * @param isDelayed 是否需要延迟滚动
+     */
+    public void scrollToBottom(boolean isDelayed) {
+        if (isDelayed) {
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mRecyclerView.scrollToPosition(mLRecyclerViewAdapter.getItemCount() - 1);
+                }
+            }, 100);
+        }else {
+            mRecyclerView.scrollToPosition(mLRecyclerViewAdapter.getItemCount() - 1);
+        }
+    }
+
+    private void scrollToBottomSmooth() {
+        mRecyclerView.smoothScrollToPosition(mLRecyclerViewAdapter.getItemCount());
     }
 
     /***

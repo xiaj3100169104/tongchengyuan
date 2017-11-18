@@ -15,8 +15,8 @@
     <!-- 表示控件激活时候的色调 -->
     <color name="colorControlActivated">@color/colorPrimary</color>
     <!-- Button按钮正常状态颜色 -->
-    <color name="colorButtonNormal">@color/colorPrimary</color>
-    <color name="colorButtonPressed">@color/pink_300</color>
+    <color name="colorButtonNormal">#44BF1A</color>
+    <color name="colorButtonPressed">#337523</color>
     <color name="textColorHint">@color/gray_light</color>
 
     <color name="bg_refresh_view">#FFB5B5B5</color>

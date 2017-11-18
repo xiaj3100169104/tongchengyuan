@@ -203,11 +203,11 @@
             android:layout_marginLeft="12dp"
             android:layout_marginRight="12dp"
             android:layout_marginTop="32dp"
-            android:background="@drawable/btn_register_bg"
+            android:background="@drawable/btn_bg_theme_selector"
             android:paddingBottom="7dp"
             android:paddingTop="7dp"
             android:text="发消息"
-            android:textColor="@android:color/white"
+            android:textColor="@color/white"
             android:textSize="17sp" />
     </LinearLayout>
 
