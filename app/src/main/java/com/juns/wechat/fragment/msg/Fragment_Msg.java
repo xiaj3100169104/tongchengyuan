@@ -43,7 +43,7 @@ public class Fragment_Msg extends BaseFragment {
     RecyclerView recyclerView;
     @Bind(R.id.txt_nochat)
     TextView txtNochat;
-    private String account = AccountManager.getInstance().getUserName();
+
     private List<MsgItem> dataList;
     private ConversationAdapter adapter;
     private UserBean curUser = AccountManager.getInstance().getUser();
@@ -91,7 +91,7 @@ public class Fragment_Msg extends BaseFragment {
     }
 
     private void setUnreadMsgNum() {
-        int unreadNum = GreenDaoManager.getInstance().getAllUnreadMsgNum(account);
+        int unreadNum = GreenDaoManager.getInstance().getAllUnreadMsgNum(curUser.userId);
         ((MainActivity) getActivity()).setUnreadMsgLabel(unreadNum);
     }
 

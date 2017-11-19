@@ -335,6 +335,8 @@ public class PersonInfoEditBasicActivity extends BaseToolbarActivity {
         curUser.setNickName(name);
         curUser.setSex(sex);
         curUser.setBirthday(birthday);
+        GreenDaoManager.getInstance().save(curUser);
+
         AccountManager.getInstance().setUser(curUser);
         EventManager.getDefault().post(EventCode.UPDATE_USER_HEAD, curUser);
 

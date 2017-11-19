@@ -3,6 +3,7 @@ package com.juns.wechat.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -53,23 +54,14 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
 
     @Override
     public void initData() {
-        initControl();
-        setListener();
-    }
-
-    protected void initControl() {
         userName = AccountManager.getInstance().getUserName();
         password = AccountManager.getInstance().getUserPassWord();
         setText(etInputName, userName);
         setText(etPassWord, password);
         btnLogin.setEnabled(true);
-    }
-
-
-    protected void setListener() {
         btnLogin.setOnClickListener(this);
         btnRegister.setOnClickListener(this);
-        findViewById(R.id.tv_wenti).setOnClickListener(this);
+        tvWenti.setOnClickListener(this);
         etInputName.addTextChangedListener(new TextChange());
         etPassWord.addTextChangedListener(new TextChange());
     }
@@ -111,12 +103,22 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
         UserBean u = new UserBean();
         u.setUserId("8");
         u.setUserName(userName);
-        u.setNickName("style");
+        u.setNickName("Star");
         data.setUserBean(u);
         data.setToken("dfhfoqfhqiuhfreuierhngjh");
-        AccountManager.getInstance().setUser(data.userBean);
-        AccountManager.getInstance().setToken(data.token);
-        AccountManager.getInstance().setUserPassWord(password);
+        if ("8".equals(u.userId) && "17364814713".equals(userName) && "123456".equals(password)) {
+            AccountManager.getInstance().setUser(data.userBean);
+            AccountManager.getInstance().setToken(data.token);
+            AccountManager.getInstance().setUserPassWord(password);
+            /*UserBean ff = GreenDaoManager.getInstance().findByUserId("23");
+            u.setHeadUrl(ff.headUrl);
+            GreenDaoManager.getInstance().save(u);*/
+            skip(MainActivity.class);
+            finish();
+        } else {
+            dismissProgressDialog();
+            showToast("账号或密码错误");
+        }
 
        /* List<UserBean> list = new ArrayList<>();
         for (int i = 2; i < 10; i++) {
@@ -135,8 +137,7 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
             f.setRemark("好友" + i);
         }
         GreenDaoManager.getInstance().saveFriends(friendBeanList);*/
-        skip(MainActivity.class);
-        finish();
+
         /*HttpActionImpl.getInstance().login(TAG, userName, password, new NetDataBeanCallback<LoginBean>(LoginBean.class) {
             @Override
             protected void onCodeSuccess(LoginBean data) {
@@ -168,31 +169,31 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
         });*/
     }
 
-// EditText监听器
-class TextChange implements TextWatcher {
+    // EditText监听器
+    class TextChange implements TextWatcher {
 
-    @Override
-    public void afterTextChanged(Editable arg0) {
+        @Override
+        public void afterTextChanged(Editable arg0) {
 
-    }
+        }
 
-    @Override
-    public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
-                                  int arg3) {
+        @Override
+        public void beforeTextChanged(CharSequence arg0, int arg1, int arg2,
+                                      int arg3) {
 
-    }
+        }
 
-    @Override
-    public void onTextChanged(CharSequence cs, int start, int before,
-                              int count) {
-        boolean Sign2 = etInputName.getText().length() > 0;
-        boolean Sign3 = etPassWord.getText().length() > 4;
-        if (Sign2 & Sign3) {
-            btnLogin.setEnabled(true);
-        } else {
-            btnLogin.setEnabled(false);
+        @Override
+        public void onTextChanged(CharSequence cs, int start, int before,
+                                  int count) {
+            boolean Sign2 = etInputName.getText().length() > 0;
+            boolean Sign3 = etPassWord.getText().length() > 4;
+            if (Sign2 & Sign3) {
+                btnLogin.setEnabled(true);
+            } else {
+                btnLogin.setEnabled(false);
+            }
         }
     }
-}
 
 }

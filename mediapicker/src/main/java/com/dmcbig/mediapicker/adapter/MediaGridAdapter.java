@@ -3,6 +3,7 @@ package com.dmcbig.mediapicker.adapter;
 
 import android.content.Context;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,7 +17,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.dmcbig.mediapicker.MediaType;
 import com.dmcbig.mediapicker.PickerConfig;
 import com.dmcbig.mediapicker.R;
 import com.dmcbig.mediapicker.entity.Media;
@@ -80,12 +80,8 @@ public class MediaGridAdapter extends RecyclerView.Adapter<MediaGridAdapter.MyVi
     public void onBindViewHolder(final MyViewHolder holder, int position) {
         final Media media = medias.get(position);
         Uri mediaUri = Uri.parse("file://" + media.path);
-
-        Glide.with(context)
-                .load(mediaUri)
-                .into(holder.media_image);
-
-        if (media.mediaType == MediaType.VIDEO) {
+        Glide.with(context).load(mediaUri).into(holder.media_image);
+        if (media.mediaType == MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO) {
             holder.video_info.setVisibility(View.VISIBLE);
             holder.textView_size.setText(fileUtils.getSizeByUnit(media.size));
         } else {

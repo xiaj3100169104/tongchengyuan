@@ -38,25 +38,19 @@ public class AccountManager {
     }
 
     public void setUser(UserBean userBean) {
-        GreenDaoManager.getInstance().save(userBean);
         setLogin(true);
         setUserId(userBean.getUserId());
         setUserName(userBean.getUserName());
-        user = userBean;
     }
 
     public UserBean getUser() {
         if (user == null) {
             String token = getToken();
             if (!TextUtils.isEmpty(token)) {
-                user = GreenDaoManager.getInstance().findByUserId(getUserId());
-                if (user != null) {
-                    String userName = user.getUserName();
-                    String password = user.getPassWord();
-                    if (!TextUtils.isEmpty(userName) && !TextUtils.isEmpty(password)) {
-                        setUserId(user.getUserId());
-                        setUserName(userName);
-                    }
+                UserBean u = GreenDaoManager.getInstance().findByUserId(getUserId());
+                if (u != null) {
+                    setUser(u);
+                    user = u;
                 }
             }
         }
@@ -66,8 +60,8 @@ public class AccountManager {
     public void logOut() {
         setLogin(false);
         setToken(null);
-        setUserName(null);
-        setUserPassWord(null);
+        /*setUserName(null);
+        setUserPassWord(null);*/
         user = null;
 
         XmppManagerImpl.getInstance().shutDownConn();

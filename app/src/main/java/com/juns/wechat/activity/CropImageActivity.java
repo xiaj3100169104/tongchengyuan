@@ -33,6 +33,13 @@ public class CropImageActivity extends BaseToolbarActivity {
     private String fileName;
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        mLayoutResID = R.layout.activity_crop_image;
+        super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
     public void initData() {
         uri = getIntent().getExtras().getParcelable("uri");
         try {
@@ -41,13 +48,6 @@ public class CropImageActivity extends BaseToolbarActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        mLayoutResID = R.layout.activity_crop_image;
-        super.onCreate(savedInstanceState);
-
     }
 
     @OnClick(R.id.view_toolbar_right)
