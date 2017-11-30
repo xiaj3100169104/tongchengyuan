@@ -280,12 +280,12 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
         if (num > 0) {
             files = new File[num];
             for (int i = 0; i < num; i++) {
-                String path = (String) adapter.getData(i).path;
+                String path = adapter.getData(i).path;
                 if (path != null) {
                     int degree = PictureUtils.readPictureDegree(path);
                     logE("degree", degree + "");
-                    Bitmap bitmap0 = BitmapUtil.revitionImageSize(path, 960, 540, 1280);
-                    Bitmap bitmap = PictureUtils.rotaingBitmap(bitmap0, degree);
+                    Bitmap bitmap0 = BitmapUtil.compressImage(path, 960, 540, 1280);
+                    Bitmap bitmap = BitmapUtil.rotate(bitmap0, degree);
                     String name = FileConfig.getUniqueFileName();
                     String newPath = FileConfig.DIR_CACHE + "/" + name;
                     logE(TAG, "path==" + newPath);

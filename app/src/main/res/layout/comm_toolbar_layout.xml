@@ -26,5 +26,5 @@
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="10dp"
         android:textColor="@color/white"
-        android:textSize="18sp" />
+        android:textSize="17sp" />
 </LinearLayout>

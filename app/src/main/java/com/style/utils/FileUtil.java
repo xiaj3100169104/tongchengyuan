@@ -1,5 +1,6 @@
 package com.style.utils;
 
+import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +17,68 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 
 public class FileUtil {
+    /**
+     * 打开图片选择器
+     *
+     * @param activity
+     */
+    public static void openPicturesChooser(Activity activity, int requestCode) {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        activity.startActivityForResult(intent, requestCode);
+    }
+
+    /**
+     * 拍照
+     *
+     * @param activity
+     */
+    public static void openCamera(Activity activity, String imagePath, int requestCode) {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File imageFile = new File(imagePath);
+        if (!imageFile.getParentFile().exists()) {
+            imageFile.getParentFile().mkdirs();
+        }
+        Uri imageUri = Uri.fromFile(imageFile);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+        activity.startActivityForResult(intent, requestCode);
+    }
+
+    /**
+     * 打开文件选择器
+     *
+     * @param activity
+     */
+    public static void openFileChooser(Activity activity, int requestCode) {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        activity.startActivityForResult(Intent.createChooser(intent, "请选择文件管理器"), requestCode);
+    }
+
+    /**
+     * 打开裁剪图片选择器
+     *
+     * @param activity
+     * @param imagePath
+     * @param x
+     * @param y
+     * @return
+     */
+    public static Uri openPicturesChooser(Activity activity, String imagePath, int x,
+                                          int y, int requestCode) {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        File imageFile = new File(imagePath);
+        if (!imageFile.getParentFile().exists()) {
+            imageFile.getParentFile().mkdirs();
+        }
+        Uri uri = Uri.fromFile(imageFile);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        intent.putExtra("crop", "true");
+        intent.putExtra("aspectX", x);// 裁剪框比例
+        intent.putExtra("aspectY", y);
+        intent.putExtra("outputX", x);// 输出图片大小
+        intent.putExtra("outputY", y);
+        activity.startActivityForResult(intent, requestCode);
+        return uri;
+    }
 
     public static void delete(String path) {
         delete(new File(path));

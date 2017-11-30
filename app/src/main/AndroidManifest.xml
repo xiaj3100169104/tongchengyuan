@@ -75,6 +75,7 @@
         <activity android:name="com.juns.wechat.activity.AboutProductActivity" />
         <activity android:name="com.juns.wechat.activity.SettingNewMessageActivity" />
         <activity android:name="com.juns.wechat.activity.PersonInfoShowActivity" />
+        <activity android:name="com.juns.wechat.activity.PersonAvatarActivity" />
         <activity android:name="com.juns.wechat.activity.PersonInfoEditExtendActivity" />
         <activity android:name="com.juns.wechat.activity.PersonInfoEditBasicActivity" />
         <activity android:name="com.juns.wechat.activity.PersonInfoEditPhotoWallActivity" />
@@ -87,8 +88,6 @@
         <activity android:name="com.juns.wechat.chat.voice.VoiceCallActivity" />
         <activity android:name="com.juns.wechat.chat.video.VideoCallActivity" />
         <activity android:name="com.juns.wechat.chat.BaiduMapActivity" />
-        <activity android:name="com.juns.wechat.chat.ShowBigImage" />
-        <activity android:name="com.juns.wechat.chat.ShowNormalFileActivity" />
         <activity android:name="com.juns.wechat.activity.SearchActivity" />
         <activity android:name="com.juns.wechat.activity.SearchResultActivity" />
 
@@ -97,8 +96,6 @@
         <activity android:name="com.juns.wechat.chat.voice.CallVoiceBaseActivity" />
         <activity android:name="com.juns.wechat.dynamic.FriendCircleActivity" />
         <activity android:name="com.juns.wechat.dynamic.DynamicPublishActivity" />
-        <activity android:name="com.juns.wechat.activity.MyCollectActivity" />
-        <activity android:name="com.juns.wechat.activity.AddNoteActivity" />
         <activity android:name="com.juns.wechat.activity.MyQRCodeActivity" />
         <activity android:name="com.juns.wechat.activity.QRScanActivity" />
 

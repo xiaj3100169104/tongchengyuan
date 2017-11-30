@@ -76,7 +76,7 @@ public class ImageLoader {
 
     public static void loadBigPicture(Context context, ImageView imageView, String url) {
         if (!TextUtils.isEmpty(url))
-            Glide.with(context).load(url).apply(getDefaultBigPictureOptions()).into(imageView);
+            Glide.with(context).load(getLocalUrl(url)).apply(getDefaultBigPictureOptions()).into(imageView);
     }
 
     private static LruCache<String, Bitmap> bitmapCache;

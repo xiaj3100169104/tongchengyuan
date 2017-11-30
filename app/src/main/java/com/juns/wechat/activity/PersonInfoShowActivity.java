@@ -15,18 +15,16 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.juns.wechat.bean.UserBasicInfo;
+import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.bean.UserExtendInfo;
 import com.juns.wechat.bean.UserPropertyBean;
 import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.juns.wechat.helper.CacheDataHelper;
 import com.juns.wechat.helper.CommonViewHelper;
+import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.request.HttpActionImpl;
 import com.same.city.love.R;
-import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.chat.ShowBigImage;
-import com.juns.wechat.manager.AccountManager;
 import com.style.base.BaseToolbarActivity;
-import com.style.constant.Skip;
 import com.style.event.EventCode;
 import com.style.net.core.NetDataBeanCallback;
 import com.style.utils.StringUtil;
@@ -37,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 import me.kaede.tagview.Tag;
 import me.kaede.tagview.TagView;
 
@@ -199,10 +198,9 @@ public class PersonInfoShowActivity extends BaseToolbarActivity {
         });
     }
 
-    //@OnClick(R.id.ivAvatar)
+    @OnClick(R.id.ivAvatar)
     public void showBigAvatar() {
-        Intent intent = new Intent(this, ShowBigImage.class);
-        intent.putExtra(Skip.KEY_IMG_NAME, curUser.getHeadUrl());
+        Intent intent = new Intent(this, PersonAvatarActivity.class);
         startActivity(intent);
     }
 
