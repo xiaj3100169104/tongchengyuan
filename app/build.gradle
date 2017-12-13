@@ -60,11 +60,12 @@ dependencies {
 
     compile fileTree(dir: 'libs', includes: ['*.jar'])
     //compile 'me.zhanghai.android.materialprogressbar:library:1.3.0'
+    compile project(':Lib-zxing')
     compile project(':LibProgressbar')
     compile project(':LibLRecyclerview')
+    compile project(':LibMediaPicker')
     compile project(':LibVideoRecord')
     compile project(':LibTagView')
-    compile project(':mediapicker')
 
     // add AndroidEventBus dependency
     compile name: 'SMSSDK-2.1.1', ext: 'aar'
@@ -86,7 +87,7 @@ dependencies {
     compile 'com.makeramen:roundedimageview:2.3.0'
     compile 'org.simple:androideventbus:1.0.5.1'
     compile 'com.google.code.gson:gson:2.3.1'
-    compile 'cn.yipianfengye.android:zxing-library:2.1'
+    //compile 'cn.yipianfengye.android:zxing-library:2.1'
 
     compile 'org.greenrobot:greendao:3.2.2'
     compile 'com.github.yuweiguocn:GreenDaoUpgradeHelper:v2.0.0'

@@ -1,6 +1,7 @@
 include ':app'
+include ':Lib-zxing'
 include ':LibProgressbar'
 include ':LibLRecyclerview'
+include ':LibMediaPicker'
 include ':LibVideoRecord'
 include ':LibTagView'
-include ':mediapicker'
