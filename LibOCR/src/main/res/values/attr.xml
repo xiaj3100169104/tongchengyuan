@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ScanView">
+        <attr name="xj_corner_color" format="color" />
+        <attr name="xj_corner_width" format="dimension" />
+        <attr name="xj_corner_height" format="dimension" />
+        <attr name="xj_scan_speed" format="integer" />
+        <attr name="xj_refresh_time" format="integer" />
+    </declare-styleable>
+</resources>

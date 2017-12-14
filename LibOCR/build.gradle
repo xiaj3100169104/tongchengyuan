@@ -10,10 +10,8 @@ android {
 
     dependencies {
         compile 'com.android.support:appcompat-v7:' + project.ANDROID_SUPPORT_VERSION
-        compile 'com.android.support:recyclerview-v7:' + project.ANDROID_SUPPORT_VERSION
-        compile 'com.github.bumptech.glide:glide:4.0.0'
-        //support_library_version = '27.0.1'
-        compile 'pub.devrel:easypermissions:+'
-        //compile 'com.chensl.rotatephotoview:rotatephotoview:1.0.5'
+        compile 'com.android.support:support-v13:' + project.ANDROID_SUPPORT_VERSION
+
+        compile 'com.rmtheis:tess-two:8.0.0'
     }
 }

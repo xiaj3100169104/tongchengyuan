@@ -5,16 +5,17 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
+import com.camera.ocrtest.ScanCardActivity;
+//import com.juns.wechat.activity.FingerPrintActivity;
+import com.juns.wechat.activity.FingerPrintActivity;
 import com.same.city.love.R;
-import com.juns.wechat.chat.voice.CallVoiceBaseActivity;
 import com.juns.wechat.dynamic.FriendCircleActivity;
 import com.juns.wechat.activity.QRScanActivity;
 import com.style.base.BaseFragment;
 
-import butterknife.Bind;
 import butterknife.OnClick;
+import custom.camera2.Camera2ScanActivity;
 
 public class Fragment_Discover extends BaseFragment {
 
@@ -37,5 +38,20 @@ public class Fragment_Discover extends BaseFragment {
     @OnClick(R.id.layout_left_menu_6)
     public void onClickEvent6() {
         skip(QRScanActivity.class);
+    }
+
+    @OnClick(R.id.layout_left_menu_7)
+    public void onClickEvent7() {
+        skip(ScanCardActivity.class);
+    }
+
+    @OnClick(R.id.layout_left_menu_8)
+    public void onClickEvent8() {
+        skip(Camera2ScanActivity.class);
+    }
+
+    @OnClick(R.id.layout_left_menu_9)
+    public void onClickEvent9() {
+        skip(FingerPrintActivity.class);
     }
 }

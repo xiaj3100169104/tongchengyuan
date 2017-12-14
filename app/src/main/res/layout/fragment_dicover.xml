@@ -46,6 +46,51 @@
                     android:gravity="center_vertical"
                     android:text="扫一扫" />
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/layout_left_menu_7"
+                style="@style/Layouts.normal_LinearLayout"
+                android:layout_marginTop="20dp">
+
+                <ImageView
+                    style="@style/user_info_icon"
+                    android:src="@drawable/icon_de_saoyisao" />
+
+                <TextView
+                    style="@style/normal_title_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
+                    android:text="卡号扫描" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/layout_left_menu_8"
+                style="@style/Layouts.normal_LinearLayout"
+                android:layout_marginTop="20dp">
+
+                <ImageView
+                    style="@style/user_info_icon"
+                    android:src="@drawable/icon_de_saoyisao" />
+
+                <TextView
+                    style="@style/normal_title_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
+                    android:text="卡号扫描(camera2API)" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/layout_left_menu_9"
+                style="@style/Layouts.normal_LinearLayout"
+                android:layout_marginTop="20dp">
+
+                <ImageView
+                    style="@style/user_info_icon"
+                    android:src="@drawable/icon_de_saoyisao" />
+
+                <TextView
+                    style="@style/normal_title_content"
+                    android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
+                    android:text="指纹识别" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

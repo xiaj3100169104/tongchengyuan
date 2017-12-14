@@ -34,8 +34,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-    <!-- sip所需要的权限 -->
-    <uses-permission android:name="android.permission.USE_SIP" />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
 
     <uses-feature
         android:name="android.hardware.sip.voip"
@@ -98,6 +97,7 @@
         <activity android:name="com.juns.wechat.dynamic.DynamicPublishActivity" />
         <activity android:name="com.juns.wechat.activity.MyQRCodeActivity" />
         <activity android:name="com.juns.wechat.activity.QRScanActivity" />
+        <activity android:name="com.juns.wechat.activity.FingerPrintActivity" />
 
         <!-- 图片浏览 -->
         <activity android:name="uk.viewpager.ImagePagerActivity" />

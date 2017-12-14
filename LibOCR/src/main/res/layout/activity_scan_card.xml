@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_horizontal">
+
+    <com.camera.ocrtest.CameraView
+        android:id="@+id/main_camera"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <custom.camera2.ScanView
+        android:id="@+id/scan_view"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_centerInParent="true"
+
+        app:xj_corner_color="#0090ff"
+        app:xj_corner_height="3dp"
+        app:xj_corner_width="8dp"
+        app:xj_refresh_time="10" />
+
+    <ImageView
+        android:id="@+id/main_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

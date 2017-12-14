@@ -16,17 +16,13 @@ import com.dmcbig.mediapicker.entity.Media;
 
 import java.util.ArrayList;
 
-import uk.co.senab.photoview.PhotoView;
-import uk.co.senab.photoview.PhotoViewAttacher;
-
 /**
  * Created by dmcBig on 2017/8/16.
  */
 
 public class PreviewFragment extends Fragment{
-    private PhotoView mPhotoView;
+    private ImageView mPhotoView;
     ImageView play_view;
-    private PhotoViewAttacher mAttacher;
     public static PreviewFragment newInstance(Media media, String label) {
         PreviewFragment f = new PreviewFragment();
         Bundle b = new Bundle();
@@ -51,10 +47,7 @@ public class PreviewFragment extends Fragment{
         super.onViewCreated(view,savedInstanceState);
         Media media=getArguments().getParcelable("media");
         play_view=(ImageView) view.findViewById(R.id.play_view);
-        mPhotoView = (PhotoView) view.findViewById(R.id.photoview);
-        mAttacher = new PhotoViewAttacher(mPhotoView);
-        mAttacher.setRotatable(true);
-        mAttacher.setToRightAngle(true);
+        mPhotoView = (ImageView) view.findViewById(R.id.photoview);
 
         setPlayView(media);
         Glide.with(getActivity())
@@ -79,7 +72,6 @@ public class PreviewFragment extends Fragment{
 
     @Override
     public void onDestroyView() {
-        mAttacher.cleanup();
         super.onDestroyView();
     }
 }

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextureView
+        android:id="@+id/texture"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ImageView
+        android:id="@+id/iv_show"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp"
+        android:scaleType="center"
+        android:visibility="visible" />
+
+    <custom.camera2.ScanView
+        android:id="@+id/scan_view"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_centerInParent="true"
+
+        app:xj_corner_color="#0090ff"
+        app:xj_corner_height="3dp"
+        app:xj_corner_width="8dp"
+        app:xj_refresh_time="10" />
+
+    <TextView
+        android:id="@+id/tv_result"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/scan_view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:background="#8fff"
+        android:gravity="center"
+        android:text="扫描结果" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/btn_open_light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开灯" />
+
+        <Button
+            android:id="@+id/btn_close_light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="关灯" />
+    </LinearLayout>
+</RelativeLayout>
