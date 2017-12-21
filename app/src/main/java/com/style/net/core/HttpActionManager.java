@@ -22,11 +22,6 @@ public class HttpActionManager {
         return mInstance;
     }
 
-    public void runTask(String tag, Call call, NetDataBeanCallback callback) {
-        call.enqueue(callback);
-        addTask(tag, call);
-    }
-
     public void addTask(String tag, Call call) {
         List<Call> callList = mTaskMap.get(tag);
         if (callList == null) {

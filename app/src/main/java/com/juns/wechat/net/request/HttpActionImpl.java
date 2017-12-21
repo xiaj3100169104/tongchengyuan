@@ -87,13 +87,8 @@ public class HttpActionImpl {
         return client.build();
     }
 
-    private void addTask(String tag, Call call) {
-        httpActionManager.addTask(tag, call);
-    }
-
     private void runTask(String tag, Call call, NetDataBeanCallback callback) {
-        //call.enqueue(callback);
-        //addTask(tag, call);
+        httpActionManager.addTask(tag, call);
     }
 
     public void register(String tag, String userName, String passWord, NetDataBeanCallback callback) {

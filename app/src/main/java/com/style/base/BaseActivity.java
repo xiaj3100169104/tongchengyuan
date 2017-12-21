@@ -21,6 +21,7 @@ import com.style.event.EventManager;
 import com.style.manager.LogManager;
 import com.style.manager.ToastManager;
 import com.style.dialog.LoadingDialog;
+import com.style.net.core.HttpActionManager;
 import com.style.rxAndroid.RXTaskManager;
 import com.style.utils.CommonUtil;
 
@@ -151,6 +152,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         ButterKnife.unbind(this);
         dismissProgressDialog();
         RXTaskManager.getInstance().removeTask(TAG);
+        HttpActionManager.getInstance().removeTask(TAG);
     }
 
     public void skip(Class<?> cls) {
