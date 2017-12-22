@@ -158,19 +158,11 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Re
         LogManager.logE(tag, msg);
     }
 
-    protected void setText(TextView textView, CharSequence str) {
-        CommonUtil.setText(textView, str);
-    }
-
-    protected void setText(TextView textView, int strId) {
-        setText(textView, mContext.getString(strId));
+    protected CharSequence getNotNullText(CharSequence str) {
+        return CommonUtil.getNotNullText(str);
     }
 
     protected int dip2px(float dpValue) {
         return CommonUtil.dip2px(mContext, dpValue);
-    }
-
-    protected int px2dip(float pxValue) {
-        return CommonUtil.px2dip(mContext, pxValue);
     }
 }

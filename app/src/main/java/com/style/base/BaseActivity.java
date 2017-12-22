@@ -207,15 +207,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         LogManager.logE(tag, msg);
     }
 
-    protected void setText(TextView textView, int strId) {
-        setText(textView, mContext.getString(strId));
-    }
-
-    protected void setText(TextView textView, String str) {
-        CommonUtil.setText(textView, getNotNullText(str));
-    }
-
-    protected CharSequence getNotNullText(String str) {
+    protected CharSequence getNotNullText(CharSequence str) {
         return CommonUtil.getNotNullText(str);
     }
 

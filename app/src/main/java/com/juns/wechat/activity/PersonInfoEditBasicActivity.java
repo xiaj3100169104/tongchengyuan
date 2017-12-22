@@ -105,10 +105,10 @@ public class PersonInfoEditBasicActivity extends BaseToolbarActivity {
         curUser = AccountManager.getInstance().getUser();
 
         String nickName = curUser.getNickName();
-        setText(tvName, nickName == null ? "" : nickName);
+        tvName.setText(getNotNullText(nickName));
         String sex = curUser.getSex();
         tvSex.setText(UserBean.Sex.isMan(sex) ? "男" : "女");
-        setText(tvBirthday, curUser.getBirthday());
+        tvBirthday.setText(getNotNullText(curUser.getBirthday()));
 
         userBasicInfo = GreenDaoManager.getInstance().queryUserBasic(curUser.getUserId());
         setUserBasicInfo(userBasicInfo);
@@ -117,13 +117,13 @@ public class PersonInfoEditBasicActivity extends BaseToolbarActivity {
 
     private void setUserBasicInfo(UserBasicInfo u) {
         if (u != null) {
-            setText(tvEmotion, u.getEmotion());
-            setText(tvEducation, u.getEducation());
-            setText(tvIndustry, u.getIndustry());
-            setText(tvWorkArea, u.getWorkArea());
-            setText(tvCompanyInfo, u.getCompanyInfo());
-            setText(tvHometownInfo, u.getHometownInfo());
-            setText(tvMyHeart, u.getMyHeart());
+            tvEmotion.setText(getNotNullText(u.getEmotion()));
+            tvEducation.setText(getNotNullText(u.getEducation()));
+            tvIndustry.setText(getNotNullText(u.getIndustry()));
+            tvWorkArea.setText(getNotNullText(u.getWorkArea()));
+            tvCompanyInfo.setText(getNotNullText(u.getCompanyInfo()));
+            tvHometownInfo.setText(getNotNullText(u.getHometownInfo()));
+            tvMyHeart.setText(getNotNullText(u.getMyHeart()));
         }
     }
 
@@ -307,7 +307,7 @@ public class PersonInfoEditBasicActivity extends BaseToolbarActivity {
         editAlertDialog.show(new EditAlertDialog.OnPromptListener() {
             @Override
             public void onPositiveButton(String s) {
-                setText(textView, s);
+                textView.setText(getNotNullText(s));
                 editAlertDialog.dismiss();
             }
 

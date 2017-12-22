@@ -51,7 +51,7 @@ public class ConversationAdapter extends BaseRecyclerViewAdapter {
         }
         if (f != null && u != null) {
             String showName = !TextUtils.isEmpty(f.getRemark()) ? f.getRemark() : u.getShowName();
-            setText(holder.tvTitle, showName);
+            holder.tvTitle.setText(getNotNullText(showName));
         }
         int unreadMsgCount = msgItem.unreadMsgCount;
         if(unreadMsgCount == 0){
@@ -60,8 +60,8 @@ public class ConversationAdapter extends BaseRecyclerViewAdapter {
             holder.tvUnreadMsgNumber.setVisibility(View.VISIBLE);
             holder.tvUnreadMsgNumber.setText(unreadMsgCount + "");
         }
-        setText(holder.tvContent, SmileUtils.getInstance().getSmiledText(msgItem.msg.getTypeDesc()));
-        setText(holder.tvTime, MyDateUtil.getTimeConversationString(msgItem.msg.getDate().getTime()));
+        holder.tvContent.setText(getNotNullText(SmileUtils.getInstance().getSmiledText(msgItem.msg.getTypeDesc())));
+        holder.tvTime.setText(getNotNullText(MyDateUtil.getTimeConversationString(msgItem.msg.getDate().getTime())));
         super.setOnItemClickListener(holder, position);
 
     }

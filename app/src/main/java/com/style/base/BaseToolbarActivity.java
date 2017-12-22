@@ -47,11 +47,11 @@ public abstract class BaseToolbarActivity extends BaseActivity {
     }
 
     protected void setToolbarTitle(String text) {
-        setText(tvTitleBase, text);
+        tvTitleBase.setText(getNotNullText(text));
     }
 
     protected void setToolbarTitle(int resId) {
-        setText(tvTitleBase, resId);
+        setToolbarTitle(getString(resId));
     }
 
 

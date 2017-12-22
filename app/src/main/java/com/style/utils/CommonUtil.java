@@ -193,32 +193,8 @@ public class CommonUtil {
         }
     }
 
-    public static void setText(TextView textView, CharSequence str) {
-        if (textView != null)
-            textView.setText(getNotNullText(str));
-    }
-
     public static CharSequence getNotNullText(CharSequence str) {
-        if (TextUtils.isEmpty(str))
-            return "";
-        return str;
-    }
-
-    public static void setTextGone(TextView textView, String str) {
-        if (textView != null)
-            if (!TextUtils.isEmpty(str)) {
-                textView.setVisibility(View.VISIBLE);
-                textView.setText(str);
-            } else
-                textView.setVisibility(View.GONE);
-    }
-
-    public static void setText(EditText editText, String str) {
-        if (editText != null)
-            if (!TextUtils.isEmpty(str))
-                editText.setText(str);
-            else
-                editText.setText(null);
+        return str == null ? "" : str;
     }
 
     public static int[] getViewLocationOnScreen(View view) {

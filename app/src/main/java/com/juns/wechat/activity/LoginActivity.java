@@ -56,8 +56,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
     public void initData() {
         userName = AccountManager.getInstance().getUserName();
         password = AccountManager.getInstance().getUserPassWord();
-        setText(etInputName, userName);
-        setText(etPassWord, password);
+        etInputName.setText(getNotNullText(userName));
+        etPassWord.setText(getNotNullText(password));
         btnLogin.setEnabled(true);
         btnLogin.setOnClickListener(this);
         btnRegister.setOnClickListener(this);

@@ -169,13 +169,13 @@ public class PersonInfoShowActivity extends BaseToolbarActivity {
     private void setUserBasicInfo(UserBasicInfo u) {
         if (u != null) {
             this.userBasicInfo = u;
-            setText(tvEmotion, u.getEmotion());
-            setText(tvEducation, u.getEducation());
-            setText(tvIndustry, u.getIndustry());
-            setText(tvWorkArea, u.getWorkArea());
-            setText(tvCompanyInfo, u.getCompanyInfo());
-            setText(tvHometownInfo, u.getHometownInfo());
-            setText(tvMyHeart, u.getMyHeart());
+            tvEmotion.setText(getNotNullText(u.getEmotion()));
+            tvEducation.setText(getNotNullText(u.getEducation()));
+            tvIndustry.setText(getNotNullText(u.getIndustry()));
+            tvWorkArea.setText(getNotNullText(u.getWorkArea()));
+            tvCompanyInfo.setText(getNotNullText(u.getCompanyInfo()));
+            tvHometownInfo.setText(getNotNullText(u.getHometownInfo()));
+            tvMyHeart.setText(getNotNullText(u.getMyHeart()));
         }
     }
 

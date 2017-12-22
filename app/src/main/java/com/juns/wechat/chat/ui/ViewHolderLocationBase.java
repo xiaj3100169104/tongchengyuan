@@ -29,7 +29,7 @@ public class ViewHolderLocationBase extends BaseMsgViewHolder {
         //先得到bean，在进行其他操作
         msg = (LocationMsg) messageBean.getMsgObj();
         super.updateView();
-        CommonUtil.setText(viewContent, msg.address);
+        viewContent.setText(CommonUtil.getNotNullText(msg.address));
     }
 
     @Override

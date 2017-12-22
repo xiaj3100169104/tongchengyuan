@@ -43,6 +43,6 @@ public class AboutProductActivity extends BaseToolbarActivity {
             }
         }
         // Finally stick the string into the text view.
-        setText(tvContent, text);
+        tvContent.setText(getNotNullText(text));
     }
 }

@@ -95,7 +95,7 @@ public class ContactAdapter extends BaseRecyclerViewAdapter<FriendBean> implemen
             }
             ImageLoader.loadAvatar(mContext, holder.ivAvatar, f.headUrl);
             String showName = !TextUtils.isEmpty(f.getRemark()) ? f.getRemark() : f.nickName;
-            setText(holder.tvNick, showName);
+            holder.tvNick.setText(getNotNullText(showName));
 
             super.setOnItemClickListener(holder, position);
         }
