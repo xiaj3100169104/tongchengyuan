@@ -9,8 +9,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.same.city.love.R;
-import com.juns.wechat.chat.bean.OfflineVideoMsg;
-import com.juns.wechat.config.ConfigUtil;
+import com.juns.wechat.chat.bean.OfflineVideoMsgData;
+import com.juns.wechat.chat.config.ConfigUtil;
 import com.style.constant.FileConfig;
 import com.style.lib.media.video.PlayVideoActivity;
 import com.style.manager.ImageLoader;
@@ -27,7 +27,7 @@ import java.io.IOException;
 
 public class ViewHolderOfflineVideoBase extends BaseMsgViewHolder {
     protected ImageView ivPicture;
-    protected OfflineVideoMsg videoMsg;
+    protected OfflineVideoMsgData videoMsg;
     protected String path;
     protected String imagePath;
     private String url;
@@ -40,7 +40,7 @@ public class ViewHolderOfflineVideoBase extends BaseMsgViewHolder {
     @Override
     protected void updateView() {
         //先得到bean，在进行其他操作
-        videoMsg = (OfflineVideoMsg) messageBean.getMsgObj();
+        videoMsg = (OfflineVideoMsgData) messageBean.getMsgDataObj();
         float width = videoMsg.width;
         float height = videoMsg.height;
         float scale = height / width;

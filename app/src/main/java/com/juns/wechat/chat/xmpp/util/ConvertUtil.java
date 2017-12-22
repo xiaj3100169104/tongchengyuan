@@ -2,7 +2,7 @@ package com.juns.wechat.chat.xmpp.util;
 
 
 import com.juns.wechat.chat.bean.MessageBean;
-import com.juns.wechat.config.ConfigUtil;
+import com.juns.wechat.chat.config.ConfigUtil;
 import com.juns.wechat.chat.xmpp.extensionelement.TimeElement;
 
 import org.jivesoftware.smack.packet.Message;
@@ -20,7 +20,7 @@ public class ConvertUtil {
         messageBean.setOtherUserId(ConfigUtil.getUserName(message.getFrom()));
         TimeElement time = TimeElement.from(message);
         messageBean.setDate(time.getTime());
-        messageBean.setDirection(MessageBean.Direction.INCOMING.value);
+        messageBean.setDirection(MessageBean.Direction.INCOMING);
         messageBean.setPacketId(message.getStanzaId());
 
         JSONObject jsonObject = new JSONObject(message.getBody());

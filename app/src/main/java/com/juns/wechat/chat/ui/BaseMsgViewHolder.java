@@ -113,9 +113,9 @@ public abstract class BaseMsgViewHolder extends RecyclerView.ViewHolder {
 
         if (!isLeftLayout()) {
             tvSendPercent.setVisibility(View.GONE);//默认隐藏百分比,文件消息才需要显示
-            if (messageBean.getState() == MessageBean.State.SEND_FAILED.value) {
+            if (messageBean.getState() == MessageBean.State.SEND_FAILED) {
                 onSendFailed();
-            } else if (messageBean.getState() == MessageBean.State.SEND_SUCCESS.value) {
+            } else if (messageBean.getState() == MessageBean.State.SEND_SUCCESS) {
                 onSendSucceed();
             } else {
                 onSending();

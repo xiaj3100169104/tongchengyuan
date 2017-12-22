@@ -1,7 +1,7 @@
 package com.juns.wechat.net.request;
 
 import com.juns.wechat.bean.CommentBean;
-import com.juns.wechat.config.ConfigUtil;
+import com.juns.wechat.chat.config.ConfigUtil;
 import com.juns.wechat.manager.AccountManager;
 import com.style.net.core.HttpActionManager;
 import com.style.net.core.NetDataBeanCallback;

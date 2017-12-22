@@ -2,13 +2,11 @@ package com.juns.wechat.chat.xmpp.util;
 
 import android.util.Log;
 
-import com.juns.wechat.config.ConfigUtil;
+import com.juns.wechat.chat.config.ConfigUtil;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.util.FileUtil;
 import com.juns.wechat.util.LogUtil;
 import com.juns.wechat.chat.xmpp.XmppExceptionHandler;
-
-import com.style.constant.FileConfig;
 
 import java.io.DataInputStream;
 import java.io.File;

@@ -1,7 +1,7 @@
 package com.juns.wechat.chat.ui;
 
 import com.juns.wechat.chat.bean.MessageBean;
-import com.juns.wechat.chat.bean.OfflineVideoMsg;
+import com.juns.wechat.chat.bean.OfflineVideoMsgData;
 import com.style.event.EventCode;
 import com.style.event.EventManager;
 import com.style.net.image.FileDownloadCallback;
@@ -13,11 +13,11 @@ import com.style.net.image.FileDownloadCallback;
 public class OfflineVideoDownloadCallback extends FileDownloadCallback {
     private MessageBean messageBean;
     private int progress = 0;
-    OfflineVideoMsg pictureMsg;
+    OfflineVideoMsgData pictureMsg;
 
     public OfflineVideoDownloadCallback(MessageBean messageBean) {
         this.messageBean = messageBean;
-        pictureMsg = (OfflineVideoMsg) messageBean.getMsgObj();
+        pictureMsg = (OfflineVideoMsgData) messageBean.getMsgDataObj();
     }
 
     @Override

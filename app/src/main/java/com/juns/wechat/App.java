@@ -6,36 +6,22 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import android.app.Application;
 import android.content.Context;
 import android.os.Environment;
-import android.os.Process;
 import android.text.TextUtils;
 
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.TypeReference;
 import com.baidu.mapapi.SDKInitializer;
-import com.juns.wechat.bean.DynamicBean;
-import com.juns.wechat.bean.FriendBean;
-import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.utils.SmileUtils;
-import com.juns.wechat.config.ConfigUtil;
 import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.request.HttpActionImpl;
-import com.juns.wechat.util.AppUtil;
-import com.style.constant.FileConfig;
-import com.style.utils.FileUtil;
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
 import cn.smssdk.SMSSDK;
-
-import static com.style.manager.LogManager.logE;
 
 public class App extends Application {
 

@@ -16,7 +16,6 @@ import com.juns.wechat.activity.UserInfoActivity;
 import com.juns.wechat.adpter.ContactAdapter;
 import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.config.MsgType;
 import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.juns.wechat.manager.AccountManager;
 import com.same.city.love.R;
@@ -72,7 +71,7 @@ public class Fragment_Friends extends BaseFragment {
         adapter.setOnHeaderItemClickListener(new ContactAdapter.OnHeaderItemClickListener() {
             @Override
             public void onClickNewFriend() {
-                greenDao.markAsRead(curUser.getUserName(), MsgType.MSG_TYPE_SEND_INVITE);
+                greenDao.markAsRead(curUser.getUserName());
                 startActivity(new Intent(getActivity(), NewFriendsListActivity.class));
             }
         });

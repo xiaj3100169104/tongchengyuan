@@ -3,7 +3,7 @@ package com.juns.wechat.chat.xmpp.process;
 import android.content.Context;
 
 import com.juns.wechat.chat.bean.MessageBean;
-import com.juns.wechat.chat.bean.InviteMsg;
+import com.juns.wechat.chat.bean.InviteMsgData;
 
 /*******************************************************
  * Created by 王者 on 2015/11/27
@@ -21,7 +21,7 @@ public class InviteMessageProcess extends MessageProcess {
 
     @Override
     public void noticeShow(MessageBean entity, String notice) {
-        InviteMsg inviteMsg = (InviteMsg) entity.getMsgObj();
+        InviteMsgData inviteMsg = (InviteMsgData) entity.getMsgDataObj();
         String noticeStr = inviteMsg.userName + "请求添加你为好友";
         super.noticeShow(entity, noticeStr);
     }

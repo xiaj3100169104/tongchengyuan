@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.LruCache;
 import android.widget.ImageView;
 
@@ -13,7 +12,7 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.request.RequestOptions;
 import com.juns.wechat.App;
 import com.same.city.love.R;
-import com.juns.wechat.config.ConfigUtil;
+import com.juns.wechat.chat.config.ConfigUtil;
 import com.juns.wechat.util.BitmapUtil;
 import com.juns.wechat.util.DisplayUtil;
 import com.style.constant.FileConfig;

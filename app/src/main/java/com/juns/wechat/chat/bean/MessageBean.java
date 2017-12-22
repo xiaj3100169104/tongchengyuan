@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Date;
+
 import org.greenrobot.greendao.annotation.Generated;
 
 /*******************************************************
@@ -27,17 +28,14 @@ public class MessageBean {
     public int state; //判断消息是否已发送或者已读
     public int flag; //判断消息是否有效
     @Transient
-    private Msg msgObj; //msg字段对应的对象
+    private MsgData msgData; //msg字段对应的对象
 
     public MessageBean() {
     }
 
-
-
-
     @Generated(hash = 914378335)
     public MessageBean(String packetId, String myUserId, String otherUserId,
-            String msg, int type, Date date, int direction, int state, int flag) {
+                       String msg, int type, Date date, int direction, int state, int flag) {
         this.packetId = packetId;
         this.myUserId = myUserId;
         this.otherUserId = otherUserId;
@@ -47,35 +45,6 @@ public class MessageBean {
         this.direction = direction;
         this.state = state;
         this.flag = flag;
-    }
-
-
-
-
-    public String toSendJson() throws JSONException {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("MSG", getMsgObj().toSendJsonObject());
-        jsonObject.put("TYPE", type);
-        return jsonObject.toString();
-    }
-
-    public enum State {
-        NEW(0), SEND_SUCCESS(1), SEND_FAILED(2), READ(3);
-
-        public int value;
-
-        State(int value) {
-            this.value = value;
-        }
-    }
-
-    public enum Direction {
-        INCOMING(0), OUTGOING(1);
-        public int value;
-
-        Direction(int value) {
-            this.value = value;
-        }
     }
 
     public String getPacketId() {
@@ -137,14 +106,21 @@ public class MessageBean {
     }
 
     public String getTypeDesc() {
-        return Msg.getTypeDesc(type, getMsgObj());
+        return MsgData.getTypeDesc(type, getMsgDataObj());
     }
 
-    public Msg getMsgObj() {
-        if (msgObj == null) {
-            msgObj = Msg.fromJson(msg, type);
+    public MsgData getMsgDataObj() {
+        if (msgData == null) {
+            msgData = MsgData.fromJson(msg, type);
         }
-        return msgObj;
+        return msgData;
+    }
+
+    public String toSendJson() throws JSONException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("MSG", getMsgDataObj().toSendJsonObject());
+        jsonObject.put("TYPE", type);
+        return jsonObject.toString();
     }
 
     @Override
@@ -159,7 +135,7 @@ public class MessageBean {
                 ", direction=" + direction +
                 ", state=" + state +
                 ", flag=" + flag +
-                ", msgObj=" + msgObj +
+                ", msgObj=" + msgData +
                 '}';
     }
 
@@ -182,4 +158,43 @@ public class MessageBean {
     public void setOtherUserId(String otherUserId) {
         this.otherUserId = otherUserId;
     }
+
+    public final class Flag {
+        public static final int VALID = 0;
+        public static final int INVALID = -1;
+    }
+
+    public final class Direction {
+        public static final int INCOMING = 0;
+        public static final int OUTGOING = 1;
+    }
+
+    public final class State {
+        public static final int NEW = 0;
+        public static final int SEND_SUCCESS = 1;
+        public static final int SEND_FAILED = 2;
+        public static final int READ = 3;
+    }
+
+    public final class Type {
+        //大于500的消息不会在消息界面展示
+        public final static int SEND_INVITE = 500; //发送邀请消息成为好友。
+        public final static int REPLY_INVITE = 501; // 是否同意添加好友请求消息
+
+        public final static int TEXT = 0;                  //文字
+        public final static int VOICE = 1; //语音
+        public final static int PICTURE = 2;//图片
+        public final static int OFFLINE_VIDEO = 3;     //视频
+        public final static int LOCATION = 4;     //地理位置
+
+    }
+
+    public final class TypeDesc {
+        public static final String VOICE = "[语音]";
+        public static final String PICTURE = "[图片]";
+        public static final String OFFLINE_VIDEO = "[视频]";
+        public static final String LOCATION = "[位置]";
+
+    }
+
 }

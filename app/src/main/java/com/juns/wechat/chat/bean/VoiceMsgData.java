@@ -7,7 +7,7 @@ import org.json.JSONObject;
 /*******************************************************
  * Created by 王者 on 2015/11/24
  *******************************************************/
-public class VoiceMsg extends Msg{
+public class VoiceMsgData extends MsgData {
     public static final String SECONDS = "seconds";
     public static final String FILE_NAME = "fileName";
     public static final String ENCODE_STR = "encodeStr";

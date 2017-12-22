@@ -1,4 +1,4 @@
-package com.juns.wechat.config;
+package com.juns.wechat.chat.config;
 
 /**
  * ****************************************************

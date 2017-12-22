@@ -1,18 +1,16 @@
 package com.juns.wechat.util;
 
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.net.sip.SipAudioCall;
 import android.net.sip.SipException;
 import android.net.sip.SipManager;
 import android.net.sip.SipProfile;
 import android.net.sip.SipRegistrationListener;
-import android.util.Log;
 
 import com.juns.wechat.App;
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.config.ConfigUtil;
+import com.juns.wechat.chat.config.ConfigUtil;
 import com.juns.wechat.manager.AccountManager;
 
 import java.text.ParseException;

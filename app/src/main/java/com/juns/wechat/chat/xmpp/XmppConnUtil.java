@@ -3,7 +3,7 @@ package com.juns.wechat.chat.xmpp;
 import com.juns.wechat.chat.xmpp.iq.FileTransferIQ;
 import com.juns.wechat.chat.xmpp.process.IQRouter;
 import com.juns.wechat.chat.xmpp.process.IQUserInfoProcessor;
-import com.juns.wechat.config.ConfigUtil;
+import com.juns.wechat.chat.config.ConfigUtil;
 import com.juns.wechat.chat.xmpp.extensionelement.TimeElement;
 import com.juns.wechat.chat.xmpp.listener.FileTransferListenerImpl;
 import com.juns.wechat.chat.xmpp.provider.FileTransferProvider;

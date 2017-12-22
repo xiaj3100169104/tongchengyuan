@@ -6,8 +6,7 @@ import android.widget.TextView;
 
 import com.same.city.love.R;
 import com.juns.wechat.activity.SendLocationActivity;
-import com.juns.wechat.chat.BaiduMapActivity;
-import com.juns.wechat.chat.bean.LocationMsg;
+import com.juns.wechat.chat.bean.LocationMsgData;
 import com.style.utils.CommonUtil;
 
 
@@ -17,7 +16,7 @@ import com.style.utils.CommonUtil;
 
 public class ViewHolderLocationBase extends BaseMsgViewHolder {
     TextView viewContent;
-    private LocationMsg msg;
+    private LocationMsgData msg;
 
     ViewHolderLocationBase(View view) {
         super(view);
@@ -27,7 +26,7 @@ public class ViewHolderLocationBase extends BaseMsgViewHolder {
     @Override
     protected void updateView() {
         //先得到bean，在进行其他操作
-        msg = (LocationMsg) messageBean.getMsgObj();
+        msg = (LocationMsgData) messageBean.getMsgDataObj();
         super.updateView();
         viewContent.setText(CommonUtil.getNotNullText(msg.address));
     }

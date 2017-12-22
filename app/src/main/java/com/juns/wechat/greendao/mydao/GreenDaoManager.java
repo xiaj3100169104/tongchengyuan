@@ -2,17 +2,14 @@ package com.juns.wechat.greendao.mydao;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.juns.wechat.bean.DynamicBean;
-import com.juns.wechat.bean.Flag;
 import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.bean.UserBasicInfo;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.bean.UserExtendInfo;
 import com.juns.wechat.chat.bean.MessageBean;
-import com.juns.wechat.config.MsgType;
 import com.juns.wechat.fragment.msg.MsgItem;
 import com.juns.wechat.greendao.dao.DaoMaster;
 import com.juns.wechat.greendao.dao.DaoSession;
@@ -24,7 +21,6 @@ import com.juns.wechat.greendao.dao.UserBeanDao;
 import com.juns.wechat.greendao.dao.UserExtendInfoDao;
 
 import org.greenrobot.greendao.database.Database;
-import org.simple.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -345,7 +341,7 @@ public class GreenDaoManager {
      */
     public List<MsgItem> getLastMessageWithEveryFriend(String userId) {
         String sql = "select * from MESSAGE_BEAN where MY_USER_ID = ? and FLAG != -1 and TYPE < ? group by OTHER_USER_ID order by DATE";
-        String[] s = {userId, String.valueOf(MsgType.MSG_TYPE_SEND_INVITE)};
+        String[] s = {userId, String.valueOf(MessageBean.Type.SEND_INVITE)};
         List<MsgItem> msgItems = new ArrayList<>();
         Cursor cursor = getDatabase().rawQuery(sql, s);
         while (cursor.moveToNext()) {
@@ -367,9 +363,9 @@ public class GreenDaoManager {
     public int getUnreadMsgNum(String myUserId, String otherUserId) {
         String sql = "select count(1) as count from MESSAGE_BEAN where MY_USER_ID = ? " +
                 "and OTHER_USER_ID = ? and DIRECTION = ? and STATE = ? and TYPE < ?";
-        String i = String.valueOf(MessageBean.Direction.INCOMING.value);
-        String j = String.valueOf(MessageBean.State.NEW.value);
-        String k = String.valueOf(MsgType.MSG_TYPE_SEND_INVITE);
+        String i = String.valueOf(MessageBean.Direction.INCOMING);
+        String j = String.valueOf(MessageBean.State.NEW);
+        String k = String.valueOf(MessageBean.Type.SEND_INVITE);
         String[] s = {myUserId, otherUserId, i, j, k};
         Cursor cursor = getDatabase().rawQuery(sql, s);
         if (cursor.moveToNext()) {
@@ -388,10 +384,10 @@ public class GreenDaoManager {
         int unreadNum = 0;
         String sql = "select count(1) as count from MESSAGE_BEAN where MY_USER_ID = ? " +
                 "and DIRECTION = ? and STATE = ? and FLAG != ? and TYPE < ?";
-        String v1 = String.valueOf(MessageBean.Direction.INCOMING.value);
-        String v2 = String.valueOf(MessageBean.State.NEW.value);
-        String v3 = String.valueOf(Flag.INVALID.value());
-        String v4 = String.valueOf(MsgType.MSG_TYPE_SEND_INVITE);
+        String v1 = String.valueOf(MessageBean.Direction.INCOMING);
+        String v2 = String.valueOf(MessageBean.State.NEW);
+        String v3 = String.valueOf(MessageBean.Flag.INVALID);
+        String v4 = String.valueOf(MessageBean.Type.SEND_INVITE);
 
         String[] s = {String.valueOf(myUserId), v1, v2, v3, v4};
         Cursor cursor = getDatabase().rawQuery(sql, s);
@@ -441,7 +437,7 @@ public class GreenDaoManager {
     public List<MessageBean> getMessagesByIndexAndSize(String myUserId, String otherUserId, int index, int size) {
         String v1 = myUserId;
         String v2 = otherUserId;
-        String v3 = String.valueOf(MsgType.MSG_TYPE_SEND_INVITE);
+        String v3 = String.valueOf(MessageBean.Type.SEND_INVITE);
         String v4 = String.valueOf(size);
         String v5 = String.valueOf(index);
 
@@ -468,7 +464,7 @@ public class GreenDaoManager {
         int count = 0;
         String v1 = myUserId;
         String v2 = otherUserId;
-        String v3 = String.valueOf(MsgType.MSG_TYPE_SEND_INVITE);
+        String v3 = String.valueOf(MessageBean.Type.SEND_INVITE);
         String[] s = {v1, v2, v3};
         Cursor cursor = getDatabase().rawQuery(COUNT_OF_TWO_USER, s);
         if (cursor.moveToNext()) {
@@ -481,7 +477,7 @@ public class GreenDaoManager {
     public void markAsRead(String myUserId, String otherUserId) {
         String sql = "update MESSAGE_BEAN set STATE = ? where MY_USER_ID = ? " +
                 "and OTHER_USER_ID = ? and FLAG != ? and STATE = ? and DIRECTION = ?";
-        Object[] s = {MessageBean.State.READ.value, myUserId, otherUserId, Flag.INVALID.value(), MessageBean.State.NEW.value, MessageBean.Direction.INCOMING.value};
+        Object[] s = {MessageBean.State.READ, myUserId, otherUserId, MessageBean.Flag.INVALID, MessageBean.State.NEW, MessageBean.Direction.INCOMING};
         getDatabase().execSQL(sql, s);
     }
 
@@ -493,23 +489,22 @@ public class GreenDaoManager {
     public void markAsRead2All(String myUserId) {
         String sql = "update MESSAGE_BEAN set STATE = ? where MY_USER_ID = ? " +
                 "and FLAG != ? and STATE = ? and DIRECTION = ?";
-        Object[] s = {MessageBean.State.READ.value, myUserId, Flag.INVALID.value(), MessageBean.State.NEW.value, MessageBean.Direction.INCOMING.value};
+        Object[] s = {MessageBean.State.READ, myUserId, MessageBean.Flag.INVALID, MessageBean.State.NEW, MessageBean.Direction.INCOMING};
         getDatabase().execSQL(sql, s);
     }
 
     /**
-     * 将用户的某一类型消息全部标为已读
+     * 将用户的添加好友请求类型消息全部标为已读
      *
      * @param myselfName
-     * @param type
      */
-    public void markAsRead(String myselfName, int type) {
+    public void markAsRead(String myselfName) {
        /* WhereBuilder whereBuilder = WhereBuilder.b();
         whereBuilder.and(MessageBean.MYSELF_NAME, "=", myselfName);
         whereBuilder.and(MessageBean.FLAG, "!=", Flag.INVALID.value());
         whereBuilder.and(MessageBean.STATE, "=", MessageBean.State.NEW.value);
         whereBuilder.and(MessageBean.DIRECTION, "=", MessageBean.Direction.INCOMING.value);
-        whereBuilder.and(MessageBean.TYPE, "=", type);
+        whereBuilder.and(MessageBean.TYPE, "=", , Msg.MSG_TYPE_SEND_INVITE);
 
         KeyValue keyValue = new KeyValue(MessageBean.STATE, MessageBean.State.READ.value);
         update(whereBuilder, keyValue);*/
@@ -530,6 +525,7 @@ public class GreenDaoManager {
         KeyValue keyValue = new KeyValue(MessageBean.STATE, MessageBean.State.SEND_FAILED.value);
         update(whereBuilder, keyValue);*/
     }
+
     /**
      * 将某一用户发送的所有消息标为发送成功
      *
@@ -538,9 +534,10 @@ public class GreenDaoManager {
     public void markAsSendSucceed(String myUserId) {
         String sql = "update MESSAGE_BEAN set STATE = ? where MY_USER_ID = ? " +
                 "and DIRECTION = ?";
-        Object[] s = {MessageBean.State.SEND_SUCCESS.value, myUserId, MessageBean.Direction.OUTGOING.value};
+        Object[] s = {MessageBean.State.SEND_SUCCESS, myUserId, MessageBean.Direction.OUTGOING};
         getDatabase().execSQL(sql, s);
     }
+
     public void delete(MessageBean t) {
         messageBeanDao.delete(t);
     }

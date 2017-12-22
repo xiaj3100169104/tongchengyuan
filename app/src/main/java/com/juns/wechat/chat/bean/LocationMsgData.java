@@ -4,7 +4,7 @@ package com.juns.wechat.chat.bean;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class LocationMsg extends Msg{
+public class LocationMsgData extends MsgData {
     public static final String LATITUDE = "latitude";
     public static final String LONGITUDE = "longitude";
     public static final String ADDRESS = "address";

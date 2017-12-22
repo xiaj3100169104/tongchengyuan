@@ -11,7 +11,7 @@ import org.json.JSONObject;
  * @since 1.6
  * Created by 王宗文 on 2015/11/24
  *******************************************************/
-public class TextMsg extends Msg {
+public class TextMsgData extends MsgData {
     public static final String CONTENT = "content";
 
     public String content;

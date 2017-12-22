@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import com.same.city.love.R;
 import com.juns.wechat.chat.bean.MessageBean;
-import com.juns.wechat.config.MsgType;
 import com.style.base.BaseRecyclerViewAdapter;
 
 import java.util.List;
@@ -38,32 +37,32 @@ public class ChatAdapter extends BaseRecyclerViewAdapter<MessageBean> {
         MessageBean msg = list.get(position);
         int direction = msg.getDirection();
         switch (msg.getType()) {
-            case MsgType.MSG_TYPE_TEXT:
-                if (direction == MessageBean.Direction.INCOMING.value)
+            case MessageBean.Type.TEXT:
+                if (direction == MessageBean.Direction.INCOMING)
                     viewType = MSG_TYPE_TEXT_LEFT;
                 else
                     viewType = MSG_TYPE_TEXT_RIGHT;
                 break;
-            case MsgType.MSG_TYPE_PICTURE:
-                if (direction == MessageBean.Direction.INCOMING.value)
+            case MessageBean.Type.PICTURE:
+                if (direction == MessageBean.Direction.INCOMING)
                     viewType = MSG_TYPE_PICTURE_LEFT;
                 else
                     viewType = MSG_TYPE_PICTURE_RIGHT;
                 break;
-            case MsgType.MSG_TYPE_VOICE:
-                if (direction == MessageBean.Direction.INCOMING.value)
+            case MessageBean.Type.VOICE:
+                if (direction == MessageBean.Direction.INCOMING)
                     viewType = MSG_TYPE_VOICE_LEFT;
                 else
                     viewType = MSG_TYPE_VOICE_RIGHT;
                 break;
-            case MsgType.MSG_TYPE_OFFLINE_VIDEO:
-                if (direction == MessageBean.Direction.INCOMING.value)
+            case MessageBean.Type.OFFLINE_VIDEO:
+                if (direction == MessageBean.Direction.INCOMING)
                     viewType = MSG_TYPE_OFFLINE_VIDEO_LEFT;
                 else
                     viewType = MSG_TYPE_OFFLINE_VIDEO_RIGHT;
                 break;
-            case MsgType.MSG_TYPE_LOCATION:
-                if (direction == MessageBean.Direction.INCOMING.value)
+            case MessageBean.Type.LOCATION:
+                if (direction == MessageBean.Direction.INCOMING)
                     viewType = MSG_TYPE_LOCATION_LEFT;
                 else
                     viewType = MSG_TYPE_LOCATION_RIGHT;

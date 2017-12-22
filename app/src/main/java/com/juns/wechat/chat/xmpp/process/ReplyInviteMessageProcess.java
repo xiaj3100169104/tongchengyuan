@@ -4,9 +4,8 @@ import android.content.Context;
 
 import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.chat.bean.InviteMsg;
-import com.juns.wechat.chat.bean.TextMsg;
-import com.juns.wechat.config.MsgType;
+import com.juns.wechat.chat.bean.InviteMsgData;
+import com.juns.wechat.chat.bean.TextMsgData;
 import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.juns.wechat.net.request.HttpActionImpl;
 import com.style.net.core.NetDataBeanCallback;
@@ -19,7 +18,7 @@ import java.util.Date;
  * Created by 王者 on 2015/11/27
  *******************************************************/
 public class ReplyInviteMessageProcess extends MessageProcess {
-    private InviteMsg inviteMsg;
+    private InviteMsgData inviteMsg;
 
     public ReplyInviteMessageProcess(Context context) {
         super(context);
@@ -27,8 +26,8 @@ public class ReplyInviteMessageProcess extends MessageProcess {
 
     @Override
     public void processMessage(final MessageBean messageBean) {
-        inviteMsg = (InviteMsg) messageBean.getMsgObj();
-        if(inviteMsg.reply != InviteMsg.Reply.ACCEPT.value) return;  //非法状态
+        inviteMsg = (InviteMsgData) messageBean.getMsgDataObj();
+        if(inviteMsg.reply != InviteMsgData.Reply.ACCEPT.value) return;  //非法状态
         HttpActionImpl.getInstance().queryUserData("process", messageBean.getOtherUserId(), new NetDataBeanCallback<UserBean>(UserBean.class) {
             @Override
             protected void onCodeSuccess(UserBean data) {
@@ -57,16 +56,16 @@ public class ReplyInviteMessageProcess extends MessageProcess {
         textMessage.setMyUserId(messageBean.getMyUserId());
         textMessage.setOtherUserId(messageBean.getOtherUserId());
 
-        TextMsg textMsg = new TextMsg();
+        TextMsgData textMsg = new TextMsgData();
         textMsg.content = inviteMsg.reason;
         textMessage.setMsg(textMsg.toJson());
-        textMessage.setType(MsgType.MSG_TYPE_TEXT);
+        textMessage.setType(MessageBean.Type.TEXT);
 
         String packetId = StanzaIdUtil.newStanzaId();
         textMessage.setPacketId(packetId);
         textMessage.setDate(new Date());
-        textMessage.setState(MessageBean.State.SEND_SUCCESS.value);
-        textMessage.setDirection(MessageBean.Direction.INCOMING.value);
+        textMessage.setState(MessageBean.State.SEND_SUCCESS);
+        textMessage.setDirection(MessageBean.Direction.INCOMING);
 
         GreenDaoManager.getInstance().save(textMessage);
     }

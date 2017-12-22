@@ -6,7 +6,7 @@ import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.chat.xmpp.listener.XmppConnectionListener;
 import com.juns.wechat.chat.xmpp.listener.XmppReceivePacketFilter;
 import com.juns.wechat.chat.xmpp.listener.XmppReceivePacketListener;
-import com.juns.wechat.config.ConfigUtil;
+import com.juns.wechat.chat.config.ConfigUtil;
 import com.juns.wechat.chat.xmpp.bean.SearchResult;
 import com.juns.wechat.chat.xmpp.listener.RosterLoadedListenerImpl;
 

@@ -9,13 +9,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.same.city.love.R;
-import com.juns.wechat.config.ConfigUtil;
 import com.style.base.BaseFragment;
-import com.style.constant.FileConfig;
 import com.style.manager.ImageLoader;
-import com.style.net.image.FileDownloadCallback;
 import com.style.net.image.FileDownloadManager;
-import com.style.utils.FileUtil;
 
 import butterknife.Bind;
 

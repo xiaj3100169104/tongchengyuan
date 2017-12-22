@@ -15,7 +15,7 @@ import com.same.city.love.R;
 import com.juns.wechat.activity.UserInfoActivity;
 import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.chat.bean.InviteMsg;
+import com.juns.wechat.chat.bean.InviteMsgData;
 import com.juns.wechat.common.ViewHolder;
 import com.juns.wechat.net.request.HttpActionImpl;
 import com.style.net.core.NetDataBeanCallback;
@@ -91,16 +91,16 @@ public class NewFriendsAdapter extends BaseAdapter {
             txt_name.setText(userBean.getShowName());
         }
 
-        final InviteMsg inviteMsg = (InviteMsg) messageBean.getMsgObj();
+        final InviteMsgData inviteMsg = (InviteMsgData) messageBean.getMsgDataObj();
         if (inviteMsg.reply == 0) {
             txt_add.setText("添加");
             txt_add.setTextColor(context.getResources().getColor(R.color.white));
             txt_add.setBackgroundResource(R.drawable.btn_bg_green);
-        } else if (inviteMsg.reply == InviteMsg.Reply.ACCEPT.value) {
+        } else if (inviteMsg.reply == InviteMsgData.Reply.ACCEPT.value) {
             txt_add.setText("已同意");
             txt_add.setTextColor(context.getResources().getColor(R.color.gray_black));
             txt_add.setBackgroundResource(R.color.white);
-        } else if (inviteMsg.reply == InviteMsg.Reply.REJECT.value) {
+        } else if (inviteMsg.reply == InviteMsgData.Reply.REJECT.value) {
             txt_add.setText("已拒绝");
             txt_add.setTextColor(context.getResources().getColor(R.color.gray_black));
             txt_add.setBackgroundResource(R.color.white);
@@ -138,8 +138,8 @@ public class NewFriendsAdapter extends BaseAdapter {
         HttpActionImpl.getInstance().addFriend("addFriend", userBean.userId, new NetDataBeanCallback() {
             @Override
             protected void onCodeSuccess() {
-                InviteMsg inviteMsg = (InviteMsg) messageBean.getMsgObj();
-                int reply = InviteMsg.Reply.ACCEPT.value;
+                InviteMsgData inviteMsg = (InviteMsgData) messageBean.getMsgDataObj();
+                int reply = InviteMsgData.Reply.ACCEPT.value;
                 inviteMsg.reply = reply;
                 messageBean.setMsg(inviteMsg.toJson());
                 GreenDaoManager.getInstance().save(messageBean);
@@ -158,7 +158,7 @@ public class NewFriendsAdapter extends BaseAdapter {
 
     private void sendMessageToOther(String otherUserId, int reply) {
         String reason = "我同意了你的添加好友的请求";
-        InviteMsg inviteMsg = new InviteMsg();
+        InviteMsgData inviteMsg = new InviteMsgData();
         UserBean userBean = userDao.findByUserId(otherUserId);
         if (userBean != null) {
             inviteMsg.userName = userBean.getShowName();

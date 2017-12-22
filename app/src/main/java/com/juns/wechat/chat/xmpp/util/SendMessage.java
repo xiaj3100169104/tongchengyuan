@@ -4,16 +4,15 @@ package com.juns.wechat.chat.xmpp.util;
 import android.widget.Toast;
 
 import com.juns.wechat.App;
-import com.juns.wechat.chat.bean.InviteMsg;
-import com.juns.wechat.chat.bean.LocationMsg;
+import com.juns.wechat.chat.bean.InviteMsgData;
+import com.juns.wechat.chat.bean.LocationMsgData;
 import com.juns.wechat.chat.bean.MessageBean;
-import com.juns.wechat.chat.bean.OfflineVideoMsg;
-import com.juns.wechat.chat.bean.PictureMsg;
-import com.juns.wechat.chat.bean.TextMsg;
-import com.juns.wechat.chat.bean.VoiceMsg;
+import com.juns.wechat.chat.bean.OfflineVideoMsgData;
+import com.juns.wechat.chat.bean.PictureMsgData;
+import com.juns.wechat.chat.bean.TextMsgData;
+import com.juns.wechat.chat.bean.VoiceMsgData;
 import com.juns.wechat.chat.xmpp.XmppManagerImpl;
 import com.juns.wechat.common.BASE64;
-import com.juns.wechat.config.MsgType;
 import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.util.ThreadPoolUtil;
@@ -41,6 +40,7 @@ public class SendMessage {
 
     /**
      * 发送普通的文字消息
+     *
      * @param content
      */
     public static void sendTextMsg(final String otherUserId, final String content) {
@@ -48,16 +48,17 @@ public class SendMessage {
             @Override
             public void run() {
                 MessageBean messageBean = new MessageBean();
-                TextMsg textMsg = new TextMsg();
+                TextMsgData textMsg = new TextMsgData();
                 textMsg.content = content;
                 messageBean.setMsg(textMsg.toJson());
                 messageBean.setOtherUserId(otherUserId);
-                messageBean.setType(MsgType.MSG_TYPE_TEXT);
+                messageBean.setType(MessageBean.Type.TEXT);
                 sendMsg(messageBean);
 
             }
         });
     }
+
     /**
      * 发送地理位置消息
      */
@@ -66,18 +67,19 @@ public class SendMessage {
             @Override
             public void run() {
                 MessageBean messageBean = new MessageBean();
-                LocationMsg msg = new LocationMsg();
+                LocationMsgData msg = new LocationMsgData();
                 msg.latitude = latitude;
                 msg.longitude = longitude;
                 msg.address = address;
                 messageBean.setMsg(msg.toJson());
                 messageBean.setOtherUserId(otherUserId);
-                messageBean.setType(MsgType.MSG_TYPE_LOCATION);
+                messageBean.setType(MessageBean.Type.LOCATION);
                 sendMsg(messageBean);
 
             }
         });
     }
+
     @SuppressWarnings("unchecked")
     public static void sendPictureMsg(final String otherUserId, final String path, final int width, final int height) {
         ThreadPoolUtil.execute(new Runnable() {
@@ -90,7 +92,7 @@ public class SendMessage {
                 }
 
                 String imgName = file.getName();
-                final PictureMsg pictureMsg = new PictureMsg();
+                final PictureMsgData pictureMsg = new PictureMsgData();
                 pictureMsg.imgName = imgName;
                 pictureMsg.progress = 0;
                 pictureMsg.width = width;
@@ -100,7 +102,7 @@ public class SendMessage {
                 final MessageBean messageBean = new MessageBean();
                 messageBean.setMsg(pictureMsg.toJson());
                 messageBean.setOtherUserId(otherUserId);
-                messageBean.setType(MsgType.MSG_TYPE_PICTURE);
+                messageBean.setType(MessageBean.Type.PICTURE);
                 completeMessageEntityInfo(messageBean);
                 addMessageToDB(messageBean);
                 sendMsgDirect(messageBean);
@@ -110,7 +112,7 @@ public class SendMessage {
     }
 
     private static void uploadPicture(final MessageBean messageBean) {
-        final PictureMsg pictureMsg = (PictureMsg) messageBean.getMsgObj();
+        final PictureMsgData pictureMsg = (PictureMsgData) messageBean.getMsgDataObj();
         String filePath = FileConfig.DIR_CACHE + "/" + pictureMsg.imgName;
         File file = new File(filePath);
         if (!file.exists()) {
@@ -118,7 +120,7 @@ public class SendMessage {
             return;
         }
         if (!XmppManagerImpl.getInstance().login()) {
-            updateMessageState(messageBean.getPacketId(), MessageBean.State.SEND_FAILED.value);
+            updateMessageState(messageBean.getPacketId(), MessageBean.State.SEND_FAILED);
             return;
         }
 
@@ -131,7 +133,7 @@ public class SendMessage {
 
             @Override
             public void onFailed() {
-                updateMessageState(messageBean.getPacketId(), MessageBean.State.SEND_FAILED.value);
+                updateMessageState(messageBean.getPacketId(), MessageBean.State.SEND_FAILED);
             }
 
             @Override
@@ -148,7 +150,7 @@ public class SendMessage {
                 if (file == null || !file.exists()) return;
 
                 String fileName = file.getName();
-                final OfflineVideoMsg contentMsg = new OfflineVideoMsg();
+                final OfflineVideoMsgData contentMsg = new OfflineVideoMsgData();
                 contentMsg.fileName = fileName;
                 contentMsg.progress = 0;
                 contentMsg.width = width;
@@ -158,7 +160,7 @@ public class SendMessage {
                 final MessageBean messageBean = new MessageBean();
                 messageBean.setMsg(contentMsg.toJson());
                 messageBean.setOtherUserId(otherUserId);
-                messageBean.setType(MsgType.MSG_TYPE_OFFLINE_VIDEO);
+                messageBean.setType(MessageBean.Type.OFFLINE_VIDEO);
                 completeMessageEntityInfo(messageBean);
                 addMessageToDB(messageBean);
                 sendMsgDirect(messageBean);
@@ -194,14 +196,14 @@ public class SendMessage {
             @Override
             public void run() {
                 MessageBean messageBean = new MessageBean();
-                VoiceMsg voiceMsg = new VoiceMsg();
+                VoiceMsgData voiceMsg = new VoiceMsgData();
                 voiceMsg.seconds = seconds;
                 voiceMsg.fileName = new File(filePath).getName();
                 voiceMsg.encodeStr = new MsgCode().encode(filePath);
 
                 messageBean.setMsg(voiceMsg.toJson());
                 messageBean.setOtherUserId(otherUserId);
-                messageBean.setType(MsgType.MSG_TYPE_VOICE);
+                messageBean.setType(MessageBean.Type.VOICE);
                 sendMsg(messageBean);
             }
         });
@@ -217,13 +219,13 @@ public class SendMessage {
             @Override
             public void run() {
                 MessageBean messageBean = new MessageBean();
-                InviteMsg inviteMsg = new InviteMsg();
+                InviteMsgData inviteMsg = new InviteMsgData();
                 inviteMsg.userName = AccountManager.getInstance().getUser().getShowName();
                 inviteMsg.reason = reason;
                 try {
                     messageBean.setMsg(inviteMsg.toJson());
                     messageBean.setOtherUserId(otherUserId);
-                    messageBean.setType(MsgType.MSG_TYPE_SEND_INVITE);
+                    messageBean.setType(MessageBean.Type.SEND_INVITE);
                     sendMsg(messageBean);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -241,14 +243,14 @@ public class SendMessage {
             @Override
             public void run() {
                 MessageBean messageBean = new MessageBean();
-                InviteMsg inviteMsg = new InviteMsg();
+                InviteMsgData inviteMsg = new InviteMsgData();
                 inviteMsg.userName = AccountManager.getInstance().getUser().getShowName();
                 inviteMsg.reason = reason;
                 inviteMsg.reply = reply;
                 try {
                     messageBean.setMsg(inviteMsg.toJson());
                     messageBean.setOtherUserId(otherUserId);
-                    messageBean.setType(MsgType.MSG_TYPE_REPLY_INVITE);
+                    messageBean.setType(MessageBean.Type.REPLY_INVITE);
                     sendMsg(messageBean);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -275,10 +277,10 @@ public class SendMessage {
             @Override
             public void run() {
                 switch (message.getType()) {
-                    case MsgType.MSG_TYPE_PICTURE:
+                    case MessageBean.Type.PICTURE:
                         //uploadPicture(message);
                         break;
-                    case MsgType.MSG_TYPE_OFFLINE_VIDEO:
+                    case MessageBean.Type.OFFLINE_VIDEO:
                         break;
                     default:
                         sendMsgDirect(message);
@@ -294,8 +296,8 @@ public class SendMessage {
         String packetId = StanzaIdUtil.newStanzaId();
         message.setPacketId(packetId);
         message.setDate(new Date());
-        message.setState(MessageBean.State.NEW.value);
-        message.setDirection(MessageBean.Direction.OUTGOING.value);
+        message.setState(MessageBean.State.NEW);
+        message.setDirection(MessageBean.Direction.OUTGOING);
     }
 
     /**
@@ -304,7 +306,7 @@ public class SendMessage {
      * @return
      */
     private static void addMessageToDB(MessageBean messageBean) {
-        messageBean.state = MessageBean.State.SEND_SUCCESS.value;
+        messageBean.state = MessageBean.State.SEND_SUCCESS;
         GreenDaoManager.getInstance().save(messageBean);
         EventManager.getDefault().post(EventCode.BEFORE_SEND_SUCCESS, messageBean);
         EventManager.getDefault().post(EventCode.REFRESH_CONVERSATION_LIST, messageBean);

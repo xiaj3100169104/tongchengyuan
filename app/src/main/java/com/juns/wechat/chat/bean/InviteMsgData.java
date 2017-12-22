@@ -11,7 +11,7 @@ import org.json.JSONObject;
  * @since 1.6
  * Created by 王宗文 on 2015/11/24
  *******************************************************/
-public class InviteMsg extends Msg{
+public class InviteMsgData extends MsgData {
     public static final String USERNAME = "userName";
     public static final String REASON = "reason";
     public static final String REPLY = "reply";

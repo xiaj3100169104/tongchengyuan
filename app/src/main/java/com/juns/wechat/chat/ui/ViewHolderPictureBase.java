@@ -4,12 +4,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
+import com.juns.wechat.chat.bean.MessageBean;
 import com.same.city.love.R;
-import com.juns.wechat.chat.bean.PictureMsg;
-import com.juns.wechat.config.ConfigUtil;
+import com.juns.wechat.chat.bean.PictureMsgData;
+import com.juns.wechat.chat.config.ConfigUtil;
 import com.style.constant.FileConfig;
 import com.style.manager.ImageLoader;
-import com.style.net.image.FileDownloadCallback;
 import com.style.net.image.FileDownloadManager;
 import com.style.utils.CommonUtil;
 
@@ -21,7 +21,7 @@ import java.io.File;
 
 public class ViewHolderPictureBase extends BaseMsgViewHolder {
     protected ImageView ivPicture;
-    protected PictureMsg pictureMsg;
+    protected PictureMsgData pictureMsg;
     protected String path;
     private String url;
 
@@ -33,7 +33,7 @@ public class ViewHolderPictureBase extends BaseMsgViewHolder {
     @Override
     protected void updateView() {
         //先得到bean，在进行其他操作
-        pictureMsg = (PictureMsg) messageBean.getMsgObj();
+        pictureMsg = (PictureMsgData) messageBean.getMsgDataObj();
         float width = pictureMsg.width;
         float height = pictureMsg.height;
         float scale = height / width;
@@ -64,7 +64,7 @@ public class ViewHolderPictureBase extends BaseMsgViewHolder {
     protected void loadPicture() {
         File f = new File(path);
         if (f.exists())
-            ImageLoader.loadTriangleImage(ivPicture, path, isLeftLayout() ? 0 : 1);
+            ImageLoader.loadTriangleImage(ivPicture, path, isLeftLayout() ? MessageBean.Direction.INCOMING : MessageBean.Direction.OUTGOING);
         else
             FileDownloadManager.getInstance().down(url, path, new PictureDownloadCallback(messageBean));
     }
