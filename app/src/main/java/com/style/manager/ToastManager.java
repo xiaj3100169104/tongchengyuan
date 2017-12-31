@@ -4,7 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import com.juns.wechat.App;
+import com.juns.wechat.app.App;
 import com.same.city.love.R;
 
 

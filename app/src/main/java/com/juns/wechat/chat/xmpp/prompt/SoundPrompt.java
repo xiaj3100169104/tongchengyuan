@@ -3,7 +3,7 @@ package com.juns.wechat.chat.xmpp.prompt;
 import android.content.Context;
 import android.media.MediaPlayer;
 
-import com.juns.wechat.App;
+import com.juns.wechat.app.App;
 import com.juns.wechat.util.SharedPreferencesUtil;
 
 

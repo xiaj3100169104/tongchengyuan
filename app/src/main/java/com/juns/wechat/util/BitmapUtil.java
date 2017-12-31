@@ -10,9 +10,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.juns.wechat.App;
-import com.same.city.love.R;
+import com.juns.wechat.app.App;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

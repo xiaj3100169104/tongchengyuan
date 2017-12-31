@@ -1,35 +1,36 @@
 package uk.viewpager;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.Log;
-import android.widget.TextView;
-
 
 import com.same.city.love.R;
+import com.same.city.love.databinding.ActivityPagerImageListBinding;
 import com.style.base.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ImagePagerActivity extends BaseActivity {
+    ActivityPagerImageListBinding bd;
     private static final String STATE_POSITION = "STATE_POSITION";
     public static final String EXTRA_IMAGE_INDEX = "image_index";
     public static final String EXTRA_IMAGE_URLS = "image_urls";
-    private HackyViewPager mPager;
     private int pagerPosition;
-    private TextView indicator;
+
+    protected boolean isWrapContentView() {
+        return false;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mLayoutResID = R.layout.activity_pager_image_list;
         super.onCreate(savedInstanceState);
+        bd = DataBindingUtil.setContentView(this, R.layout.activity_pager_image_list);
+        super.setContentView(bd.getRoot());
+        initData();
     }
 
     @Override
@@ -38,9 +39,6 @@ public class ImagePagerActivity extends BaseActivity {
     }
 
     public void initData() {
-        mPager = (HackyViewPager) findViewById(R.id.pager);
-        indicator = (TextView) findViewById(R.id.indicator);
-
         pagerPosition = getIntent().getIntExtra(EXTRA_IMAGE_INDEX, 0);
         ArrayList<String> urls = getIntent().getStringArrayListExtra(EXTRA_IMAGE_URLS);
         List<Fragment> dataList = new ArrayList<>();
@@ -50,14 +48,14 @@ public class ImagePagerActivity extends BaseActivity {
             dataList.add(f);
         }
         ImagePagerAdapter mAdapter = new ImagePagerAdapter(getSupportFragmentManager(), dataList);
-        mPager.setAdapter(mAdapter);
+        bd.pager.setAdapter(mAdapter);
         //如果不设置将导致超过3页后原fragment被销毁，数据丢失
-        mPager.setOffscreenPageLimit(9);
-        CharSequence text = getString(R.string.viewpager_indicator, 1, mPager.getAdapter().getCount());
-        indicator.setText(text);
+        bd.pager.setOffscreenPageLimit(9);
+        CharSequence text = getString(R.string.viewpager_indicator, 1, bd.pager.getAdapter().getCount());
+        bd.indicator.setText(text);
 
         // 更新下标
-        mPager.addOnPageChangeListener(new OnPageChangeListener() {
+        bd.pager.addOnPageChangeListener(new OnPageChangeListener() {
 
             @Override
             public void onPageScrollStateChanged(int arg0) {
@@ -69,12 +67,12 @@ public class ImagePagerActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int arg0) {
-                CharSequence text = getString(R.string.viewpager_indicator, arg0 + 1, mPager.getAdapter().getCount());
-                indicator.setText(text);
+                CharSequence text = getString(R.string.viewpager_indicator, arg0 + 1, bd.pager.getAdapter().getCount());
+                bd.indicator.setText(text);
             }
 
         });
-        mPager.setCurrentItem(pagerPosition);
+        bd.pager.setCurrentItem(pagerPosition);
     }
 
     private class ImagePagerAdapter extends FragmentStatePagerAdapter {

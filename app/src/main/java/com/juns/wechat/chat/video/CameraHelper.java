@@ -10,7 +10,7 @@ import android.os.Build;
 import android.util.Log;
 import android.view.SurfaceHolder;
 
-import com.juns.wechat.App;
+import com.juns.wechat.app.App;
 
 public class CameraHelper implements PreviewCallback {
 	private static final String TAG = "CameraHelper";

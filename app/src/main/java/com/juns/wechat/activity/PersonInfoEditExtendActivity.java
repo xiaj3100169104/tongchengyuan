@@ -1,6 +1,7 @@
 package com.juns.wechat.activity;
 
 import android.content.DialogInterface;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
@@ -8,8 +9,6 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -20,6 +19,7 @@ import com.juns.wechat.bean.UserPropertyBean;
 import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.juns.wechat.manager.AccountManager;
 import com.same.city.love.R;
+import com.same.city.love.databinding.ActivityPersonInfoExtendBinding;
 import com.style.base.BaseToolbarActivity;
 import com.style.event.EventCode;
 import com.style.event.EventManager;
@@ -29,8 +29,6 @@ import com.style.utils.StringUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.OnClick;
 import me.kaede.tagview.Tag;
 import me.kaede.tagview.TagView;
 
@@ -38,55 +36,9 @@ import me.kaede.tagview.TagView;
  * Created by xiajun on 2017/5/9.
  */
 
-public class PersonInfoEditExtendActivity extends BaseToolbarActivity {
+public class PersonInfoEditExtendActivity extends BaseToolbarActivity implements View.OnClickListener {
 
-    @Bind(R.id.tv_my_label)
-    TextView tvMyLabel;
-    @Bind(R.id.layout_content_my_label)
-    RelativeLayout layoutContentMyLabel;
-    @Bind(R.id.layout_my_label)
-    LinearLayout layoutMyLabel;
-    @Bind(R.id.tv_interest_sport)
-    TextView tvInterestSport;
-    @Bind(R.id.layout_content_interest_sport)
-    RelativeLayout layoutContentInterestSport;
-    @Bind(R.id.layout_interest_sport)
-    LinearLayout layoutInterestSport;
-    @Bind(R.id.tv_interest_music)
-    TextView tvInterestMusic;
-    @Bind(R.id.layout_content_interest_music)
-    RelativeLayout layoutContentInterestMusic;
-    @Bind(R.id.layout_interest_music)
-    LinearLayout layoutInterestMusic;
-    @Bind(R.id.tv_interest_food)
-    TextView tvInterestFood;
-    @Bind(R.id.layout_content_interest_food)
-    RelativeLayout layoutContentInterestFood;
-    @Bind(R.id.layout_interest_food)
-    LinearLayout layoutInterestFood;
-    @Bind(R.id.tv_interest_movie)
-    TextView tvInterestMovie;
-    @Bind(R.id.layout_content_interest_movie)
-    RelativeLayout layoutContentInterestMovie;
-    @Bind(R.id.layout_interest_movie)
-    LinearLayout layoutInterestMovie;
-    @Bind(R.id.tv_question)
-    TextView tvQuestion;
-    @Bind(R.id.layout_content_question)
-    RelativeLayout layoutContentQuestion;
-    @Bind(R.id.layout_question)
-    LinearLayout layoutQuestion;
-
-    @Bind(R.id.tag_view_my_label)
-    TagView tagViewMyLabel;
-    @Bind(R.id.tag_view_interest_sport)
-    TagView tagViewInterestSport;
-    @Bind(R.id.tag_view_interest_music)
-    TagView tagViewInterestMusic;
-    @Bind(R.id.tag_view_interest_food)
-    TagView tagViewInterestFood;
-    @Bind(R.id.tag_view_interest_movie)
-    TagView tagViewInterestMovie;
+    ActivityPersonInfoExtendBinding bd;
 
     private UserBean curUser;
     private UserExtendInfo userExtendInfo;
@@ -94,8 +46,10 @@ public class PersonInfoEditExtendActivity extends BaseToolbarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mLayoutResID = R.layout.activity_person_info_extend;
         super.onCreate(savedInstanceState);
+        bd = DataBindingUtil.setContentView(this, R.layout.activity_person_info_extend);
+        super.setContentView(bd.getRoot());
+        initData();
     }
 
     @Override
@@ -126,6 +80,11 @@ public class PersonInfoEditExtendActivity extends BaseToolbarActivity {
             });
             setExtendInfo(userProperties);
         }
+        bd.extend.layoutMyLabel.setOnClickListener(this);
+        bd.extend.layoutInterestSport.setOnClickListener(this);
+        bd.extend.layoutInterestMusic.setOnClickListener(this);
+        bd.extend.layoutInterestFood.setOnClickListener(this);
+        bd.extend.layoutInterestMovie.setOnClickListener(this);
     }
 
     private void saveInfo() {
@@ -135,11 +94,11 @@ public class PersonInfoEditExtendActivity extends BaseToolbarActivity {
             userExtendInfo.setUserId(curUser.getUserId());
         }
         List<UserPropertyBean> list = new ArrayList<>();
-        list.add(new UserPropertyBean(UserPropertyBean.KEY_MY_LABEL, getTagStr(tagViewMyLabel)));
-        list.add(new UserPropertyBean(UserPropertyBean.KEY_INTEREST_SPORT, getTagStr(tagViewInterestSport)));
-        list.add(new UserPropertyBean(UserPropertyBean.KEY_INTEREST_MUSIC, getTagStr(tagViewInterestMusic)));
-        list.add(new UserPropertyBean(UserPropertyBean.KEY_INTEREST_FOOD, getTagStr(tagViewInterestFood)));
-        list.add(new UserPropertyBean(UserPropertyBean.KEY_INTEREST_MOVIE, getTagStr(tagViewInterestMovie)));
+        list.add(new UserPropertyBean(UserPropertyBean.KEY_MY_LABEL, getTagStr(bd.extend.tagViewMyLabel)));
+        list.add(new UserPropertyBean(UserPropertyBean.KEY_INTEREST_SPORT, getTagStr(bd.extend.tagViewInterestSport)));
+        list.add(new UserPropertyBean(UserPropertyBean.KEY_INTEREST_MUSIC, getTagStr(bd.extend.tagViewInterestMusic)));
+        list.add(new UserPropertyBean(UserPropertyBean.KEY_INTEREST_FOOD, getTagStr(bd.extend.tagViewInterestFood)));
+        list.add(new UserPropertyBean(UserPropertyBean.KEY_INTEREST_MOVIE, getTagStr(bd.extend.tagViewInterestMovie)));
 
         com.alibaba.fastjson.JSONArray jsonArray = new com.alibaba.fastjson.JSONArray();
         jsonArray.addAll(list);
@@ -192,19 +151,19 @@ public class PersonInfoEditExtendActivity extends BaseToolbarActivity {
 
                         switch (u.key) {
                             case UserPropertyBean.KEY_MY_LABEL:
-                                setLabelData(tagViewMyLabel, list, R.color.tag_my_label, R.color.tag_my_label_bg, tvMyLabel);
+                                setLabelData(bd.extend.tagViewMyLabel, list, R.color.tag_my_label, R.color.tag_my_label_bg, bd.extend.tvMyLabel);
                                 break;
                             case UserPropertyBean.KEY_INTEREST_SPORT:
-                                setLabelData(tagViewInterestSport, list, R.color.tag_sport, R.color.tag_sport_bg, tvInterestSport);
+                                setLabelData(bd.extend.tagViewInterestSport, list, R.color.tag_sport, R.color.tag_sport_bg, bd.extend.tvInterestSport);
                                 break;
                             case UserPropertyBean.KEY_INTEREST_MUSIC:
-                                setLabelData(tagViewInterestMusic, list, R.color.tag_music, R.color.tag_music_bg, tvInterestMusic);
+                                setLabelData(bd.extend.tagViewInterestMusic, list, R.color.tag_music, R.color.tag_music_bg, bd.extend.tvInterestMusic);
                                 break;
                             case UserPropertyBean.KEY_INTEREST_FOOD:
-                                setLabelData(tagViewInterestFood, list, R.color.tag_food, R.color.tag_food_bg, tvInterestFood);
+                                setLabelData(bd.extend.tagViewInterestFood, list, R.color.tag_food, R.color.tag_food_bg, bd.extend.tvInterestFood);
                                 break;
                             case UserPropertyBean.KEY_INTEREST_MOVIE:
-                                setLabelData(tagViewInterestMovie, list, R.color.tag_movie, R.color.tag_movie_bg, tvInterestMovie);
+                                setLabelData(bd.extend.tagViewInterestMovie, list, R.color.tag_movie, R.color.tag_movie_bg, bd.extend.tvInterestMovie);
                                 break;
                         }
                     }
@@ -213,29 +172,24 @@ public class PersonInfoEditExtendActivity extends BaseToolbarActivity {
         }, 200);
     }
 
-    @OnClick(R.id.layout_my_label)
-    public void modifyInfo11() {
-        openMulti("标签", getResources().getStringArray(R.array.my_label), tagViewMyLabel, R.color.tag_my_label, R.color.tag_my_label_bg, tvMyLabel);
-    }
-
-    @OnClick(R.id.layout_interest_sport)
-    public void modifyInfo12() {
-        openMulti("运动", getResources().getStringArray(R.array.sport), tagViewInterestSport, R.color.tag_sport, R.color.tag_sport_bg, tvInterestSport);
-    }
-
-    @OnClick(R.id.layout_interest_music)
-    public void modifyInfo13() {
-        openMulti("音乐", getResources().getStringArray(R.array.music), tagViewInterestMusic, R.color.tag_music, R.color.tag_music_bg, tvInterestMusic);
-    }
-
-    @OnClick(R.id.layout_interest_food)
-    public void modifyInfo14() {
-        openMulti("美食", getResources().getStringArray(R.array.food), tagViewInterestFood, R.color.tag_food, R.color.tag_food_bg, tvInterestFood);
-    }
-
-    @OnClick(R.id.layout_interest_movie)
-    public void modifyInfo15() {
-        openMulti("电影", getResources().getStringArray(R.array.movie), tagViewInterestMovie, R.color.tag_movie, R.color.tag_movie_bg, tvInterestMovie);
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.layout_my_label:
+                openMulti("标签", getResources().getStringArray(R.array.my_label), bd.extend.tagViewMyLabel, R.color.tag_my_label, R.color.tag_my_label_bg, bd.extend.tvMyLabel);
+                break;
+            case R.id.layout_interest_sport:
+                openMulti("运动", getResources().getStringArray(R.array.sport), bd.extend.tagViewInterestSport, R.color.tag_sport, R.color.tag_sport_bg, bd.extend.tvInterestSport);
+                break;
+            case R.id.layout_interest_music:
+                openMulti("音乐", getResources().getStringArray(R.array.music), bd.extend.tagViewInterestMusic, R.color.tag_music, R.color.tag_music_bg, bd.extend.tvInterestMusic);
+                break;
+            case R.id.layout_interest_food:
+                openMulti("美食", getResources().getStringArray(R.array.food), bd.extend.tagViewInterestFood, R.color.tag_food, R.color.tag_food_bg, bd.extend.tvInterestFood);
+                break;
+            case R.id.layout_interest_movie:
+                openMulti("电影", getResources().getStringArray(R.array.movie), bd.extend.tagViewInterestMovie, R.color.tag_movie, R.color.tag_movie_bg, bd.extend.tvInterestMovie);
+        }
     }
 
     private void openMulti(final String title, final String[] allData, final TagView tagView, final int tagColor, final int tagColorBg, final TextView textView) {
@@ -305,4 +259,5 @@ public class PersonInfoEditExtendActivity extends BaseToolbarActivity {
             textView.setVisibility(View.VISIBLE);
         }
     }
+
 }

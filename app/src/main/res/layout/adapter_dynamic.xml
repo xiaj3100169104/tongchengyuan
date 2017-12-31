@@ -1,170 +1,173 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@android:color/white"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/activity_horizontal_margin">
+        android:background="@android:color/white"
+        android:orientation="vertical">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_horizontal_margin">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/iv_avatar"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/default_avatar"/>
-
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:orientation="vertical"
-                    android:paddingLeft="@dimen/activity_horizontal_margin">
+                    android:layout_height="wrap_content">
 
-                    <RelativeLayout
+                    <ImageView
+                        android:id="@+id/iv_avatar"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/default_avatar" />
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:paddingLeft="@dimen/activity_horizontal_margin">
 
-                        <LinearLayout
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
+                            android:layout_height="wrap_content">
 
-                            <TextView
-                                android:id="@+id/tv_nike"
-                                style="@style/text_black_14sp"
-                                android:layout_width="wrap_content"
+                            <LinearLayout
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:singleLine="true"
-                                android:text="昵称"
-                                android:textColor="@color/dynamic_content"/>
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
 
-                        </LinearLayout>
+                                <TextView
+                                    android:id="@+id/tv_nike"
+                                    style="@style/text_black_14sp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:singleLine="true"
+                                    android:text="昵称"
+                                    android:textColor="@color/dynamic_content" />
 
-                    </RelativeLayout>
+                            </LinearLayout>
+
+                        </RelativeLayout>
 
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp">
-
-                        <TextView
-                            android:id="@+id/tv_content"
-                            style="@style/text_black_14sp"
-                            android:singleLine="false"
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:lineSpacingExtra="@dimen/line_Spacing_Extra"
-                            android:maxLines="6"
-                            android:textIsSelectable="true"
-                            android:text="内容" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp">
-
-                        <GridLayout
-                            android:id="@+id/gl_images"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"></GridLayout>
-                        <!--<android.support.v7.widget.RecyclerView
-                            android:id="@+id/gv_image"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />-->
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:orientation="vertical">
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
+                            android:layout_marginTop="10dp">
 
                             <TextView
-                                android:id="@+id/tv_time"
-                                style="@style/text_gray_12sp"
+                                android:id="@+id/tv_content"
+                                style="@style/text_black_14sp"
+                                android:singleLine="false"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:lineSpacingExtra="@dimen/line_Spacing_Extra"
+                                android:maxLines="6"
+                                android:textIsSelectable="true"
+                                android:text="内容" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp">
+
+                            <GridLayout
+                                android:id="@+id/gl_images"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"></GridLayout>
+                            <!--<android.support.v7.widget.RecyclerView
+                                android:id="@+id/gv_image"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />-->
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:orientation="vertical">
+
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
-                                android:singleLine="true"
-                                android:text="19.30" />
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
 
-                            <TextView
-                                android:id="@+id/tv_delete"
-                                style="@style/text_black_13sp"
+                                <TextView
+                                    android:id="@+id/tv_time"
+                                    style="@style/text_gray_12sp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:singleLine="true"
+                                    android:text="19.30" />
+
+                                <TextView
+                                    android:id="@+id/tv_delete"
+                                    style="@style/text_black_13sp"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="20dp"
+                                    android:singleLine="true"
+                                    android:text="@string/delete"
+                                    android:visibility="gone" />
+                            </LinearLayout>
+
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:singleLine="true"
-                                android:text="@string/delete"
-                                android:visibility="gone"/>
-                        </LinearLayout>
+                                android:layout_alignParentRight="true"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:id="@+id/iv_discuss"
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:src="@drawable/afr" />
+                            </LinearLayout>
+                        </RelativeLayout>
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <ImageView
-                                android:id="@+id/iv_discuss"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:src="@drawable/afr" />
-                        </LinearLayout>
-                    </RelativeLayout>
-
-                    <LinearLayout
-                        android:id="@+id/layout_comment"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/gray_light"
-                        android:orientation="vertical"
-                        android:padding="5dp">
-
-                        <android.support.v7.widget.RecyclerView
-                            android:id="@+id/recyclerView"
+                            android:id="@+id/layout_comment"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-
-                        <TextView
-                            android:id="@+id/tv_support_list"
-                            style="@style/text_black_14sp"
-                            android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
-                            android:lineSpacingExtra="@dimen/line_Spacing_Extra"
-                            android:maxLines="6"
-                            android:paddingBottom="10dp"
-                            android:text="1、2、3.。。。"
-                            android:textColor="@color/blue"
-                            android:visibility="gone"/>
+                            android:background="@color/gray_light"
+                            android:orientation="vertical"
+                            android:padding="5dp">
 
+                            <android.support.v7.widget.RecyclerView
+                                android:id="@+id/recyclerView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+
+                            <TextView
+                                android:id="@+id/tv_support_list"
+                                style="@style/text_black_14sp"
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:lineSpacingExtra="@dimen/line_Spacing_Extra"
+                                android:maxLines="6"
+                                android:paddingBottom="10dp"
+                                android:text="1、2、3.。。。"
+                                android:textColor="@color/blue"
+                                android:visibility="gone" />
+
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
-            </LinearLayout>
-        </RelativeLayout>
+            </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+</layout>

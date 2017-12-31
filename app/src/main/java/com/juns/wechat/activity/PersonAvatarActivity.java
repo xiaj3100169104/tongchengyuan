@@ -1,6 +1,7 @@
 package com.juns.wechat.activity;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -8,12 +9,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
 
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.juns.wechat.manager.AccountManager;
 import com.same.city.love.R;
+import com.same.city.love.databinding.ActivityPersonAvatarBinding;
 import com.style.base.BaseToolbarActivity;
 import com.style.constant.FileConfig;
 import com.style.constant.Skip;
@@ -30,12 +31,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import butterknife.Bind;
-
 public class PersonAvatarActivity extends BaseToolbarActivity {
 
-    @Bind(R.id.iv_avatar)
-    ImageView ivAvatar;
+    ActivityPersonAvatarBinding bd;
     private File photoFile;
     private boolean isFromCamera;
     private SelAvatarDialog dialog;
@@ -44,8 +42,10 @@ public class PersonAvatarActivity extends BaseToolbarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mLayoutResID = R.layout.activity_person_avatar;
         super.onCreate(savedInstanceState);
+        bd = DataBindingUtil.setContentView(this, R.layout.activity_person_avatar);
+        super.setContentView(bd.getRoot());
+        initData();
     }
 
     @Override
@@ -56,7 +56,7 @@ public class PersonAvatarActivity extends BaseToolbarActivity {
     }
 
     private void setAvatar(String url) {
-        ImageLoader.loadBigPicture(this, ivAvatar, url);
+        ImageLoader.loadBigPicture(this, bd.ivAvatar, url);
 
     }
 

@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/window_bg"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <include layout="@layout/comm_toolbar" />
-
-    <ListView
-        android:id="@+id/lvNewFriends"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#fff"
-        android:divider="#DADADA"
-        android:dividerHeight="0.1dp" />
+        android:background="@color/window_bg"
+        android:orientation="vertical">
 
-</LinearLayout>
+        <include layout="@layout/comm_toolbar" />
+
+        <ListView
+            android:id="@+id/lvNewFriends"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#fff"
+            android:divider="#DADADA"
+            android:dividerHeight="0.1dp" />
+
+    </LinearLayout>
+</layout>

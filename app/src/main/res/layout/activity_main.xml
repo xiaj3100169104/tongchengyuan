@@ -1,25 +1,187 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <FrameLayout
-        android:id="@+id/fragment_container"
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="0dip"
-        android:background="@color/bg_color"
-        android:layout_weight="1">
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/vp_main_content"
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="fill_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1"
+            android:background="@color/bg_color">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </android.support.v4.view.ViewPager>
+
+        </FrameLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical">
 
-        </android.support.v4.view.ViewPager>
+            <View
+                android:id="@+id/view3"
+                style="@style/divider_horizontal_transparent_black" />
 
-    </FrameLayout>
+            <!-- 普通底部导航 -->
 
-    <include layout="@layout/layout_bottom_main_activity" />
+            <LinearLayout
+                android:id="@+id/main_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:background="#ffffff"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-</LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/re_weixin"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:onClick="onTabClicked"
+                    android:padding="3dp">
+
+                    <RelativeLayout
+                        android:layout_width="60dp"
+                        android:layout_height="match_parent"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/ib_weixin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="28dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="#ffffff"
+                            android:focusable="false"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/tab_weixin" />
+
+                        <TextView
+                            android:id="@+id/tv_weixin"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/ib_weixin"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="3dp"
+                            android:text="@string/chat"
+                            android:textColor="@color/sel_home_tab_text"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/tag_unread_msg"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="8dp"
+                            android:background="@drawable/aii"
+                            android:gravity="center"
+                            android:text="7"
+                            android:textColor="@android:color/white"
+                            android:textSize="12sp"
+                            android:visibility="gone" />
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/re_contact_list"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:onClick="onTabClicked"
+                    android:padding="3dp">
+
+                    <RelativeLayout
+                        android:layout_width="60dp"
+                        android:layout_height="match_parent"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/ib_contact_list"
+                            android:layout_width="wrap_content"
+                            android:layout_height="28dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="#ffffff"
+                            android:focusable="false"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/tab_contact_list" />
+
+                        <TextView
+                            android:id="@+id/tv_contact_list"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/ib_contact_list"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="3dp"
+                            android:text="@string/contacts"
+                            android:textColor="@color/sel_home_tab_text"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/tag_unread_address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="8dp"
+                            android:background="@drawable/aii"
+                            android:gravity="center"
+                            android:text="7"
+                            android:textColor="@android:color/white"
+                            android:textSize="12sp"
+                            android:visibility="gone" />
+                    </RelativeLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/re_find"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:onClick="onTabClicked"
+                    android:padding="3dp">
+
+                    <RelativeLayout
+                        android:layout_width="60dp"
+                        android:layout_height="match_parent"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:id="@+id/ib_find"
+                            android:layout_width="wrap_content"
+                            android:layout_height="28dp"
+                            android:layout_centerHorizontal="true"
+                            android:background="#ffffff"
+                            android:focusable="false"
+                            android:scaleType="centerInside"
+                            android:src="@drawable/tab_find" />
+
+                        <TextView
+                            android:id="@+id/tv_find"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/ib_find"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="3dp"
+                            android:text="@string/discover"
+                            android:textColor="@color/sel_home_tab_text"
+                            android:textSize="12sp" />
+
+                    </RelativeLayout>
+                </RelativeLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

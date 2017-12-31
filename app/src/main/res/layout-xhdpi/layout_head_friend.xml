@@ -1,48 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:custom="http://schemas.android.com/apk/res-auto"
-    android:divider="@drawable/divider_common"
-    android:dividerPadding="@dimen/activity_horizontal_margin"
-    android:orientation="vertical"
-    android:showDividers="middle|end">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto">
 
-    <RelativeLayout
-        android:id="@+id/layout_new_friends"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/height_friends_item"
-        android:background="@drawable/bg_pressed_default"
-        android:clickable="true">
+        android:layout_height="wrap_content"
+        android:divider="@drawable/divider_common"
+        android:dividerPadding="@dimen/activity_horizontal_margin"
+        android:orientation="vertical"
+        android:showDividers="middle|end">
 
-        <ImageView
-            android:id="@+id/ivAvatar"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="12dp"
-            android:src="@drawable/default_fmessage" />
+        <RelativeLayout
+            android:id="@+id/layout_new_friends"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_friends_item"
+            android:background="@drawable/bg_pressed_default"
+            android:clickable="true">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="12dp"
-            android:layout_toRightOf="@id/ivAvatar"
-            android:text="新的朋友"
-            android:textColor="#353535"
-            android:textSize="16sp" />
+            <ImageView
+                android:id="@+id/ivAvatar"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="12dp"
+                android:src="@drawable/default_fmessage" />
 
-        <com.style.view.CustomNotifyView
-            android:id="@+id/view_notify_msg"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="30dp"
-            custom:notifyText="2" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="12dp"
+                android:layout_toRightOf="@id/ivAvatar"
+                android:text="新的朋友"
+                android:textColor="#353535"
+                android:textSize="16sp" />
 
-    </RelativeLayout>
+            <com.style.view.CustomNotifyView
+                android:id="@+id/view_notify_msg"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="30dp"
+                custom:notifyText="2" />
 
-</LinearLayout>
+        </RelativeLayout>
+
+    </LinearLayout>
+</layout>

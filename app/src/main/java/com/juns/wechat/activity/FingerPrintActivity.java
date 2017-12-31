@@ -6,6 +6,7 @@ import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.databinding.DataBindingUtil;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,7 +19,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.same.city.love.R;
-import com.style.base.BaseActivity;
+import com.same.city.love.databinding.ActivityFingerPrintBinding;
 import com.style.base.BaseToolbarActivity;
 
 /**
@@ -27,6 +28,7 @@ import com.style.base.BaseToolbarActivity;
 @RequiresApi(Build.VERSION_CODES.M)
 public class FingerPrintActivity extends BaseToolbarActivity {
 
+    ActivityFingerPrintBinding bd;
     FingerprintManager manager;
     KeyguardManager mKeyManager;
     private final static int REQUEST_CODE_CONFIRM_DEVICE_CREDENTIALS = 0;
@@ -34,8 +36,10 @@ public class FingerPrintActivity extends BaseToolbarActivity {
 
     @Override
     protected void onCreate(Bundle arg0) {
-        mLayoutResID = R.layout.activity_finger_print;
         super.onCreate(arg0);
+        bd = DataBindingUtil.setContentView(this, R.layout.activity_finger_print);
+        super.setContentView(bd.getRoot());
+        initData();
     }
 
     @Override

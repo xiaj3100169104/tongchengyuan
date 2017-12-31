@@ -1,6 +1,5 @@
 package com.style.base;
 
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,10 +13,16 @@ public abstract class BaseToolbarActivity extends BaseActivity {
     private TextView tvTitleBase;
     private ImageView ivBaseToolbarReturn;
 
+    @Override
+    public void setContentView(View mContentView) {
+        super.setContentView(mContentView);
+        customTitleOptions(mContentView);
+    }
+
     protected void customTitleOptions(View mContentView) {
-        toolbar = (Toolbar) mContentView.findViewById(R.id.toolbar);
-        ivBaseToolbarReturn = (ImageView) mContentView.findViewById(R.id.iv_base_toolbar_Return);
-        tvTitleBase = (TextView) mContentView.findViewById(R.id.tv_base_toolbar_title);
+        toolbar = mContentView.findViewById(R.id.toolbar);
+        ivBaseToolbarReturn = mContentView.findViewById(R.id.iv_base_toolbar_Return);
+        tvTitleBase = mContentView.findViewById(R.id.tv_base_toolbar_title);
         if (toolbar != null) {
             toolbar.setTitle("");
             setSupportActionBar(toolbar);

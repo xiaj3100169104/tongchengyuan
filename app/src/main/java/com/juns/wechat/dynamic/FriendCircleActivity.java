@@ -2,41 +2,36 @@ package com.juns.wechat.dynamic;
 
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.alibaba.fastjson.TypeReference;
 import com.github.jdsjlzx.interfaces.OnRefreshListener;
-import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.github.jdsjlzx.recyclerview.ProgressStyle;
-import com.juns.wechat.greendao.mydao.GreenDaoManager;
-import com.same.city.love.R;
 import com.juns.wechat.bean.CommentBean;
 import com.juns.wechat.bean.DynamicBean;
 import com.juns.wechat.bean.UserBean;
+import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.request.HttpActionImpl;
-import com.style.net.core.NetDataBeanCallback;
-import com.makeramen.roundedimageview.RoundedImageView;
+import com.same.city.love.R;
+import com.same.city.love.databinding.ActivityFriendCircleBinding;
+import com.same.city.love.databinding.HeaderFriendCircleBinding;
 import com.style.base.BaseToolbarActivity;
 import com.style.constant.Skip;
 import com.style.manager.ImageLoader;
+import com.style.net.core.NetDataBeanCallback;
 import com.style.view.DividerItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
 
 
 /**
@@ -50,8 +45,8 @@ public class FriendCircleActivity extends BaseToolbarActivity {
     private static final int REPLY_REPLY = 2;
 
     private int tag = COMMENT;
-    @Bind(R.id.list)
-    LRecyclerView mRecyclerView;
+     ActivityFriendCircleBinding bd;
+    private FriendCircleHelper faceHelper;
 
     private static List cacheList;
     private List<DynamicBean> dataList;
@@ -61,15 +56,16 @@ public class FriendCircleActivity extends BaseToolbarActivity {
     private int page = 1;
     private int action = ACTION_REFRESH;
     private UserBean curUser;
-    private FriendCircleHelper faceHelper;
     private int curDynamicPosition;
     private int curCommentPosition;
     private Handler handler = new Handler();
 
     @Override
     protected void onCreate(Bundle arg0) {
-        mLayoutResID = R.layout.activity_friend_circle;
         super.onCreate(arg0);
+        bd = DataBindingUtil.setContentView(this, R.layout.activity_friend_circle);
+        super.setContentView(bd.getRoot());
+        initData();
     }
 
     @Override
@@ -102,29 +98,29 @@ public class FriendCircleActivity extends BaseToolbarActivity {
         dataList = new ArrayList<>();
         mDataAdapter = new DynamicAdapter(this, dataList);
         mLRecyclerViewAdapter = new LRecyclerViewAdapter(mDataAdapter);
-        mRecyclerView.setAdapter(mLRecyclerViewAdapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(this));
-        View header = LayoutInflater.from(this).inflate(R.layout.header_friend_circle, (ViewGroup) mRecyclerView.getParent(), false);
-        mLRecyclerViewAdapter.addHeaderView(header);
-        HeaderViewHolder headerViewHolder = new HeaderViewHolder(header);
-        ImageLoader.loadAvatar(this, headerViewHolder.ivAvatar, curUser.getHeadUrl());
-        headerViewHolder.tvNick.setText(curUser.getShowName());
+        bd.recyclerView.setAdapter(mLRecyclerViewAdapter);
+        bd.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        bd.recyclerView.addItemDecoration(new DividerItemDecoration(this));
+        HeaderFriendCircleBinding header = DataBindingUtil.inflate(mInflater, R.layout.header_friend_circle, (ViewGroup) bd.recyclerView.getParent(), false);
+        //View header = LayoutInflater.from(this).inflate(R.layout.header_friend_circle, (ViewGroup) bd.recyclerView.getParent(), false);
+        mLRecyclerViewAdapter.addHeaderView(header.getRoot());
+        ImageLoader.loadAvatar(this, header.ivAvatar, curUser.getHeadUrl());
+        header.tvNick.setText(curUser.getShowName());
 
         //禁用下拉刷新功能
-        mRecyclerView.setPullRefreshEnabled(true);
+        bd.recyclerView.setPullRefreshEnabled(true);
         //禁用自动加载更多功能
-        mRecyclerView.setLoadMoreEnabled(true);
-        mRecyclerView.setRefreshProgressStyle(ProgressStyle.BallPulse);
-        mRecyclerView.setArrowImageView(R.drawable.ic_pulltorefresh_arrow);
-        mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallPulse);
+        bd.recyclerView.setLoadMoreEnabled(true);
+        bd.recyclerView.setRefreshProgressStyle(ProgressStyle.BallPulse);
+        bd.recyclerView.setArrowImageView(R.drawable.ic_pulltorefresh_arrow);
+        bd.recyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallPulse);
         //设置头部加载颜色
-        mRecyclerView.setHeaderViewColor(R.color.white, android.R.color.white, R.color.bg_refresh_view);
+        bd.recyclerView.setHeaderViewColor(R.color.white, android.R.color.white, R.color.bg_refresh_view);
         //设置底部加载颜色
-        mRecyclerView.setFooterViewColor(R.color.gray, android.R.color.darker_gray, R.color.white);
+        bd.recyclerView.setFooterViewColor(R.color.gray, android.R.color.darker_gray, R.color.white);
         //设置底部加载文字提示
-        mRecyclerView.setFooterViewHint("拼命加载中", "已经全部为你呈现了", "网络不给力啊，点击再试一次吧");
-        mRecyclerView.setOnRefreshListener(new OnRefreshListener() {
+        bd.recyclerView.setFooterViewHint("拼命加载中", "已经全部为你呈现了", "网络不给力啊，点击再试一次吧");
+        bd.recyclerView.setOnRefreshListener(new OnRefreshListener() {
 
             @Override
             public void onRefresh() {
@@ -169,15 +165,8 @@ public class FriendCircleActivity extends BaseToolbarActivity {
                 }
             }
         });
-        faceHelper.btSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String content = faceHelper.etContent.getText().toString();
-                addComment2Dynamic(content);
 
-            }
-        });
-        mRecyclerView.setOnTouchListener(new View.OnTouchListener() {
+        bd.recyclerView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 faceHelper.hideAllLayout();
@@ -200,7 +189,7 @@ public class FriendCircleActivity extends BaseToolbarActivity {
         }, 500);
     }
 
-    private void addComment2Dynamic(final String content) {
+    public void addComment2Dynamic(String content) {
         final DynamicBean dynamicBean = dataList.get(curDynamicPosition);
         String replyUserId = null;//表示直接评论动态
         if (tag == REPLY) {
@@ -277,9 +266,9 @@ public class FriendCircleActivity extends BaseToolbarActivity {
             offset = dataList.size();
         }
         List<DynamicBean> data = GreenDaoManager.getInstance().queryByPage(offset, 5, curUser.getUserId());
-        mRecyclerView.refreshComplete(5);
+        bd.recyclerView.refreshComplete(5);
         if (data != null && data.size() > 0) {
-            mRecyclerView.setLoadMoreEnabled(true);
+            bd.recyclerView.setLoadMoreEnabled(true);
 
             if (action == ACTION_REFRESH) {
                 List<CommentBean> commentList = new ArrayList<>();
@@ -311,7 +300,7 @@ public class FriendCircleActivity extends BaseToolbarActivity {
             mDataAdapter.notifyDataSetChanged();
         } else {
             //the end
-            mRecyclerView.setNoMore(true);
+            bd.recyclerView.setNoMore(true);
         }
     }
 
@@ -343,16 +332,5 @@ public class FriendCircleActivity extends BaseToolbarActivity {
         super.onDestroy();
         //  If null, all callbacks and messages will be removed.
         handler.removeCallbacksAndMessages(null);
-    }
-
-    static class HeaderViewHolder {
-        @Bind(R.id.tv_nick)
-        TextView tvNick;
-        @Bind(R.id.iv_avatar)
-        RoundedImageView ivAvatar;
-
-        public HeaderViewHolder(View itemView) {
-            ButterKnife.bind(this, itemView);
-        }
     }
 }

@@ -2,6 +2,7 @@ package com.juns.wechat.adpter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,6 +19,7 @@ import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.bean.InviteMsgData;
 import com.juns.wechat.common.ViewHolder;
 import com.juns.wechat.net.request.HttpActionImpl;
+import com.same.city.love.databinding.LayoutItemNewfriendBinding;
 import com.style.net.core.NetDataBeanCallback;
 import com.juns.wechat.util.SyncDataUtil;
 import com.juns.wechat.chat.xmpp.util.SendMessage;
@@ -60,8 +62,8 @@ public class NewFriendsAdapter extends BaseAdapter {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(
-                    R.layout.layout_item_newfriend, parent, false);
+            LayoutItemNewfriendBinding bd = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.layout_item_newfriend, parent, false);
+            convertView = bd.getRoot();
         }
         ImageView ivAvatar = ViewHolder.get(convertView, R.id.ivAvatar);
         TextView txt_name = ViewHolder.get(convertView, R.id.tv_title);

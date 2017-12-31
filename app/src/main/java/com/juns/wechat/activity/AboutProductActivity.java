@@ -1,27 +1,29 @@
 package com.juns.wechat.activity;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.same.city.love.R;
+import com.same.city.love.databinding.ActivityAboutAppBinding;
 import com.style.base.BaseToolbarActivity;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-import butterknife.Bind;
 
 public class AboutProductActivity extends BaseToolbarActivity {
 
-    @Bind(R.id.tv_content)
-    TextView tvContent;
+    ActivityAboutAppBinding bd;
     private static String text;//静态缓存
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mLayoutResID = R.layout.activity_about_app;
         super.onCreate(savedInstanceState);
+        bd = DataBindingUtil.setContentView(this, R.layout.activity_about_app);
+        super.setContentView(bd.getRoot());
+        initData();
     }
 
     @Override
@@ -43,6 +45,6 @@ public class AboutProductActivity extends BaseToolbarActivity {
             }
         }
         // Finally stick the string into the text view.
-        tvContent.setText(getNotNullText(text));
+        bd.tvContent.setText(getNotNullText(text));
     }
 }

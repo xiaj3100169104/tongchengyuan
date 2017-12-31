@@ -1,5 +1,6 @@
 package com.juns.wechat.activity;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -7,27 +8,27 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.same.city.love.R;
+import com.same.city.love.databinding.ActivityAddFriendFinalBinding;
 import com.style.base.BaseToolbarActivity;
 import com.juns.wechat.chat.xmpp.util.SendMessage;
 import com.style.constant.Skip;
 
-import butterknife.Bind;
-
 public class AddFriendFinalActivity extends BaseToolbarActivity {
-    @Bind(R.id.etReason)
-    EditText etReason;
+    ActivityAddFriendFinalBinding bd;
 
     private String wantToAddUser;
 
     @Override
-    public void initData() {
-        wantToAddUser = getIntent().getStringExtra(Skip.KEY_USER_ID);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        bd = DataBindingUtil.setContentView(this, R.layout.activity_add_friend_final);
+        super.setContentView(bd.getRoot());
+        initData();
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        mLayoutResID = R.layout.activity_add_friend_final;
-        super.onCreate(savedInstanceState);
+    public void initData() {
+        wantToAddUser = getIntent().getStringExtra(Skip.KEY_USER_ID);
     }
 
     @Override
@@ -48,7 +49,7 @@ public class AddFriendFinalActivity extends BaseToolbarActivity {
     }
 
     private void goonNext() {
-        String reason = etReason.getText().toString();
+        String reason = bd.etReason.getText().toString();
         if (TextUtils.isEmpty(reason)) {
             showToastLong("请输入添加好友理由");
             return;

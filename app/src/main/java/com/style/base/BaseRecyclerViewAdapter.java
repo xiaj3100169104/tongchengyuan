@@ -94,9 +94,9 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Re
         notifyDataSetChanged();
     }
 
-    public void setOnItemClickListener(RecyclerView.ViewHolder holder, final int position) {
+    public void setOnItemClickListener(View holder, final int position) {
         if (onItemClickListener != null) {
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
+            holder.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (onItemClickListener != null)
@@ -106,9 +106,9 @@ public abstract class BaseRecyclerViewAdapter<T> extends RecyclerView.Adapter<Re
         }
     }
 
-    public void setOnItemLongClickListener(RecyclerView.ViewHolder holder, final int position) {
+    public void setOnItemLongClickListener(View holder, final int position) {
         if (onItemLongClickListener != null) {
-            holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            holder.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
                     if (onItemLongClickListener != null)

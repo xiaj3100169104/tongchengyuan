@@ -3,7 +3,7 @@ package com.juns.wechat.helper;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.juns.wechat.App;
+import com.juns.wechat.app.App;
 import com.same.city.love.R;
 import com.juns.wechat.bean.UserBean;
 import com.style.manager.ImageLoader;

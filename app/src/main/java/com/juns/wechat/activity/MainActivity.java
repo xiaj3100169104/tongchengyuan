@@ -2,27 +2,20 @@ package com.juns.wechat.activity;
 
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.os.Process;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.juns.wechat.adpter.MainAdapter;
-import com.juns.wechat.bean.DynamicBean;
-import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.chat.xmpp.event.XmppEvent;
 import com.juns.wechat.fragment.Fragment_Discover;
 import com.juns.wechat.fragment.Fragment_Friends;
@@ -30,52 +23,25 @@ import com.juns.wechat.fragment.msg.Fragment_Msg;
 import com.juns.wechat.helper.CommonViewHelper;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.service.XmppService;
-import com.juns.wechat.util.LogUtil;
 import com.same.city.love.R;
-import com.style.event.EventCode;
+import com.same.city.love.databinding.ActivityMain2Binding;
 import com.style.base.BaseActivity;
-import com.style.utils.StringUtil;
+import com.style.event.EventCode;
 
-import org.simple.eventbus.EventBus;
 import org.simple.eventbus.Subscriber;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
-    @Bind(R.id.ivAvatar)
-    ImageView ivAvatar;
-    @Bind(R.id.tvNickName)
-    TextView tvNickName;
-    @Bind(R.id.tvUserName)
-    TextView tvUserName;
-    @Bind(R.id.layout_left_menu_1)
-    LinearLayout layoutLeftMenu1;
-    @Bind(R.id.layout_left_menu_2)
-    LinearLayout layoutLeftMenu2;
-    @Bind(R.id.layout_left_menu_3)
-    LinearLayout layoutLeftMenu3;
-    @Bind(R.id.layout_left_menu_4)
-    LinearLayout layoutLeftMenu4;
-    @Bind(R.id.layout_left_menu_5)
-    LinearLayout layoutLeftMenu5;
-    @Bind(R.id.layout_left_menu_6)
-    LinearLayout layoutLeftMenu6;
-    @Bind(R.id.layout_left_menu_7)
-    LinearLayout layoutLeftMenu7;
-    private ViewPager vpMainContent;
-    private TextView unreaMsgdLabel;// 未读消息textview
-    private TextView unreadAddressLable;// 未读通讯录textview
+    ActivityMain2Binding bd;
+
     private ImageView[] imagebuttons;
     private TextView[] textviews;
     private int index;
 
     private MainAdapter mainAdapter;
-    DrawerLayout drawer;
     private Fragment_Msg fragmentMsg;
     private Fragment_Friends fragmentFriends;
     private Fragment_Discover fragmentDicover;
@@ -87,26 +53,22 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        mLayoutResID = R.layout.activity_main2;
         super.onCreate(savedInstanceState);
+        bd = DataBindingUtil.setContentView(this, R.layout.activity_main2);
+        super.setContentView(bd.getRoot());
+        initData();
     }
 
     @Override
     public void initData() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(bd.main.toolbar);
 
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, bd.drawerLayout, bd.main.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        bd.drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
         initView();
         XmppService.login(this);
 
-        int userId = Process.myUid();
-
-        //new Watcher(this).createAppMonitor(userId + "");
     }
 
     @Override
@@ -139,20 +101,16 @@ public class MainActivity extends BaseActivity {
 
     private void initView() {
 
-        unreaMsgdLabel = (TextView) findViewById(R.id.tv_unread_msg_number);
-        unreadAddressLable = (TextView) findViewById(R.id.unread_contact_number);
-
         imagebuttons = new ImageView[3];
-        imagebuttons[0] = (ImageView) findViewById(R.id.ib_weixin);
-        imagebuttons[1] = (ImageView) findViewById(R.id.ib_contact_list);
-        imagebuttons[2] = (ImageView) findViewById(R.id.ib_find);
+        imagebuttons[0] = bd.main.body.ibWeixin;
+        imagebuttons[1] = bd.main.body.ibContactList;
+        imagebuttons[2] = bd.main.body.ibFind;
 
         textviews = new TextView[3];
-        textviews[0] = (TextView) findViewById(R.id.tv_weixin);
-        textviews[1] = (TextView) findViewById(R.id.tv_contact_list);
-        textviews[2] = (TextView) findViewById(R.id.tv_find);
+        textviews[0] = bd.main.body.tvWeixin;
+        textviews[1] = bd.main.body.tvContactList;
+        textviews[2] = bd.main.body.tvFind;
 
-        vpMainContent = (ViewPager) findViewById(R.id.vp_main_content);
         List<Fragment> fragments = new ArrayList<>();
         fragmentMsg = new Fragment_Msg();
         fragmentFriends = new Fragment_Friends();
@@ -162,9 +120,9 @@ public class MainActivity extends BaseActivity {
         fragments.add(fragmentDicover);
 
         mainAdapter = new MainAdapter(getSupportFragmentManager(), fragments);
-        vpMainContent.setOffscreenPageLimit(3);
-        vpMainContent.setAdapter(mainAdapter);
-        vpMainContent.addOnPageChangeListener(pageChangeListener);
+        bd.main.body.viewpager.setOffscreenPageLimit(3);
+        bd.main.body.viewpager.setAdapter(mainAdapter);
+        bd.main.body.viewpager.addOnPageChangeListener(pageChangeListener);
 
         setSelectedIndex(0);
 
@@ -184,7 +142,7 @@ public class MainActivity extends BaseActivity {
                 break;
         }
         setSelectedIndex(index);
-        vpMainContent.setCurrentItem(index, false);
+        bd.main.body.viewpager.setCurrentItem(index, false);
     }
 
     private void setSelectedIndex(int index) {
@@ -224,7 +182,7 @@ public class MainActivity extends BaseActivity {
 
     private void updateUserView() {
         UserBean curUser = AccountManager.getInstance().getUser();
-        CommonViewHelper.setUserViewInfo(curUser, ivAvatar, tvNickName, null, tvUserName, true);
+        CommonViewHelper.setUserViewInfo(curUser, bd.menu.ivAvatar, bd.menu.tvNickName, null, bd.menu.tvUserName, true);
 
     }
 
@@ -247,44 +205,44 @@ public class MainActivity extends BaseActivity {
 
     public void setUnreadMsgLabel(int unreadNum) {
         if (unreadNum > 0) {
-            unreaMsgdLabel.setText(unreadNum + "");
-            unreaMsgdLabel.setVisibility(View.VISIBLE);
+            bd.main.body.tagUnreadMsg.setText(unreadNum + "");
+            bd.main.body.tagUnreadMsg.setVisibility(View.VISIBLE);
         } else {
-            unreaMsgdLabel.setVisibility(View.GONE);
+            bd.main.body.tagUnreadMsg.setVisibility(View.GONE);
         }
     }
 
     public void setUnreadInviteMsgLabel(int unreadNum) {
         if (unreadNum > 0) {
-            unreadAddressLable.setText(unreadNum + "");
-            unreadAddressLable.setVisibility(View.VISIBLE);
+            bd.main.body.tagUnreadAddress.setText(unreadNum + "");
+            bd.main.body.tagUnreadAddress.setVisibility(View.VISIBLE);
         } else {
-            unreadAddressLable.setVisibility(View.GONE);
+            bd.main.body.tagUnreadAddress.setVisibility(View.GONE);
         }
     }
 
     @Override
     public void onBackPressed() {
         if (isDrawerOpen()) {
-            drawer.closeDrawer(GravityCompat.START);
+            closeDrawer();
         } else {
             this.moveTaskToBack(true);
         }
     }
 
     private boolean isDrawerOpen() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
+        if (bd.drawerLayout.isDrawerOpen(GravityCompat.START)) {
             return true;
         }
         return false;
     }
 
     private void openDrawer() {
-        drawer.openDrawer(GravityCompat.START);
+        bd.drawerLayout.openDrawer(GravityCompat.START);
     }
 
     private void closeDrawer() {
-        drawer.closeDrawer(GravityCompat.START);
+        bd.drawerLayout.closeDrawer(GravityCompat.START);
     }
 
     private ViewPager.OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
@@ -304,43 +262,19 @@ public class MainActivity extends BaseActivity {
         }
     };
 
-    @OnClick(R.id.layout_left_menu_header)
-    public void onClickEvent() {
+    public void onClickEvent(View v) {
         startActivity(new Intent(this, PersonInfoShowActivity.class));
     }
 
-    @OnClick(R.id.layout_left_menu_1)
-    public void onClickEvent1() {
-        //skip(EditBaseInfoActivity.class);
-    }
-
-    @OnClick(R.id.layout_left_menu_2)
-    public void onClickEvent2() {
-        //skip(EditBaseInfoActivity.class);
-    }
-
-    @OnClick(R.id.layout_left_menu_3)
-    public void onClickEvent3() {
-        //skip(EditBaseInfoActivity.class);
-    }
-
-    @OnClick(R.id.layout_left_menu_4)
-    public void onClickEvent4() {
-        //  skip(EditBaseInfoActivity.class);
-    }
-
-    @OnClick(R.id.layout_left_menu_5)
-    public void onClickEvent5() {
+    public void onClickEvent5(View v) {
         skip(MyQRCodeActivity.class);
     }
 
-    @OnClick(R.id.layout_left_menu_6)
-    public void onClickEvent6() {
+    public void onClickEvent6(View v) {
         skip(QRScanActivity.class);
     }
 
-    @OnClick(R.id.layout_left_menu_7)
-    public void onClickEvent7() {
+    public void onClickEvent7(View v) {
         skip(SettingActivity.class);
     }
 

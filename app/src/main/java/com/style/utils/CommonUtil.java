@@ -29,12 +29,10 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 
-import com.juns.wechat.App;
+import com.juns.wechat.app.App;
 import com.same.city.love.R;
-import com.style.constant.MyAction;
 import com.style.constant.Skip;
 import com.style.manager.ToastManager;
 

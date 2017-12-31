@@ -1,41 +1,34 @@
 package com.juns.wechat.activity;
 
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.widget.CompoundButton;
-import android.widget.Switch;
 
-import com.juns.wechat.manager.AccountManager;
 import com.same.city.love.R;
+import com.same.city.love.databinding.ActivitySettingPushNotifyBinding;
 import com.style.base.BaseToolbarActivity;
-
-import butterknife.Bind;
 
 
 public class SettingNewMessageActivity extends BaseToolbarActivity implements CompoundButton.OnCheckedChangeListener {
 
-    @Bind(R.id.switch_ringtone)
-    Switch switchRingtone;
-    @Bind(R.id.switch_vibrate)
-    Switch switchVibrate;
-    @Bind(R.id.switch_show_message)
-    Switch switchShowMessage;
+    ActivitySettingPushNotifyBinding bd;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        mLayoutResID = R.layout.activity_setting_push_notify;
         super.onCreate(savedInstanceState);
-
+        bd = DataBindingUtil.setContentView(this, R.layout.activity_setting_push_notify);
+        super.setContentView(bd.getRoot());
+        initData();
     }
 
     @Override
     public void initData() {
         setToolbarTitle("新消息通知");
 
-        switchShowMessage.setOnCheckedChangeListener(this);
-        switchRingtone.setOnCheckedChangeListener(this);
-        switchVibrate.setOnCheckedChangeListener(this);
-
+        bd.switchShowMessage.setOnCheckedChangeListener(this);
+        bd.switchRingtone.setOnCheckedChangeListener(this);
+        bd.switchVibrate.setOnCheckedChangeListener(this);
     }
 
     @Override

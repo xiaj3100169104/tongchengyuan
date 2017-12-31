@@ -1,4 +1,4 @@
-package com.juns.wechat;
+package com.juns.wechat.app;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,6 +19,7 @@ import com.juns.wechat.chat.utils.SmileUtils;
 import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.request.HttpActionImpl;
+import com.style.manager.AppManager;
 import com.uuzuche.lib_zxing.activity.ZXingLibrary;
 
 import cn.smssdk.SMSSDK;
@@ -38,10 +39,11 @@ public class App extends Application {
         SDKInitializer.initialize(this);
         //Thread.setDefaultUncaughtExceptionHandler(new CustomExceptionHandler());
         ZXingLibrary.initDisplayOpinion(this);
+        AppManager.getInstance().init(mContext);
+        GreenDaoManager.getInstance().initialize(mContext);
         AccountManager.getInstance().init(mContext);
         HttpActionImpl.getInstance().init();
         SmileUtils.getInstance().init(mContext);
-        GreenDaoManager.getInstance().initialize(mContext);
         /*// 设置拍摄视频缓存路径
         VCamera.setVideoCachePath(FileConfig.DIR_CACHE);
 		// 开启log输出,ffmpeg输出到logcat

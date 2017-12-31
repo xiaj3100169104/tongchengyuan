@@ -1,27 +1,19 @@
 package uk.viewpager;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.same.city.love.R;
+import com.same.city.love.databinding.FragmentDynamicImageDetailBinding;
 import com.style.base.BaseFragment;
 import com.style.manager.ImageLoader;
 import com.style.net.image.FileDownloadManager;
 
-import butterknife.Bind;
-
 public class ImageDetailFragment extends BaseFragment {
-    @Bind(R.id.image)
-    ImageView image;
-    @Bind(R.id.progressbar)
-    ProgressBar progressBar;
-    @Bind(R.id.tv_percent)
-    TextView tvPercent;
+    FragmentDynamicImageDetailBinding bd;
     private String imgName;
     private String url;
 
@@ -36,22 +28,22 @@ public class ImageDetailFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mLayoutResID = R.layout.fragment_dynamic_image_detail;
-        return super.onCreateView(inflater, container, savedInstanceState);
+        bd = DataBindingUtil.inflate(inflater, R.layout.fragment_dynamic_image_detail, container, false);
+        return bd.getRoot();
     }
 
     @Override
     protected void initData() {
 
-        progressBar.setVisibility(View.GONE);
-        tvPercent.setVisibility(View.GONE);
+        bd.progressbar.setVisibility(View.GONE);
+        bd.tvPercent.setVisibility(View.GONE);
         Bundle args = getArguments();
         if (args != null) {
             logE(TAG, "args不为空");
             imgName = args.getString("imgName");
         }
         logE(TAG, "文件名" + imgName);
-        ImageLoader.loadPictureByName(mContext, image, imgName);
+        ImageLoader.loadPictureByName(getContext(), bd.image, imgName);
         return;
 
        /* String path = FileConfig.DIR_CACHE + "/" + imgName;
@@ -94,10 +86,10 @@ public class ImageDetailFragment extends BaseFragment {
     }
 
     private void fileExist(String path) {
-        progressBar.setVisibility(View.GONE);
-        tvPercent.setVisibility(View.GONE);
+        bd.progressbar.setVisibility(View.GONE);
+        bd.tvPercent.setVisibility(View.GONE);
         logE(TAG, path);
-        ImageLoader.loadBigPicture(getContext(), image, path);
+        ImageLoader.loadBigPicture(getContext(), bd.image, path);
        /* PhotoViewAttacher attacher = new PhotoViewAttacher(image);
         attacher.update();*/
 

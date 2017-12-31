@@ -2,14 +2,15 @@ package com.juns.wechat.activity;
 
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.DatePicker;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.juns.wechat.bean.UserBasicInfo;
@@ -17,6 +18,7 @@ import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.juns.wechat.manager.AccountManager;
 import com.same.city.love.R;
+import com.same.city.love.databinding.ActivityPersonInfoBasicBinding;
 import com.style.base.BaseToolbarActivity;
 import com.style.dialog.EditAlertDialog;
 import com.style.event.EventCode;
@@ -25,51 +27,14 @@ import com.style.utils.CommonUtil;
 
 import java.util.Calendar;
 
-import butterknife.Bind;
-import butterknife.OnClick;
 
 /**
  * Created by xiajun on 2017/5/9.
  */
 
-public class PersonInfoEditBasicActivity extends BaseToolbarActivity {
+public class PersonInfoEditBasicActivity extends BaseToolbarActivity implements View.OnClickListener {
 
-    @Bind(R.id.tv_sex)
-    TextView tvSex;
-    @Bind(R.id.tv_name)
-    TextView tvName;
-    @Bind(R.id.tv_birthday)
-    TextView tvBirthday;
-
-    @Bind(R.id.tv_emotion)
-    TextView tvEmotion;
-    @Bind(R.id.layout_emotion)
-    LinearLayout layoutEmotion;
-    @Bind(R.id.tv_education)
-    TextView tvEducation;
-    @Bind(R.id.layout_education)
-    LinearLayout layoutEducation;
-    @Bind(R.id.tv_industry)
-    TextView tvIndustry;
-    @Bind(R.id.layout_industry)
-    LinearLayout layoutIndustry;
-    @Bind(R.id.tv_work_area)
-    TextView tvWorkArea;
-    @Bind(R.id.layout_work_area)
-    LinearLayout layoutWorkArea;
-    @Bind(R.id.tv_company_info)
-    TextView tvCompanyInfo;
-    @Bind(R.id.layout_company_info)
-    LinearLayout layoutCompanyInfo;
-    @Bind(R.id.tv_hometown_info)
-    TextView tvHometownInfo;
-    @Bind(R.id.layout_hometown_info)
-    LinearLayout layoutHometownInfo;
-    @Bind(R.id.tv_my_heart)
-    TextView tvMyHeart;
-    @Bind(R.id.layout_my_heart)
-    LinearLayout layoutMyHeart;
-
+    ActivityPersonInfoBasicBinding bd;
     private UserBean curUser;
 
     private String[] sexList = {"男", "女"};
@@ -78,8 +43,10 @@ public class PersonInfoEditBasicActivity extends BaseToolbarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mLayoutResID = R.layout.activity_person_info_basic;
         super.onCreate(savedInstanceState);
+        bd = DataBindingUtil.setContentView(this, R.layout.activity_person_info_basic);
+        super.setContentView(bd.getRoot());
+        initData();
     }
 
     @Override
@@ -105,42 +72,37 @@ public class PersonInfoEditBasicActivity extends BaseToolbarActivity {
         curUser = AccountManager.getInstance().getUser();
 
         String nickName = curUser.getNickName();
-        tvName.setText(getNotNullText(nickName));
+        bd.tvName.setText(getNotNullText(nickName));
         String sex = curUser.getSex();
-        tvSex.setText(UserBean.Sex.isMan(sex) ? "男" : "女");
-        tvBirthday.setText(getNotNullText(curUser.getBirthday()));
+        bd.tvSex.setText(UserBean.Sex.isMan(sex) ? "男" : "女");
+        bd.tvBirthday.setText(getNotNullText(curUser.getBirthday()));
 
         userBasicInfo = GreenDaoManager.getInstance().queryUserBasic(curUser.getUserId());
         setUserBasicInfo(userBasicInfo);
+
+        bd.layoutSex.setOnClickListener(this);
+        bd.layoutName.setOnClickListener(this);
+        bd.layoutBirthday.setOnClickListener(this);
+        bd.basicInfo.layoutEmotion.setOnClickListener(this);
+        bd.basicInfo.layoutEducation.setOnClickListener(this);
+        bd.basicInfo.layoutIndustry.setOnClickListener(this);
+        bd.basicInfo.layoutWorkArea.setOnClickListener(this);
+        bd.basicInfo.layoutCompanyInfo.setOnClickListener(this);
+        bd.basicInfo.layoutHometownInfo.setOnClickListener(this);
+        bd.basicInfo.tvMyHeart.setOnClickListener(this);
 
     }
 
     private void setUserBasicInfo(UserBasicInfo u) {
         if (u != null) {
-            tvEmotion.setText(getNotNullText(u.getEmotion()));
-            tvEducation.setText(getNotNullText(u.getEducation()));
-            tvIndustry.setText(getNotNullText(u.getIndustry()));
-            tvWorkArea.setText(getNotNullText(u.getWorkArea()));
-            tvCompanyInfo.setText(getNotNullText(u.getCompanyInfo()));
-            tvHometownInfo.setText(getNotNullText(u.getHometownInfo()));
-            tvMyHeart.setText(getNotNullText(u.getMyHeart()));
+            bd.basicInfo.tvEmotion.setText(getNotNullText(u.getEmotion()));
+            bd.basicInfo.tvEducation.setText(getNotNullText(u.getEducation()));
+            bd.basicInfo.tvIndustry.setText(getNotNullText(u.getIndustry()));
+            bd.basicInfo.tvWorkArea.setText(getNotNullText(u.getWorkArea()));
+            bd.basicInfo.tvCompanyInfo.setText(getNotNullText(u.getCompanyInfo()));
+            bd.basicInfo.tvHometownInfo.setText(getNotNullText(u.getHometownInfo()));
+            bd.basicInfo.tvMyHeart.setText(getNotNullText(u.getMyHeart()));
         }
-    }
-
-    @OnClick(R.id.layout_sex)
-    public void selectSex() {
-        openSelectSex(sexList, tvSex);
-    }
-
-    @OnClick(R.id.layout_name)
-    public void editName() {
-        openEdit(tvName);
-    }
-
-
-    @OnClick(R.id.layout_birthday)
-    public void selectBirthday() {
-        openSelectBirthday();
     }
 
 
@@ -167,7 +129,7 @@ public class PersonInfoEditBasicActivity extends BaseToolbarActivity {
     }
 
     private void openSelectBirthday() {
-        strBirthday = tvBirthday.getText().toString();
+        strBirthday = bd.tvBirthday.getText().toString();
         Calendar calendar = Calendar.getInstance();
         if (TextUtils.isEmpty(strBirthday))
             calendar.set(1990, 0, 1);
@@ -219,28 +181,44 @@ public class PersonInfoEditBasicActivity extends BaseToolbarActivity {
     }
 
     private void setBirthday() {
-        tvBirthday.setText(strBirthday);
+        bd.tvBirthday.setText(strBirthday);
 
     }
 
-    @OnClick(R.id.layout_emotion)
-    public void modifyInfo3() {
-        openSingleSelect(getResources().getStringArray(R.array.emotion), tvEmotion);
-    }
-
-    @OnClick(R.id.layout_education)
-    public void modifyInfo4() {
-        openSingleSelect(getResources().getStringArray(R.array.education), tvEducation);
-    }
-
-    @OnClick(R.id.layout_industry)
-    public void modifyInfo() {
-        openSingleSelect(getResources().getStringArray(R.array.industry), tvIndustry);
-    }
-
-    @OnClick(R.id.layout_work_area)
-    public void modifyInfo2() {
-        openSingleSelect(getResources().getStringArray(R.array.occupations), tvWorkArea);
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.layout_sex:
+                openSelectSex(sexList, bd.tvSex);
+                break;
+            case R.id.layout_name:
+                openEdit(bd.tvName);
+                break;
+            case R.id.layout_birthday:
+                openSelectBirthday();
+                break;
+            case R.id.layout_emotion:
+                openSingleSelect(getResources().getStringArray(R.array.emotion), bd.basicInfo.tvEmotion);
+                break;
+            case R.id.layout_education:
+                openSingleSelect(getResources().getStringArray(R.array.education), bd.basicInfo.tvEducation);
+                break;
+            case R.id.layout_industry:
+                openSingleSelect(getResources().getStringArray(R.array.industry), bd.basicInfo.tvIndustry);
+                break;
+            case R.id.layout_work_area:
+                openSingleSelect(getResources().getStringArray(R.array.occupations), bd.basicInfo.tvWorkArea);
+                break;
+            case R.id.layout_company_info:
+                openEdit(bd.basicInfo.tvCompanyInfo);
+                break;
+            case R.id.layout_hometown_info:
+                openEdit(bd.basicInfo.tvHometownInfo);
+                break;
+            case R.id.layout_my_heart:
+                openEdit(bd.basicInfo.tvMyHeart);
+                break;
+        }
     }
 
     public int p2 = 0;
@@ -285,20 +263,6 @@ public class PersonInfoEditBasicActivity extends BaseToolbarActivity {
         singleDialog.show();
     }
 
-    @OnClick(R.id.layout_company_info)
-    public void modifyInfo5() {
-        openEdit(tvCompanyInfo);
-    }
-
-    @OnClick(R.id.layout_hometown_info)
-    public void modifyInfo6() {
-        openEdit(tvHometownInfo);
-    }
-
-    @OnClick(R.id.layout_my_heart)
-    public void modifyInfo7() {
-        openEdit(tvMyHeart);
-    }
 
     private void openEdit(final TextView textView) {
         String name = textView.getText().toString();
@@ -321,16 +285,16 @@ public class PersonInfoEditBasicActivity extends BaseToolbarActivity {
 
     private void saveInfo() {
 
-        String name = tvName.getText().toString();
-        String sex = tvSex.getText().toString();
-        String birthday = tvBirthday.getText().toString();
-        String education = tvEducation.getText().toString();
-        String emotion = tvEmotion.getText().toString();
-        String industry = tvIndustry.getText().toString();
-        String workArea = tvWorkArea.getText().toString();
-        String companyInfo = tvCompanyInfo.getText().toString();
-        String hometownInfo = tvHometownInfo.getText().toString();
-        String myHeart = tvMyHeart.getText().toString();
+        String name = bd.tvName.getText().toString();
+        String sex = bd.tvSex.getText().toString();
+        String birthday = bd.tvBirthday.getText().toString();
+        String education = bd.basicInfo.tvEducation.getText().toString();
+        String emotion = bd.basicInfo.tvEmotion.getText().toString();
+        String industry = bd.basicInfo.tvIndustry.getText().toString();
+        String workArea = bd.basicInfo.tvWorkArea.getText().toString();
+        String companyInfo = bd.basicInfo.tvCompanyInfo.getText().toString();
+        String hometownInfo = bd.basicInfo.tvHometownInfo.getText().toString();
+        String myHeart = bd.basicInfo.tvMyHeart.getText().toString();
 
         curUser.setNickName(name);
         curUser.setSex(sex);

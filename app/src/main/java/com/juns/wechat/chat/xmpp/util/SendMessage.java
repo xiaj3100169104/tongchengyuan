@@ -3,7 +3,7 @@ package com.juns.wechat.chat.xmpp.util;
 
 import android.widget.Toast;
 
-import com.juns.wechat.App;
+import com.juns.wechat.app.App;
 import com.juns.wechat.chat.bean.InviteMsgData;
 import com.juns.wechat.chat.bean.LocationMsgData;
 import com.juns.wechat.chat.bean.MessageBean;

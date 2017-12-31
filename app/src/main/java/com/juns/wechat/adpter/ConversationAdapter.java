@@ -1,29 +1,23 @@
 package com.juns.wechat.adpter;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
-import com.same.city.love.R;
+
 import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.utils.SmileUtils;
 import com.juns.wechat.fragment.msg.MsgItem;
-import com.juns.wechat.util.TimeUtil;
-import com.juns.wechat.widget.swipe.SwipeLayout;
+import com.same.city.love.R;
+import com.same.city.love.databinding.LayoutItemMsgBinding;
 import com.style.base.BaseRecyclerViewAdapter;
 import com.style.manager.ImageLoader;
 import com.style.utils.MyDateUtil;
 
 import java.util.List;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Created by 王者 on 2016/8/9.
@@ -36,7 +30,8 @@ public class ConversationAdapter extends BaseRecyclerViewAdapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(mInflater.inflate(R.layout.layout_item_msg, parent, false));
+        LayoutItemMsgBinding bd = DataBindingUtil.inflate(mInflater, R.layout.layout_item_msg, parent, false);
+        return new ViewHolder(bd);
     }
 
     @Override
@@ -47,52 +42,31 @@ public class ConversationAdapter extends BaseRecyclerViewAdapter {
         UserBean u = msgItem.user;
         if (u != null) {
             logE(TAG, u.getHeadUrl());
-            ImageLoader.loadAvatar(mContext, holder.ivAvatar, u.getHeadUrl());
+            ImageLoader.loadAvatar(mContext, holder.bd.ivAvatar, u.getHeadUrl());
         }
         if (f != null && u != null) {
             String showName = !TextUtils.isEmpty(f.getRemark()) ? f.getRemark() : u.getShowName();
-            holder.tvTitle.setText(getNotNullText(showName));
+            holder.bd.tvTitle.setText(getNotNullText(showName));
         }
         int unreadMsgCount = msgItem.unreadMsgCount;
         if(unreadMsgCount == 0){
-            holder.tvUnreadMsgNumber.setVisibility(View.GONE);
+            holder.bd.tvUnreadMsgNumber.setVisibility(View.GONE);
         }else {
-            holder.tvUnreadMsgNumber.setVisibility(View.VISIBLE);
-            holder.tvUnreadMsgNumber.setText(unreadMsgCount + "");
+            holder.bd.tvUnreadMsgNumber.setVisibility(View.VISIBLE);
+            holder.bd.tvUnreadMsgNumber.setText(unreadMsgCount + "");
         }
-        holder.tvContent.setText(getNotNullText(SmileUtils.getInstance().getSmiledText(msgItem.msg.getTypeDesc())));
-        holder.tvTime.setText(getNotNullText(MyDateUtil.getTimeConversationString(msgItem.msg.getDate().getTime())));
-        super.setOnItemClickListener(holder, position);
-
+        holder.bd.tvContent.setText(getNotNullText(SmileUtils.getInstance().getSmiledText(msgItem.msg.getTypeDesc())));
+        holder.bd.tvTime.setText(getNotNullText(MyDateUtil.getTimeConversationString(msgItem.msg.getDate().getTime())));
+        super.setOnItemClickListener(holder.itemView, position);
+        holder.bd.executePendingBindings();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-       /* @Bind(R.id.txt_del)
-        TextView txtDel;
-        @Bind(R.id.layout_back)
-        LinearLayout layoutBack;*/
-        @Bind(R.id.iv_avatar)
-        ImageView ivAvatar;
-        @Bind(R.id.tv_unread_msg_number)
-        TextView tvUnreadMsgNumber;
-        @Bind(R.id.avatar_container)
-        RelativeLayout avatarContainer;
-        @Bind(R.id.tv_title)
-        TextView tvTitle;
-        @Bind(R.id.txt_state)
-        TextView txtState;
-        @Bind(R.id.tv_content)
-        TextView tvContent;
-        @Bind(R.id.tv_time)
-        TextView tvTime;
-        @Bind(R.id.contact_item_layout)
-        LinearLayout contactItemLayout;
-        //@Bind(R.id.swipe)
-        //SwipeLayout swipe;
+        private final LayoutItemMsgBinding bd;
 
-        ViewHolder(View view) {
-            super(view);
-            ButterKnife.bind(this, view);
+        ViewHolder(LayoutItemMsgBinding bd) {
+            super(bd.getRoot());
+            this.bd = bd;
         }
     }
 }

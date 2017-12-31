@@ -1,18 +1,15 @@
 package com.juns.wechat.chat.adpter;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.same.city.love.R;
+import com.same.city.love.databinding.RowExpressionBinding;
 import com.style.base.BaseRecyclerViewAdapter;
 
 import java.util.List;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
 
 public class ExpressionAdapter extends BaseRecyclerViewAdapter<String> {
 
@@ -22,7 +19,8 @@ public class ExpressionAdapter extends BaseRecyclerViewAdapter<String> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(mInflater.inflate(R.layout.row_expression, parent, false));
+        RowExpressionBinding bd = DataBindingUtil.inflate(mInflater, R.layout.row_expression, parent, false);
+        return new ViewHolder(bd);
     }
 
     @Override
@@ -32,18 +30,17 @@ public class ExpressionAdapter extends BaseRecyclerViewAdapter<String> {
         String filename = getData(position);
         int resId = mContext.getResources().getIdentifier(filename, "drawable", mContext.getPackageName());
 
-        holder.ivExpression.setImageResource(resId);
-        super.setOnItemClickListener(viewHolder, pos);
+        holder.bd.ivExpression.setImageResource(resId);
+        super.setOnItemClickListener(viewHolder.itemView, pos);
+        holder.bd.executePendingBindings();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.iv_expression)
-        ImageView ivExpression;
+        private final RowExpressionBinding bd;
 
-        public ViewHolder(View view) {
-            super(view);
-            ButterKnife.bind(this, view);
-
+        public ViewHolder(RowExpressionBinding bd) {
+            super(bd.getRoot());
+            this.bd = bd;
         }
     }
 }

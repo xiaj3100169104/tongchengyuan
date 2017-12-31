@@ -1,5 +1,6 @@
 package com.juns.wechat.activity;
 
+import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,6 +11,8 @@ import com.same.city.love.R;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.request.HttpActionImpl;
+import com.same.city.love.databinding.ActivityCropImageBinding;
+import com.style.base.BaseToolbarBtnActivity;
 import com.style.net.core.NetDataBeanCallback;
 import com.juns.wechat.view.ClipImageLayout;
 import com.style.base.BaseToolbarActivity;
@@ -21,22 +24,20 @@ import org.jivesoftware.smack.packet.id.StanzaIdUtil;
 import java.io.File;
 import java.io.IOException;
 
-import butterknife.Bind;
-import butterknife.OnClick;
 
-public class CropImageActivity extends BaseToolbarActivity {
+public class CropImageActivity extends BaseToolbarBtnActivity {
 
-    @Bind(R.id.clipImageLayout)
-    ClipImageLayout clipImageLayout;
+    ActivityCropImageBinding bd;
     private Uri uri;
 
     private String fileName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mLayoutResID = R.layout.activity_crop_image;
         super.onCreate(savedInstanceState);
-
+        bd = DataBindingUtil.setContentView(this, R.layout.activity_crop_image);
+        super.setContentView(bd.getRoot());
+        initData();
     }
 
     @Override
@@ -44,15 +45,15 @@ public class CropImageActivity extends BaseToolbarActivity {
         uri = getIntent().getExtras().getParcelable("uri");
         try {
             Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-            clipImageLayout.setCropImage(bitmap);
+            bd.clipImageLayout.setCropImage(bitmap);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    @OnClick(R.id.view_toolbar_right)
-    public void saveInfo(View v) {
-        Bitmap croppedBitmap = clipImageLayout.clip();
+    @Override
+    protected void onClickTitleRightView() {
+        Bitmap croppedBitmap = bd.clipImageLayout.clip();
         fileName = StanzaIdUtil.newStanzaId() + ".image";
         String filePath = FileConfig.DIR_CACHE + File.separator + fileName;
         try {

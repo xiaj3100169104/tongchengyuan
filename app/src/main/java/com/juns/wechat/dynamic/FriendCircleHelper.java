@@ -1,25 +1,18 @@
 package com.juns.wechat.dynamic;
 
 import android.os.Handler;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 
-import com.juns.wechat.chat.ui.CommonExpressionView;
-import com.same.city.love.R;
 import com.juns.wechat.chat.adpter.ExpressionPagerAdapter;
+import com.juns.wechat.chat.ui.CommonExpressionView;
+import com.same.city.love.databinding.ActivityFriendCircleBinding;
 import com.style.utils.CommonUtil;
-import com.style.view.CirclePageIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,16 +23,10 @@ import java.util.List;
  */
 public class FriendCircleHelper {
     private static final String TAG = "FriendCircleHelper";
-    Button btSend;
-    EditText etContent;
-    View layoutRoot;
-    CheckBox viewSmile;
-    ViewGroup layoutBottomSmile;
-    LinearLayout layoutFace;
-    ViewPager facePager;
-    CirclePageIndicator indicator;
 
-    private AppCompatActivity mActivity;
+    private FriendCircleActivity mActivity;
+    private final ActivityFriendCircleBinding bd;
+
     Handler mHandler = new Handler();
     //屏幕高度
     private int screenHeight = 0;
@@ -47,32 +34,23 @@ public class FriendCircleHelper {
     private int keyHeight = 0;
 
 
-    public FriendCircleHelper(AppCompatActivity mActivity) {
+    public FriendCircleHelper(FriendCircleActivity mActivity) {
         this.mActivity = mActivity;
-        //不能是DecorView，DecorView不能监听layout变化
-        layoutRoot = mActivity.findViewById(R.id.layout_root);//mActivity.getWindow().getDecorView();
-        layoutBottomSmile = (ViewGroup) layoutRoot.findViewById(R.id.layout_bottom_smile);
-        etContent = (EditText) layoutRoot.findViewById(R.id.et_comment);
-        viewSmile = (CheckBox) layoutRoot.findViewById(R.id.view_smile);
-        btSend = (Button) layoutRoot.findViewById(R.id.bt_dis_dynamic);
-        layoutFace = (LinearLayout) layoutRoot.findViewById(R.id.layout_face);
-        facePager = (ViewPager) layoutRoot.findViewById(R.id.face_pager);
-        indicator = (CirclePageIndicator) layoutRoot.findViewById(R.id.indicator);
-
+        this.bd = mActivity.bd;
         //监听软键盘显示状态
         //获取屏幕高度
         screenHeight = mActivity.getWindowManager().getDefaultDisplay().getHeight();
         //阀值设置为屏幕高度的1/3
         keyHeight = screenHeight / 3;
-        //添加layout大小发生改变监听器
-        layoutRoot.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+        //添加layout大小发生改变监听器//不能是DecorView，DecorView不能监听layout变化
+        bd.layoutRoot.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
                 //现在认为只要控件将Activity向上推的高度超过了1/3屏幕高，就认为软键盘弹起
                 if (oldBottom != 0 && bottom != 0 && (oldBottom - bottom > keyHeight)) {
                     Log.e(TAG, "监听到软键盘弹起");
                     showLayoutBottom();
-                    viewSmile.setChecked(false);
+                    bd.bottom.viewSmile.setChecked(false);
                 } else if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > keyHeight)) {
                     Log.e(TAG, "监听到软件盘关闭");
                     //如果是切换到表情面板而隐藏流量输入法，需要延迟判断表情面板是否显示，如果表情面板是关闭的，操作栏也关闭
@@ -80,8 +58,8 @@ public class FriendCircleHelper {
                         @Override
                         public void run() {
                             //如果表情面板是关闭的，操作栏也关闭
-                            if (layoutFace.getVisibility() == View.GONE) {
-                                viewSmile.setChecked(false);
+                            if (bd.bottom.layoutFace.getVisibility() == View.GONE) {
+                                bd.bottom.viewSmile.setChecked(false);
                                 //layoutBottomSmile.setVisibility(View.GONE);
                             }
                         }
@@ -89,7 +67,7 @@ public class FriendCircleHelper {
                 }
             }
         });
-        viewSmile.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        bd.bottom.viewSmile.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
                 if (isChecked) {
@@ -110,15 +88,15 @@ public class FriendCircleHelper {
             }
         });
 
-        this.etContent.setOnTouchListener(new View.OnTouchListener() {
+        bd.bottom.etComment.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                viewSmile.setChecked(false);//还原表情状态
-                layoutFace.setVisibility(View.GONE);
+                bd.bottom.viewSmile.setChecked(false);//还原表情状态
+                bd.bottom.layoutFace.setVisibility(View.GONE);
                 return false;
             }
         });
-        this.etContent.addTextChangedListener(new TextWatcher() {
+        bd.bottom.etComment.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
             }
@@ -130,9 +108,17 @@ public class FriendCircleHelper {
             @Override
             public void afterTextChanged(Editable arg0) {
                 if (arg0.length() > 0)
-                    btSend.setEnabled(true);
+                    bd.bottom.btDisDynamic.setEnabled(true);
                 else
-                    btSend.setEnabled(false);
+                    bd.bottom.btDisDynamic.setEnabled(false);
+            }
+        });
+        bd.bottom.btDisDynamic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String content = bd.bottom.etComment.getText().toString();
+                FriendCircleHelper.this.mActivity.addComment2Dynamic(content);
+
             }
         });
     }
@@ -143,27 +129,27 @@ public class FriendCircleHelper {
     }
 
     public void resetEditText() {
-        etContent.setText("");
+        bd.bottom.etComment.setText("");
     }
 
     public void hideLayoutBottom() {
-        layoutBottomSmile.setVisibility(View.GONE);
+        bd.bottom.layoutBottomSmile.setVisibility(View.GONE);
     }
 
     public void showLayoutBottom() {
-        layoutBottomSmile.setVisibility(View.VISIBLE);
+        bd.bottom.layoutBottomSmile.setVisibility(View.VISIBLE);
     }
 
     public void hideLayoutFace() {
-        layoutFace.setVisibility(View.GONE);
+        bd.bottom.layoutFace.setVisibility(View.GONE);
     }
 
     public void showLayoutFace() {
-        layoutFace.setVisibility(View.VISIBLE);
+        bd.bottom.layoutFace.setVisibility(View.VISIBLE);
     }
 
     public void showEditLayout() {
-        if (layoutFace.getVisibility() == View.VISIBLE)
+        if (bd.bottom.layoutFace.getVisibility() == View.VISIBLE)
             return;
         hideLayoutFace();
         showLayoutBottom();
@@ -184,20 +170,20 @@ public class FriendCircleHelper {
     }
 
     public void hiddenSoftInput() {
-        CommonUtil.hiddenSoftInput(mActivity, etContent);
+        CommonUtil.hiddenSoftInput(mActivity, bd.bottom.etComment);
     }
 
     public void showSoftInput() {
-        CommonUtil.showSoftInput(mActivity, etContent);
+        CommonUtil.showSoftInput(mActivity, bd.bottom.etComment);
     }
 
     private void initFace() {
         List<View> views = new ArrayList<>();
-        View gv1 = CommonExpressionView.getStickerView(mActivity, etContent);
+        View gv1 = CommonExpressionView.getStickerView(mActivity, bd.bottom.etComment);
         views.add(gv1);
 
-        facePager.setAdapter(new ExpressionPagerAdapter(views));
-        indicator.setViewPager(facePager);
+        bd.bottom.facePager.setAdapter(new ExpressionPagerAdapter(views));
+        bd.bottom.indicator.setViewPager(bd.bottom.facePager);
 
     }
 

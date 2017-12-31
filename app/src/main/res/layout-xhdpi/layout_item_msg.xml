@@ -1,33 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-   <!-- <com.juns.wechat.widget.swipe.SwipeLayout
-        android:id="@+id/swipe"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        app:drag_edge="right">
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:id="@+id/layout_back"
-            android:layout_width="80dp"
-            android:layout_height="65.0dip"
-            android:background="@color/red"
-            android:gravity="center">
+        <!-- <com.juns.wechat.widget.swipe.SwipeLayout
+             android:id="@+id/swipe"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             app:drag_edge="right">
 
-            <TextView
-                android:id="@+id/txt_del"
-                style="@style/MMFontTitleInList"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:singleLine="true"
-                android:text="删除"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
-        </LinearLayout>-->
+             <LinearLayout
+                 android:id="@+id/layout_back"
+                 android:layout_width="80dp"
+                 android:layout_height="65.0dip"
+                 android:background="@color/red"
+                 android:gravity="center">
+
+                 <TextView
+                     android:id="@+id/txt_del"
+                     style="@style/MMFontTitleInList"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:singleLine="true"
+                     android:text="删除"
+                     android:textColor="@color/white"
+                     android:textSize="18sp" />
+             </LinearLayout>-->
 
         <LinearLayout
             android:id="@+id/contact_item_layout"
@@ -48,7 +50,7 @@
                     android:layout_width="50.0dip"
                     android:layout_height="50.0dip"
                     android:src="@drawable/default_avatar"
-                    android:scaleType="centerCrop"/>
+                    android:scaleType="centerCrop" />
 
                 <TextView
                     android:id="@+id/tv_unread_msg_number"
@@ -109,7 +111,8 @@
         </LinearLayout>
 
 
-<!--
-    </com.juns.wechat.widget.swipe.SwipeLayout>
--->
-</LinearLayout>
+        <!--
+            </com.juns.wechat.widget.swipe.SwipeLayout>
+        -->
+    </LinearLayout>
+</layout>

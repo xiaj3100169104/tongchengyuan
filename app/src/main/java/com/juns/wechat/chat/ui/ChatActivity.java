@@ -3,6 +3,7 @@ package com.juns.wechat.chat.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,23 +14,21 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import com.dmcbig.mediapicker.PickerConfig;
 import com.dmcbig.mediapicker.entity.Media;
 import com.github.jdsjlzx.interfaces.OnRefreshListener;
-import com.github.jdsjlzx.recyclerview.LRecyclerView;
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import com.github.jdsjlzx.recyclerview.ProgressStyle;
-import com.juns.wechat.Constants;
-import com.juns.wechat.greendao.mydao.GreenDaoManager;
-import com.same.city.love.R;
 import com.juns.wechat.bean.FriendBean;
-import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.bean.UserBean;
+import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.chat.xmpp.util.SendMessage;
+import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.util.LogUtil;
+import com.same.city.love.R;
+import com.same.city.love.databinding.ActivityChatBinding;
 import com.style.base.BaseToolbarActivity;
 import com.style.constant.Skip;
 import com.style.dialog.PromptDialog;
@@ -41,8 +40,6 @@ import org.simple.eventbus.Subscriber;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.Bind;
 
 //聊天页面
 public class ChatActivity extends BaseToolbarActivity {
@@ -57,10 +54,7 @@ public class ChatActivity extends BaseToolbarActivity {
     public static final String COPY_IMAGE = "EASEMOBIMG";
 
     private static final int SIZE = 10;
-    @Bind(R.id.layout_root)
-    LinearLayout layoutRoot;
-    @Bind(R.id.list)
-    LRecyclerView mRecyclerView;
+    ActivityChatBinding bd;
 
     private ChatInputManager chatInputManager;
     private ChatActivityHelper chatActivityHelper;
@@ -86,8 +80,10 @@ public class ChatActivity extends BaseToolbarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mLayoutResID = R.layout.activity_chat;
         super.onCreate(savedInstanceState);
+        bd = DataBindingUtil.setContentView(this, R.layout.activity_chat);
+        super.setContentView(bd.getRoot());
+        initData();
     }
 
     @Override
@@ -124,9 +120,7 @@ public class ChatActivity extends BaseToolbarActivity {
 
         contactUserId = contactUser.getUserId();
         String showName = !TextUtils.isEmpty(friendBean.getRemark()) ? friendBean.getRemark() : contactUser.getShowName();
-
         setToolbarTitle(showName);
-
         chatInputManager = new ChatInputManager(this);
         chatInputManager.onCreate();
         chatActivityHelper = new ChatActivityHelper(this);
@@ -135,22 +129,22 @@ public class ChatActivity extends BaseToolbarActivity {
         msgViewModels = new ArrayList<>();
         mDataAdapter = new ChatAdapter(this, msgViewModels);
         mLRecyclerViewAdapter = new LRecyclerViewAdapter(mDataAdapter);
-        mRecyclerView.setAdapter(mLRecyclerViewAdapter);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setLoadMoreEnabled(false);
-        mRecyclerView.setRefreshProgressStyle(ProgressStyle.BallPulse);
-        mRecyclerView.setArrowImageView(R.drawable.ic_pulltorefresh_arrow);
+        bd.recyclerView.setAdapter(mLRecyclerViewAdapter);
+        bd.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        bd.recyclerView.setLoadMoreEnabled(false);
+        bd.recyclerView.setRefreshProgressStyle(ProgressStyle.BallPulse);
+        bd.recyclerView.setArrowImageView(R.drawable.ic_pulltorefresh_arrow);
         //mRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.BallPulse);
         //设置头部加载颜色
-        mRecyclerView.setHeaderViewColor(R.color.white, android.R.color.white, R.color.bg_refresh_view);
+        bd.recyclerView.setHeaderViewColor(R.color.white, android.R.color.white, R.color.bg_refresh_view);
 
-        mRecyclerView.setOnRefreshListener(new OnRefreshListener() {
+        bd.recyclerView.setOnRefreshListener(new OnRefreshListener() {
 
             @Override
             public void onRefresh() {
                 int queryIndex = chatActivityHelper.getQueryIndex();
                 if (queryIndex < 0) {
-                    mRecyclerView.refreshComplete(5);
+                    bd.recyclerView.refreshComplete(5);
                 } else {
                     chatActivityHelper.loadMessagesFromDb();
                 }
@@ -174,7 +168,7 @@ public class ChatActivity extends BaseToolbarActivity {
         //阀值设置为屏幕高度的1/3
         keyHeight = screenHeight / 3;
         //添加layout大小发生改变监听器,前提是windowSoftInputMode="adjustResize" 并且布局确实会发生大小变化
-        layoutRoot.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+        bd.layoutRoot.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
             public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
                 //现在认为只要控件将Activity向上推的高度超过了1/3屏幕高，就认为软键盘弹起
@@ -202,7 +196,7 @@ public class ChatActivity extends BaseToolbarActivity {
         clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
 
         // 判断单聊还是群聊
-        chatType = getIntent().getIntExtra(Constants.TYPE, CHATTYPE_SINGLE);
+        chatType = getIntent().getIntExtra("CHAT_TYPE", CHATTYPE_SINGLE);
         if (chatType == CHATTYPE_SINGLE) { // 单聊
 
         } else {
@@ -228,7 +222,7 @@ public class ChatActivity extends BaseToolbarActivity {
      * {@link ChatActivityHelper#loadMessagesFromDb()}方法完成之后调用
      */
     public void loadDataComplete(boolean hasNewData) {
-        mRecyclerView.refreshComplete(5);
+        bd.recyclerView.refreshComplete(5);
         if (hasNewData) {
             mDataAdapter.notifyDataSetChanged();  //ChatActivityHelper已经更新数据源
         }
@@ -260,16 +254,16 @@ public class ChatActivity extends BaseToolbarActivity {
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    mRecyclerView.scrollToPosition(mLRecyclerViewAdapter.getItemCount() - 1);
+                    bd.recyclerView.scrollToPosition(mLRecyclerViewAdapter.getItemCount() - 1);
                 }
             }, 100);
-        }else {
-            mRecyclerView.scrollToPosition(mLRecyclerViewAdapter.getItemCount() - 1);
+        } else {
+            bd.recyclerView.scrollToPosition(mLRecyclerViewAdapter.getItemCount() - 1);
         }
     }
 
     private void scrollToBottomSmooth() {
-        mRecyclerView.smoothScrollToPosition(mLRecyclerViewAdapter.getItemCount());
+        bd.recyclerView.smoothScrollToPosition(mLRecyclerViewAdapter.getItemCount());
     }
 
     /***
@@ -313,7 +307,7 @@ public class ChatActivity extends BaseToolbarActivity {
      */
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        mRecyclerView.smoothScrollToPosition(mRecyclerView.getChildCount());
+        bd.recyclerView.smoothScrollToPosition(bd.recyclerView.getChildCount());
         if (resultCode == RESULT_CODE_EXIT_GROUP) {
             setResult(RESULT_OK);
             finish();

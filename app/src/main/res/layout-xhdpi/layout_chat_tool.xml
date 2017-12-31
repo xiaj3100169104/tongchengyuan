@@ -1,128 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/menu_bg"
-    android:orientation="vertical">
-
-    <View style="@style/divider_horizontal_transparent_black" />
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
-        android:id="@+id/rl_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingTop="4dp">
+        android:background="@drawable/menu_bg"
+        android:orientation="vertical">
+
+        <View style="@style/divider_horizontal_transparent_black" />
+
+        <LinearLayout
+            android:id="@+id/rl_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingTop="4dp">
+
+            <RelativeLayout
+                android:id="@+id/rl_input_text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="3dp"
+                android:layout_marginLeft="6dp"
+                android:layout_marginRight="6dp"
+                android:layout_weight="1"
+                android:gravity="bottom">
+
+                <com.juns.wechat.chat.widght.PasteEditText
+                    android:id="@+id/et_input_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="发消息..."
+                    android:lineSpacingExtra="2dp"
+                    android:maxLines="3"
+                    android:minHeight="35dp"
+                    android:paddingBottom="3dp"
+                    android:paddingLeft="1dp"
+                    android:paddingRight="1dp"
+                    android:paddingTop="3dp"
+                    android:textSize="15sp" />
+
+            </RelativeLayout>
+
+            <Button
+                android:id="@+id/btn_send"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginRight="12dp"
+                android:background="@drawable/bg_chat_tool_send"
+                android:enabled="false"
+                android:onClick="onClick" />
+        </LinearLayout>
+        <!-- 图片，表情，名片等按钮 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/view_camera"
+                style="@style/chat_tool_item"
+                android:background="@drawable/bg_chat_tool_camera" />
+
+            <Button
+                android:id="@+id/view_picture"
+                style="@style/chat_tool_item"
+                android:background="@drawable/bg_chat_tool_picture" />
+
+            <Button
+                android:id="@+id/view_emotion"
+                style="@style/chat_tool_item"
+                android:background="@drawable/bg_chat_tool_sticker" />
+
+            <Button
+                android:id="@+id/view_audio_record"
+                style="@style/chat_tool_item"
+                android:background="@drawable/bg_chat_tool_record_audio" />
+
+            <Button
+                android:id="@+id/view_location"
+                style="@style/chat_tool_item"
+                android:background="@drawable/bg_chat_tool_location" />
+        </LinearLayout>
 
         <RelativeLayout
-            android:id="@+id/rl_input_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="3dp"
-            android:layout_marginLeft="6dp"
-            android:layout_marginRight="6dp"
-            android:layout_weight="1"
-            android:gravity="bottom">
-
-            <com.juns.wechat.chat.widght.PasteEditText
-                android:id="@+id/et_input_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:hint="发消息..."
-                android:lineSpacingExtra="2dp"
-                android:maxLines="3"
-                android:minHeight="35dp"
-                android:paddingBottom="3dp"
-                android:paddingLeft="1dp"
-                android:paddingRight="1dp"
-                android:paddingTop="3dp"
-                android:textSize="15sp" />
-
-        </RelativeLayout>
-
-        <Button
-            android:id="@+id/btn_send"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginRight="12dp"
-            android:background="@drawable/bg_chat_tool_send"
-            android:enabled="false"
-            android:onClick="onClick" />
-    </LinearLayout>
-    <!-- 图片，表情，名片等按钮 -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/view_camera"
-            style="@style/chat_tool_item"
-            android:background="@drawable/bg_chat_tool_camera" />
-
-        <Button
-            android:id="@+id/view_picture"
-            style="@style/chat_tool_item"
-            android:background="@drawable/bg_chat_tool_picture" />
-
-        <Button
-            android:id="@+id/view_emotion"
-            style="@style/chat_tool_item"
-            android:background="@drawable/bg_chat_tool_sticker" />
-
-        <Button
-            android:id="@+id/view_audio_record"
-            style="@style/chat_tool_item"
-            android:background="@drawable/bg_chat_tool_record_audio" />
-
-        <Button
-            android:id="@+id/view_location"
-            style="@style/chat_tool_item"
-            android:background="@drawable/bg_chat_tool_location" />
-    </LinearLayout>
-
-    <RelativeLayout
-        android:id="@+id/layout_bottom_container"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="#ffffff"
-        android:orientation="vertical"
-        android:visibility="visible">
-
-        <!-- 表情容器 -->
-        <LinearLayout
-            android:id="@+id/layout_emoticon_container"
+            android:id="@+id/layout_bottom_container"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="200dp"
+            android:background="#ffffff"
             android:orientation="vertical"
             android:visibility="visible">
 
-            <android.support.v4.view.ViewPager
-                android:id="@+id/viewPager"
+            <!-- 表情容器 -->
+            <LinearLayout
+                android:id="@+id/layout_emoticon_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/menu_bg" />
-        </LinearLayout>
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="visible">
 
-        <LinearLayout
-            android:id="@+id/layout_record_container"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:visibility="visible">
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/emoticons_viewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/menu_bg" />
+            </LinearLayout>
 
-            <com.juns.wechat.view.AudioRecordButton
-                android:id="@+id/btn_record"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:background="@drawable/chat_press_speak_btn"
-                android:text="@string/button_pushtotalk"
-                android:textColor="#fff"
-                android:textSize="16sp" />
-        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/layout_record_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:visibility="visible">
 
-    </RelativeLayout>
-</LinearLayout>
+                <com.juns.wechat.view.AudioRecordButton
+                    android:id="@+id/btn_record"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:background="@drawable/chat_press_speak_btn"
+                    android:text="@string/button_pushtotalk"
+                    android:textColor="#fff"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+        </RelativeLayout>
+    </LinearLayout>
+</layout>

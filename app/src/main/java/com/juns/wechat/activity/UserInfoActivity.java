@@ -1,48 +1,34 @@
 package com.juns.wechat.activity;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.juns.wechat.greendao.mydao.GreenDaoManager;
-import com.same.city.love.R;
 import com.juns.wechat.bean.FriendBean;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.ui.ChatActivity;
+import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.juns.wechat.helper.CommonViewHelper;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.request.HttpActionImpl;
-import com.style.net.core.NetDataBeanCallback;
+import com.same.city.love.R;
+import com.same.city.love.databinding.ActivityUserInfoBinding;
 import com.style.base.BaseToolbarActivity;
 import com.style.constant.Skip;
-
-import butterknife.Bind;
-import butterknife.OnClick;
+import com.style.net.core.NetDataBeanCallback;
 
 /**
  * 用户资料
  */
 
 public class UserInfoActivity extends BaseToolbarActivity implements OnClickListener {
-    @Bind(R.id.ivAvatar)
-    ImageView ivAvatar;
-    @Bind(R.id.tvNickName)
-    TextView tvNickName;
-    @Bind(R.id.ivSex)
-    ImageView ivSex;
-    @Bind(R.id.tvUserName)
-    TextView tvUserName;
-    @Bind(R.id.btnSendMsg)
-    Button btnSendMsg;
+    ActivityUserInfoBinding bd;
 
     private String userId;
-
     private UserBean curUser = AccountManager.getInstance().getUser();
     private FriendBean friendBean;
     private UserBean userBean;
@@ -51,8 +37,10 @@ public class UserInfoActivity extends BaseToolbarActivity implements OnClickList
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        mLayoutResID = R.layout.activity_user_info;
         super.onCreate(savedInstanceState);
+        bd = DataBindingUtil.setContentView(this, R.layout.activity_user_info);
+        super.setContentView(bd.getRoot());
+        initData();
     }
 
     @Override
@@ -73,6 +61,8 @@ public class UserInfoActivity extends BaseToolbarActivity implements OnClickList
 
     public void initData() {
         setToolbarTitle("详细资料");
+        bd.btnSendMsg.setOnClickListener(this);
+
         userId = getIntent().getStringExtra(Skip.KEY_USER_ID);
         if (userId == curUser.getUserId()) {  //查看自己的信息
             userBean = curUser;
@@ -107,33 +97,35 @@ public class UserInfoActivity extends BaseToolbarActivity implements OnClickList
     }
 
     private void setData() {
-        CommonViewHelper.setUserViewInfo(userBean, ivAvatar, tvNickName, ivSex, tvUserName, true);
+        CommonViewHelper.setUserViewInfo(userBean, bd.ivAvatar, bd.tvNickName, bd.ivSex, bd.tvUserName, true);
 
         if (userId == curUser.getUserId()) {
-            btnSendMsg.setText("个人信息");
+            bd.btnSendMsg.setText("个人信息");
         } else {
             if (subType == null) {
-                btnSendMsg.setText("加为好友");
+                bd.btnSendMsg.setText("加为好友");
             } else {
-                btnSendMsg.setText("发送消息");
+                bd.btnSendMsg.setText("发送消息");
             }
         }
     }
 
-    @OnClick(R.id.btnSendMsg)
+    @Override
     public void onClick(View v) {
-        if (userId == curUser.getUserId()) {
-            startActivity(new Intent(this, PersonInfoShowActivity.class));
-            return;
-        }
-        if (subType == null) {
-            Intent intent = new Intent(UserInfoActivity.this, AddFriendFinalActivity.class);
-            intent.putExtra(Skip.KEY_USER_ID, userBean.getUserId());
-            startActivity(intent);
-        } else {
-            Intent intent = new Intent(UserInfoActivity.this, ChatActivity.class);
-            intent.putExtra(Skip.KEY_USER_ID, userId);
-            startActivity(intent);
+        if (v.getId() == bd.btnSendMsg.getId()) {
+            if (userId == curUser.getUserId()) {
+                startActivity(new Intent(this, PersonInfoShowActivity.class));
+                return;
+            }
+            if (subType == null) {
+                Intent intent = new Intent(UserInfoActivity.this, AddFriendFinalActivity.class);
+                intent.putExtra(Skip.KEY_USER_ID, userBean.getUserId());
+                startActivity(intent);
+            } else {
+                Intent intent = new Intent(UserInfoActivity.this, ChatActivity.class);
+                intent.putExtra(Skip.KEY_USER_ID, userId);
+                startActivity(intent);
+            }
         }
     }
 

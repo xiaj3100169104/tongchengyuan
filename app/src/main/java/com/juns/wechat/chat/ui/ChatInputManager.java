@@ -4,31 +4,26 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
 import android.os.Handler;
-import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.dmcbig.mediapicker.PickerActivity;
 import com.dmcbig.mediapicker.PickerConfig;
-import com.github.jdsjlzx.recyclerview.LRecyclerView;
-import com.same.city.love.R;
 import com.juns.wechat.activity.SendLocationActivity;
 import com.juns.wechat.chat.adpter.ExpressionPagerAdapter;
 import com.juns.wechat.chat.voice.CallVoiceBaseActivity;
-import com.juns.wechat.chat.widght.PasteEditText;
+import com.juns.wechat.chat.xmpp.util.SendMessage;
 import com.juns.wechat.util.BitmapUtil;
 import com.juns.wechat.util.LogUtil;
 import com.juns.wechat.util.ThreadPoolUtil;
 import com.juns.wechat.util.ToastUtil;
 import com.juns.wechat.view.AudioRecordButton;
-import com.juns.wechat.chat.xmpp.util.SendMessage;
+import com.same.city.love.R;
+import com.same.city.love.databinding.ActivityChatBinding;
 import com.style.constant.FileConfig;
 import com.style.constant.Skip;
 import com.style.lib.media.camera2video.CameraActivity;
@@ -44,43 +39,20 @@ import java.util.List;
  * Created by 王者 on 2016/8/7.
  */
 public class ChatInputManager implements View.OnClickListener {
-    private LinearLayout layoutRecordContainer; //按住说话
-    private AudioRecordButton btnRecord; //录音按钮
-    private PasteEditText etInputText; //输入文本框
-    private Button viewEmoticon; //表情按钮
-    private Button viewRecordAudio; //表情按钮
-
-    private Button btnSend; //发送按钮
-    private LinearLayout layoutEmoticonContainer; //表情容器
-    private ViewPager emoticonsViewPager; //表情viewPager
-    private RelativeLayout layoutBottomContainer; //图片，相册等更多功能容器
-
-    private LRecyclerView recyclerView;  //消息列表
-    //  private AnimationDrawable animationDrawable;
 
     private ChatActivity mChatActivity;
+    private final ActivityChatBinding bd;
 
     static Handler mHandler = new Handler();
 
 
     public ChatInputManager(ChatActivity chatActivity) {
-        View view = chatActivity.getWindow().getDecorView();
+        //View view = chatActivity.getWindow().getDecorView();
         mChatActivity = chatActivity;
-        etInputText = (PasteEditText) view.findViewById(R.id.et_input_text);
-        btnSend = (Button) view.findViewById(R.id.btn_send);
-
-        viewEmoticon = (Button) view.findViewById(R.id.view_emotion);
-        viewRecordAudio = (Button) view.findViewById(R.id.view_audio_record);
-        //viewMore = (CheckBox) view.findViewById(R.id.view_more);
-        layoutBottomContainer = (RelativeLayout) view.findViewById(R.id.layout_bottom_container);
-        layoutRecordContainer = (LinearLayout) view.findViewById(R.id.layout_record_container);
-        btnRecord = (AudioRecordButton) view.findViewById(R.id.btn_record);
-        layoutEmoticonContainer = (LinearLayout) view.findViewById(R.id.layout_emoticon_container);
-        emoticonsViewPager = (ViewPager) view.findViewById(R.id.viewPager);
+        this.bd = mChatActivity.bd;
         closeBottomContainer();
 
-        recyclerView = (LRecyclerView) view.findViewById(R.id.list);
-        recyclerView.setOverScrollMode(View.OVER_SCROLL_NEVER);
+        bd.recyclerView.setOverScrollMode(View.OVER_SCROLL_NEVER);
     }
 
     public void onCreate() {
@@ -99,22 +71,22 @@ public class ChatInputManager implements View.OnClickListener {
 
     private void initEmoticonsViewPager() {
         List<View> views = new ArrayList<>();
-        View gv1 = CommonExpressionView.getStickerView(mChatActivity, etInputText);
+        View gv1 = CommonExpressionView.getStickerView(mChatActivity, bd.chatTool.etInputText);
         views.add(gv1);
-        emoticonsViewPager.setAdapter(new ExpressionPagerAdapter(views));
+        bd.chatTool.emoticonsViewPager.setAdapter(new ExpressionPagerAdapter(views));
     }
 
     private void setListener() {
 
         // 监听文字框
-        etInputText.addTextChangedListener(new TextWatcher() {
+        bd.chatTool.etInputText.addTextChangedListener(new TextWatcher() {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!TextUtils.isEmpty(s)) {
-                    btnSend.setEnabled(true);
+                    bd.chatTool.btnSend.setEnabled(true);
                 } else {
-                    btnSend.setEnabled(false);
+                    bd.chatTool.btnSend.setEnabled(false);
                 }
             }
 
@@ -127,14 +99,14 @@ public class ChatInputManager implements View.OnClickListener {
             }
         });
 
-        btnRecord.setAudioFinishRecorderListener(new AudioRecordButton.AudioFinishRecorderListener() {
+        bd.chatTool.btnRecord.setAudioFinishRecorderListener(new AudioRecordButton.AudioFinishRecorderListener() {
             @Override
             public void onFinished(float seconds, String filePath) {
                 sendVoice(mChatActivity.getContactUserId(), (int) seconds, filePath);
             }
         });
 
-        recyclerView.setOnTouchListener(new View.OnTouchListener() {
+        bd.recyclerView.setOnTouchListener(new View.OnTouchListener() {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -143,7 +115,7 @@ public class ChatInputManager implements View.OnClickListener {
                 return false;
             }
         });
-        etInputText.setOnTouchListener(new View.OnTouchListener() {
+        bd.chatTool.etInputText.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 //viewMore.setChecked(false);
@@ -152,13 +124,13 @@ public class ChatInputManager implements View.OnClickListener {
                 return false;
             }
         });
-        btnSend.setOnClickListener(this);
+        bd.chatTool.btnSend.setOnClickListener(this);
 
-        mChatActivity.findViewById(R.id.view_camera).setOnClickListener(this);
-        mChatActivity.findViewById(R.id.view_picture).setOnClickListener(this);
-        mChatActivity.findViewById(R.id.view_location).setOnClickListener(this);
-        mChatActivity.findViewById(R.id.view_emotion).setOnClickListener(this);
-        mChatActivity.findViewById(R.id.view_audio_record).setOnClickListener(this);
+        bd.chatTool.viewCamera.setOnClickListener(this);
+        bd.chatTool.viewPicture.setOnClickListener(this);
+        bd.chatTool.viewLocation.setOnClickListener(this);
+        bd.chatTool.viewEmotion.setOnClickListener(this);
+        bd.chatTool.viewAudioRecord.setOnClickListener(this);
 
         //mChatActivity.findViewById(R.id.view_video_record).setOnClickListener(this);
         //mChatActivity.findViewById(R.id.view_audio).setOnClickListener(this);
@@ -166,7 +138,7 @@ public class ChatInputManager implements View.OnClickListener {
     }
 
     public boolean isBottomContainerVisibility() {
-        if (layoutBottomContainer.getVisibility() == View.VISIBLE) {
+        if (bd.chatTool.layoutBottomContainer.getVisibility() == View.VISIBLE) {
             closeBottomContainer();
             return true;
         }
@@ -224,20 +196,20 @@ public class ChatInputManager implements View.OnClickListener {
     }
 
     private void closeBottomContainer() {
-        layoutBottomContainer.setVisibility(View.GONE);
+        bd.chatTool.layoutBottomContainer.setVisibility(View.GONE);
         closeRecordContainer();
         closeEmotionContainer();
     }
 
     //先打开最外层容器
     private void openBottomContainer() {
-        layoutBottomContainer.setVisibility(View.VISIBLE);
+        bd.chatTool.layoutBottomContainer.setVisibility(View.VISIBLE);
         hiddenSoftInput();
     }
 
     private void closeEmotionContainer() {
-        layoutEmoticonContainer.setVisibility(View.GONE);
-        viewEmoticon.setSelected(false);
+        bd.chatTool.layoutEmoticonContainer.setVisibility(View.GONE);
+        bd.chatTool.viewEmotion.setSelected(false);
     }
 
     private void openEmotionContainer() {
@@ -247,15 +219,15 @@ public class ChatInputManager implements View.OnClickListener {
             @Override
             public void run() {
                 openBottomContainer();
-                layoutEmoticonContainer.setVisibility(View.VISIBLE);
-                viewEmoticon.setSelected(true);
+                bd.chatTool.layoutEmoticonContainer.setVisibility(View.VISIBLE);
+                bd.chatTool.viewEmotion.setSelected(true);
             }
         }, 100);
     }
 
     private void closeRecordContainer() {
-        layoutRecordContainer.setVisibility(View.GONE);
-        viewRecordAudio.setSelected(false);
+        bd.chatTool.layoutRecordContainer.setVisibility(View.GONE);
+        bd.chatTool.viewAudioRecord.setSelected(false);
     }
 
     private void openRecordContainer() {
@@ -265,8 +237,8 @@ public class ChatInputManager implements View.OnClickListener {
             @Override
             public void run() {
                 openBottomContainer();
-                layoutRecordContainer.setVisibility(View.VISIBLE);
-                viewRecordAudio.setSelected(true);
+                bd.chatTool.layoutRecordContainer.setVisibility(View.VISIBLE);
+                bd.chatTool.viewAudioRecord.setSelected(true);
             }
         }, 100);
     }
@@ -276,7 +248,7 @@ public class ChatInputManager implements View.OnClickListener {
     }
 
     public void showSoftInput() {
-        CommonUtil.showSoftInput(mChatActivity, etInputText);
+        CommonUtil.showSoftInput(mChatActivity, bd.chatTool.etInputText);
     }
     /**
      * 从图库获取图片
@@ -305,16 +277,16 @@ public class ChatInputManager implements View.OnClickListener {
     }
 
     private void sendText(String otherUserName) {
-        String content = etInputText.getText().toString();
+        String content = bd.chatTool.etInputText.getText().toString();
         if (!TextUtils.isEmpty(content)) {
             SendMessage.sendTextMsg(otherUserName, content);
-            etInputText.getText().clear();
+            bd.chatTool.etInputText.getText().clear();
         }
     }
 
     public void sendLocation(String contactName, double latitude, double longitude, String address) {
         SendMessage.sendLocationMsg(contactName, latitude, longitude, address);
-        etInputText.getText().clear();
+        bd.chatTool.etInputText.getText().clear();
     }
 
     private void sendVoice(String otherUserName, int seconds, String filePath) {

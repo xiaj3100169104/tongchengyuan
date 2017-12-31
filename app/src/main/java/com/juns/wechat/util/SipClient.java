@@ -8,7 +8,7 @@ import android.net.sip.SipManager;
 import android.net.sip.SipProfile;
 import android.net.sip.SipRegistrationListener;
 
-import com.juns.wechat.App;
+import com.juns.wechat.app.App;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.config.ConfigUtil;
 import com.juns.wechat.manager.AccountManager;

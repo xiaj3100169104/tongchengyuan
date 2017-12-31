@@ -1,18 +1,15 @@
 package com.style.dialog;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.same.city.love.R;
+import com.same.city.love.databinding.AdapterDialogSingleSelectBinding;
 import com.style.base.BaseRecyclerViewAdapter;
 
 import java.util.List;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
 
 
 public class SingleSelectAdapter extends BaseRecyclerViewAdapter<String> {
@@ -23,7 +20,8 @@ public class SingleSelectAdapter extends BaseRecyclerViewAdapter<String> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(mInflater.inflate(R.layout.adapter_dialog_single_select, parent, false));
+        AdapterDialogSingleSelectBinding bd = DataBindingUtil.inflate(mInflater, R.layout.adapter_dialog_single_select, parent, false);
+        return new ViewHolder(bd);
     }
 
     @Override
@@ -31,18 +29,17 @@ public class SingleSelectAdapter extends BaseRecyclerViewAdapter<String> {
         final int pos = position;
         final ViewHolder holder = (ViewHolder) viewHolder;
         final String bean = getData(position);
-        holder.tvItem.setText(bean);
-        setOnItemClickListener(holder, pos);
+        holder.bd.tvItem.setText(bean);
+        setOnItemClickListener(holder.itemView, pos);
+        holder.bd.executePendingBindings();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.tv_item)
-        TextView tvItem;
+        private final AdapterDialogSingleSelectBinding bd;
 
-        public ViewHolder(View view) {
-            super(view);
-            ButterKnife.bind(this, view);
-
+        public ViewHolder(AdapterDialogSingleSelectBinding bd) {
+            super(bd.getRoot());
+            this.bd = bd;
         }
     }
 }

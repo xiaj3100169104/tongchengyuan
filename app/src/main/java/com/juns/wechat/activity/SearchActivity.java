@@ -2,6 +2,7 @@ package com.juns.wechat.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -15,6 +16,7 @@ import com.alibaba.fastjson.TypeReference;
 import com.same.city.love.R;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.net.request.HttpActionImpl;
+import com.same.city.love.databinding.ActivitySearchBinding;
 import com.style.net.core.NetDataBeanCallback;
 import com.juns.wechat.util.LogUtil;
 import com.style.base.BaseActivity;
@@ -29,32 +31,22 @@ import java.util.List;
 
 public class SearchActivity extends BaseActivity {
 
-    private EditText etSearch;
-    private RelativeLayout rlSearch;
-    private TextView tvSearchContent;
+    ActivitySearchBinding bd;
     private String search;
 
-    @Override
-    public void initData() {
-        initView();
-        setListener();
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        mLayoutResID = R.layout.activity_search;
         super.onCreate(savedInstanceState);
-
+        bd = DataBindingUtil.setContentView(this, R.layout.activity_search);
+        super.setContentView(bd.getRoot());
+        initData();
     }
 
-    private void initView(){
-        etSearch = (EditText) findViewById(R.id.et_search);
-        rlSearch = (RelativeLayout) findViewById(R.id.re_search);
-        tvSearchContent = (TextView) findViewById(R.id.tv_search);
-    }
+    @Override
+    public void initData() {
 
-    private void setListener(){
-        etSearch.addTextChangedListener(new TextWatcher() {
+        bd.etSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -67,18 +59,18 @@ public class SearchActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                search = etSearch.getText().toString();
+                search = bd.etSearch.getText().toString();
                 if(!TextUtils.isEmpty(search)){
-                    tvSearchContent.setText(search);
-                    rlSearch.setVisibility(View.VISIBLE);
+                    bd.tvSearch.setText(search);
+                    bd.reSearch.setVisibility(View.VISIBLE);
                 }else {
-                    tvSearchContent.setText("");
-                    rlSearch.setVisibility(View.GONE);
+                    bd.tvSearch.setText("");
+                    bd.reSearch.setVisibility(View.GONE);
                 }
             }
         });
 
-        rlSearch.setOnClickListener(new View.OnClickListener() {
+        bd.reSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showSearchDialog();

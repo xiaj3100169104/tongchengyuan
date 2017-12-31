@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.widget.Toast;
 
-import com.juns.wechat.App;
+import com.juns.wechat.app.App;
 
 /**
  * Created by 王宗文 on 2016/6/13.

@@ -1,38 +1,24 @@
 package com.juns.wechat.activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.bean.UserPropertyBean;
 import com.juns.wechat.dialog.SelectPhotoDialog;
-import com.juns.wechat.net.request.HttpActionImpl;
 import com.same.city.love.R;
+import com.same.city.love.databinding.ActivityPersonInfoPhotoWallBinding;
 import com.style.base.BaseToolbarActivity;
 import com.style.constant.FileConfig;
 import com.style.constant.Skip;
-import com.style.net.core.NetDataBeanCallback;
 import com.style.utils.CommonUtil;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-
-import butterknife.Bind;
-import butterknife.OnClick;
-import me.kaede.tagview.Tag;
-import me.kaede.tagview.TagView;
 
 /**
  * Created by xiajun on 2017/5/9.
@@ -40,14 +26,16 @@ import me.kaede.tagview.TagView;
 
 public class PersonInfoEditPhotoWallActivity extends BaseToolbarActivity {
 
+    ActivityPersonInfoPhotoWallBinding bd;
     private SelectPhotoDialog selectPhotoDialog;
     private String avatarFile;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mLayoutResID = R.layout.activity_person_info_photo_wall;
         super.onCreate(savedInstanceState);
+        bd = DataBindingUtil.setContentView(this, R.layout.activity_person_info_photo_wall);
+        super.setContentView(bd.getRoot());
+        initData();
     }
 
     @Override
@@ -71,10 +59,14 @@ public class PersonInfoEditPhotoWallActivity extends BaseToolbarActivity {
     @Override
     protected void initData() {
         setToolbarTitle(R.string.edit_photo_wall);
-
+        bd.glPhotoWall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                modifyAvatar();
+            }
+        });
     }
 
-    @OnClick(R.id.gl_photo_wall)
     public void modifyAvatar() {
         if (selectPhotoDialog == null) {
             selectPhotoDialog = new SelectPhotoDialog(this);

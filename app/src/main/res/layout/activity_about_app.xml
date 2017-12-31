@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/gray_light"
-    android:orientation="vertical">
-    <include layout="@layout/comm_toolbar" />
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/tv_content"
-        style="@style/text_black_16sp"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:singleLine="false"
-        android:lineSpacingExtra="3dp"
-        android:text="@string/app_name"/>
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:background="@color/gray_light"
+        android:orientation="vertical">
+
+        <include layout="@layout/comm_toolbar" />
+
+        <TextView
+            android:id="@+id/tv_content"
+            style="@style/text_black_16sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:singleLine="false"
+            android:lineSpacingExtra="3dp"
+            android:text="@string/app_name" />
+    </LinearLayout>
+</layout>

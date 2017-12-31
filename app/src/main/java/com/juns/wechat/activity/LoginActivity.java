@@ -2,6 +2,7 @@ package com.juns.wechat.activity;
 
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
@@ -19,36 +20,24 @@ import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.response.LoginBean;
 import com.same.city.love.R;
+import com.same.city.love.databinding.ActivityLoginBinding;
 import com.style.base.BaseActivity;
 import com.style.utils.CommonUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
 
-/**
- * create by 王者 on 2016/7/12
- */
 public class LoginActivity extends BaseActivity implements OnClickListener {
-    @Bind(R.id.etInputName)
-    EditText etInputName;
-    @Bind(R.id.etPassWord)
-    EditText etPassWord;
-    @Bind(R.id.tv_password)
-    TextView tvPassword;
-    @Bind(R.id.btn_login)
-    Button btnLogin;
-    @Bind(R.id.tv_wenti)
-    TextView tvWenti;
-    @Bind(R.id.btn_register)
-    Button btnRegister;
+    ActivityLoginBinding bd;
     private String userName, password;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        mLayoutResID = R.layout.activity_login;
         super.onCreate(savedInstanceState);
+        bd = DataBindingUtil.setContentView(this, R.layout.activity_login);
+        super.setContentView(bd.getRoot());
+        initData();
 
     }
 
@@ -56,14 +45,14 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
     public void initData() {
         userName = AccountManager.getInstance().getUserName();
         password = AccountManager.getInstance().getUserPassWord();
-        etInputName.setText(getNotNullText(userName));
-        etPassWord.setText(getNotNullText(password));
-        btnLogin.setEnabled(true);
-        btnLogin.setOnClickListener(this);
-        btnRegister.setOnClickListener(this);
-        tvWenti.setOnClickListener(this);
-        etInputName.addTextChangedListener(new TextChange());
-        etPassWord.addTextChangedListener(new TextChange());
+        bd.etInputName.setText(getNotNullText(userName));
+        bd.etPassWord.setText(getNotNullText(password));
+        bd.btnLogin.setEnabled(true);
+        bd.btnLogin.setOnClickListener(this);
+        bd.btnRegister.setOnClickListener(this);
+        bd.tvWenti.setOnClickListener(this);
+        bd.etInputName.addTextChangedListener(new TextChange());
+        bd.etPassWord.addTextChangedListener(new TextChange());
     }
 
     @Override
@@ -84,8 +73,8 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
     }
 
     private void startLogin() {
-        userName = etInputName.getText().toString().trim().replace(" ", "");
-        password = etPassWord.getText().toString().trim().replace(" ", "");
+        userName = bd.etInputName.getText().toString().trim().replace(" ", "");
+        password = bd.etPassWord.getText().toString().trim().replace(" ", "");
         if (!TextUtils.isEmpty(userName) && !TextUtils.isEmpty(password)) {
             login(userName, password);
         } else {
@@ -186,12 +175,12 @@ public class LoginActivity extends BaseActivity implements OnClickListener {
         @Override
         public void onTextChanged(CharSequence cs, int start, int before,
                                   int count) {
-            boolean Sign2 = etInputName.getText().length() > 0;
-            boolean Sign3 = etPassWord.getText().length() > 4;
+            boolean Sign2 = bd.etInputName.getText().length() > 0;
+            boolean Sign3 = bd.etPassWord.getText().length() > 4;
             if (Sign2 & Sign3) {
-                btnLogin.setEnabled(true);
+                bd.btnLogin.setEnabled(true);
             } else {
-                btnLogin.setEnabled(false);
+                bd.btnLogin.setEnabled(false);
             }
         }
     }

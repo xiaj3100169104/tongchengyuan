@@ -1,13 +1,8 @@
-package com.juns.wechat;
+package com.juns.wechat.app;
 
 import com.juns.wechat.util.SDCardUtil;
 
 public interface Constants {
-
-	// 聊天
-	String LoginState = "LoginState";
-	String TYPE = "COLUMN_TYPE";
-	// JSON status
 
     String MOB_SDK_KEY = "1607163f39976";
     String MOB_SDK_SECRET = "23886b7a0a42425a2f89d8b73dbf3d17";

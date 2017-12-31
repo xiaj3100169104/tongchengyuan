@@ -1,9 +1,9 @@
 package com.juns.wechat.fragment;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +19,7 @@ import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.juns.wechat.manager.AccountManager;
 import com.same.city.love.R;
+import com.same.city.love.databinding.FragmentFriendsBinding;
 import com.style.base.BaseFragment;
 import com.style.base.BaseRecyclerViewAdapter;
 import com.style.constant.Skip;
@@ -34,17 +35,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-
 //通讯录
 
 public class Fragment_Friends extends BaseFragment {
 
-    @Bind(R.id.recyclerView)
-    RecyclerView recyclerView;
-    @Bind(R.id.sideBar)
-    SideBar sideBar;
+    FragmentFriendsBinding bd;
     private GreenDaoManager greenDao = GreenDaoManager.getInstance();
     private int unReadCount = 0;
     private List<FriendBean> dataList;
@@ -54,19 +49,19 @@ public class Fragment_Friends extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mLayoutResID = R.layout.fragment_friends;
-        return super.onCreateView(inflater, container, savedInstanceState);
+        bd = DataBindingUtil.inflate(inflater, R.layout.fragment_friends, container, false);
+        return bd.getRoot();
     }
 
     @Override
     protected void initData() {
 
         layoutManager = new LinearLayoutManager(this.getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new DividerItemDecoration(this.getActivity()));
+        bd.recyclerView.setLayoutManager(layoutManager);
+        bd.recyclerView.addItemDecoration(new DividerItemDecoration(this.getActivity()));
         dataList = new ArrayList<>();
         adapter = new ContactAdapter(getActivity(), dataList);
-        recyclerView.setAdapter(adapter);
+        bd.recyclerView.setAdapter(adapter);
         adapter.setUnReadCount(unReadCount);
         adapter.setOnHeaderItemClickListener(new ContactAdapter.OnHeaderItemClickListener() {
             @Override
@@ -86,13 +81,13 @@ public class Fragment_Friends extends BaseFragment {
         });
         // 设置右侧触摸监听
         //sideBar.setTextView(tvDialog);
-        sideBar.setOnTouchingLetterChangedListener(new SideBar.OnTouchingLetterChangedListener() {
+        bd.sideBar.setOnTouchingLetterChangedListener(new SideBar.OnTouchingLetterChangedListener() {
             @Override
             public void onTouchingLetterChanged(String s) {
                 // 该字母首次出现的位置
                 int position = adapter.getPositionForSection(s.charAt(0));
                 if (position != -1) {
-                    layoutManager.smoothScrollToPosition(recyclerView, null, position + 1);
+                    layoutManager.smoothScrollToPosition(bd.recyclerView, null, position + 1);
                 }
             }
         });
@@ -139,22 +134,16 @@ public class Fragment_Friends extends BaseFragment {
         setUnreadInviteMsgData();
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
-    }
-
-public class UploadPhoneComparator implements Comparator<FriendBean> {
-    public int compare(FriendBean o1, FriendBean o2) {
-        if ("#".equals(o2.getSortLetters())) {
-            return -1;// o1 < o2
-        } else if ("#".equals(o1.getSortLetters())) {
-            return 1;// o1 > o2
-        } else {
-            return o1.getSortLetters().compareTo(o2.getSortLetters());
+    public class UploadPhoneComparator implements Comparator<FriendBean> {
+        public int compare(FriendBean o1, FriendBean o2) {
+            if ("#".equals(o2.getSortLetters())) {
+                return -1;// o1 < o2
+            } else if ("#".equals(o1.getSortLetters())) {
+                return 1;// o1 > o2
+            } else {
+                return o1.getSortLetters().compareTo(o2.getSortLetters());
+            }
         }
     }
-}
 
 }

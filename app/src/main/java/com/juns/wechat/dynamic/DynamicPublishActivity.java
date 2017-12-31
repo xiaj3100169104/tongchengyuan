@@ -1,30 +1,29 @@
 package com.juns.wechat.dynamic;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.widget.EditText;
 
 import com.dmcbig.mediapicker.PickerActivity;
 import com.dmcbig.mediapicker.PickerConfig;
 import com.dmcbig.mediapicker.entity.Media;
-import com.juns.wechat.greendao.mydao.GreenDaoManager;
-import com.same.city.love.R;
 import com.juns.wechat.bean.DynamicBean;
 import com.juns.wechat.bean.UserBean;
+import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.juns.wechat.manager.AccountManager;
-import com.style.album.SelectLocalPictureActivity;
-import com.style.dialog.PromptDialog;
+import com.same.city.love.R;
+import com.same.city.love.databinding.ActivityDynamicPublishBinding;
 import com.style.album.DynamicPublishImageAdapter;
 import com.style.base.BaseRecyclerViewAdapter;
 import com.style.base.BaseToolbarBtnActivity;
 import com.style.constant.FileConfig;
 import com.style.constant.Skip;
+import com.style.dialog.PromptDialog;
 import com.style.dialog.SelAvatarDialog;
 import com.style.rxAndroid.RXTaskManager;
 import com.style.rxAndroid.callback.RXTaskCallBack;
@@ -38,19 +37,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
-
 
 public class DynamicPublishActivity extends BaseToolbarBtnActivity {
     private Media TAG_ADD;
 
-    @Bind(R.id.et_content)
-    EditText etContent;
-    @Bind(R.id.recyclerView)
-    RecyclerView recyclerView;
-
-    private PublishDynamicHelper facehelper;
-
+    ActivityDynamicPublishBinding bd;
+    private PublishDynamicHelper faceHelper;
     private DynamicPublishImageAdapter adapter;
     private List<Media> paths;
     protected boolean haveContent;
@@ -63,8 +55,10 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mLayoutResID = R.layout.activity_dynamic_publish;
         super.onCreate(savedInstanceState);
+        bd = DataBindingUtil.setContentView(this, R.layout.activity_dynamic_publish);
+        super.setContentView(bd.getRoot());
+        initData();
     }
 
     @Override
@@ -74,16 +68,16 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
 
         curUser = AccountManager.getInstance().getUser();
         setToolbarTitle("");
-        facehelper = new PublishDynamicHelper(this, etContent);
-        facehelper.onCreate();
+        faceHelper = new PublishDynamicHelper(this, bd.etContent);
+        faceHelper.onCreate();
         paths = new ArrayList<>();
         TAG_ADD = new Media();
         paths.add(TAG_ADD);
         adapter = new DynamicPublishImageAdapter(DynamicPublishActivity.this, paths);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4);
         gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(gridLayoutManager);
-        recyclerView.setAdapter(adapter);
+        bd.recyclerView.setLayoutManager(gridLayoutManager);
+        bd.recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener<Media>() {
             @Override
             public void onItemClick(int position, Media data) {
@@ -100,7 +94,7 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
             }
         });
 
-        etContent.addTextChangedListener(new TextWatcher() {
+        bd.etContent.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
             }
@@ -194,7 +188,7 @@ public class DynamicPublishActivity extends BaseToolbarBtnActivity {
     }
 
     private void startSend(File[] fileList) {
-        String content = etContent.getText().toString();
+        String content = bd.etContent.getText().toString();
         /*HttpActionImpl.getInstance().addDynamic(TAG, content, files, new NetDataBeanCallback<DynamicBean>(DynamicBean.class) {
             @Override
             protected void onCodeSuccess(DynamicBean data) {

@@ -1,28 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <include
-        android:id="@+id/rl_error_item"
-        layout="@layout/layout_chat_neterror_item"
-        android:visibility="gone" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        android:id="@+id/txt_nochat"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:drawableTop="@drawable/no_chat"
-        android:gravity="center"
-        android:text="@string/no_msg"
-        android:textColor="@color/black1"
-        android:textSize="16sp"
-        android:visibility="gone" />
-</RelativeLayout>
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/rl_error_item"
+            layout="@layout/layout_chat_neterror_item"
+            android:visibility="gone" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/txt_nochat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:drawableTop="@drawable/no_chat"
+            android:gravity="center"
+            android:text="@string/no_msg"
+            android:textColor="@color/black1"
+            android:textSize="16sp"
+            android:visibility="gone" />
+    </RelativeLayout>
+</layout>

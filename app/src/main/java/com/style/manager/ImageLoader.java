@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.request.RequestOptions;
-import com.juns.wechat.App;
+import com.juns.wechat.app.App;
 import com.same.city.love.R;
 import com.juns.wechat.chat.config.ConfigUtil;
 import com.juns.wechat.util.BitmapUtil;

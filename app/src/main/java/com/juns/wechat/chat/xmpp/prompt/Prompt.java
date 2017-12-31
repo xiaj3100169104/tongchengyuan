@@ -2,9 +2,8 @@ package com.juns.wechat.chat.xmpp.prompt;
 
 import android.app.ActivityManager;
 import android.content.Context;
-import android.text.TextUtils;
 
-import com.juns.wechat.App;
+import com.juns.wechat.app.App;
 
 import java.util.List;
 

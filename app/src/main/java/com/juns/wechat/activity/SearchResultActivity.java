@@ -1,14 +1,15 @@
 package com.juns.wechat.activity;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
 
-import com.same.city.love.R;
 import com.juns.wechat.adpter.SearchResultAdapter;
 import com.juns.wechat.bean.UserBean;
+import com.same.city.love.R;
+import com.same.city.love.databinding.ActivitySearchResultBinding;
 import com.style.base.BaseToolbarActivity;
 import com.style.constant.Skip;
 
@@ -16,14 +17,16 @@ import java.util.List;
 
 public class SearchResultActivity extends BaseToolbarActivity {
 
-    private ListView lvSearchResultList;
+    ActivitySearchResultBinding bd;
     private List<UserBean> searchResults;
     private SearchResultAdapter searchResultAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mLayoutResID = R.layout.activity_search_result;
         super.onCreate(savedInstanceState);
+        bd = DataBindingUtil.setContentView(this, R.layout.activity_search_result);
+        super.setContentView(bd.getRoot());
+        initData();
     }
 
     @Override
@@ -31,15 +34,11 @@ public class SearchResultActivity extends BaseToolbarActivity {
         setToolbarTitle("搜索结果");
         searchResults = (List<UserBean>) getIntent().getSerializableExtra(Skip.KEY_SEARCH_RESULTS);
 
-        if(searchResults == null || searchResults.isEmpty()){
-            throw new IllegalArgumentException("search results is null or empty!");
-        }
         searchResultAdapter = new SearchResultAdapter(this);
         searchResultAdapter.setData(searchResults);
-        lvSearchResultList = (ListView) findViewById(R.id.lvSearchResultList);
-        lvSearchResultList.setAdapter(searchResultAdapter);
+        bd.lvSearchResultList.setAdapter(searchResultAdapter);
 
-        lvSearchResultList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        bd.lvSearchResultList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 UserBean userBean = searchResults.get(position);

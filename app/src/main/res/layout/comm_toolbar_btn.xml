@@ -25,7 +25,8 @@
             android:gravity="center"
             android:text="保存"
             android:textColor="@color/sel_title_right_text_white"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            />
 
     </RelativeLayout>
 

@@ -1,6 +1,7 @@
 package com.juns.wechat.activity;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -8,7 +9,6 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.baidu.location.BDLocation;
@@ -31,22 +31,15 @@ import com.baidu.mapapi.search.geocode.GeoCoder;
 import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeOption;
 import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
-import com.same.city.love.R;
-import com.style.base.BaseToolbarActivity;
 import com.juns.wechat.util.LogUtil;
+import com.same.city.love.R;
+import com.same.city.love.databinding.ActivitySendLocationBinding;
 import com.style.base.BaseToolbarBtnActivity;
 
 import java.util.List;
 
-import butterknife.Bind;
-
 public class SendLocationActivity extends BaseToolbarBtnActivity implements OnGetGeoCoderResultListener {
-    @Bind(R.id.ivMarker)
-    ImageView ivMarker;
-    /**
-     * MapView 是地图主控件
-     */
-    private MapView mMapView;
+    ActivitySendLocationBinding bd;
     private BaiduMap mBaiduMap;
     private UiSettings mUiSettings;
     private static final int paddingLeft = 0;
@@ -66,22 +59,21 @@ public class SendLocationActivity extends BaseToolbarBtnActivity implements OnGe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mLayoutResID = R.layout.activity_send_location;
         super.onCreate(savedInstanceState);
-
+        bd = DataBindingUtil.setContentView(this, R.layout.activity_send_location);
+        super.setContentView(bd.getRoot());
+        initData();
     }
 
     @Override
     public void initData() {
-
-        mMapView = (MapView) findViewById(R.id.bmapView);
         setToolbarTitle("选择位置");
         getToolbarRightView().setText("发送");
         Intent intent = getIntent();
         isSelect = intent.getBooleanExtra("select", true);
         if (!isSelect)
             getToolbarRightView().setVisibility(View.GONE);
-        mBaiduMap = mMapView.getMap();
+        mBaiduMap = bd.mapView.getMap();
         mUiSettings = mBaiduMap.getUiSettings();
         mBaiduMap.setOnMapStatusChangeListener(new BaiduMap.OnMapStatusChangeListener() {
             @Override
@@ -181,7 +173,7 @@ public class SendLocationActivity extends BaseToolbarBtnActivity implements OnGe
         @Override
         public void onReceiveLocation(BDLocation location) {
             // map view 销毁后不在处理新接收的位置
-            if (location == null || mMapView == null) {
+            if (location == null || bd.mapView == null) {
                 return;
             }
             Log.d(TAG, "经纬度:" + location.getLatitude() + "--" + location.getLongitude());
@@ -207,15 +199,15 @@ public class SendLocationActivity extends BaseToolbarBtnActivity implements OnGe
 
         // 初始化当前MapView中心屏幕坐标，初始化当前地理坐标
         mCenterPoint = mBaiduMap.getMapStatus().targetScreen;
-        mCenterPoint.y = (int) (mMapView.getY() + mMapView.getMeasuredHeight() / 2);
+        mCenterPoint.y = (int) (bd.mapView.getY() + bd.mapView.getMeasuredHeight() / 2);
         LogUtil.e("X: " + mCenterPoint.x + ", Y: " + mCenterPoint.y);
         builder.targetScreen(mCenterPoint);
-        int w = ivMarker.getMeasuredWidth();
-        int h = ivMarker.getMeasuredHeight();
+        int w = bd.ivMarker.getMeasuredWidth();
+        int h = bd.ivMarker.getMeasuredHeight();
         int x = (int) (mCenterPoint.x - w * 0.5);
         int y = (int) (mCenterPoint.y - h);
-        ivMarker.setLeft(x);
-        ivMarker.setTop(y);
+        bd.ivMarker.setLeft(x);
+        bd.ivMarker.setTop(y);
         MapStatusUpdate mapStatusUpdate = MapStatusUpdateFactory.newMapStatus(builder.build());
         mBaiduMap.animateMapStatus(mapStatusUpdate);
     }
@@ -291,10 +283,10 @@ public class SendLocationActivity extends BaseToolbarBtnActivity implements OnGe
     public void setPadding(View v) {
         if (((CheckBox) v).isChecked()) {
             mBaiduMap.setViewPadding(paddingLeft, paddingTop, paddingRight, paddingBottom);
-            addView(mMapView);
+            addView(bd.mapView);
         } else {
             mBaiduMap.setViewPadding(0, 0, 0, 0);
-            mMapView.removeView(mTextView);
+            bd.mapView.removeView(mTextView);
         }
     }
 
@@ -320,14 +312,14 @@ public class SendLocationActivity extends BaseToolbarBtnActivity implements OnGe
     @Override
     protected void onPause() {
         // MapView的生命周期与Activity同步，当activity挂起时需调用MapView.onPause()
-        mMapView.onPause();
+        bd.mapView.onPause();
         super.onPause();
     }
 
     @Override
     protected void onResume() {
         // MapView的生命周期与Activity同步，当activity恢复时需调用MapView.onResume()
-        mMapView.onResume();
+        bd.mapView.onResume();
         super.onResume();
     }
 
@@ -338,7 +330,7 @@ public class SendLocationActivity extends BaseToolbarBtnActivity implements OnGe
         // 关闭定位图层
         mBaiduMap.setMyLocationEnabled(false);
         // MapView的生命周期与Activity同步，当activity销毁时需调用MapView.destroy()
-        mMapView.onDestroy();
+        bd.mapView.onDestroy();
         super.onDestroy();
     }
 }

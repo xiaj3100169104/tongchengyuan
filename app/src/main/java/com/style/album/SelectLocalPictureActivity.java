@@ -1,17 +1,18 @@
 package com.style.album;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 
 import com.dmcbig.mediapicker.PickerActivity;
 import com.dmcbig.mediapicker.PickerConfig;
 import com.dmcbig.mediapicker.entity.Media;
 import com.same.city.love.R;
-import com.style.base.BaseToolbarActivity;
+import com.same.city.love.databinding.ActivitySelectLocalPictureBinding;
 import com.style.base.BaseRecyclerViewAdapter;
+import com.style.base.BaseToolbarActivity;
 import com.style.constant.FileConfig;
 import com.style.constant.Skip;
 import com.style.dialog.SelAvatarDialog;
@@ -21,28 +22,24 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
-
 /**
  * Created by xiajun on 2016/10/8.
  */
 public class SelectLocalPictureActivity extends BaseToolbarActivity {
-    @Bind(R.id.recyclerView)
-    RecyclerView recyclerView;
-
+    ActivitySelectLocalPictureBinding bd;
     private Media TAG_ADD;
-
     private DynamicPublishImageAdapter adapter;
     private List<Media> paths;
     protected File photoFile;
     private SelAvatarDialog dialog;
-
     private boolean haveImg;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        mLayoutResID = R.layout.activity_select_local_picture;
         super.onCreate(savedInstanceState);
+        bd = DataBindingUtil.setContentView(this, R.layout.activity_select_local_picture);
+        super.setContentView(bd.getRoot());
+        initData();
     }
 
     @Override
@@ -54,8 +51,8 @@ public class SelectLocalPictureActivity extends BaseToolbarActivity {
         adapter = new DynamicPublishImageAdapter(this, paths);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 4);
         gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(gridLayoutManager);
-        recyclerView.setAdapter(adapter);
+        bd.recyclerView.setLayoutManager(gridLayoutManager);
+        bd.recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(new BaseRecyclerViewAdapter.OnItemClickListener<Media>() {
             @Override
             public void onItemClick(int position, Media data) {

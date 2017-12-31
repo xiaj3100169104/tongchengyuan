@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -74,13 +75,9 @@ public class BaiduMapActivity extends BaseActivity implements OnClickListener {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        // 在使用SDK各组件之前初始化context信息，传入ApplicationContext
-        // 注意该方法要再setContentView方法之前实现
-        SDKInitializer.initialize(getApplicationContext());
-
-        mLayoutResID = R.layout.activity_baidumap;
         super.onCreate(savedInstanceState);
-
+        setContentView(R.layout.activity_baidumap);
+        initData();
     }
 
     @Override

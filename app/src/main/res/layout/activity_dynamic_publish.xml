@@ -1,54 +1,59 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout_root"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/gray_light">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/layout_root"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:background="@color/gray_light">
 
-        <include layout="@layout/comm_toolbar_btn" />
-
-        <ScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="vertical">
 
-            <LinearLayout
+            <include layout="@layout/comm_toolbar_btn" />
+
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:orientation="vertical"
-                android:padding="10dp">
+                android:layout_height="wrap_content">
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="150dp">
-
-                    <EditText
-                        android:id="@+id/et_content"
-                        style="@style/text_black_15sp"
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent"
-                        android:background="@android:color/white"
-                        android:gravity="top"
-                        android:hint="请输入文字"
-                        android:maxLength="500"
-                        android:singleLine="false"
-                        android:textColorHint="@color/gray" />
-                </RelativeLayout>
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/recyclerView"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp" />
-            </LinearLayout>
-        </ScrollView>
-    </LinearLayout>
+                    android:background="@android:color/white"
+                    android:orientation="vertical"
+                    android:padding="10dp">
 
-    <include layout="@layout/layout_bottom_publish_dynamic_activity" />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp">
 
-</RelativeLayout>
+                        <EditText
+                            android:id="@+id/et_content"
+                            style="@style/text_black_15sp"
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:background="@android:color/white"
+                            android:gravity="top"
+                            android:hint="请输入文字"
+                            android:maxLength="500"
+                            android:singleLine="false"
+                            android:textColorHint="@color/gray" />
+                    </RelativeLayout>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp" />
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+
+        <include
+            android:id="@+id/bottom"
+            layout="@layout/layout_bottom_publish_dynamic_activity" />
+
+    </RelativeLayout>
+</layout>

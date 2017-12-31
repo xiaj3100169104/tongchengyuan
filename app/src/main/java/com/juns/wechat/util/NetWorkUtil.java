@@ -3,7 +3,7 @@ package com.juns.wechat.util;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import com.juns.wechat.App;
+import com.juns.wechat.app.App;
 
 
 /**

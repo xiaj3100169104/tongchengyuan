@@ -1,6 +1,7 @@
 package com.juns.wechat.activity;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Window;
@@ -11,16 +12,19 @@ import com.same.city.love.R;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.util.SyncDataUtil;
+import com.same.city.love.databinding.ActivityStartBinding;
 import com.style.base.BaseActivity;
 
 public class SplashActivity extends BaseActivity {
+    ActivityStartBinding bd;
     private Handler mHandler = new Handler();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mLayoutResID = R.layout.activity_start;
         super.onCreate(savedInstanceState);
+        bd = DataBindingUtil.setContentView(this, R.layout.activity_start);
+        super.setContentView(bd.getRoot());
+        initData();
     }
 
     @Override

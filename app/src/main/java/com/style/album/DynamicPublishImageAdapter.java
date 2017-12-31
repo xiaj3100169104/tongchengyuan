@@ -1,20 +1,18 @@
 package com.style.album;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.dmcbig.mediapicker.entity.Media;
 import com.same.city.love.R;
+import com.same.city.love.databinding.AdapterPublishDynamicPictureBinding;
 import com.style.base.BaseRecyclerViewAdapter;
 import com.style.manager.ImageLoader;
 
 import java.util.List;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
 
 
 public class DynamicPublishImageAdapter extends BaseRecyclerViewAdapter<Media> {
@@ -27,9 +25,8 @@ public class DynamicPublishImageAdapter extends BaseRecyclerViewAdapter<Media> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = mInflater.inflate(R.layout.adapter_publish_dynamic_picture, parent, false);
-        ViewHolder holder = new ViewHolder(v);
-        return holder;
+        AdapterPublishDynamicPictureBinding bd = DataBindingUtil.inflate(mInflater, R.layout.adapter_publish_dynamic_picture, parent, false);
+        return new ViewHolder(bd);
     }
 
     @Override
@@ -38,16 +35,16 @@ public class DynamicPublishImageAdapter extends BaseRecyclerViewAdapter<Media> {
         ViewHolder holder = (ViewHolder) viewHolder;
         Media media = getData(position);
         if (position != getItemCount() - 1) {
-            holder.ivDelete.setVisibility(View.VISIBLE);
-            ImageLoader.loadPictureByUrl(mContext, holder.ivActiveImages, media.path);
+            holder.bd.ivDelete.setVisibility(View.VISIBLE);
+            ImageLoader.loadPictureByUrl(mContext, holder.bd.ivActiveImages, media.path);
 
         } else {
-            holder.ivDelete.setVisibility(View.GONE);
-            holder.ivActiveImages.setImageResource(R.mipmap.ic_add_photo);
+            holder.bd.ivDelete.setVisibility(View.GONE);
+            holder.bd.ivActiveImages.setImageResource(R.mipmap.ic_add_photo);
         }
-        super.setOnItemClickListener(holder, position);
+        super.setOnItemClickListener(holder.itemView, position);
 
-        holder.ivDelete.setOnClickListener(new View.OnClickListener() {
+        holder.bd.ivDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
@@ -55,17 +52,15 @@ public class DynamicPublishImageAdapter extends BaseRecyclerViewAdapter<Media> {
                 }
             }
         });
+        holder.bd.executePendingBindings();
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.iv_active_images)
-        ImageView ivActiveImages;
-        @Bind(R.id.iv_delete)
-        ImageView ivDelete;
+        private final AdapterPublishDynamicPictureBinding bd;
 
-        ViewHolder(View view) {
-            super(view);
-            ButterKnife.bind(this, view);
+        ViewHolder(AdapterPublishDynamicPictureBinding bd) {
+            super(bd.getRoot());
+            this.bd = bd;
         }
     }
 

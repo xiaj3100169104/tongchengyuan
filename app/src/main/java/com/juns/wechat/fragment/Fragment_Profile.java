@@ -1,21 +1,24 @@
 package com.juns.wechat.fragment;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.same.city.love.R;
+import com.same.city.love.databinding.FragmentProfileBinding;
 import com.style.base.BaseFragment;
 
 //我
 public class Fragment_Profile extends BaseFragment {
 
+    FragmentProfileBinding bd;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mLayoutResID = R.layout.fragment_profile;
-        return super.onCreateView(inflater, container, savedInstanceState);
+        bd = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false);
+        return bd.getRoot();
     }
 
 

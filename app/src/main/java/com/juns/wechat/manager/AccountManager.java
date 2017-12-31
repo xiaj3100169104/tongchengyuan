@@ -3,8 +3,7 @@ package com.juns.wechat.manager;
 import android.content.Context;
 import android.text.TextUtils;
 
-import com.juns.wechat.App;
-import com.juns.wechat.Constants;
+import com.juns.wechat.app.App;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.xmpp.XmppManagerImpl;
 import com.juns.wechat.chat.xmpp.event.XmppEvent;
@@ -23,6 +22,7 @@ public class AccountManager {
     private static final String CURRENT_LOGIN_USER_NAME = "current_login_username";
     private static final String CURRENT_LOGIN_USER_ID = "current_login_user_id";
     private static final String CURRENT_LOGIN_PWD = "PWD";
+    private static final String LOGIN_STATE = "LoginState";
 
     private static AccountManager instance;
 
@@ -71,11 +71,11 @@ public class AccountManager {
     }
 
     public boolean isLogin() {
-        return SharedPreferencesUtil.getBooleanValue(App.getInstance(), Constants.LoginState);
+        return SharedPreferencesUtil.getBooleanValue(App.getInstance(), LOGIN_STATE);
     }
 
     public void setLogin(boolean login) {
-        SharedPreferencesUtil.putBooleanValue(context, Constants.LoginState, login);
+        SharedPreferencesUtil.putBooleanValue(context, LOGIN_STATE, login);
     }
 
     public void setUserId(String userId) {

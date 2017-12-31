@@ -14,9 +14,6 @@
         app:contentInsetEnd="0dp"
         app:contentInsetStart="0dp"
         app:popupTheme="@style/AppTheme.PopupOverlay">
-        <!--
-            app:popupTheme="@style/AppTheme.PopupOverlay"
-        -->
 
         <include layout="@layout/comm_toolbar_layout" />
     </android.support.v7.widget.Toolbar>

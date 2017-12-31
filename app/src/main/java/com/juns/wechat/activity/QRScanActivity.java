@@ -1,6 +1,7 @@
 package com.juns.wechat.activity;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.same.city.love.R;
+import com.same.city.love.databinding.ActivityQrScanBinding;
 import com.style.base.BaseToolbarActivity;
 import com.style.constant.Skip;
 import com.style.utils.CommonUtil;
@@ -22,14 +24,17 @@ import com.uuzuche.lib_zxing.activity.CodeUtils;
  */
 public class QRScanActivity extends BaseToolbarActivity {
 
+    ActivityQrScanBinding bd;
     private CaptureFragment captureFragment;
     public static boolean isOpen = false;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mLayoutResID = R.layout.activity_qr_scan;
         super.onCreate(savedInstanceState);
+        bd = DataBindingUtil.setContentView(this, R.layout.activity_qr_scan);
+        super.setContentView(bd.getRoot());
+        initData();
     }
 
     @Override
@@ -63,8 +68,7 @@ public class QRScanActivity extends BaseToolbarActivity {
     }
 
     private void initView() {
-        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linear1);
-        linearLayout.setOnClickListener(new View.OnClickListener() {
+        bd.linear1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!isOpen) {

@@ -1,7 +1,7 @@
 package com.juns.wechat.chat.xmpp.listener;
 
 
-import com.juns.wechat.App;
+import com.juns.wechat.app.App;
 import com.juns.wechat.chat.bean.MessageBean;
 import com.juns.wechat.chat.xmpp.XmppManagerUtil;
 import com.juns.wechat.chat.xmpp.extensionelement.TimeElement;

@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.juns.wechat.activity.SearchResultActivity"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <include layout="@layout/comm_toolbar" />
-
-    <ListView
-        android:id="@+id/lvSearchResultList"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none"></ListView>
+        tools:context="com.juns.wechat.activity.SearchResultActivity"
+        android:orientation="vertical">
 
-</LinearLayout>
+        <include layout="@layout/comm_toolbar" />
+
+        <ListView
+            android:id="@+id/lvSearchResultList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none"></ListView>
+
+    </LinearLayout>
+</layout>

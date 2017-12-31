@@ -1,22 +1,20 @@
 package com.juns.wechat.activity;
 
 
+import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.same.city.love.R;
 import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.helper.CommonViewHelper;
 import com.juns.wechat.manager.AccountManager;
+import com.same.city.love.R;
+import com.same.city.love.databinding.ActivityMycodeBinding;
 import com.style.base.BaseToolbarActivity;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
-
-import butterknife.Bind;
 
 
 /**
@@ -24,23 +22,15 @@ import butterknife.Bind;
  */
 public class MyQRCodeActivity extends BaseToolbarActivity {
 
-
-    @Bind(R.id.iv_avatar)
-    ImageView ivAvatar;
-    @Bind(R.id.tvNickName)
-    TextView tvNickName;
-    @Bind(R.id.ivSex)
-    ImageView ivSex;
-    @Bind(R.id.tvUserName)
-    TextView tvUserName;
-    @Bind(R.id.img_code)
-    ImageView imgCode;
+    ActivityMycodeBinding bd;
     private UserBean curUser;
 
     @Override
     protected void onCreate(Bundle arg0) {
-        mLayoutResID = R.layout.activity_mycode;
         super.onCreate(arg0);
+        bd = DataBindingUtil.setContentView(this, R.layout.activity_mycode);
+        super.setContentView(bd.getRoot());
+        initData();
     }
 
     @Override
@@ -76,12 +66,12 @@ public class MyQRCodeActivity extends BaseToolbarActivity {
     }
 
     private void initQRcode() {
-        Bitmap mBitmap = CodeUtils.createImage(curUser.getUserId(), imgCode.getWidth(), imgCode.getHeight(), BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
-        imgCode.setImageBitmap(mBitmap);
+        Bitmap mBitmap = CodeUtils.createImage(curUser.getUserId(), bd.imgCode.getWidth(), bd.imgCode.getHeight(), BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
+        bd.imgCode.setImageBitmap(mBitmap);
     }
 
     private void setData() {
         curUser = AccountManager.getInstance().getUser();
-        CommonViewHelper.setUserViewInfo(curUser, ivAvatar, tvNickName, ivSex, tvUserName, true);
+        CommonViewHelper.setUserViewInfo(curUser, bd.ivAvatar, bd.tvNickName, bd.ivSex, bd.tvUserName, true);
     }
 }

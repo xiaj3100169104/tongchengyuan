@@ -1,19 +1,16 @@
 package com.juns.wechat.chat.adpter;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.juns.wechat.chat.utils.SmileUtils;
 import com.same.city.love.R;
+import com.same.city.love.databinding.RowExpressionBinding;
 import com.style.base.BaseRecyclerViewAdapter;
 
 import java.util.List;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
 
 public class ExpressionAdapter2 extends BaseRecyclerViewAdapter<SmileUtils.SmileBean> {
 
@@ -23,7 +20,8 @@ public class ExpressionAdapter2 extends BaseRecyclerViewAdapter<SmileUtils.Smile
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(mInflater.inflate(R.layout.row_expression, parent, false));
+        RowExpressionBinding bd = DataBindingUtil.inflate(mInflater, R.layout.row_expression, parent, false);
+        return new ViewHolder(bd);
     }
 
     @Override
@@ -31,18 +29,17 @@ public class ExpressionAdapter2 extends BaseRecyclerViewAdapter<SmileUtils.Smile
         final int pos = position;
         final ViewHolder holder = (ViewHolder) viewHolder;
         SmileUtils.SmileBean bean = getData(position);
-        holder.ivExpression.setImageResource(bean.resId);
-        super.setOnItemClickListener(viewHolder, pos);
+        holder.bd.ivExpression.setImageResource(bean.resId);
+        super.setOnItemClickListener(viewHolder.itemView, pos);
+        holder.bd.executePendingBindings();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.iv_expression)
-        ImageView ivExpression;
+        private final RowExpressionBinding bd;
 
-        public ViewHolder(View view) {
-            super(view);
-            ButterKnife.bind(this, view);
-
+        public ViewHolder(RowExpressionBinding bd) {
+            super(bd.getRoot());
+            this.bd = bd;
         }
     }
 }

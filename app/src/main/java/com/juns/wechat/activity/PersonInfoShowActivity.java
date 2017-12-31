@@ -1,6 +1,7 @@
 package com.juns.wechat.activity;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -24,6 +25,7 @@ import com.juns.wechat.helper.CommonViewHelper;
 import com.juns.wechat.manager.AccountManager;
 import com.juns.wechat.net.request.HttpActionImpl;
 import com.same.city.love.R;
+import com.same.city.love.databinding.ActivityPersonInfoShowBinding;
 import com.style.base.BaseToolbarActivity;
 import com.style.event.EventCode;
 import com.style.net.core.NetDataBeanCallback;
@@ -34,91 +36,21 @@ import org.simple.eventbus.Subscriber;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
-import butterknife.OnClick;
 import me.kaede.tagview.Tag;
 import me.kaede.tagview.TagView;
 
 public class PersonInfoShowActivity extends BaseToolbarActivity {
-    @Bind(R.id.ivAvatar)
-    ImageView ivAvatar;
-    @Bind(R.id.tvNickName)
-    TextView tvNickName;
-    @Bind(R.id.ivSex)
-    ImageView ivSex;
-    @Bind(R.id.tvUserName)
-    TextView tvUserName;
-    @Bind(R.id.tv_industry)
-    TextView tvIndustry;
-    @Bind(R.id.layout_industry)
-    LinearLayout layoutIndustry;
-    @Bind(R.id.tv_work_area)
-    TextView tvWorkArea;
-    @Bind(R.id.layout_work_area)
-    LinearLayout layoutWorkArea;
-    @Bind(R.id.tv_company_info)
-    TextView tvCompanyInfo;
-    @Bind(R.id.layout_company_info)
-    LinearLayout layoutCompanyInfo;
-    @Bind(R.id.tv_hometown_info)
-    TextView tvHometownInfo;
-    @Bind(R.id.layout_hometown_info)
-    LinearLayout layoutHometownInfo;
-    @Bind(R.id.tv_my_heart)
-    TextView tvMyHeart;
-    @Bind(R.id.layout_my_heart)
-    LinearLayout layoutMyHeart;
-    @Bind(R.id.tv_my_label)
-    TextView tvMyLabel;
-    @Bind(R.id.layout_my_label)
-    LinearLayout layoutMyLabel;
-    @Bind(R.id.tv_interest_sport)
-    TextView tvInterestSport;
-    @Bind(R.id.layout_interest_sport)
-    LinearLayout layoutInterestSport;
-    @Bind(R.id.tv_interest_music)
-    TextView tvInterestMusic;
-    @Bind(R.id.layout_interest_music)
-    LinearLayout layoutInterestMusic;
-    @Bind(R.id.tv_interest_food)
-    TextView tvInterestFood;
-    @Bind(R.id.layout_interest_food)
-    LinearLayout layoutInterestFood;
-    @Bind(R.id.tv_interest_movie)
-    TextView tvInterestMovie;
-    @Bind(R.id.layout_interest_movie)
-    LinearLayout layoutInterestMovie;
-    @Bind(R.id.tv_question)
-    TextView tvQuestion;
-    @Bind(R.id.layout_question)
-    LinearLayout layoutQuestion;
-    @Bind(R.id.tv_emotion)
-    TextView tvEmotion;
-    @Bind(R.id.layout_emotion)
-    LinearLayout layoutEmotion;
-    @Bind(R.id.tv_education)
-    TextView tvEducation;
-    @Bind(R.id.layout_education)
-    LinearLayout layoutEducation;
-
-    @Bind(R.id.tag_view_my_label)
-    TagView tagViewMyLabel;
-    @Bind(R.id.tag_view_interest_sport)
-    TagView tagViewInterestSport;
-    @Bind(R.id.tag_view_interest_music)
-    TagView tagViewInterestMusic;
-    @Bind(R.id.tag_view_interest_food)
-    TagView tagViewInterestFood;
-    @Bind(R.id.tag_view_interest_movie)
-    TagView tagViewInterestMovie;
+    ActivityPersonInfoShowBinding bd;
 
     private UserBean curUser;
     private UserBasicInfo userBasicInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mLayoutResID = R.layout.activity_person_info_show;
         super.onCreate(savedInstanceState);
+        bd = DataBindingUtil.setContentView(this, R.layout.activity_person_info_show);
+        super.setContentView(bd.getRoot());
+        initData();
     }
 
     @Override
@@ -159,23 +91,29 @@ public class PersonInfoShowActivity extends BaseToolbarActivity {
             setExtendInfo(userProperties);
         }
         //getUserDetailInfo();
+        bd.ivAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showBigAvatar();
+            }
+        });
     }
 
     private void setUserHeadInfo(UserBean userBean) {
-        CommonViewHelper.setUserViewInfo(userBean, ivAvatar, tvNickName, ivSex, tvUserName, true);
+        CommonViewHelper.setUserViewInfo(userBean, bd.ivAvatar, bd.tvNickName, bd.ivSex, bd.tvUserName, true);
 
     }
 
     private void setUserBasicInfo(UserBasicInfo u) {
         if (u != null) {
             this.userBasicInfo = u;
-            tvEmotion.setText(getNotNullText(u.getEmotion()));
-            tvEducation.setText(getNotNullText(u.getEducation()));
-            tvIndustry.setText(getNotNullText(u.getIndustry()));
-            tvWorkArea.setText(getNotNullText(u.getWorkArea()));
-            tvCompanyInfo.setText(getNotNullText(u.getCompanyInfo()));
-            tvHometownInfo.setText(getNotNullText(u.getHometownInfo()));
-            tvMyHeart.setText(getNotNullText(u.getMyHeart()));
+            bd.basic.tvEmotion.setText(getNotNullText(u.getEmotion()));
+            bd.basic.tvEducation.setText(getNotNullText(u.getEducation()));
+            bd.basic.tvIndustry.setText(getNotNullText(u.getIndustry()));
+            bd.basic.tvWorkArea.setText(getNotNullText(u.getWorkArea()));
+            bd.basic.tvCompanyInfo.setText(getNotNullText(u.getCompanyInfo()));
+            bd.basic.tvHometownInfo.setText(getNotNullText(u.getHometownInfo()));
+            bd.basic.tvMyHeart.setText(getNotNullText(u.getMyHeart()));
         }
     }
 
@@ -198,7 +136,6 @@ public class PersonInfoShowActivity extends BaseToolbarActivity {
         });
     }
 
-    @OnClick(R.id.ivAvatar)
     public void showBigAvatar() {
         Intent intent = new Intent(this, PersonAvatarActivity.class);
         startActivity(intent);
@@ -230,19 +167,19 @@ public class PersonInfoShowActivity extends BaseToolbarActivity {
                         List<String> list = StringUtil.String2List(u.value, ",");
                         switch (u.key) {
                             case UserPropertyBean.KEY_MY_LABEL:
-                                setLabelData(layoutMyLabel, tagViewMyLabel, list, R.color.tag_my_label, R.color.tag_my_label_bg, tvMyLabel);
+                                setLabelData(bd.extend.layoutMyLabel, bd.extend.tagViewMyLabel, list, R.color.tag_my_label, R.color.tag_my_label_bg, bd.extend.tvMyLabel);
                                 break;
                             case UserPropertyBean.KEY_INTEREST_SPORT:
-                                setLabelData(layoutInterestSport, tagViewInterestSport, list, R.color.tag_sport, R.color.tag_sport_bg, tvInterestSport);
+                                setLabelData(bd.extend.layoutInterestSport, bd.extend.tagViewInterestSport, list, R.color.tag_sport, R.color.tag_sport_bg, bd.extend.tvInterestSport);
                                 break;
                             case UserPropertyBean.KEY_INTEREST_MUSIC:
-                                setLabelData(layoutInterestMusic, tagViewInterestMusic, list, R.color.tag_music, R.color.tag_music_bg, tvInterestMusic);
+                                setLabelData(bd.extend.layoutInterestMusic, bd.extend.tagViewInterestMusic, list, R.color.tag_music, R.color.tag_music_bg, bd.extend.tvInterestMusic);
                                 break;
                             case UserPropertyBean.KEY_INTEREST_FOOD:
-                                setLabelData(layoutInterestFood, tagViewInterestFood, list, R.color.tag_food, R.color.tag_food_bg, tvInterestFood);
+                                setLabelData(bd.extend.layoutInterestFood, bd.extend.tagViewInterestFood, list, R.color.tag_food, R.color.tag_food_bg, bd.extend.tvInterestFood);
                                 break;
                             case UserPropertyBean.KEY_INTEREST_MOVIE:
-                                setLabelData(layoutInterestMovie, tagViewInterestMovie, list, R.color.tag_movie, R.color.tag_movie_bg, tvInterestMovie);
+                                setLabelData(bd.extend.layoutInterestMovie, bd.extend.tagViewInterestMovie, list, R.color.tag_movie, R.color.tag_movie_bg, bd.extend.tvInterestMovie);
                                 break;
                         }
                     }

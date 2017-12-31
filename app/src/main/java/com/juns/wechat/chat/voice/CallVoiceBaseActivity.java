@@ -4,54 +4,30 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.same.city.love.R;
-import com.juns.wechat.util.SipClient;
+import com.same.city.love.databinding.ActivityCallVoiceBinding;
 import com.style.base.BaseActivity;
 import com.style.constant.MyAction;
 import com.style.constant.Skip;
-
-import butterknife.Bind;
 
 /**
  * Created by xiajun on 2016/6/6.
  */
 public class CallVoiceBaseActivity extends BaseActivity {
     protected CallReceiver broadCast;
-    @Bind(R.id.tv_phone)
-    TextView tvPhone;
-    @Bind(R.id.tv_time)
-    TextView tvTime;
-    @Bind(R.id.bt_Hang_up)
-    Button btHangUp;
-    @Bind(R.id.bt_answer)
-    Button btAnswer;
-    @Bind(R.id.layout_before_connected)
-    LinearLayout layoutBeforeConnected;
-    @Bind(R.id.iv_mute)
-    ImageView ivMute;
-    @Bind(R.id.layout_mute)
-    LinearLayout layoutMute;
-    @Bind(R.id.iv_speaker)
-    ImageView ivSpeaker;
-    @Bind(R.id.layout_speaker)
-    LinearLayout layoutSpeaker;
-    @Bind(R.id.layout_shrink)
-    LinearLayout layoutShrink;
-    @Bind(R.id.layout_option)
-    LinearLayout layoutOption;
+    ActivityCallVoiceBinding bd;
 
     private String toUserName;
 
     @Override
     protected void onCreate(Bundle arg0) {
-        mLayoutResID = R.layout.activity_call_voice;
         super.onCreate(arg0);
+        bd = DataBindingUtil.setContentView(this, R.layout.activity_call_voice);
+        super.setContentView(bd.getRoot());
+        initData();
     }
 
     @Override

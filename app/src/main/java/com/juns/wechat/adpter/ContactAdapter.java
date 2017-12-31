@@ -1,27 +1,21 @@
 package com.juns.wechat.adpter;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.SectionIndexer;
-import android.widget.TextView;
 
-import com.same.city.love.R;
 import com.juns.wechat.bean.FriendBean;
-import com.juns.wechat.bean.UserBean;
+import com.same.city.love.R;
+import com.same.city.love.databinding.ContactItemBinding;
+import com.same.city.love.databinding.LayoutHeadFriendBinding;
 import com.style.base.BaseRecyclerViewAdapter;
 import com.style.manager.ImageLoader;
-import com.style.view.CustomNotifyView;
 
 import java.util.List;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
 
 public class ContactAdapter extends BaseRecyclerViewAdapter<FriendBean> implements SectionIndexer {
     public static final int TYPE_HEADER = 0;
@@ -56,9 +50,12 @@ public class ContactAdapter extends BaseRecyclerViewAdapter<FriendBean> implemen
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == TYPE_HEADER)
-            return new HeaderViewHolder(mInflater.inflate(R.layout.layout_head_friend, parent, false));
-        return new ViewHolder(mInflater.inflate(R.layout.contact_item, parent, false));
+        if (viewType == TYPE_HEADER) {
+            LayoutHeadFriendBinding bd = DataBindingUtil.inflate(mInflater, R.layout.layout_head_friend, parent, false);
+            return new HeaderViewHolder(bd);
+        }
+        ContactItemBinding bd = DataBindingUtil.inflate(mInflater, R.layout.contact_item, parent, false);
+        return new ViewHolder(bd);
     }
 
     @Override
@@ -67,19 +64,20 @@ public class ContactAdapter extends BaseRecyclerViewAdapter<FriendBean> implemen
             HeaderViewHolder headerViewHolder = (HeaderViewHolder) viewHolder;
             int count = getUnReadCount();
             if (count > 0) {
-                headerViewHolder.tvUnreadInviteMsg.setVisibility(View.VISIBLE);
-                headerViewHolder.tvUnreadInviteMsg.setNotifyCount(count);
+                headerViewHolder.bd.viewNotifyMsg.setVisibility(View.VISIBLE);
+                headerViewHolder.bd.viewNotifyMsg.setNotifyCount(count);
             } else {
-                headerViewHolder.tvUnreadInviteMsg.setVisibility(View.GONE);
+                headerViewHolder.bd.viewNotifyMsg.setVisibility(View.GONE);
             }
             if (mHeaderListener != null) {
-                headerViewHolder.layoutNewFriends.setOnClickListener(new View.OnClickListener() {
+                headerViewHolder.bd.layoutNewFriends.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mHeaderListener.onClickNewFriend();
                     }
                 });
             }
+            headerViewHolder.bd.executePendingBindings();
         } else {
             ViewHolder holder = (ViewHolder) viewHolder;
             int position = layoutPosition - 1;
@@ -88,16 +86,16 @@ public class ContactAdapter extends BaseRecyclerViewAdapter<FriendBean> implemen
             int section = getSectionForPosition(position);
             // 如果当前位置等于该分类首字母的Char的位置 ，则认为是第一次出现
             if (position == getPositionForSection(section)) {
-                holder.tvCatalog.setVisibility(View.VISIBLE);
-                holder.tvCatalog.setText(f.getSortLetters());
+                holder.bd.tvCatalog.setVisibility(View.VISIBLE);
+                holder.bd.tvCatalog.setText(f.getSortLetters());
             } else {
-                holder.tvCatalog.setVisibility(View.GONE);
+                holder.bd.tvCatalog.setVisibility(View.GONE);
             }
-            ImageLoader.loadAvatar(mContext, holder.ivAvatar, f.headUrl);
+            ImageLoader.loadAvatar(mContext, holder.bd.ivAvatar, f.headUrl);
             String showName = !TextUtils.isEmpty(f.getRemark()) ? f.getRemark() : f.nickName;
-            holder.tvNick.setText(getNotNullText(showName));
-
-            super.setOnItemClickListener(holder, position);
+            holder.bd.tvNick.setText(getNotNullText(showName));
+            super.setOnItemClickListener(holder.itemView, position);
+            holder.bd.executePendingBindings();
         }
     }
 
@@ -129,30 +127,20 @@ public class ContactAdapter extends BaseRecyclerViewAdapter<FriendBean> implemen
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.tv_catalog)
-        TextView tvCatalog;
-        @Bind(R.id.iv_avatar)
-        ImageView ivAvatar;
-        @Bind(R.id.tv_nick)
-        TextView tvNick;
-        @Bind(R.id.checkbox)
-        CheckBox checkbox;
+        private final ContactItemBinding bd;
 
-        ViewHolder(View view) {
-            super(view);
-            ButterKnife.bind(this, view);
+        ViewHolder(ContactItemBinding bd) {
+            super(bd.getRoot());
+            this.bd = bd;
         }
     }
 
     static class HeaderViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.view_notify_msg)
-        CustomNotifyView tvUnreadInviteMsg;
-        @Bind(R.id.layout_new_friends)
-        RelativeLayout layoutNewFriends;
+        private final LayoutHeadFriendBinding bd;
 
-        public HeaderViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
+        HeaderViewHolder(LayoutHeadFriendBinding bd) {
+            super(bd.getRoot());
+            this.bd = bd;
         }
     }
 

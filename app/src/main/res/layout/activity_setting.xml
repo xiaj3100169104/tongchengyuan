@@ -1,66 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <include layout="@layout/comm_toolbar" />
+    <data>
 
-    <LinearLayout
-        android:id="@+id/layout_safe"
-        style="@style/Layouts.user_info_item">
-
-        <ImageView style="@style/user_info_icon" />
-
-        <TextView
-            style="@style/user_info_content"
-            android:text="账号安全" />
-    </LinearLayout>
+        <variable
+            name="onItemClickListener"
+            type="com.juns.wechat.activity.SettingActivity.OnItemClickListener" />
+    </data>
 
     <LinearLayout
-        android:id="@+id/layout_message_notify"
-        style="@style/Layouts.user_info_item">
-
-        <ImageView style="@style/user_info_icon" />
-
-        <TextView
-            style="@style/user_info_content"
-            android:text="新消息通知" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layout_secrecy"
-        style="@style/Layouts.user_info_item">
-
-        <ImageView style="@style/user_info_icon" />
-
-        <TextView
-            style="@style/user_info_content"
-            android:text="隐私" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layout_about"
-        style="@style/Layouts.user_info_item">
-
-        <ImageView style="@style/user_info_icon" />
-
-        <TextView
-            style="@style/user_info_content"
-            android:text="@string/about_app" />
-    </LinearLayout>
-
-
-    <Button
-        android:id="@+id/btn_exit"
         android:layout_width="match_parent"
-        android:layout_height="48dip"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:layout_marginTop="32dp"
-        android:background="@drawable/btn_bg_theme_selector"
-        android:text="退出登录"
-        android:textColor="@color/white"
-        android:textSize="17sp" />
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <include layout="@layout/comm_toolbar" />
+
+        <LinearLayout
+            android:id="@+id/layout_safe"
+            style="@style/Layouts.user_info_item">
+
+            <ImageView style="@style/user_info_icon" />
+
+            <TextView
+                style="@style/user_info_content"
+                android:text="账号安全" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_message_notify"
+            style="@style/Layouts.user_info_item"
+            android:onClick="@{onItemClickListener.onClickEvent1}">
+
+            <ImageView style="@style/user_info_icon" />
+
+            <TextView
+                style="@style/user_info_content"
+                android:text="新消息通知" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_secrecy"
+            style="@style/Layouts.user_info_item">
+
+            <ImageView style="@style/user_info_icon" />
+
+            <TextView
+                style="@style/user_info_content"
+                android:text="隐私" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_about"
+            style="@style/Layouts.user_info_item"
+            android:onClick="@{onItemClickListener.onClickEvent2}">
+
+            <ImageView style="@style/user_info_icon" />
+
+            <TextView
+                style="@style/user_info_content"
+                android:text="@string/about_app" />
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/btn_exit"
+            android:layout_width="match_parent"
+            android:layout_height="48dip"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginTop="32dp"
+            android:background="@drawable/btn_bg_theme_selector"
+            android:text="退出登录"
+            android:textColor="@color/white"
+            android:textSize="17sp"
+            android:onClick="@{onItemClickListener.onClickEvent3}"/>
+    </LinearLayout>
+</layout>

@@ -2,6 +2,7 @@ package com.juns.wechat.dynamic;
 
 import android.content.Context;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -9,8 +10,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.juns.wechat.bean.CommentBean;
 import com.juns.wechat.bean.DynamicBean;
@@ -19,6 +18,8 @@ import com.juns.wechat.chat.utils.SmileUtils;
 import com.juns.wechat.greendao.mydao.GreenDaoManager;
 import com.juns.wechat.helper.CommonViewHelper;
 import com.same.city.love.R;
+import com.same.city.love.databinding.AdapterDynamicBinding;
+import com.same.city.love.databinding.PopupwindowDiscussOptionBinding;
 import com.style.base.BaseRecyclerViewAdapter;
 import com.style.manager.ImageLoader;
 import com.style.utils.MyDateUtil;
@@ -29,8 +30,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import uk.viewpager.ImagePagerActivity;
 
 
@@ -47,64 +46,66 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter<DynamicBean> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-      return new ViewHolder(mInflater.inflate(R.layout.adapter_dynamic, parent, false));
+        AdapterDynamicBinding bd = DataBindingUtil.inflate(mInflater, R.layout.adapter_dynamic, parent, false);
+        return new ViewHolder(bd);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
 
-            final int pos = position;
-            final ViewHolder holder = (ViewHolder) viewHolder;
-            final DynamicBean bean = getData(position);
-            UserBean user;
-            if (userMap.containsKey(bean.getPublisherId()))
-                user = userMap.get(bean.getPublisherId());
-            else {
-                user = GreenDaoManager.getInstance().findByUserId(bean.getPublisherId());
-                userMap.put(bean.getPublisherId(), user);
+        final int pos = position;
+        final ViewHolder holder = (ViewHolder) viewHolder;
+        final DynamicBean bean = getData(position);
+        UserBean user;
+        if (userMap.containsKey(bean.getPublisherId()))
+            user = userMap.get(bean.getPublisherId());
+        else {
+            user = GreenDaoManager.getInstance().findByUserId(bean.getPublisherId());
+            userMap.put(bean.getPublisherId(), user);
+        }
+        CommonViewHelper.setUserViewInfo(user, holder.bd.ivAvatar, holder.bd.tvNike, null, null, false);
+
+        holder.bd.tvContent.setText(SmileUtils.getInstance().getSmiledText(bean.getContent()));
+        holder.bd.tvTime.setText(MyDateUtil.getTimeFromNow(bean.getCreateDate(), MyDateUtil.FORMAT_yyyy_MM_dd_HH_mm_ss));
+
+        holder.bd.ivDiscuss.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMenuWindow(pos, bean, (ViewGroup) holder.itemView.getRootView(), v);
             }
-            CommonViewHelper.setUserViewInfo(user, holder.ivAvatar, holder.tvNike, null, null, false);
+        });
+        //图片数据处理
+        List<String> images = StringUtil.String2List(bean.getImages(), ",");
+        holder.bd.glImages.removeAllViews();
+        if (images != null && images.size() > 0) {
+            holder.bd.glImages.setVisibility(View.VISIBLE);
+            dealImages(mContext, holder.bd.glImages, images);
+        } else {
+            holder.bd.glImages.setVisibility(View.GONE);
+        }
 
-            holder.tvContent.setText(SmileUtils.getInstance().getSmiledText(bean.getContent()));
-            holder.tvTime.setText(MyDateUtil.getTimeFromNow(bean.getCreateDate(), MyDateUtil.FORMAT_yyyy_MM_dd_HH_mm_ss));
-
-            holder.ivDiscuss.setOnClickListener(new OnClickListener() {
+        //评论数据处理
+        List<CommentBean> commentBeanList = bean.getCommentList();
+        if (commentBeanList != null && commentBeanList.size() > 0) {
+            holder.bd.layoutComment.setVisibility(View.VISIBLE);
+            holder.bd.recyclerView.setVisibility(View.VISIBLE);
+            CommentAdapter adapter = new CommentAdapter(mContext, commentBeanList);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
+            linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            holder.bd.recyclerView.setLayoutManager(linearLayoutManager);
+            holder.bd.recyclerView.setAdapter(adapter);
+            adapter.setOnItemClickListener(new OnItemClickListener() {
                 @Override
-                public void onClick(View v) {
-                    showMenuWindow(pos, bean, (ViewGroup) holder.itemView.getRootView(), v);
+                public void onItemClick(int position, Object data) {
+                    logE(TAG, pos + "--" + position);
+                    mDiscussListener.OnClickReply(pos, position, data);
                 }
             });
-            //图片数据处理
-            List<String> images = StringUtil.String2List(bean.getImages(), ",");
-            holder.glImages.removeAllViews();
-            if (images != null && images.size() > 0) {
-                holder.glImages.setVisibility(View.VISIBLE);
-                dealImages(mContext, holder.glImages, images);
-            } else {
-                holder.glImages.setVisibility(View.GONE);
-            }
-
-            //评论数据处理
-            List<CommentBean> commentBeanList = bean.getCommentList();
-            if (commentBeanList != null && commentBeanList.size() > 0) {
-                holder.layoutComment.setVisibility(View.VISIBLE);
-                holder.recyclerView.setVisibility(View.VISIBLE);
-                CommentAdapter adapter = new CommentAdapter(mContext, commentBeanList);
-                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
-                linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-                holder.recyclerView.setLayoutManager(linearLayoutManager);
-                holder.recyclerView.setAdapter(adapter);
-                adapter.setOnItemClickListener(new OnItemClickListener() {
-                    @Override
-                    public void onItemClick(int position, Object data) {
-                        logE(TAG, pos + "--" + position);
-                        mDiscussListener.OnClickReply(pos, position, data);
-                    }
-                });
-            } else {
-                holder.layoutComment.setVisibility(View.GONE);
-                holder.recyclerView.setVisibility(View.GONE);
-            }
+        } else {
+            holder.bd.layoutComment.setVisibility(View.GONE);
+            holder.bd.recyclerView.setVisibility(View.GONE);
+        }
+        holder.bd.executePendingBindings();
         /*if (viewHolder instanceof Holder) {
             Holder holder = (Holder) viewHolder;
             User user = ud.getUser();
@@ -202,7 +203,7 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter<DynamicBean> {
                 image.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        skip2imageBrower(0, images);
+                        skip2imageBrowser(0, images);
                     }
                 });
             } else if (imageNum > 1 && imageNum < 10) {
@@ -234,7 +235,7 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter<DynamicBean> {
                     image.setOnClickListener(new OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            skip2imageBrower(index, images);
+                            skip2imageBrowser(index, images);
                         }
                     });
                 }
@@ -242,7 +243,7 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter<DynamicBean> {
         }
     }
 
-    private void skip2imageBrower(int position, List<String> imgs) {
+    private void skip2imageBrowser(int position, List<String> imgs) {
         Intent intent = new Intent(mContext, ImagePagerActivity.class);
         // 图片url,为了演示这里使用常量，一般从数据库中或网络中获取
         intent.putStringArrayListExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, (ArrayList<String>) imgs);
@@ -252,11 +253,12 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter<DynamicBean> {
 
     private void showMenuWindow(final int pos, final Object data, ViewGroup rootView, View anchor) {
         if (menuWindow == null) {
-            menuWindow = new CommentPopupWindow(mContext, rootView, R.layout.popupwindow_discuss_option);
+            PopupwindowDiscussOptionBinding bd = DataBindingUtil.inflate(mInflater, R.layout.popupwindow_discuss_option, rootView, false);
+            menuWindow = new CommentPopupWindow(mContext, bd);
             menuWindow.setAnimationStyle(R.style.Animations_ExtendsFromLeft);
         }
         //防止popupwindow还在内存中保持原来的位置监听器，都需重置监听器
-        menuWindow.llSupport.setOnClickListener(new OnClickListener() {
+        menuWindow.bd.llSupport.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mDiscussListener != null) {
@@ -265,7 +267,7 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter<DynamicBean> {
                 }
             }
         });
-        menuWindow.llComment.setOnClickListener(new OnClickListener() {
+        menuWindow.bd.llComment.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mDiscussListener != null) {
@@ -300,28 +302,11 @@ public class DynamicAdapter extends BaseRecyclerViewAdapter<DynamicBean> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.iv_avatar)
-        ImageView ivAvatar;
-        @Bind(R.id.tv_nike)
-        TextView tvNike;
-        @Bind(R.id.tv_content)
-        TextView tvContent;
-        @Bind(R.id.layout_comment)
-        LinearLayout layoutComment;
-        @Bind(R.id.tv_time)
-        TextView tvTime;
-        @Bind(R.id.tv_delete)
-        TextView tvDelete;
-        @Bind(R.id.iv_discuss)
-        ImageView ivDiscuss;
-        @Bind(R.id.gl_images)
-        GridLayout glImages;
-        @Bind(R.id.recyclerView)
-        RecyclerView recyclerView;
+        private final AdapterDynamicBinding bd;
 
-        public ViewHolder(View view) {
-            super(view);
-            ButterKnife.bind(this, view);
+        public ViewHolder(AdapterDynamicBinding bd) {
+            super(bd.getRoot());
+            this.bd = bd;
 
         }
     }

@@ -1,5 +1,6 @@
 package com.juns.wechat.activity;
 
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -8,25 +9,21 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.EditText;
 
-import com.same.city.love.R;
-import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.manager.AccountManager;
-
 import com.juns.wechat.net.request.HttpActionImpl;
-import com.style.net.core.NetDataBeanCallback;
 import com.juns.wechat.net.response.LoginBean;
 import com.juns.wechat.net.response.RegisterBean;
 import com.juns.wechat.util.NetWorkUtil;
+import com.same.city.love.R;
+import com.same.city.love.databinding.ActivityRegisterBinding;
 import com.style.base.BaseToolbarActivity;
+import com.style.net.core.NetDataBeanCallback;
 import com.style.utils.FormatUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import butterknife.Bind;
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
 
@@ -36,16 +33,7 @@ import cn.smssdk.SMSSDK;
  * create by 王者 on 2061/2/7
  */
 public class RegisterActivity extends BaseToolbarActivity implements OnClickListener {
-    @Bind(R.id.btnRegister)
-    Button btn_register;
-    @Bind(R.id.btn_send)
-    Button btn_send;
-    @Bind(R.id.etInputName)
-    EditText etInputName;
-    @Bind(R.id.etPassWord)
-    EditText etPassword;
-    @Bind(R.id.etVerifyCode)
-    EditText et_code;
+    ActivityRegisterBinding bd;
     private MyCount mc;
     private Handler handler = new Handler();
 
@@ -58,24 +46,21 @@ public class RegisterActivity extends BaseToolbarActivity implements OnClickList
 
     private EventHandler eventHandler; //短信验证码的事件监听
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        bd = DataBindingUtil.setContentView(this, R.layout.activity_register);
+        super.setContentView(bd.getRoot());
+        initData();
+    }
 
     @Override
     public void initData() {
-        setListener();
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        mLayoutResID = R.layout.activity_register;
-        super.onCreate(savedInstanceState);
-
-    }
-
-    protected void setListener() {
-        btn_send.setOnClickListener(this);
-        btn_register.setOnClickListener(this);
-        etInputName.addTextChangedListener(new TelTextChange());
-        etPassword.addTextChangedListener(new TextChange());
+        setToolbarTitle("注册");
+        bd.btnSend.setOnClickListener(this);
+        bd.btnRegister.setOnClickListener(this);
+        bd.etInputName.addTextChangedListener(new TelTextChange());
+        bd.etPassword.addTextChangedListener(new TextChange());
         eventHandler = new EventHandler() {
             @Override
             public void afterEvent(int event, int result, Object data) {
@@ -132,7 +117,7 @@ public class RegisterActivity extends BaseToolbarActivity implements OnClickList
     }
 
     private void sendVerifyCode() {
-        userName = etInputName.getText().toString().trim();
+        userName = bd.etInputName.getText().toString().trim();
         if (!FormatUtil.isMobileNum(userName)) {
             showToast("请使用手机号码注册账户！ ");
             return;
@@ -141,9 +126,9 @@ public class RegisterActivity extends BaseToolbarActivity implements OnClickList
     }
 
     private void checkInput() {
-        userName = etInputName.getText().toString().trim();
-        passWord = etPassword.getText().toString();
-        verifyCode = et_code.getText().toString().trim();
+        userName = bd.etInputName.getText().toString().trim();
+        passWord = bd.etPassword.getText().toString();
+        verifyCode = bd.etVerifyCode.getText().toString().trim();
         if (!FormatUtil.isMobileNum(userName)) {
             showToast("请使用手机号码注册账户！ ");
             return;
@@ -242,20 +227,20 @@ public class RegisterActivity extends BaseToolbarActivity implements OnClickList
         @Override
         public void onTextChanged(CharSequence cs, int start, int before,
                                   int count) {
-            String phone = etInputName.getText().toString();
+            String phone = bd.etInputName.getText().toString();
             if (phone.length() == 11) {
                 if (FormatUtil.isMobileNum(phone)) {
-                    btn_send.setTextColor(0xFFFFFFFF);
-                    btn_send.setEnabled(true);
-                    btn_register.setTextColor(0xFFFFFFFF);
-                    btn_register.setEnabled(true);
+                    bd.btnSend.setTextColor(0xFFFFFFFF);
+                    bd.btnSend.setEnabled(true);
+                    bd.btnRegister.setTextColor(0xFFFFFFFF);
+                    bd.btnRegister.setEnabled(true);
                 } else {
-                    etInputName.requestFocus();
+                    bd.etInputName.requestFocus();
                     showToast("请输入正确的手机号码！");
                 }
             } else {
-                btn_send.setEnabled(false);
-                btn_register.setEnabled(true);
+                bd.btnSend.setEnabled(false);
+                bd.btnRegister.setEnabled(true);
             }
         }
     }
@@ -277,14 +262,14 @@ public class RegisterActivity extends BaseToolbarActivity implements OnClickList
         @Override
         public void onTextChanged(CharSequence cs, int start, int before,
                                   int count) {
-            boolean Sign1 = et_code.getText().length() > 0;
-            boolean Sign2 = etInputName.getText().length() > 0;
-            boolean Sign3 = etPassword.getText().length() > 0;
+            boolean Sign1 = bd.etVerifyCode.getText().length() > 0;
+            boolean Sign2 = bd.etInputName.getText().length() > 0;
+            boolean Sign3 = bd.etPassword.getText().length() > 0;
 
             if (Sign1 & Sign2 & Sign3) {
-                btn_register.setEnabled(true);
+                bd.btnRegister.setEnabled(true);
             } else {
-                btn_register.setEnabled(false);
+                bd.btnRegister.setEnabled(false);
             }
         }
     }
@@ -297,14 +282,14 @@ public class RegisterActivity extends BaseToolbarActivity implements OnClickList
 
         @Override
         public void onFinish() {
-            btn_send.setEnabled(true);
-            btn_send.setText("发送验证码");
+            bd.btnSend.setEnabled(true);
+            bd.btnSend.setText("发送验证码");
         }
 
         @Override
         public void onTick(long millisUntilFinished) {
-            btn_send.setEnabled(false);
-            btn_send.setText("(" + millisUntilFinished / 1000 + ")秒");
+            bd.btnSend.setEnabled(false);
+            bd.btnSend.setText("(" + millisUntilFinished / 1000 + ")秒");
         }
     }
 

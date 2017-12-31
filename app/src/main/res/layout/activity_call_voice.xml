@@ -1,179 +1,182 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@mipmap/bg_call_voice">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:orientation="vertical">
-
-        <TextView
-            style="@style/text_white_18sp"
-            android:layout_marginTop="35dp"
-            android:text="语音电话" />
-
-        <TextView
-            android:id="@+id/tv_phone"
-            style="@style/text_white_18sp"
-            android:layout_marginTop="5dp"
-            android:text="4566764545" />
-
-        <ImageView
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginTop="20dp"
-            android:src="@mipmap/bg_call_voice_avatar" />
-
-
-        <TextView
-            android:id="@+id/tv_time"
-            style="@style/text_white_18sp"
-            android:layout_marginTop="30dp"
-            android:text="5:30"
-            android:visibility="invisible" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layout_before_connected"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="50dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:visibility="gone">
+        android:layout_height="match_parent"
+        android:background="@mipmap/bg_call_voice">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_centerHorizontal="true"
             android:gravity="center"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/bt_Hang_up"
+            <TextView
                 style="@style/text_white_18sp"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:background="@mipmap/ic_call_voice_hangup" />
+                android:layout_marginTop="35dp"
+                android:text="语音电话" />
 
             <TextView
-                style="@style/text_white_17sp"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/hang_up" />
+                android:id="@+id/tv_phone"
+                style="@style/text_white_18sp"
+                android:layout_marginTop="5dp"
+                android:text="4566764545" />
+
+            <ImageView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="20dp"
+                android:src="@mipmap/bg_call_voice_avatar" />
+
+
+            <TextView
+                android:id="@+id/tv_time"
+                style="@style/text_white_18sp"
+                android:layout_marginTop="30dp"
+                android:text="5:30"
+                android:visibility="invisible" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/layout_before_connected"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="50dp"
             android:gravity="center"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/bt_answer"
-                style="@style/text_white_18sp"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:background="@mipmap/ic_call_voice_answer" />
-
-            <TextView
-                style="@style/text_white_17sp"
-                android:layout_marginTop="10dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/answer" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/layout_option"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="50dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="visible">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <LinearLayout
-                android:id="@+id/layout_mute"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:id="@+id/iv_mute"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/bg_call_mute" />
-
-                <TextView
-                    style="@style/text_white_17sp"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"
-                    android:text="@string/mute" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layout_speaker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/iv_speaker"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/bg_call_speaker" />
-
-                <TextView
-                    style="@style/text_white_17sp"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"
-                    android:text="@string/speaker" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layout_shrink"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@mipmap/ic_shrink" />
+                <Button
+                    android:id="@+id/bt_Hang_up"
+                    style="@style/text_white_18sp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="@mipmap/ic_call_voice_hangup" />
 
                 <TextView
                     style="@style/text_white_17sp"
                     android:layout_marginTop="10dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="@string/shrink" />
-
+                    android:text="@string/hang_up" />
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/bt_answer"
+                    style="@style/text_white_18sp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:background="@mipmap/ic_call_voice_answer" />
+
+                <TextView
+                    style="@style/text_white_17sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/answer" />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-</RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_option"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="50dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/layout_mute"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/iv_mute"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/bg_call_mute" />
+
+                    <TextView
+                        style="@style/text_white_17sp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:text="@string/mute" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_speaker"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/iv_speaker"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@drawable/bg_call_speaker" />
+
+                    <TextView
+                        style="@style/text_white_17sp"
+                        android:layout_marginTop="10dp"
+                        android:gravity="center"
+                        android:text="@string/speaker" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layout_shrink"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:src="@mipmap/ic_shrink" />
+
+                    <TextView
+                        style="@style/text_white_17sp"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="@string/shrink" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</layout>

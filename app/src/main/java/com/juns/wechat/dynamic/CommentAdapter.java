@@ -1,7 +1,7 @@
 package com.juns.wechat.dynamic;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
+import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.text.SpannableStringBuilder;
 import android.text.TextPaint;
@@ -11,16 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.same.city.love.R;
 import com.juns.wechat.bean.CommentBean;
-import com.juns.wechat.bean.UserBean;
 import com.juns.wechat.chat.utils.SmileUtils;
+import com.same.city.love.R;
+import com.same.city.love.databinding.AdapterCommentBinding;
 import com.style.base.BaseRecyclerViewAdapter;
 
 import java.util.List;
-
-import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * Created by xiajun on 2016/5/14.
@@ -33,7 +30,8 @@ public class CommentAdapter extends BaseRecyclerViewAdapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(mInflater.inflate(R.layout.adapter_comment, parent, false));
+        AdapterCommentBinding bd = DataBindingUtil.inflate(mInflater, R.layout.adapter_comment, parent, false);
+        return new ViewHolder(bd);
     }
 
     @Override
@@ -49,14 +47,14 @@ public class CommentAdapter extends BaseRecyclerViewAdapter {
         else
             builder = addClickablePart(user1, user2, content);
         if (builder != null) {
-            holder.tvComment.setVisibility(View.VISIBLE);
-            holder.tvComment.setText(builder, TextView.BufferType.SPANNABLE);
+            holder.bd.tvComment.setVisibility(View.VISIBLE);
+            holder.bd.tvComment.setText(builder, TextView.BufferType.SPANNABLE);
         } else {
-            holder.tvComment.setVisibility(View.GONE);
-            holder.tvComment.setText("");
+            holder.bd.tvComment.setVisibility(View.GONE);
+            holder.bd.tvComment.setText("");
         }
-        super.setOnItemClickListener(holder, position);
-
+        super.setOnItemClickListener(holder.itemView, position);
+        holder.bd.executePendingBindings();
            /* adapter.setOnDefaultClickListener(new OnDefaultClickListener() {
                 @Override
                 public void onItemClick(int sub) {
@@ -107,12 +105,11 @@ public class CommentAdapter extends BaseRecyclerViewAdapter {
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.tv_comment)
-        TextView tvComment;
+        private final AdapterCommentBinding bd;
 
-        ViewHolder(View view) {
-            super(view);
-            ButterKnife.bind(this, view);
+        ViewHolder(AdapterCommentBinding bd) {
+            super(bd.getRoot());
+            this.bd = bd;
         }
     }
 }

@@ -11,11 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.same.city.love.R;
 import com.juns.wechat.util.ToastUtil;
 import com.style.event.EventManager;
 import com.style.manager.LogManager;
@@ -25,16 +22,11 @@ import com.style.net.core.HttpActionManager;
 import com.style.rxAndroid.RXTaskManager;
 import com.style.utils.CommonUtil;
 
-import org.simple.eventbus.EventBus;
-
-import butterknife.ButterKnife;
-
 
 public abstract class BaseActivity extends AppCompatActivity {
     protected String TAG = getClass().getSimpleName();
     private Context mContext;
     public LayoutInflater mInflater;
-    protected Integer mLayoutResID;
     protected View mContentView;
     protected boolean isVisibleToUser = false;
     private LoadingDialog progressDialog;
@@ -46,19 +38,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(arg0);
         mContext = this;
         mInflater = LayoutInflater.from(mContext);
-        if (mLayoutResID != null)
-            mContentView = mInflater.inflate(mLayoutResID, null);
         //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE); //横屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);  //竖屏
         customWindowOptions(getWindow());
-
-        setContentView(mContentView);
-        //ButterKnife must set after setContentView
-        ButterKnife.bind(this);
         if (registerEventBus()) {
             EventManager.getDefault().register(this);
         }
-        initData();
     }
 
     public Context getContext() {
@@ -97,20 +82,23 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     public void setContentView(View mContentView) {
-        ViewGroup rootView = (ViewGroup) mContentView;
         if (isWrapContentView()) {
-            rootView = new CoordinatorLayout(this);
+            /*不用CoordinatorLayout，主题里面的状态栏颜色不生效。
+            v-21主题里面设置了状态栏透明，主题里面又能设置状态栏颜色；
+            说明状态栏在5.0后activity根布局是CoordinatorLayout时状态栏是一个悬浮着的view。
+            */
+            ViewGroup rootView = new CoordinatorLayout(this);
             CoordinatorLayout.LayoutParams layoutParams = new CoordinatorLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            //一个view不能同时有两个父布局
+            ((ViewGroup) mContentView.getParent()).removeView(mContentView);
             rootView.addView(mContentView, layoutParams);
             rootView.setFitsSystemWindows(true);
+            mContentView = rootView;
+            this.mContentView = mContentView;
         }
-        customTitleOptions(mContentView);
-        super.setContentView(rootView);
+        super.setContentView(mContentView);
     }
 
-    protected void customTitleOptions(View mContentView) {
-
-    }
 
     protected boolean registerEventBus() {
         return true;
@@ -149,7 +137,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (registerEventBus()) {
             EventManager.getDefault().unRegister(this);
         }
-        ButterKnife.unbind(this);
         dismissProgressDialog();
         RXTaskManager.getInstance().removeTask(TAG);
         HttpActionManager.getInstance().removeTask(TAG);

@@ -1,82 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <GridLayout
-        android:id="@+id/gl_photo_wall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:columnCount="3"
-        android:orientation="horizontal"
-        android:rowCount="3"
-        android:visibility="visible">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/iv_photo_wall_1"
-            android:layout_width="240dp"
-            android:layout_height="240dp"
-            android:layout_column="0"
-            android:layout_columnSpan="2"
-            android:layout_row="0"
-            android:layout_rowSpan="2"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/ic_add_photo" />
+        <GridLayout
+            android:id="@+id/gl_photo_wall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:columnCount="3"
+            android:orientation="horizontal"
+            android:rowCount="3"
+            android:visibility="visible">
 
-        <ImageView
-            android:id="@+id/iv_photo_wall_2"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_column="2"
-            android:layout_columnSpan="1"
-            android:layout_row="0"
-            android:layout_rowSpan="1"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/ic_add_photo" />
+            <ImageView
+                android:id="@+id/iv_photo_wall_1"
+                android:layout_width="240dp"
+                android:layout_height="240dp"
+                android:layout_column="0"
+                android:layout_columnSpan="2"
+                android:layout_row="0"
+                android:layout_rowSpan="2"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_add_photo" />
 
-        <ImageView
-            android:id="@+id/iv_photo_wall_3"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_column="2"
-            android:layout_columnSpan="1"
-            android:layout_row="1"
-            android:layout_rowSpan="1"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/ic_add_photo" />
+            <ImageView
+                android:id="@+id/iv_photo_wall_2"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_column="2"
+                android:layout_columnSpan="1"
+                android:layout_row="0"
+                android:layout_rowSpan="1"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_add_photo" />
 
-        <ImageView
-            android:id="@+id/iv_photo_wall_4"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_column="0"
-            android:layout_columnSpan="1"
-            android:layout_row="2"
-            android:layout_rowSpan="1"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/ic_add_photo" />
+            <ImageView
+                android:id="@+id/iv_photo_wall_3"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_column="2"
+                android:layout_columnSpan="1"
+                android:layout_row="1"
+                android:layout_rowSpan="1"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_add_photo" />
 
-        <ImageView
-            android:id="@+id/iv_photo_wall_5"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_column="1"
-            android:layout_columnSpan="1"
-            android:layout_row="2"
-            android:layout_rowSpan="1"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/ic_add_photo" />
+            <ImageView
+                android:id="@+id/iv_photo_wall_4"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_column="0"
+                android:layout_columnSpan="1"
+                android:layout_row="2"
+                android:layout_rowSpan="1"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_add_photo" />
 
-        <ImageView
-            android:id="@+id/iv_photo_wall_6"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_column="2"
-            android:layout_columnSpan="1"
-            android:layout_row="2"
-            android:layout_rowSpan="1"
-            android:scaleType="centerCrop"
-            android:src="@mipmap/ic_add_photo" />
-    </GridLayout>
+            <ImageView
+                android:id="@+id/iv_photo_wall_5"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_column="1"
+                android:layout_columnSpan="1"
+                android:layout_row="2"
+                android:layout_rowSpan="1"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_add_photo" />
 
-</LinearLayout>
+            <ImageView
+                android:id="@+id/iv_photo_wall_6"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_column="2"
+                android:layout_columnSpan="1"
+                android:layout_row="2"
+                android:layout_rowSpan="1"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_add_photo" />
+        </GridLayout>
+
+    </LinearLayout>
+</layout>

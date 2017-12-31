@@ -1,25 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/layout_root"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#f2f0eb"
-    android:keepScreenOn="true"
-    android:orientation="vertical">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cube_ptr="http://schemas.android.com/apk/res-auto">
 
-    <include layout="@layout/comm_toolbar" />
-
-    <com.github.jdsjlzx.recyclerview.LRecyclerView
-        android:id="@+id/list"
+    <LinearLayout
+        android:id="@+id/layout_root"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:cacheColorHint="#00000000"
-        android:divider="@null"
-        android:fadingEdge="none"
-        android:scrollbars="none" />
+        android:layout_height="match_parent"
+        android:background="#f2f0eb"
+        android:keepScreenOn="true"
+        android:orientation="vertical">
 
-    <include layout="@layout/layout_chat_tool" />
+        <include layout="@layout/comm_toolbar" />
 
-</LinearLayout>
+        <com.github.jdsjlzx.recyclerview.LRecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:cacheColorHint="#00000000"
+            android:divider="@null"
+            android:fadingEdge="none"
+            android:scrollbars="none" />
+
+        <include
+            android:id="@+id/chat_tool"
+            layout="@layout/layout_chat_tool" />
+
+    </LinearLayout>
+</layout>
