@@ -1,13 +1,13 @@
 ## 主页
   -------------
-<img src="screenshots/Screenshot_20180101-174823.png" height="400" alt="Screenshot"/> <img src="screenshots/Screenshot_20180101-174938.png" height="400" alt="Screenshot"/> <img src="screenshots/Screenshot_20180101-174944.png" height="400" alt="Screenshot"/>
-<img src="screenshots/Screenshot_20180101-174830.png" height="400" alt="Screenshot"/> <img src="screenshots/Screenshot_20180101-180214.png" height="400" alt="Screenshot"/>
+<img src="screenshots/Screenshot_20180101-174823.jpg" height="400" alt="Screenshot"/> <img src="screenshots/Screenshot_20180101-174938.jpg" height="400" alt="Screenshot"/> <img src="screenshots/Screenshot_20180101-174944.jpg" height="400" alt="Screenshot"/>
+<img src="screenshots/Screenshot_20180101-174830.jpg" height="400" alt="Screenshot"/> <img src="screenshots/Screenshot_20180101-180214.jpg" height="400" alt="Screenshot"/>
 
 ## 个人信息
   -------------
-<img src="screenshots/Screenshot_20180101-180412.jpg" height="400" alt="Screenshot"/> <img src="screenshots/Screenshot_20180101-180709.jpg" height="400" alt="Screenshot"/> <img src="screenshots/Screenshot_20180101-180747.jpg" height="400" alt="Screenshot"/>
-<img src="screenshots/Screenshot_20180101-180444.jpg" height="400" alt="Screenshot"/> <img src="screenshots/Screenshot_20180101-183709.jpg" height="400" alt="Screenshot"/> <img src="screenshots/Screenshot_20170721-104037.jpg" height="400" alt="Screenshot"/>
-<img src="screenshots/Screenshot_20170721-104134.jpg" height="400" alt="Screenshot"/> <img src="screenshots/Screenshot_20170721-104314.jpg" height="400" alt="Screenshot"/>
+<img src="screenshots/Screenshot_20180101-180412.jpg" height="400" alt="Screenshot"/> <img src="screenshots/Screenshot_20180101-183709.jpg" height="400" alt="Screenshot"/> <img src="screenshots/Screenshot_20180101-183747.jpg" height="400" alt="Screenshot"/>
+<img src="screenshots/Screenshot_20180101-180444.jpg" height="400" alt="Screenshot"/> <img src="screenshots/Screenshot_20170721-104037.jpg" height="400" alt="Screenshot"/> <img src="screenshots/Screenshot_20170721-104134.jpg" height="400" alt="Screenshot"/>
+<img src="screenshots/Screenshot_20170721-104314.jpg" height="400" alt="Screenshot"/>
 
 ## 设置
   -------------
@@ -15,7 +15,7 @@
 
 ## 聊天
   -------------
-<img src="screenshots/Screenshot_20170822-104656.jpg" height="400" alt="Screenshot"/> <img src="screenshots/Screenshot_20170721-104349.jpg" height="400" alt="Screenshot"/> <img src="screenshots/Screenshot_20180101-175810.jpg" height="400" alt="Screenshot"/>
+<img src="screenshots/Screenshot_20180101-175721.jpg" height="400" alt="Screenshot"/> <img src="screenshots/Screenshot_20170721-104349.jpg" height="400" alt="Screenshot"/> <img src="screenshots/Screenshot_20180101-175810.jpg" height="400" alt="Screenshot"/>
 <img src="screenshots/Screenshot_20170721-104444.jpg" height="400" alt="Screenshot"/> <img src="screenshots/Screenshot_20170721-104509.jpg" height="400" alt="Screenshot"/> <img src="screenshots/Screenshot_20170721-104523.jpg" height="400" alt="Screenshot"/>
 
 ## 动态
