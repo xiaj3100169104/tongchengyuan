@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
-    android:layout_height="48dp"
-    android:minHeight="48dp"
-    android:theme="@style/AppTheme.Toolbar"
+    android:layout_height="72dp"
+    android:background="@drawable/bg_comm_toolbar"
+    android:paddingTop="24dp"
     app:contentInsetEnd="0dp"
     app:contentInsetStart="0dp">
 
@@ -25,8 +25,7 @@
             android:gravity="center"
             android:text="保存"
             android:textColor="@color/sel_title_right_text_white"
-            android:textSize="14sp"
-            />
+            android:textSize="14sp" />
 
     </RelativeLayout>
 

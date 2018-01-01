@@ -32,7 +32,7 @@
     </style>
 
     <style name="AppTheme.Toolbar" parent="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:background">@drawable/bg_comm_toolbar</item>
     </style>
 
     <style name="AppTheme.SwitchAnimation" parent="@android:style/Animation.Activity">

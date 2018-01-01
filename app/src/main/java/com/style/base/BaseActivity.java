@@ -92,7 +92,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             //一个view不能同时有两个父布局
             ((ViewGroup) mContentView.getParent()).removeView(mContentView);
             rootView.addView(mContentView, layoutParams);
-            rootView.setFitsSystemWindows(true);
+            rootView.setFitsSystemWindows(false);
             mContentView = rootView;
             this.mContentView = mContentView;
         }

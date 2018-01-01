@@ -2,15 +2,15 @@
 <android.support.design.widget.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="72dp"
+    android:background="@drawable/bg_comm_toolbar"
+    android:paddingTop="24dp"
     android:theme="@style/AppTheme.AppBarOverlay">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="?attr/colorPrimary"
-        android:minHeight="48dp"
         app:contentInsetEnd="0dp"
         app:contentInsetStart="0dp"
         app:popupTheme="@style/AppTheme.PopupOverlay">
