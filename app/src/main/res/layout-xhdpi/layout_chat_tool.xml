@@ -27,7 +27,7 @@
                 android:layout_weight="1"
                 android:gravity="bottom">
 
-                <com.juns.wechat.chat.widght.PasteEditText
+                <cn.tongchengyuan.chat.widght.PasteEditText
                     android:id="@+id/et_input_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -116,7 +116,7 @@
                 android:gravity="center"
                 android:visibility="visible">
 
-                <com.juns.wechat.view.AudioRecordButton
+                <cn.tongchengyuan.view.AudioRecordButton
                     android:id="@+id/btn_record"
                     android:layout_width="150dp"
                     android:layout_height="150dp"

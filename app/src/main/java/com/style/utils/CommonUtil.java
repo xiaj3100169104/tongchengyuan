@@ -31,7 +31,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 
-import com.juns.wechat.app.App;
+import cn.tongchengyuan.app.App;
+
 import com.same.city.love.R;
 import com.style.constant.Skip;
 import com.style.manager.ToastManager;
@@ -489,12 +490,6 @@ public class CommonUtil {
         return getMetrics(context).heightPixels;
     }
 
-    public static Display getDisplay(Context context) {
-        WindowManager wm = (WindowManager) context
-                .getSystemService(Context.WINDOW_SERVICE);
-        return wm.getDefaultDisplay();
-    }
-
     public static DisplayMetrics getMetrics(Context context) {
         DisplayMetrics metric = new DisplayMetrics();
         getDisplay(context).getMetrics(metric);
@@ -503,6 +498,11 @@ public class CommonUtil {
         float density = metric.density;      // 屏幕密度（0.75 / 1.0 / 1.5）
         int densityDpi = metric.densityDpi;  // 屏幕密度DPI（120 / 160 / 240）
         return metric;
+    }
+
+    public static Display getDisplay(Context context) {
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        return wm.getDefaultDisplay();
     }
 
     public static String getIMEI(Context context) {

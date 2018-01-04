@@ -50,9 +50,7 @@ public class PreviewFragment extends Fragment{
         mPhotoView = (ImageView) view.findViewById(R.id.photoview);
 
         setPlayView(media);
-        Glide.with(getActivity())
-                .load(media.path)
-                .into(mPhotoView);
+        Glide.with(getActivity()).load(media.path).into(mPhotoView);
     }
 
     void setPlayView(final Media media){

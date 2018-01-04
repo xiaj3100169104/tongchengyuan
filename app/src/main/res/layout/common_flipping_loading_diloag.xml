@@ -6,7 +6,7 @@
     android:orientation="horizontal"
     android:background="@drawable/bg_common_toast" >
 
-    <com.juns.wechat.widget.FlippingImageView.FlippingImageView
+    <cn.tongchengyuan.widget.FlippingImageView.FlippingImageView
         android:id="@+id/loadingdialog_fiv_icon"
         android:layout_width="30dip"
         android:layout_height="30dip"

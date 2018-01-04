@@ -1,6 +1,6 @@
 package com.style.net.image;
 
-import com.juns.wechat.util.ThreadPoolUtil;
+import cn.tongchengyuan.util.ThreadPoolUtil;
 
 import java.util.HashMap;
 import java.util.Map;

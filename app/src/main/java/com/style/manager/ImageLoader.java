@@ -10,11 +10,16 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.request.RequestOptions;
-import com.juns.wechat.app.App;
+
+import cn.tongchengyuan.app.App;
+
 import com.same.city.love.R;
-import com.juns.wechat.chat.config.ConfigUtil;
-import com.juns.wechat.util.BitmapUtil;
-import com.juns.wechat.util.DisplayUtil;
+
+import cn.tongchengyuan.chat.config.ConfigUtil;
+import cn.tongchengyuan.util.BitmapUtil;
+import cn.tongchengyuan.util.DisplayUtil;
+import uk.viewpager.GlideAutoFitTransform;
+
 import com.style.constant.FileConfig;
 
 public class ImageLoader {
@@ -22,8 +27,9 @@ public class ImageLoader {
     private static RequestOptions defaultRequestOptions;
     private static RequestOptions bigPictureOptions;
     private static RequestOptions defaultAvatarOptions;
+    private static RequestOptions autoFitOptions;
 
-    private static CharSequence getLocalUrl(String fileName) {
+    public static CharSequence getLocalUrl(String fileName) {
         return FileConfig.DIR_CACHE + "/" + fileName;
     }
 
@@ -57,6 +63,14 @@ public class ImageLoader {
         return defaultAvatarOptions;
     }
 
+    public static RequestOptions getAutoFitOptions() {
+        if (autoFitOptions == null) {
+            autoFitOptions = new RequestOptions().error(R.mipmap.image_fail)
+                    .priority(Priority.HIGH);
+        }
+        return autoFitOptions;
+    }
+
     public static void loadAvatar(Context context, ImageView imageView, String fileName) {
         if (!TextUtils.isEmpty(fileName)) {
             Glide.with(context).load(getLocalUrl(fileName)).apply(getDefaultAvatarOptions()).into(imageView);
@@ -76,6 +90,11 @@ public class ImageLoader {
     public static void loadBigPicture(Context context, ImageView imageView, String url) {
         if (!TextUtils.isEmpty(url))
             Glide.with(context).load(getLocalUrl(url)).apply(getDefaultBigPictureOptions()).into(imageView);
+    }
+
+    public static void loadAutoFit(Context context, ImageView imageView, String url) {
+        if (!TextUtils.isEmpty(url))
+            Glide.with(context).load(getLocalUrl(url)).apply(getAutoFitOptions().transform(new GlideAutoFitTransform(imageView))).into(imageView);
     }
 
     private static LruCache<String, Bitmap> bitmapCache;

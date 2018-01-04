@@ -1,5 +1,6 @@
 package com.style.base;
 
+import android.support.design.widget.AppBarLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,6 +13,7 @@ public abstract class BaseToolbarActivity extends BaseActivity {
     private Toolbar toolbar;
     private TextView tvTitleBase;
     private ImageView ivBaseToolbarReturn;
+    private AppBarLayout appbar;
 
     @Override
     public void setContentView(View mContentView) {
@@ -20,6 +22,7 @@ public abstract class BaseToolbarActivity extends BaseActivity {
     }
 
     protected void customTitleOptions(View mContentView) {
+        appbar = mContentView.findViewById(R.id.app_bar);
         toolbar = mContentView.findViewById(R.id.toolbar);
         ivBaseToolbarReturn = mContentView.findViewById(R.id.iv_base_toolbar_Return);
         tvTitleBase = mContentView.findViewById(R.id.tv_base_toolbar_title);
@@ -59,5 +62,7 @@ public abstract class BaseToolbarActivity extends BaseActivity {
         setToolbarTitle(getString(resId));
     }
 
-
+    protected void setAppBarLayoutTransparent() {
+        appbar.setBackgroundColor(getResources().getColor(R.color.appbar_transparent));
+    }
 }

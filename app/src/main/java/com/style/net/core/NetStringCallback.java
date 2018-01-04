@@ -4,7 +4,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 
-import com.juns.wechat.util.ToastUtil;
+import cn.tongchengyuan.util.ToastUtil;
 
 import retrofit2.Call;
 import retrofit2.Callback;

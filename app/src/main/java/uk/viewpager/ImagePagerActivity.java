@@ -16,7 +16,6 @@ import java.util.List;
 
 public class ImagePagerActivity extends BaseActivity {
     ActivityPagerImageListBinding bd;
-    private static final String STATE_POSITION = "STATE_POSITION";
     public static final String EXTRA_IMAGE_INDEX = "image_index";
     public static final String EXTRA_IMAGE_URLS = "image_urls";
     private int pagerPosition;
@@ -34,8 +33,9 @@ public class ImagePagerActivity extends BaseActivity {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        //super.onSaveInstanceState(outState);
+    protected void onPause() {
+        overridePendingTransition(0, 0);
+        super.onPause();
     }
 
     public void initData() {
@@ -94,5 +94,6 @@ public class ImagePagerActivity extends BaseActivity {
             return fileList.get(position);
         }
     }
+
 
 }

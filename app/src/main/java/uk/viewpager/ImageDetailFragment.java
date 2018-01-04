@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.same.city.love.R;
 import com.same.city.love.databinding.FragmentDynamicImageDetailBinding;
 import com.style.base.BaseFragment;
@@ -43,7 +44,8 @@ public class ImageDetailFragment extends BaseFragment {
             imgName = args.getString("imgName");
         }
         logE(TAG, "文件名" + imgName);
-        ImageLoader.loadPictureByName(getContext(), bd.image, imgName);
+        //ImageLoader.loadAutoFit(getContext(), bd.image, imgName);
+        Glide.with(getActivity()).load(ImageLoader.getLocalUrl(imgName)).into(bd.image);
         return;
 
        /* String path = FileConfig.DIR_CACHE + "/" + imgName;
@@ -89,7 +91,7 @@ public class ImageDetailFragment extends BaseFragment {
         bd.progressbar.setVisibility(View.GONE);
         bd.tvPercent.setVisibility(View.GONE);
         logE(TAG, path);
-        ImageLoader.loadBigPicture(getContext(), bd.image, path);
+        ImageLoader.loadAutoFit(getContext(), bd.image, path);
        /* PhotoViewAttacher attacher = new PhotoViewAttacher(image);
         attacher.update();*/
 

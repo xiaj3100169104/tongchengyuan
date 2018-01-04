@@ -5,8 +5,6 @@
         <item name="android:windowAnimationStyle">@style/Anim_main</item>
         <item name="android:colorControlNormal">@color/colorButtonNormal</item>
         <item name="android:colorControlActivated">@color/colorControlActivated</item>
-
-        <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     <!-- 注意属性一定要加前缀android:，不然没作用-->

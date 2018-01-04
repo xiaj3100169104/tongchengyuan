@@ -74,6 +74,13 @@
         <item name="android:activityCloseExitAnimation">@anim/slide_out_to_right</item>
     </style>
 
+    <style name="Anim_2" parent="@android:style/Animation.Activity">
+        <!-- 当我们从 A1 启动 A2 时，A2 出现在屏幕上 -->
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_from_bottom</item>
+        <!-- 当我们从 A2 退出回到 A1 时，A2 从屏幕上消失 -->
+        <item name="android:activityCloseExitAnimation">@anim/slide_out_to_top</item>
+    </style>
+
     <style name="AnimFade2" parent="@android:style/Animation.Activity">
         <!-- 当我们从 A1 启动 A2 时，A2 出现在屏幕上 -->
         <item name="android:activityOpenEnterAnimation">@anim/slide_in_from_right</item>

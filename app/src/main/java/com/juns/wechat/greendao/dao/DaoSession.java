@@ -8,12 +8,12 @@ import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.identityscope.IdentityScopeType;
 import org.greenrobot.greendao.internal.DaoConfig;
 
-import com.juns.wechat.bean.DynamicBean;
-import com.juns.wechat.bean.FriendBean;
-import com.juns.wechat.bean.UserBasicInfo;
-import com.juns.wechat.bean.UserBean;
-import com.juns.wechat.bean.UserExtendInfo;
-import com.juns.wechat.chat.bean.MessageBean;
+import cn.tongchengyuan.bean.DynamicBean;
+import cn.tongchengyuan.bean.FriendBean;
+import cn.tongchengyuan.bean.UserBasicInfo;
+import cn.tongchengyuan.bean.UserBean;
+import cn.tongchengyuan.bean.UserExtendInfo;
+import cn.tongchengyuan.chat.bean.MessageBean;
 
 import com.juns.wechat.greendao.dao.DynamicBeanDao;
 import com.juns.wechat.greendao.dao.FriendBeanDao;

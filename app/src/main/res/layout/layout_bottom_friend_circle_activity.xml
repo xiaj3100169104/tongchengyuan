@@ -11,30 +11,29 @@
         android:showDividers="beginning|middle|end">
 
         <RelativeLayout
-            android:id="@+id/layout_bottom_smile"
+            android:id="@+id/layout_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="5dp"
-            android:paddingBottom="5dp">
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp">
 
             <LinearLayout
                 android:id="@+id/layout1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:layout_alignBottom="@+id/et_comment"
-                android:orientation="horizontal"
+                android:layout_alignParentRight="true"
                 android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="5dp">
 
-                <CheckBox
+                <Button
                     android:id="@+id/view_smile"
                     android:layout_width="25dp"
                     android:layout_height="25dp"
-                    android:background="@drawable/sel_switch_emoji"
-                    android:button="@null" />
+                    android:background="@drawable/sel_switch_emoji" />
 
                 <Button
                     android:id="@+id/bt_dis_dynamic"
@@ -52,12 +51,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toLeftOf="@+id/layout1"
-                android:paddingLeft="8dp"
                 android:gravity="top"
+                android:maxLines="3"
+                android:paddingLeft="8dp"
                 android:paddingTop="5dp"
-                android:text=""
                 android:singleLine="false"
-                android:maxLines="3" />
+                android:text="" />
 
         </RelativeLayout>
 

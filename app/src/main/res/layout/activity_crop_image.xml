@@ -7,19 +7,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context="com.juns.wechat.activity.CropImageActivity">
+        tools:context="cn.tongchengyuan.activity.CropImageActivity">
 
         <include
             android:id="@+id/toolbar"
             layout="@layout/comm_toolbar_btn" />
 
-        <com.juns.wechat.view.ClipImageLayout
+        <cn.tongchengyuan.view.ClipImageLayout
             android:id="@+id/clipImageLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:horizontal_padding="30dp">
 
-        </com.juns.wechat.view.ClipImageLayout>
+        </cn.tongchengyuan.view.ClipImageLayout>
 
     </LinearLayout>
 </layout>

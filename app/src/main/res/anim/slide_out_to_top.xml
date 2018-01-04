@@ -3,19 +3,6 @@
 
     <translate
         android:duration="200"
-        android:fromXDelta="0"
         android:fromYDelta="0"
-        android:toXDelta="0"
-        android:toYDelta="-100%" />
-    <scale
-        android:duration="200"
-        android:fromXScale="1"
-        android:fromYScale="1"
-        android:toXScale="1"
-        android:toYScale="0" />
-    <alpha
-        android:duration="200"
-        android:fromAlpha="1.0"
-        android:interpolator="@android:anim/decelerate_interpolator"
-        android:toAlpha="0.0" />
+        android:toYDelta="-100%p" />
 </set>

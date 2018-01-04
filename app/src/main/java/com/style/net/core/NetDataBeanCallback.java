@@ -5,8 +5,8 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
-import com.juns.wechat.manager.AccountManager;
-import com.juns.wechat.util.ToastUtil;
+import cn.tongchengyuan.manager.AccountManager;
+import cn.tongchengyuan.util.ToastUtil;
 
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- 布局还没加载出来前的窗口背景颜色 -->
+    <color name="windowBackground_transparent">#40000000</color>
+    <color name="appbar_transparent">#21000000</color>
+
     <color name="windowBackground">@color/white</color>
     <!-- appbar颜色 -->
-    <color name="colorPrimary">@color/actionbar</color>
+    <color name="colorPrimary">#ff2d6f</color>
     <!-- 状态栏颜色 -->
-    <color name="colorPrimaryDark">@color/colorPrimary</color>
+    <color name="colorPrimaryDark">#e00032</color>
     <!-- 文本颜色、日期等对话框字体颜色 -->
     <color name="textColorPrimary">@color/text_color_black_light</color>
     <!-- 控件选中后的颜色 -->
-    <color name="colorAccent">@color/colorPrimary</color>
+    <color name="colorAccent">@color/black_light</color>
     <!-- 表示控件默认时的色调 -->
     <color name="colorControlNormal">@color/gray</color>
     <!-- 表示控件激活时候的色调 -->
-    <color name="colorControlActivated">@color/colorPrimary</color>
+    <color name="colorControlActivated">@color/black_light</color>
     <!-- Button按钮正常状态颜色 -->
     <color name="colorButtonNormal">#44BF1A</color>
     <color name="colorButtonPressed">#337523</color>
