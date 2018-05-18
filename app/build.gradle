@@ -2,21 +2,22 @@ apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao' // apply plugin
 
 android {
-    compileSdkVersion Integer.parseInt(project.ANDROID_COMPILE_SDK_VERSION)
-    buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
+    compileSdkVersion ANDROID_COMPILE_SDK_VERSION
+    buildToolsVersion ANDROID_BUILD_TOOLS_VERSION
 
     defaultConfig {
         applicationId "com.same.city.love"
-        minSdkVersion Integer.parseInt(project.ANDROID_MIN_SDK_VERSION)
-        targetSdkVersion Integer.parseInt(project.ANDROID_TARGET_SDK_VERSION)
-        versionCode Integer.parseInt(project.VERSION_CODE)
-        versionName project.VERSION_NAME
+        minSdkVersion ANDROID_MIN_SDK_VERSION
+        targetSdkVersion ANDROID_TARGET_SDK_VERSION
+        versionCode 1
+        versionName '1.0'
         multiDexEnabled true
         /*externalNativeBuild {
             cmake {
                 cppFlags ""
             }
         }*/
+
         vectorDrawables.useSupportLibrary = true
 
         ndk {
@@ -97,7 +98,7 @@ dependencies {
     //compile 'cn.yipianfengye.android:zxing-library:2.1'
 
     compile 'org.greenrobot:greendao:3.2.2'
-    compile 'com.github.yuweiguocn:GreenDaoUpgradeHelper:v2.0.0'
+    compile 'com.github.yuweiguocn:GreenDaoUpgradeHelper:v2.0.2'
 
 }
 greendao {

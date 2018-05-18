@@ -1,12 +1,10 @@
 .gradle/
 .idea/
-build/
-*.iml
-/androidTest
-/test
-.DS_Store
+allProduct/
 /build
-/captures
+*.iml
 .externalNativeBuild
+gradle.properties
 local.properties
 *.jks
+*.apk
