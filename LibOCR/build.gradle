@@ -9,9 +9,9 @@ android {
     }
 
     dependencies {
-        compile 'com.android.support:appcompat-v7:' + project.ANDROID_SUPPORT_VERSION
-        compile 'com.android.support:support-v13:' + project.ANDROID_SUPPORT_VERSION
+        implementation 'com.android.support:appcompat-v7:' + project.ANDROID_SUPPORT_VERSION
+        implementation 'com.android.support:support-v13:' + project.ANDROID_SUPPORT_VERSION
 
-        compile 'com.rmtheis:tess-two:8.0.0'
+        implementation 'com.rmtheis:tess-two:8.0.0'
     }
 }

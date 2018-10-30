@@ -2,8 +2,8 @@
 <resources>
 
     <item name="selected_view" type="id"/>
-    <item name="action_bar" type="id">false</item>
-    <item name="actionbar_title" type="id">false</item>
+    <item name="action_bar" type="id"/>
+    <item name="actionbar_title" type="id"/>
 
     <!-- start 二维码 zxing -->
     <!-- Messages IDs -->

@@ -9,8 +9,8 @@ android {
         targetSdkVersion ANDROID_TARGET_SDK_VERSION
     }
     dependencies {
-        compile 'com.android.support:appcompat-v7:' + project.ANDROID_SUPPORT_VERSION
-        compile 'com.android.support:support-v4:' + project.ANDROID_SUPPORT_VERSION
-        compile 'com.google.zxing:core:3.3.1'
+        implementation 'com.android.support:appcompat-v7:' + project.ANDROID_SUPPORT_VERSION
+        implementation 'com.android.support:support-v4:' + project.ANDROID_SUPPORT_VERSION
+        implementation 'com.google.zxing:core:3.3.1'
     }
 }

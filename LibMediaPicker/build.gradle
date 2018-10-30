@@ -9,11 +9,11 @@ android {
     }
 
     dependencies {
-        compile 'com.android.support:appcompat-v7:' + project.ANDROID_SUPPORT_VERSION
-        compile 'com.android.support:recyclerview-v7:' + project.ANDROID_SUPPORT_VERSION
-        compile 'com.github.bumptech.glide:glide:4.0.0'
+        implementation 'com.android.support:appcompat-v7:' + project.ANDROID_SUPPORT_VERSION
+        implementation 'com.android.support:recyclerview-v7:' + project.ANDROID_SUPPORT_VERSION
+        implementation 'com.github.bumptech.glide:glide:4.0.0'
         //support_library_version = '27.0.1'
-        compile 'pub.devrel:easypermissions:+'
-        //compile 'com.chensl.rotatephotoview:rotatephotoview:1.0.5'
+        implementation 'pub.devrel:easypermissions:+'
+        //implementation 'com.chensl.rotatephotoview:rotatephotoview:1.0.5'
     }
 }

@@ -33,6 +33,8 @@ import android.widget.ImageView.ScaleType;
 
 import java.lang.ref.WeakReference;
 
+import uk.co.senab.photoview.gestures.VersionedGestureDetector;
+
 public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener,
 		VersionedGestureDetector.OnGestureListener,
 		GestureDetector.OnDoubleTapListener,
