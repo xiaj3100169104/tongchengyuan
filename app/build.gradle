@@ -100,6 +100,7 @@ dependencies {
 
     implementation 'org.greenrobot:greendao:3.2.2'
     implementation 'com.github.yuweiguocn:GreenDaoUpgradeHelper:v2.0.2'
+    implementation 'com.github.bumptech.glide:glide:4.0.0'
 
 }
 greendao {
