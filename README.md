@@ -1,6 +1,6 @@
 ## 主页
   -------------
-<img src="https://raw.github.com/xj913492952/tongchengyuan/master/screenshots/Screenshot_20180101-174823.jpg" height="400" alt="Screenshot"/> <img src="https://raw.github.com/xj913492952/tongchengyuan/master/screenshots/Screenshot_20180101-174938.jpg" height="400" alt="Screenshot"/> <img src="https://raw.github.com/xj913492952/tongchengyuan/master/screenshots/Screenshot_20180101-174944.jpg" height="400" alt="Screenshot"/>
+<img src="https://raw.github.com/xj913492952/tongchengyuan/master/screenshots/Screenshot_20180101-174944.jpg" height="400" alt="Screenshot"/>
 <img src="https://raw.github.com/xj913492952/tongchengyuan/master/screenshots/Screenshot_20180101-174830.jpg" height="400" alt="Screenshot"/> <img src="https://raw.github.com/xj913492952/tongchengyuan/master/screenshots/Screenshot_20180101-180214.jpg" height="400" alt="Screenshot"/>
 
 ## 个人信息
